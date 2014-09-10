@@ -8,111 +8,15 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
   	<display-name>El TPE de PAW</display-name>
-	<servlet>
-		<servlet-name>ListHotels</servlet-name>
-		<servlet-class>ar.edu.itba.it.paw.web.ListHotels</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>ViewHotel</servlet-name>
-		<servlet-class>ar.edu.itba.it.paw.web.ViewHotel</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>AddComment</servlet-name>
-		<servlet-class>ar.edu.itba.it.paw.services.AddComment</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>WelcomeScreen</servlet-name>
-		<servlet-class>ar.edu.itba.it.paw.web.WelcomeScreen</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>EditHotel</servlet-name>
-		<servlet-class>ar.edu.itba.it.paw.web.EditHotel</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>AuthenticateUser</servlet-name>
-		<servlet-class>ar.edu.itba.it.paw.services.AuthenticateUser</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>LogoutUser</servlet-name>
-		<servlet-class>ar.edu.itba.it.paw.services.LogoutUser</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>EditHotelService</servlet-name>
-		<servlet-class>ar.edu.itba.it.paw.services.EditHotelService</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>AddHotel</servlet-name>
-		<servlet-class>ar.edu.itba.it.paw.web.AddHotel</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>AddHotelService</servlet-name>
-		<servlet-class>ar.edu.itba.it.paw.services.AddHotelService</servlet-class>
-	</servlet>
-	
-	<filter>
-		<filter-name>AuthenticationFilter</filter-name>
-		<filter-class>ar.edu.itba.it.paw.filters.AuthenticationFilter</filter-class>
-	</filter>
-	<filter>
-		<filter-name>WelcomeScreenFilter</filter-name>
-		<filter-class>ar.edu.itba.it.paw.filters.WelcomeScreenFilter</filter-class>
-	</filter>
-	
-	<servlet-mapping>
-		<servlet-name>ListHotels</servlet-name>
-		<url-pattern>/listHotels</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>ViewHotel</servlet-name>
-		<url-pattern>/viewHotel</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>AddComment</servlet-name>
-		<url-pattern>/addComment</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>WelcomeScreen</servlet-name>
-		<url-pattern>/welcome</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>AuthenticateUser</servlet-name>
-		<url-pattern>/authenticateUser</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>LogoutUser</servlet-name>
-		<url-pattern>/logoutUser</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>EditHotel</servlet-name>
-		<url-pattern>/editHotel</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>EditHotelService</servlet-name>
-		<url-pattern>/editHotelService</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>AddHotel</servlet-name>
-		<url-pattern>/addHotel</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>AddHotelService</servlet-name>
-		<url-pattern>/addHotelService</url-pattern>
-	</servlet-mapping>
-	
 
-	<filter-mapping>
-		<filter-name>AuthenticationFilter</filter-name>
-		<url-pattern>/listHotels</url-pattern>
-	</filter-mapping>
-	
-	<filter-mapping>
-		<filter-name>AuthenticationFilter</filter-name>
-		<url-pattern>/viewHotel</url-pattern>
-	</filter-mapping>
-	
-	<filter-mapping>
-		<filter-name>WelcomeScreenFilter</filter-name>
-		<url-pattern>/welcome</url-pattern>
-	</filter-mapping>
+	<servlet>
+		<servlet-name>FilmList</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.FilmList</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FilmList</servlet-name>
+		<url-pattern>/filmList</url-pattern>
+	</servlet-mapping>
 	
 </web-app>
