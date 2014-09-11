@@ -5,11 +5,13 @@ public class Comment extends BaseType {
 	private String message;
 	private String username;
 	private int score;
+	private Film film;
 	
 	private Comment(final Builder builder) {
 		this.message = builder.message;
 		this.username = builder.username;
 		this.score = builder.score;
+		this.film = builder.film;
 	}
 	
 	public String getMessage() {
@@ -29,6 +31,7 @@ public class Comment extends BaseType {
 		private String message;
 		private String username;
 		private int score;
+		private Film film;
 		
 		public Builder message(final String message) {
 			this.message = message;
@@ -42,6 +45,11 @@ public class Comment extends BaseType {
 		
 		public Builder score(final int score) {
 			this.score = score;
+			return this;
+		}
+		
+		public Builder film(final Film film) {
+			this.film = film;
 			return this;
 		}
 		
