@@ -9,6 +9,7 @@ public class Film extends BaseType {
 	private Date releaseDate;
 	private String genre;
 	private String description;
+	private int length;
 	
 	private Film(final Builder builder) {
 		setId(builder.id);
@@ -17,14 +18,40 @@ public class Film extends BaseType {
 		this.releaseDate = builder.releaseDate;
 		this.genre = builder.genre;
 		this.description = builder.description;
+		this.length = builder.length;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
+	public String getDirector() {
+		return director;
+	}
+	
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+	
+	public String getGenre() {
+		return genre;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public int getLength() {
+		return length;
+	}
+
 	public static class Builder {
 		private String name;
 		private String director;
 		private Date releaseDate;
 		private String genre;
 		private String description;
+		private int length;
 		private Integer id = -1;
 		
 		public Builder name(final String name) {
@@ -57,28 +84,13 @@ public class Film extends BaseType {
 			return this;
 		}
 		
+		public Builder length(final int length) {
+			this.length = length;
+			return this;
+		}
+		
 		public Film build() {
 			return new Film(this);
 		}
-	}
-	
-	public String getName(){
-		return name;
-	}
-	
-	public String getDirector(){
-		return director;
-	}
-	
-	public Date getReleaseDate(){
-		return releaseDate;
-	}
-	
-	public String getGenre(){
-		return genre;
-	}
-	
-	public String getDescription(){
-		return description;
 	}
 }

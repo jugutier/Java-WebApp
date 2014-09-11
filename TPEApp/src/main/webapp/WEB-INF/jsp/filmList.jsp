@@ -9,7 +9,7 @@
 		<th>Fecha de estreno</th>
 	</tr>
 	<c:forEach items="${filmList}" var="film">
-		<c:url value="filmDetail" var="detailUrl">
+		<c:url value="filmDetails" var="detailUrl">
 			<c:param name="id" value="${film.id}" />
 		</c:url>
 		<tr>
@@ -23,6 +23,6 @@
 	</c:if>
 </table>
 
-<a href="addHotel" class="btn btn-primary"><i class="icon-plus"></i> A&ntilde;adir hotel</a>
+<a href="addHotel" class="btn btn-primary pull-right"><i class="icon-plus"></i> A&ntilde;adir pel&iacute;cula</a>
 
 <%@ include file="footer.jsp" %>

@@ -5,17 +5,31 @@ import java.util.HashMap;
 import java.util.List;
 
 import ar.edu.itba.grupo2.dao.FilmManager;
+import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
+import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 
 public final class MemoryFilmManager implements FilmManager{
 	
 	private final HashMap<Integer, Film> film_list = new HashMap<Integer, Film>();
+	private final List<CommentTuple> comment_list = new ArrayList<CommentTuple>();
 	private int next_id = 0;
 	
 	private static FilmManager film_manager = null;
 	
 	private MemoryFilmManager(){
+		
 	}
+	
+	private static class CommentTuple {
+		public Comment comment;
+		public Film film;
+		
+		public CommentTuple(Comment comment, Film film){
+			this.comment = comment;
+			this.film = film;
+		}
+	};
 	
 	public static FilmManager getInstance(){
 		if (film_manager == null){
@@ -26,8 +40,14 @@ public final class MemoryFilmManager implements FilmManager{
 	}
 
 	@Override
-	public Film getFilmById(int id) {
-		return film_list.get(id);
+	public Film getFilmById(final int id) throws FilmNotFoundException{
+		Film film = film_list.get(id);
+		
+		if (film == null) {
+			throw new FilmNotFoundException();
+		}
+		
+		return film;
 	}
 
 	@Override
@@ -38,7 +58,7 @@ public final class MemoryFilmManager implements FilmManager{
 	}
 
 	@Override
-	public void saveFilm(Film film) {
+	public void saveFilm(final Film film) {
 		if (film != null){
 			if (film.isNew()) {
 				film.setId(next_id);
@@ -51,9 +71,27 @@ public final class MemoryFilmManager implements FilmManager{
 	}
 
 	@Override
-	public void deleteFilm(Film film) {
+	public void deleteFilm(final Film film) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public List<Comment> getCommentsForFilm(final Film film) {
+		List<Comment> tmpList = new ArrayList<Comment>();
+		
+		for (CommentTuple c : comment_list) {
+			if (film.getId() == c.film.getId()) {
+				tmpList.add(c.comment);
+			}
+		}
+		
+		return tmpList;
+	}
+	
+	@Override
+	public void addCommentToFilm(final Film film, final Comment comment) {
+		comment_list.add(new CommentTuple(comment, film));
 	}
 
 }
