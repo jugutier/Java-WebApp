@@ -23,6 +23,10 @@
 		<servlet-name>FilmDetails</servlet-name>
 		<servlet-class>ar.edu.itba.grupo2.web.FilmDetails</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>WelcomeScreen</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.WelcomeScreen</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>WelcomeScreen</servlet-name>
@@ -37,11 +41,7 @@
 	<servlet-mapping>
 		<servlet-name>FilmDetails</servlet-name>
 		<url-pattern>/filmDetails</url-pattern>
-	<servlet>
-		<servlet-name>WelcomeScreen</servlet-name>
-		<servlet-class>ar.edu.itba.grupo2.web.WelcomeScreen</servlet-class>
-	</servlet>
-	
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>WelcomeScreen</servlet-name>
 		<url-pattern>/home</url-pattern>
