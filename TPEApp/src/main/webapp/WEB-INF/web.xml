@@ -19,4 +19,17 @@
 		<url-pattern>/filmList</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>WelcomeScreen</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.WelcomeScreen</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>WelcomeScreen</servlet-name>
+		<url-pattern>/home</url-pattern>
+	</servlet-mapping>
+	
+	<welcome-file-list>
+		<welcome-file>welcome.jsp</welcome-file>
+	</welcome-file-list>
 </web-app>

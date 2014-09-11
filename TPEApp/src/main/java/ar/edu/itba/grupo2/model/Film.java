@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class Film extends BaseType {
 	
-	private String name;
-	private String director;
-	private Date releaseDate;
-	private String genre;
-	private String description;
+	private final String name;
+	private final String director;
+	private final Date releaseDate;
+	private final String genre;
+	private final String description;
 	
 	private Film(final Builder builder) {
 		setId(builder.id);
