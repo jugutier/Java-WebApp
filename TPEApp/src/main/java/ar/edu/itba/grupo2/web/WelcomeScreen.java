@@ -39,6 +39,6 @@ public class WelcomeScreen extends HttpServlet{
 
 		List<Film> filmList = fm.getAllFilms();
 		req.setAttribute("topfive", filmList.subList(0, 4));
-		req.getRequestDispatcher("/WEB-INF/jsp/welcome.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(req, resp);
 	}
 }

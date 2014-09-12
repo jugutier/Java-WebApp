@@ -21,7 +21,7 @@ public class AddComment extends HttpServlet{
 		UserManager userManager = new UserManager(req);
 		
 		if(userManager.existsUser()){
-			API.addCommentToHotel(hotel_id, userManager.getName(), message);
+			API.addCommentToHotel(hotel_id, userManager.getEmail(), message);
 			
 			resp.sendRedirect(resp.encodeRedirectURL("viewHotel?id=" + hotel_id));
 		}	
