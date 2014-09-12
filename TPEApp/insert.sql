@@ -10,10 +10,10 @@ INSERT INTO FILM VALUES (9,'Inception','Perinola','2010-09-01','Suspenso','Viene
 INSERT INTO FILM VALUES (10,'Proximamente','agregoire','2020-09-01','Documental','La historia de unos chicos y su Aplicacion Web.');
 
 
-INSERT INTO GAJAMDBUSER VALUES (1,'asciglia','123456', 'Agustin','Scigliano','1990-11-14','asciglia@itba.edu.ar',FALSE);
-INSERT INTO GAJAMDBUSER VALUES (2,'amedvede','123456', 'Alexis','Medvedeff','1990-11-14','amedvede@itba.edu.ar',FALSE);
-INSERT INTO GAJAMDBUSER VALUES (3,'gdelgiud','123456', 'Gustavo','Del Giudice','1989-12-13','gdelgiud@itba.edu.ar',TRUE);
-INSERT INTO GAJAMDBUSER VALUES (4,'jugutier','123456', 'Julian','Gutierrez','1991-03-31','jugutier@itba.edu.ar',FALSE);
+INSERT INTO GAJAMDBUSER VALUES (1,'asciglia@itba.edu.ar','123456', 'Agustin','Scigliano','1990-11-14',FALSE);
+INSERT INTO GAJAMDBUSER VALUES (2,'amedvede@itba.edu.ar','123456', 'Alexis','Medvedeff','1990-11-14',FALSE);
+INSERT INTO GAJAMDBUSER VALUES (3,'gdelgiud@itba.edu.ar','123456', 'Gustavo','Del Giudice','1989-12-13',TRUE);
+INSERT INTO GAJAMDBUSER VALUES (4,'jugutier@itba.edu.ar','123456', 'Julian','Gutierrez','1991-03-31',FALSE);
 
 
 INSERT INTO COMMENT VALUES (1,2,2, 'Este es un comentario de prueba, porque me encanta comentar',3);
