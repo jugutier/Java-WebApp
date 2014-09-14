@@ -1,7 +1,8 @@
 <%@ page contentType="text/html" %>
 <%@ page pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -33,6 +34,15 @@
 							<%@ include file="loginFormMini.jsp" %>
 						</li>
 					</ul>
+					<div class="btn-group pull-right">
+						<a class="btn btn-primary">Pedro</a>
+						<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Ver mis comentarios</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Cerrar sesi&oacute;n</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
