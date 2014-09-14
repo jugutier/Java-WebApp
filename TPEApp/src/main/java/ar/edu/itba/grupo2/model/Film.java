@@ -93,4 +93,9 @@ public class Film extends BaseType {
 			return new Film(this);
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return this.name + " - " + this.director;
+	}
 }
