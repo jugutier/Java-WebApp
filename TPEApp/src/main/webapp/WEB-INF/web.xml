@@ -77,6 +77,17 @@
 		<url-pattern>/register</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>UserComments</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.UserComments</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>UserComments</servlet-name>
+		<url-pattern>/userComments</url-pattern>
+	</servlet-mapping>
+
+
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

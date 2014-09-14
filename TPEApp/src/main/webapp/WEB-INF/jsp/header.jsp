@@ -33,16 +33,15 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Iniciar sesi&oacute;n <b class="caret"></b></a>
 							<%@ include file="loginFormMini.jsp" %>
 						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedro <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="userComments">Ver mis comentarios</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Cerrar sesi&oacute;n</a></li>
+							</ul>
+						</li>
 					</ul>
-					<div class="btn-group pull-right">
-						<a class="btn btn-primary">Pedro</a>
-						<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="#">Ver mis comentarios</a></li>
-							<li class="divider"></li>
-							<li><a href="#">Cerrar sesi&oacute;n</a></li>
-						</ul>
-					</div>
 				</div>
 			</div>
 		</div>
