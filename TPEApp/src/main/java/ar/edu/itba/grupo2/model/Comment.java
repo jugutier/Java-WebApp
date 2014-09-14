@@ -57,4 +57,9 @@ public class Comment extends BaseType {
 			return new Comment(this);
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return this.username + " > " + this.message;
+	}
 }

@@ -32,26 +32,7 @@ public class FilmDetails extends HttpServlet{
 		final int id = Integer.valueOf(Utilities.getQueryMap(req.getQueryString()).get("id"));
 		
 		try{
-			final Film film = fm.getFilmById(id);
-			
-			Comment c = null;
-			
-			c = new Comment.Builder()
-				.username("Pedrito")
-				.message("Malisima che")
-				.score(3)
-				.build();
-
-			fm.addCommentToFilm(film, c);
-			
-			c = new Comment.Builder()
-				.username("l@lo.com")
-				.message("piola")
-				.score(53)
-				.build();
-
-			fm.addCommentToFilm(film, c);
-			
+			final Film film = fm.getFilmById(id);			
 			
 			final List<Comment> commentList = fm.getCommentsForFilm(film);
 			

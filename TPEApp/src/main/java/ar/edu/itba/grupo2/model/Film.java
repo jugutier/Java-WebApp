@@ -10,6 +10,7 @@ public class Film extends BaseType {
 	private String genre;
 	private String description;
 	private int length;
+	public int score;
 	
 	private Film(final Builder builder) {
 		setId(builder.id);
@@ -19,6 +20,7 @@ public class Film extends BaseType {
 		this.genre = builder.genre;
 		this.description = builder.description;
 		this.length = builder.length;
+		this.score = builder.score;
 	}
 	
 	public String getName() {
@@ -44,6 +46,10 @@ public class Film extends BaseType {
 	public int getLength() {
 		return length;
 	}
+	
+	public int getScore() {
+		return score;
+	}
 
 	public static class Builder {
 		private String name;
@@ -52,6 +58,7 @@ public class Film extends BaseType {
 		private String genre;
 		private String description;
 		private int length;
+		private int score;
 		private Integer id = -1;
 		
 		public Builder name(final String name) {
@@ -89,8 +96,18 @@ public class Film extends BaseType {
 			return this;
 		}
 		
+		public Builder score(final int score) {
+			this.score = score;
+			return this;
+		}
+		
 		public Film build() {
 			return new Film(this);
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return this.name + " - " + this.director;
 	}
 }
