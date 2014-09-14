@@ -54,6 +54,10 @@ public class Film extends BaseType {
 	public int getLength() {
 		return length;
 	}
+	
+	public int getTotalComments() {
+		return totalComments;
+	}
 
 	public double getScore() {
 		return totalComments == 0 ? 0 : sumComments / totalComments;

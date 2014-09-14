@@ -24,8 +24,6 @@ public class WelcomeScreen extends HttpServlet{
 	@Override
 	public void init() throws ServletException{
 		super.init();
-		
-		API.createBogusDatabase();
 	}
 	
 	@Override
@@ -37,6 +35,7 @@ public class WelcomeScreen extends HttpServlet{
 			.name("JG")
 			.director("PURI")
 			.releaseDate(new Date())
+			.creationDate(new Date())
 			.build();
 			fm.saveFilm(film);
 		}
@@ -54,6 +53,19 @@ public class WelcomeScreen extends HttpServlet{
 		});
 		
 		req.setAttribute("topfive", filmList.subList(0, 4));
+		
+		
+		List<Film> filmList2 = fm.getAllFilms();
+		
+		Collections.sort(filmList2, new Comparator<Film>(){
+
+			@Override
+			public int compare(Film arg0, Film arg1) {
+				return arg0.getCreationDate().compareTo(arg1.getCreationDate());
+			}
+			
+		});
+		req.setAttribute("latest", filmList2.subList(0,4));
 		req.getRequestDispatcher("/WEB-INF/jsp/welcome.jsp").forward(req, resp);
 	}
 }

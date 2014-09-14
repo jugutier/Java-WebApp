@@ -15,7 +15,7 @@
 			<td><c:out value="${film.creationDate}"/></td>
 			<td><c:out value="${film.releaseDate}"/></td>
 			<td><a href="${detailUrl}"><c:out value="${film.name}"/></a></td>
-			<td><c:out value="${film.commentsCount}"/></td>
+			<td><c:out value="${film.totalComments}"/></td>
 		</tr>
 	</c:forEach>
 	<c:if test="${empty latest}">
