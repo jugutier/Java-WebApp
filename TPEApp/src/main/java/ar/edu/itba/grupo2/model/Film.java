@@ -56,7 +56,7 @@ public class Film extends BaseType {
 	}
 
 	public double getScore() {
-		return sumComments / totalComments;
+		return totalComments == 0 ? 0 : sumComments / totalComments;
 	}
 
 	public static class Builder {
@@ -129,5 +129,12 @@ public class Film extends BaseType {
 	@Override
 	public String toString() {
 		return this.name + " - " + this.director;
+	}
+	
+	public boolean isReleased() {
+		Date today = new Date();
+		if(today.after(this.releaseDate))
+			return true;
+		return false;
 	}
 }
