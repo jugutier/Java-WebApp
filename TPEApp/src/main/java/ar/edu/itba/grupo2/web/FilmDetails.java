@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ar.edu.itba.grupo2.dao.FilmManager;
+import ar.edu.itba.grupo2.dao.FilmManagerDAO;
 import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.dao.memory.MemoryFilmManager;
 import ar.edu.itba.grupo2.model.Comment;
@@ -18,7 +18,7 @@ import ar.edu.itba.it.paw.model.Utilities;
 @SuppressWarnings("serial")
 public class FilmDetails extends HttpServlet{
 	
-	FilmManager fm;
+	FilmManagerDAO fm;
 	
 	@Override
 	public void init() throws ServletException{

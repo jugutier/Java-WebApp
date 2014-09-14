@@ -6,7 +6,7 @@ import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 
-public interface FilmManager {
+public interface FilmManagerDAO {
 	
 	public Film getFilmById(final int id) throws FilmNotFoundException;
 	

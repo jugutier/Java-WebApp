@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import ar.edu.itba.grupo2.dao.FilmManager;
+import ar.edu.itba.grupo2.dao.FilmManagerDAO;
 import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 
-public final class MemoryFilmManager implements FilmManager{
+public final class MemoryFilmManager implements FilmManagerDAO{
 	
 	private final HashMap<Integer, Film> film_list = new HashMap<Integer, Film>();
 	private final List<CommentTuple> comment_list = new ArrayList<CommentTuple>();
 	private int next_id = 0;
 	
-	private static FilmManager film_manager = null;
+	private static FilmManagerDAO film_manager = null;
 	
 	private MemoryFilmManager(){
 		
@@ -31,7 +31,7 @@ public final class MemoryFilmManager implements FilmManager{
 		}
 	};
 	
-	public static FilmManager getInstance(){
+	public static FilmManagerDAO getInstance(){
 		if (film_manager == null){
 			film_manager = new MemoryFilmManager();
 		}

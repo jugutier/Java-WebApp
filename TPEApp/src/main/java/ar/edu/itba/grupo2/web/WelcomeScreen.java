@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ar.edu.itba.grupo2.dao.FilmManager;
+import ar.edu.itba.grupo2.dao.FilmManagerDAO;
 import ar.edu.itba.grupo2.dao.memory.MemoryFilmManager;
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.utils.ConnectionUtilities;
@@ -29,7 +29,7 @@ public class WelcomeScreen extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
-		FilmManager fm = MemoryFilmManager.getInstance();
+		FilmManagerDAO fm = MemoryFilmManager.getInstance();
 		for (int i = 0; i < 4; i++) {
 			Film film = new Film.Builder()
 			.name("JG")
