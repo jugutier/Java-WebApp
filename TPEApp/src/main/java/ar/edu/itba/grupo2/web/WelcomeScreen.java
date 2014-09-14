@@ -2,6 +2,8 @@ package ar.edu.itba.grupo2.web;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -37,11 +39,21 @@ public class WelcomeScreen extends HttpServlet{
 			.releaseDate(new Date())
 			.build();
 			fm.saveFilm(film);
-		}		
+		}
 		Connection c = ConnectionUtilities.getInstance().getConnection();
 		ConnectionUtilities.getInstance().testQuery(c);
 		List<Film> filmList = fm.getAllFilms();
+		
+		Collections.sort(filmList, new Comparator<Film>(){
+
+			@Override
+			public int compare(Film arg0, Film arg1) {
+				return arg0.getScore() - arg1.getScore();
+			}
+			
+		});
+		
 		req.setAttribute("topfive", filmList.subList(0, 4));
-		req.getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/jsp/welcome.jsp").forward(req, resp);
 	}
 }

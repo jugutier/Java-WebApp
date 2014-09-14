@@ -15,7 +15,7 @@
 		<tr>
 			<td><a href="${detailUrl}"><c:out value="${film.name}"/></a></td>
 			<td><c:out value="${film.director}"/></td>
-			<td><c:out value="${film.releaseDate}"/></td>
+			<td><fmt:formatDate value="${film.releaseDate}" pattern="dd-MM-yyyy"/></td>
 		</tr>
 	</c:forEach>
 	<c:if test="${empty filmList}">

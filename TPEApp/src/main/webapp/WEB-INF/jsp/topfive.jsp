@@ -1,5 +1,3 @@
-<%@ include file="header.jsp" %>
-
 <h2>Top 5 de pel&iacute;culas seg&uacute;n otros usuarios</h2>
 
 <table class="table table-bordered">
@@ -32,5 +30,3 @@
 		<tr><td colspan="4"><h4 class="muted text-center">No hay pel&iacute;culas cargadas</h4></td></tr>
 	</c:if>
 </table>
-
-<%@ include file="footer.jsp" %>

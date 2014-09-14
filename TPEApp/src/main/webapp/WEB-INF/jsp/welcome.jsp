@@ -14,4 +14,6 @@
 </form>
 <%@ include file="topfive.jsp" %>
 
+<%@ include file="latestMovies.jsp" %>
+
 <%@ include file="footer.jsp" %>
