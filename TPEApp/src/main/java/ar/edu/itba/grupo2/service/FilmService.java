@@ -105,4 +105,31 @@ public class FilmService {
 		
 		return result;
 	}
+	
+	public List<Film> filterByGenre(final List<Film> filmList, final String genre) {
+		final List<Film> result = new ArrayList<Film>();
+		
+		boolean dontFilter = (genre == null || genre.isEmpty());
+		
+		for (Film f : filmList) {
+			if (dontFilter || genre.compareTo(f.getGenre()) == 0) {
+				result.add(f);
+			}
+		}
+		
+		return result;
+	}
+	
+	public List<Film> filterByDirector(final List<Film> filmList, final String director) {
+		final List<Film> result = new ArrayList<Film>();
+		boolean dontFilter = (director == null || director.isEmpty());
+		
+		for (Film f : filmList) {
+			if (dontFilter || director.compareTo(f.getDirector()) == 0) {
+				result.add(f);
+			}
+		}
+		
+		return result;
+	}
 }

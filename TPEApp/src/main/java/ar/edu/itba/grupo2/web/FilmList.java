@@ -9,9 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.tools.ant.util.StringUtils;
+
 import ar.edu.itba.grupo2.dao.FilmManagerDAO;
 import ar.edu.itba.grupo2.dao.memory.MemoryFilmManager;
 import ar.edu.itba.grupo2.model.Film;
+import ar.edu.itba.grupo2.service.FilmService;
 
 @SuppressWarnings("serial")
 public class FilmList extends HttpServlet{
@@ -38,10 +41,33 @@ public class FilmList extends HttpServlet{
 				.build();
 		fm.saveFilm(film);
 		
+		final Film film2 = new Film.Builder()
+		.name("JG")
+		.director("xx")
+		.releaseDate(new Date())
+		.creationDate(new Date())
+		.genre("De tiros")
+		.description("Chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken")
+		.length(20)
+		.build();
+fm.saveFilm(film2);
 		
-		List<Film> film_list = fm.getAllFilms();
+		FilmService filmService = FilmService.getInstance();
 		
-		req.setAttribute("filmList", film_list);
+		String genreFilter = req.getParameter("genre");
+		String directorFilter = req.getParameter("director");
+		
+		List<Film> filmList = fm.getAllFilms();
+		
+		if (genreFilter != null) {
+			filmList = filmService.filterByGenre(filmList, genreFilter);
+		}
+		
+		if (directorFilter != null) {
+			filmList = filmService.filterByDirector(filmList, directorFilter);
+		}
+		
+		req.setAttribute("filmList", filmList);
 		req.getRequestDispatcher("/WEB-INF/jsp/filmList.jsp").forward(req, resp);
 	}
 }

@@ -2,6 +2,12 @@
 
 <h2>Lista de pel&iacute;culas</h2>
 
+<form class="form-inline" action="filmList" method="GET">
+	<input name="director" type="text" class="input-small" placeholder="Director" value="<c:out value="${param.director}"/>">
+	<input name="genre" type="text" class="input-small" placeholder="G&eacute;nero" value="<c:out value="${param.genre}"/>">
+	<button type="submit" class="btn">Filtrar</button>
+</form>
+
 <table class="table table-bordered">
 	<tr>
 		<th>Nombre</th>
