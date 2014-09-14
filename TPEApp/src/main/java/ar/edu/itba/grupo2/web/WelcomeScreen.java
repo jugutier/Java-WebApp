@@ -1,10 +1,7 @@
 package ar.edu.itba.grupo2.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import ar.edu.itba.grupo2.dao.FilmManagerDAO;
 import ar.edu.itba.grupo2.dao.memory.MemoryFilmManager;
 import ar.edu.itba.grupo2.model.Film;
+import ar.edu.itba.grupo2.service.FilmService;
 
 @SuppressWarnings("serial")
 public class WelcomeScreen extends HttpServlet{
@@ -29,6 +27,7 @@ public class WelcomeScreen extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
 		FilmManagerDAO fm = MemoryFilmManager.getInstance();
+		FilmService filmService = FilmService.getInstance();
 		/*for (int i = 0; i < 4; i++) {
 			Film film = new Film.Builder()
 			.name("JG")
@@ -67,74 +66,10 @@ public class WelcomeScreen extends HttpServlet{
 		//ConnectionUtilities.getInstance().testQuery(c);
 		List<Film> filmList = fm.getAllFilms();
 		
-		req.setAttribute("topfive", filterTopFilms(filmList, 5));
-		req.setAttribute("latest", filterRecentlyAdded(filmList, 5));
-		req.setAttribute("newReleases", filterNewReleases(filmList, 7));
+		req.setAttribute("topfive", filmService.filterTopFilms(filmList, 5));
+		req.setAttribute("latest", filmService.filterRecentlyAdded(filmList, 5));
+		req.setAttribute("newReleases", filmService.filterNewReleases(filmList, 7));
 		
 		req.getRequestDispatcher("/WEB-INF/jsp/welcome.jsp").forward(req, resp);
-	}
-	
-	private List<Film> filterTopFilms(final List<Film> filmList, final int topAmount) {
-		final List<Film> result = new ArrayList<Film>();
-		int originalSize = filmList.size();
-		int top = (topAmount > originalSize)? originalSize : topAmount;
-		
-		for (Film f : filmList) {
-			result.add(f);
-		}
-		
-		Collections.sort(result, new Comparator<Film>(){
-
-			@Override
-			public int compare(Film arg0, Film arg1) {
-				return Double.compare(arg0.getScore(), arg1.getScore());
-			}
-			
-		});
-		
-		return result.subList(0, top);
-	}
-	
-	private List<Film> filterRecentlyAdded(final List<Film> filmList, final int amount) {
-		final List<Film> result = new ArrayList<Film>();
-		int originalSize = filmList.size();
-		int top = (amount > originalSize)? originalSize : amount;
-		
-		for (Film f : filmList) {
-			result.add(f);
-		}
-		
-		Collections.sort(filmList, new Comparator<Film>(){
-
-			@Override
-			public int compare(Film arg0, Film arg1) {
-				return arg0.getCreationDate().compareTo(arg1.getCreationDate());
-			}
-			
-		});
-		
-		return result.subList(0, top);
-	}
-	
-	private List<Film> filterNewReleases(final List<Film> filmList, final int dayTolerance) {
-		final List<Film> result = new ArrayList<Film>();
-		final Date today = new Date();
-		long startTime = 0;
-		long endTime = 0;
-		long diffTime = 0;
-		long diffDays = 0;
-		
-		for (Film f : filmList) {
-			startTime = f.getReleaseDate().getTime();
-			endTime = today.getTime();
-			diffTime = endTime - startTime;
-			diffDays = diffTime / (1000 * 60 * 60 * 24);
-			
-			if (diffDays < dayTolerance && diffDays >= 0) {
-				result.add(f);
-			}
-		}
-		
-		return result;
 	}
 }
