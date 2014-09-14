@@ -31,6 +31,7 @@ public class FilmList extends HttpServlet{
 				.name("JG")
 				.director("PURI")
 				.releaseDate(new Date())
+				.creationDate(new Date())
 				.genre("De tiros")
 				.description("Chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken")
 				.length(20)
