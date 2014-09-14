@@ -16,15 +16,17 @@ public class AuthenticateUser extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
-		String username = req.getParameter(UserManager.USERNAME);
+		String email = req.getParameter(UserManager.EMAIL);
 		String password = req.getParameter(UserManager.PASSWORD);
+		System.out.println(email);
+		System.out.println(password);
 		UserManager userManager = new UserManager(req);
 		
-		boolean authenticated = API.authenticateUser(username, password);
+		boolean authenticated = API.authenticateUser(email, password);
 		
 		if (authenticated){
-			userManager.setUser(username, password);
-			resp.sendRedirect(resp.encodeRedirectURL("listHotels"));
+			userManager.setUser(email, password);
+			req.getRequestDispatcher("/WEB-INF/jsp/filmList.jsp").forward(req, resp);
 		}
 		else{
 			resp.sendRedirect(resp.encodeRedirectURL("welcome?status=auth_fail"));

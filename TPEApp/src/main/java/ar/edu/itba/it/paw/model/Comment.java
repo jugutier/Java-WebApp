@@ -10,9 +10,9 @@ public class Comment {
 		this.message = message;
 	}
 	
-	public String getUsername(){
-		return user.getUsername();
-	}
+//	public String getUsername(){
+//		return user.getUsername();
+//	}
 	
 	public String getEmail(){
 		return user.getEmail();

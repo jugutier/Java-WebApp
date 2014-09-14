@@ -15,6 +15,26 @@
 	</servlet>
 	
 	<servlet>
+		<servlet-name>AuthenticateUser</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.services.AuthenticateUser</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>RegisterUser</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.RegisterUser</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>AuthenticateUser</servlet-name>
+		<url-pattern>/authenticateUser</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>RegisterUser</servlet-name>
+		<url-pattern>/registerUser</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>WelcomeScreen</servlet-name>
 		<servlet-class>ar.edu.itba.grupo2.web.WelcomeScreen</servlet-class>
 	</servlet>

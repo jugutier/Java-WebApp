@@ -4,8 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class UserManager {
-	public static String USERNAME = "username";
-	public static String PASSWORD = "password";
+	public static final String EMAIL = "email";
+	public static final String PASSWORD = "password";
 	private HttpServletRequest request;
 	
 	public UserManager(HttpServletRequest request) {
@@ -14,12 +14,12 @@ public class UserManager {
 	
 	public boolean existsUser() {
 		HttpSession session = request.getSession(false);
-		return (session != null && ((session.getAttribute(USERNAME) != null && session.getAttribute(PASSWORD) != null) ||
-				(request.getParameter(USERNAME) != null && request.getParameter(PASSWORD) != null)));
+		return (session != null && ((session.getAttribute(EMAIL) != null && session.getAttribute(PASSWORD) != null) ||
+				(request.getParameter(EMAIL) != null && request.getParameter(PASSWORD) != null)));
 	}
 	
-	public String getName() {
-		return getByID(USERNAME);
+	public String getEmail() {
+		return getByID(EMAIL);
 	}
 	
 	
@@ -27,9 +27,9 @@ public class UserManager {
 		return getByID(PASSWORD);
 	}
 	
-	public void setUser(String username, String password) {
+	public void setUser(final String email,final String password) {
 		HttpSession session = request.getSession();
-		session.setAttribute(USERNAME, username);
+		session.setAttribute(EMAIL, email);
 		session.setAttribute(PASSWORD, password);
 	}
 	
@@ -37,7 +37,7 @@ public class UserManager {
 		HttpSession session = request.getSession(false);
 		
 		if (session != null){
-			session.setAttribute(USERNAME, null);
+			session.setAttribute(EMAIL, null);
 			session.setAttribute(PASSWORD, null);
 		}
 	}

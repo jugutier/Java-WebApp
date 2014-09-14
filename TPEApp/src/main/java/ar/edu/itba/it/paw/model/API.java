@@ -1,6 +1,7 @@
 package ar.edu.itba.it.paw.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class API {
@@ -32,9 +33,9 @@ public class API {
 		if (user_list == null){
 			user_list = new HashMap<String, User>();
 			
-			user_list.put("Pedro", new User("Pedro", "123qwe", "pedro@capo.com"));
-			user_list.put("Carlos", new User("Carlos", "123qwe", "carlos@yo.com"));
-			user_list.put("Tribilin", new User("Tribilin", "123qwe", "no@se.com"));
+			user_list.put("Pedro", new User.Builder().email("asd@aa.com").password("asd").build());
+//			user_list.put("Carlos", new User("Carlos", "123qwe", "carlos@yo.com"));
+//			user_list.put("Tribilin", new User("Tribilin", "123qwe", "no@se.com"));
 		}
 	}
 	
@@ -90,17 +91,17 @@ public class API {
 		next_hotel_id++;
 	}
 	
-	public static boolean authenticateUser(String username, String password){
+	public static boolean authenticateUser(String email, String password){
 		boolean found = false;
 		boolean failed = false;
 		
-		if (username == null || password == null) {
+		if (email == null || password == null) {
 			return false;
 		}
 		
 		for(User u : user_list.values()){
 			if (!failed && !found){
-				if(u.getUsername().compareTo(username) == 0){
+				if(u.getEmail().compareTo(email) == 0){
 					found = true;
 					if(u.getPassword().compareTo(password) != 0){
 						failed = true;
@@ -108,7 +109,6 @@ public class API {
 				}
 			}
 		}
-		
 		return found && !failed;
 	}
 	

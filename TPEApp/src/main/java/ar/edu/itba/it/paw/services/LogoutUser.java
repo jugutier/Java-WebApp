@@ -18,7 +18,7 @@ public class LogoutUser extends HttpServlet{
 		UserManager userManager = new UserManager(req);
 		
 		if(userManager.existsUser()){
-			userManager.resetUser(userManager.getName());
+			userManager.resetUser(userManager.getEmail());
 		}
 		
 		resp.sendRedirect(resp.encodeRedirectURL("welcome"));
