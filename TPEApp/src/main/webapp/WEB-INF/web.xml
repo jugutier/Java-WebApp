@@ -23,11 +23,6 @@
 		<servlet-name>RegisterUser</servlet-name>
 		<servlet-class>ar.edu.itba.grupo2.web.RegisterUser</servlet-class>
 	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>FilmList</servlet-name>
-		<url-pattern>/filmList</url-pattern>
-	</servlet-mapping>
 	
 	<servlet-mapping>
 		<servlet-name>AuthenticateUser</servlet-name>
@@ -44,6 +39,29 @@
 		<servlet-class>ar.edu.itba.grupo2.web.WelcomeScreen</servlet-class>
 	</servlet>
 	
+	<servlet>
+		<servlet-name>FilmDetails</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.FilmDetails</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>WelcomeScreen</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.WelcomeScreen</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>WelcomeScreen</servlet-name>
+		<url-pattern>/home</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>FilmList</servlet-name>
+		<url-pattern>/filmList</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>FilmDetails</servlet-name>
+		<url-pattern>/filmDetails</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>WelcomeScreen</servlet-name>
 		<url-pattern>/home</url-pattern>

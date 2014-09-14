@@ -28,11 +28,14 @@ public class FilmList extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
 		final Film film = new Film.Builder()
-		.name("JG")
-		.director("PURI")
-		.releaseDate(new Date())
-		.build();
-fm.saveFilm(film);
+				.name("JG")
+				.director("PURI")
+				.releaseDate(new Date())
+				.genre("De tiros")
+				.description("Chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken")
+				.length(20)
+				.build();
+		fm.saveFilm(film);
 		
 		
 		List<Film> film_list = fm.getAllFilms();
