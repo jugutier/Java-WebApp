@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ar.edu.itba.grupo2.dao.UserManager;
-import ar.edu.itba.grupo2.dao.memory.UserManagerSQL;
+import ar.edu.itba.grupo2.dao.UserManagerDAO;
+import ar.edu.itba.grupo2.dao.PSQLImpl.UserManagerPSQLImpl;
 import ar.edu.itba.it.paw.model.User;
 
 public class RegisterUser extends HttpServlet {
@@ -40,7 +40,7 @@ public class RegisterUser extends HttpServlet {
 		}
 		if(errors.size()==0){
 			User newUser=new User.Builder().email(email).surname(surname).name(name).password(password).build();
-			UserManagerSQL.getInstance().registerUser(newUser);
+			UserManagerPSQLImpl.getInstance().registerUser(newUser);
 		}
 		
 	}

@@ -1,21 +1,20 @@
-package ar.edu.itba.grupo2.dao.memory;
+package ar.edu.itba.grupo2.dao.PSQLImpl;
 
 import java.util.List;
 
-import ar.edu.itba.grupo2.dao.FilmManager;
-import ar.edu.itba.grupo2.dao.UserManager;
+import ar.edu.itba.grupo2.dao.UserManagerDAO;
 import ar.edu.itba.it.paw.model.User;
 
-public final class UserManagerSQL implements UserManager {
+public final class UserManagerPSQLImpl implements UserManagerDAO {
 	
-	private static UserManagerSQL user_manager = null;
+	private static UserManagerPSQLImpl user_manager = null;
 	
-	private UserManagerSQL(){
+	private UserManagerPSQLImpl(){
 	}
 	
-	public static UserManagerSQL getInstance(){
+	public static UserManagerPSQLImpl getInstance(){
 		if (user_manager == null){
-			user_manager = new UserManagerSQL();
+			user_manager = new UserManagerPSQLImpl();
 		}
 		
 		return user_manager;

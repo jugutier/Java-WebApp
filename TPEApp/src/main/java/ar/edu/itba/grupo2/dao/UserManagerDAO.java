@@ -4,7 +4,7 @@ import java.util.List;
 
 import ar.edu.itba.it.paw.model.User;
 
-public interface UserManager {
+public interface UserManagerDAO {
 	
 	public User getUserById (final int id);
 	public boolean existsUser(final User user);
