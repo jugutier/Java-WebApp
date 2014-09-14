@@ -2,81 +2,71 @@
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
-<web-app
-	xmlns="http://java.sun.com/xml/ns/j2ee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
-  	<display-name>El TPE de PAW</display-name>
+	<display-name>El TPE de PAW</display-name>
 
 	<servlet>
 		<servlet-name>FilmList</servlet-name>
 		<servlet-class>ar.edu.itba.grupo2.web.FilmList</servlet-class>
 	</servlet>
-	
-	<servlet>
-		<servlet-name>AuthenticateUser</servlet-name>
-		<servlet-class>ar.edu.itba.it.paw.services.AuthenticateUser</servlet-class>
-	</servlet>
-	
-	<servlet>
-		<servlet-name>RegisterUser</servlet-name>
-		<servlet-class>ar.edu.itba.grupo2.web.RegisterUser</servlet-class>
-	</servlet>
-	
-	<servlet>
-		<servlet-name>AddComment</servlet-name>
-		<servlet-class>ar.edu.itba.grupo2.web.AddComment</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>AuthenticateUser</servlet-name>
-		<url-pattern>/authenticateUser</url-pattern>
-	</servlet-mapping>
-	
-	<servlet-mapping>
-		<servlet-name>RegisterUser</servlet-name>
-		<url-pattern>/registerUser</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>WelcomeScreen</servlet-name>
-		<servlet-class>ar.edu.itba.grupo2.web.WelcomeScreen</servlet-class>
-	</servlet>
-	
-	<servlet>
-		<servlet-name>FilmDetails</servlet-name>
-		<servlet-class>ar.edu.itba.grupo2.web.FilmDetails</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>WelcomeScreen</servlet-name>
-		<servlet-class>ar.edu.itba.grupo2.web.WelcomeScreen</servlet-class>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>WelcomeScreen</servlet-name>
-		<url-pattern>/home</url-pattern>
-	</servlet-mapping>
-	
+
 	<servlet-mapping>
 		<servlet-name>FilmList</servlet-name>
 		<url-pattern>/filmList</url-pattern>
 	</servlet-mapping>
-	
+
+	<servlet>
+		<servlet-name>AuthenticateUser</servlet-name>
+		<servlet-class>ar.edu.itba.it.paw.services.AuthenticateUser</servlet-class>
+	</servlet>
+
 	<servlet-mapping>
-		<servlet-name>FilmDetails</servlet-name>
-		<url-pattern>/filmDetails</url-pattern>
+		<servlet-name>AuthenticateUser</servlet-name>
+		<url-pattern>/authenticateUser</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>RegisterUser</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.RegisterUser</servlet-class>
+	</servlet>
+
 	<servlet-mapping>
-		<servlet-name>WelcomeScreen</servlet-name>
-		<url-pattern>/home</url-pattern>
+		<servlet-name>RegisterUser</servlet-name>
+		<url-pattern>/registerUser</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AddComment</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.AddComment</servlet-class>
+	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>AddComment</servlet-name>
 		<url-pattern>/addComment</url-pattern>
 	</servlet-mapping>
-	
-	
+
+	<servlet>
+		<servlet-name>WelcomeScreen</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.WelcomeScreen</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>WelcomeScreen</servlet-name>
+		<url-pattern>/home</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FilmDetails</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.FilmDetails</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>FilmDetails</servlet-name>
+		<url-pattern>/filmDetails</url-pattern>
+	</servlet-mapping>
+
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
