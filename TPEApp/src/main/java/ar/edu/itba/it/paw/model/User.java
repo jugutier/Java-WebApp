@@ -9,35 +9,51 @@ import ar.edu.itba.grupo2.model.Film.Builder;
 public class User extends BaseType {
 	
 	private String name;
-	private String surname;
+	private String lastname;
 	private String password;
 	private String email;
 	private Date birthdate;
+	private boolean vip;
+	private String secretQuestion;
+	private String secretAnswer;
 	
 	private User(final Builder builder){
 		setId(builder.id);
 		this.name = builder.name;
-		this.surname = builder.surname;
+		this.lastname = builder.lastname;
 		this.email = builder.email;
 		this.password = builder.password;
 		this.birthdate = builder.birthdate;
+		this.vip = builder.vip;
+		this.secretQuestion = builder.secretQuestion;
+		this.secretAnswer = builder.secretAnswer;
 	}
 	
 	public static class Builder {
 		private String name;
-		private String surname;
+		private String lastname;
 		private Date birthdate;
 		private String email;
 		private String password;
 		private Integer id = -1;
+		private boolean vip = false;
+		private String secretQuestion;
+		private String secretAnswer;
 		
+
+
 		public Builder name(final String name){
 			this.name=name;
 			return this;
 		}
 		
-		public Builder surname(final String surname){
-			this.surname=surname;
+		public Builder lastname(final String lastname){
+			this.lastname=lastname;
+			return this;
+		}
+		
+		public Builder vip(final boolean vip){
+			this.vip=vip;
 			return this;
 		}
 		
@@ -61,6 +77,16 @@ public class User extends BaseType {
 			return this;
 		}
 		
+		public Builder secretQuestion(final String secretQuestion){
+			this.secretQuestion = secretQuestion;
+			return this;
+		}
+		
+		public Builder secretAnswer(final String secretAnswer){
+			this.secretAnswer = secretAnswer;
+			return this;
+		}
+		
 		public User build() {
 			return new User(this);
 		}
@@ -68,6 +94,10 @@ public class User extends BaseType {
 	
 	public String getName(){
 		return name;
+	}
+	
+	public boolean getVip(){
+		return vip;
 	}
 	
 	public String getEmail(){
@@ -78,11 +108,19 @@ public class User extends BaseType {
 		return password;
 	}
 
-	public String getSurname() {
-		return surname;
+	public String getLastname() {
+		return lastname;
 	}
 
 	public Date getBirthdate() {
 		return birthdate;
+	}
+	
+	public String getSecretQuestion() {
+		return secretQuestion;
+	}
+
+	public String getSecretAnswer() {
+		return secretAnswer;
 	}
 }
