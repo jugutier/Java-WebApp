@@ -1,22 +1,20 @@
 package ar.edu.itba.grupo2.web;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ar.edu.itba.grupo2.dao.FilmManager;
+import ar.edu.itba.grupo2.dao.FilmManagerDAO;
 import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.dao.memory.MemoryFilmManager;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 
 public class AddComment extends HttpServlet {
-	FilmManager fm;
+	FilmManagerDAO fm;
 	
 	@Override
 	public void init() throws ServletException{
