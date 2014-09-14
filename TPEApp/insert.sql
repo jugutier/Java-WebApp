@@ -1,13 +1,13 @@
-INSERT INTO FILM VALUES (1,'El hombre mas buscado','Anton Corbijin','2014-09-01','Thriller','A Chechen Muslim illegally immigrates to Hamburg, where he gets caught in the international war on terror.',0.0,0);
-INSERT INTO FILM VALUES (2,'Lo que el viento se llevo','El director','1970-09-01','Drama','Sopla mucho viento, y se lleva todo....',0.0,0);
-INSERT INTO FILM VALUES (3,'Casblanca','George W. Bush','1980-09-01','Documental','Pelicula sobre una casa blanca en Estados Unidos.',0.0,0);
-INSERT INTO FILM VALUES (4,'Forest Gump','El forest','1981-09-01','Pelicula Copada','COOOOOREEEE FOREST!!!!',0.0,0);
-INSERT INTO FILM VALUES (5,'Ghost, La sombra del amor','El jarron de barro','1985-09-01','Suspenso','Se murio y se hizo fantasma.',0.0,0);
-INSERT INTO FILM VALUES (6,'Sexto sentido','El de la llamada','1985-09-01','Suspenso','La continuacion de quinto sentido.',0.0,0);
-INSERT INTO FILM VALUES (7,'La bala que doblo en la esquina','El de la llamada','1980-09-01','Terror','Venia derecho y al final doblo.... En la esquina...',0.0,0);
-INSERT INTO FILM VALUES (8,'Star wars: La venganza del jeti','Jorge Lucas','1980-09-01','Thriller','El Jeti de las nieves decide vengarse de Anakin.',0.0,0);
-INSERT INTO FILM VALUES (9,'Inception','Perinola','2010-09-01','Suspenso','Vienen jugando a la perinola, hasta que se pudre todo.',0.0,0);
-INSERT INTO FILM VALUES (10,'Proximamente','agregoire','2020-09-01','Documental','La historia de unos chicos y su Aplicacion Web.',0.0,0);
+INSERT INTO FILM VALUES (1,'El hombre mas buscado','Anton Corbijin','2014-09-01','2014-09-01','Thriller','A Chechen Muslim illegally immigrates to Hamburg, where he gets caught in the international war on terror.',73,0,0);
+INSERT INTO FILM VALUES (2,'Lo que el viento se llevo','El director','2014-09-01','1970-09-01','Drama','Sopla mucho viento, y se lleva todo....',90,0,0);
+INSERT INTO FILM VALUES (3,'Casblanca','George W. Bush','2014-09-01','1980-09-01','Documental','Pelicula sobre una casa blanca en Estados Unidos.',90,0,0);
+INSERT INTO FILM VALUES (4,'Forest Gump','El forest','2014-09-01','1981-09-01','Pelicula Copada','COOOOOREEEE FOREST!!!!',120,0,0);
+INSERT INTO FILM VALUES (5,'Ghost, La sombra del amor','El jarron de barro','2014-09-01','1985-09-01','Suspenso','Se murio y se hizo fantasma.',90,0,0);
+INSERT INTO FILM VALUES (6,'Sexto sentido','El de la llamada','2014-09-01','1985-09-01','Suspenso','La continuacion de quinto sentido.',80,0,0);
+INSERT INTO FILM VALUES (7,'La bala que doblo en la esquina','El de la llamada','2014-09-01','1980-09-01','Terror','Venia derecho y al final doblo.... En la esquina...',90,0,0);
+INSERT INTO FILM VALUES (8,'Star wars: La venganza del jeti','Jorge Lucas','2014-09-01','1980-09-01','Thriller','El Jeti de las nieves decide vengarse de Anakin.',45,0,0);
+INSERT INTO FILM VALUES (9,'Inception','Perinola','2014-09-01','2010-09-01','Suspenso','Vienen jugando a la perinola, hasta que se pudre todo.',90,0,0);
+INSERT INTO FILM VALUES (10,'Proximamente','agregoire','2014-09-01','2020-09-01','Documental','La historia de unos chicos y su Aplicacion Web.',90,0,0);
 
 
 INSERT INTO GAJAMDBUSER VALUES (1,'asciglia@itba.edu.ar','123456', 'Agustin','Scigliano','1990-11-14',FALSE);
