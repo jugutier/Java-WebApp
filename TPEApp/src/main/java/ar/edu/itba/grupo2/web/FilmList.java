@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ar.edu.itba.grupo2.dao.FilmManager;
+import ar.edu.itba.grupo2.dao.FilmManagerDAO;
 import ar.edu.itba.grupo2.dao.memory.MemoryFilmManager;
 import ar.edu.itba.grupo2.model.Film;
 
 @SuppressWarnings("serial")
 public class FilmList extends HttpServlet{
 	
-	FilmManager fm;
+	FilmManagerDAO fm;
 	
 	@Override
 	public void init() throws ServletException{
