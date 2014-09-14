@@ -23,4 +23,13 @@
 	<p><c:out value="${comment.message}"/></p>
 </c:forEach>
 
+<c:if test="${showLogin}">
+	<%@ include file="login.jsp" %>
+</c:if>
+
+<c:if test="${showNewComment}">
+	<%@ include file="newComment.jsp" %>
+</c:if>
+<%@ include file="newComment.jsp" %>
+
 <%@ include file="footer.jsp" %>
