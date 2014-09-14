@@ -48,7 +48,7 @@ public class WelcomeScreen extends HttpServlet{
 
 			@Override
 			public int compare(Film arg0, Film arg1) {
-				return arg0.getScore() - arg1.getScore();
+				return Double.compare(arg0.getScore(), arg1.getScore());
 			}
 			
 		});
