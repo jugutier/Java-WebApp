@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>El TP3 de PAW</title>
+		<title>El TPE de PAW</title>
 
 		<link href="css/bootstrap.css" rel="stylesheet">
 		<link href="css/bootstrap-responsive.css" rel="stylesheet">
@@ -26,7 +26,13 @@
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container-narrow">
-					<a class="brand" href="#">El TP3 de PAW</a>
+					<a class="brand" href="home">El TPE de PAW</a>
+					<ul class="nav pull-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Iniciar sesi&oacute;n <b class="caret"></b></a>
+							<%@ include file="loginFormMini.jsp" %>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>

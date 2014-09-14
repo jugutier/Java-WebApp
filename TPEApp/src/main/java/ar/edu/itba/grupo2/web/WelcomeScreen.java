@@ -24,8 +24,6 @@ public class WelcomeScreen extends HttpServlet{
 	@Override
 	public void init() throws ServletException{
 		super.init();
-		
-		API.createBogusDatabase();
 	}
 	
 	@Override
@@ -40,8 +38,8 @@ public class WelcomeScreen extends HttpServlet{
 			.build();
 			fm.saveFilm(film);
 		}
-		Connection c = ConnectionUtilities.getInstance().getConnection();
-		ConnectionUtilities.getInstance().testQuery(c);
+		//Connection c = ConnectionUtilities.getInstance().getConnection();
+		//ConnectionUtilities.getInstance().testQuery(c);
 		List<Film> filmList = fm.getAllFilms();
 		
 		Collections.sort(filmList, new Comparator<Film>(){
