@@ -11,7 +11,7 @@
 	<dt>G&eacute;nero</dt>
 	<dd><c:out value="${film.genre}"/></dd>
 	<dt>Fecha de estreno</dt>
-	<dd><c:out value="${film.releaseDate}"/></dd>
+	<dd><fmt:formatDate value="${film.releaseDate}" pattern="dd-MM-yyyy"/></dd>
 	<dt>Duraci&oacute;n</dt>
 	<dd><c:out value="${film.length}"/> minutos</dd>
 </dl>
@@ -30,6 +30,10 @@
 	</p>
 	<p><c:out value="${comment.message}"/></p>
 </c:forEach>
+
+<c:if test="${empty commentList}">
+	<h4 class="muted">No hay comentarios acerca de esta pel&iacute;cula</h4>
+</c:if>
 
 <c:if test="${showLogin}">
 	<%@ include file="login.jsp" %>
