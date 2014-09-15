@@ -29,18 +29,24 @@
 				<div class="container-narrow">
 					<a class="brand" href="home">El TPE de PAW</a>
 					<ul class="nav pull-right">
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Iniciar sesi&oacute;n <b class="caret"></b></a>
-							<%@ include file="loginFormMini.jsp" %>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedro <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="userComments">Ver mis comentarios</a></li>
-								<li class="divider"></li>
-								<li><a href="#">Cerrar sesi&oacute;n</a></li>
-							</ul>
-						</li>
+						<c:choose>
+						    <c:when test="${empty loggedInUser}">
+						        <li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Iniciar sesi&oacute;n <b class="caret"></b></a>
+									<%@ include file="loginFormMini.jsp" %>
+								</li>
+						    </c:when>
+						    <c:otherwise>
+						       <li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><c:out value="${loggedInUser.name}"/> <b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="userComments">Ver mis comentarios</a></li>
+										<li class="divider"></li>
+										<li><a href="#">Cerrar sesi&oacute;n</a></li>
+									</ul>
+								</li>
+						    </c:otherwise>
+						</c:choose>
 					</ul>
 				</div>
 			</div>

@@ -16,7 +16,7 @@ import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.it.paw.model.Utilities;
 
 @SuppressWarnings("serial")
-public class FilmDetails extends HttpServlet{
+public class FilmDetails extends BaseWebServlet{
 	
 	FilmManagerDAO fm;
 	
@@ -29,6 +29,7 @@ public class FilmDetails extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
+		super.doGet(req, resp);
 		final int id = Integer.valueOf(Utilities.getQueryMap(req.getQueryString()).get("id"));
 		
 		try{
