@@ -58,7 +58,7 @@ public final class MemoryFilmManager implements FilmManagerDAO{
 	}
 
 	@Override
-	public void saveFilm(final Film film) {
+	public Film saveFilm(final Film film) {
 		if (film != null){
 			if (film.isNew()) {
 				film.setId(next_id);
@@ -68,6 +68,7 @@ public final class MemoryFilmManager implements FilmManagerDAO{
 			
 			next_id++;
 		}
+		return film;
 	}
 
 	@Override

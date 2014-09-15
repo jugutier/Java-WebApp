@@ -3,7 +3,6 @@ package ar.edu.itba.grupo2.model;
 import java.util.Date;
 
 public class Film extends BaseType {
-
 	private String name;
 	private String director;
 	private Date creationDate;
@@ -54,7 +53,11 @@ public class Film extends BaseType {
 	public int getLength() {
 		return length;
 	}
-	
+
+	public int getSumComments() {
+		return sumComments;
+	}
+
 	public int getTotalComments() {
 		return totalComments;
 	}
@@ -64,6 +67,7 @@ public class Film extends BaseType {
 	}
 
 	public static class Builder {
+		private Integer id = -1;
 		private String name;
 		private String director;
 		private Date releaseDate;
@@ -72,8 +76,12 @@ public class Film extends BaseType {
 		private int length;
 		private int totalComments;
 		private int sumComments;
-		private Integer id = -1;
 		private Date creationDate;
+
+		public Builder id(final Integer id) {
+			this.id = id;
+			return this;
+		}
 
 		public Builder name(final String name) {
 			this.name = name;
@@ -105,11 +113,6 @@ public class Film extends BaseType {
 			return this;
 		}
 
-		public Builder id(final Integer id) {
-			this.id = id;
-			return this;
-		}
-
 		public Builder length(final int length) {
 			this.length = length;
 			return this;
@@ -134,10 +137,10 @@ public class Film extends BaseType {
 	public String toString() {
 		return this.name + " - " + this.director;
 	}
-	
+
 	public boolean isReleased() {
 		Date today = new Date();
-		if(today.after(this.releaseDate))
+		if (today.after(this.releaseDate))
 			return true;
 		return false;
 	}

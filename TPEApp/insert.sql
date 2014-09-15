@@ -9,11 +9,15 @@ INSERT INTO FILM VALUES (8,'Star wars: La venganza del jeti','Jorge Lucas','2014
 INSERT INTO FILM VALUES (9,'Inception','Perinola','2014-09-01','2010-09-01','Suspenso','Vienen jugando a la perinola, hasta que se pudre todo.',90,0,0);
 INSERT INTO FILM VALUES (10,'Proximamente','agregoire','2014-09-01','2020-09-01','Documental','La historia de unos chicos y su Aplicacion Web.',90,0,0);
 
+ALTER SEQUENCE film_id_seq RESTART WITH 11;
 
 INSERT INTO GAJAMDBUSER VALUES (1,'asciglia@itba.edu.ar','123456', 'Agustin','Scigliano','1990-11-14','Quien es tu profesor favorito?','Horacio Rinaldi',FALSE);
 INSERT INTO GAJAMDBUSER VALUES (2,'amedvede@itba.edu.ar','123456', 'Alexis','Medvedeff','1989-11-14','te gusta el SABF?','ME ENCANTA',FALSE);
 INSERT INTO GAJAMDBUSER VALUES (3,'gdelgiud@itba.edu.ar','123456', 'Gustavo','Del Giudice','1989-12-13','Que cosa no usan los vikingos?','abrigo',TRUE);
 INSERT INTO GAJAMDBUSER VALUES (4,'jugutier@itba.edu.ar','123456', 'Julian','Gutierrez','1991-03-31','A quien le preguntas las dudas del TPE?','Andres Gregoire',FALSE);
 
+ALTER SEQUENCE gajamdbuser_id_seq RESTART WITH 5;
 
 INSERT INTO COMMENT VALUES (1,2,2, 'Este es un comentario de prueba, porque me encanta comentar',3);
+
+ALTER SEQUENCE comment_id_seq RESTART WITH 2;

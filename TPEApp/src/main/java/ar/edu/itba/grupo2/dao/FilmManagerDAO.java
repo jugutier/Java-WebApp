@@ -12,7 +12,7 @@ public interface FilmManagerDAO {
 	
 	public List<Film> getAllFilms();
 	
-	public void saveFilm(Film film);
+	public Film saveFilm(Film film);
 	
 	public void deleteFilm(final Film film);
 	
