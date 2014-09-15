@@ -20,5 +20,4 @@ public interface FilmManagerDAO {
 	
 	public void addCommentToFilm(final Film film, final Comment comment);
 	
-	
 }
