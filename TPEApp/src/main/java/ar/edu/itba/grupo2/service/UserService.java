@@ -84,7 +84,7 @@ public class UserService {
 	}
 	
 	public List<Comment> getCommentsByUser(final User user) {
-		return null;
+		return UserManagerPSQLImpl.getInstance().getCommentsByUser(user);
 	}
 
 }
