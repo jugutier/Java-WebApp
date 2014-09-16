@@ -12,6 +12,7 @@ import ar.edu.itba.grupo2.dao.PSQLImpl.FilmManagerPSQLImpl;
 import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
+import ar.edu.itba.grupo2.model.User;
 
 @SuppressWarnings("serial")
 public class AddComment extends HttpServlet {
@@ -28,14 +29,15 @@ public class AddComment extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		Film film;
-
+		User user = (User)req.getSession(false).getAttribute("user");
+		
 		try {			
 			film = fm.getFilmById(Integer.parseInt(req.getParameter("id")));
 			// TODO Add other requirements for comments
 			if(film.isReleased()) {
 				final Comment comment = new Comment.Builder()
 					.text(req.getParameter("comment"))
-					.user(null)
+					.user(user)
 					.rate(Integer.parseInt(req.getParameter("rating")))
 					.film(film)
 					.build();
