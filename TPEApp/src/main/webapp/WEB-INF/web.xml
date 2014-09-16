@@ -46,6 +46,16 @@
 		<servlet-name>WelcomeScreen</servlet-name>
 		<url-pattern>/home</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Logout</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.Logout</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Logout</servlet-name>
+		<url-pattern>/logout</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>FilmDetails</servlet-name>
