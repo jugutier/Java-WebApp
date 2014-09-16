@@ -125,9 +125,11 @@ public class FilmService {
 			return filmList;
 		}else{
 			Genre filter = Genre.fromString(genre);
-			for (Film f : filmList) {
-				if (f.getGenre().equals(filter)) {
-					result.add(f);
+			if (filter != null) {
+				for (Film f : filmList) {
+					if (f.getGenre() != null && f.getGenre().equals(filter)) {
+						result.add(f);
+					}
 				}
 			}
 		}
@@ -140,7 +142,8 @@ public class FilmService {
 		boolean dontFilter = (director == null || director.isEmpty());
 		
 		for (Film f : filmList) {
-			if (dontFilter || director.compareTo(f.getDirector()) == 0) {
+			// Add Films where the given string is contained within said Film's director. Case insensitive.
+			if (dontFilter || f.getDirector().toUpperCase().contains(director.toUpperCase())) {
 				result.add(f);
 			}
 		}

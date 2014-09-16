@@ -3,8 +3,8 @@
 <h2>Lista de pel&iacute;culas</h2>
 
 <form class="form-inline" action="filmList" method="GET">
-	<input name="director" type="text" class="input-small" placeholder="Director" value="<c:out value="${param.director}"/>">
-	<input name="genre" type="text" class="input-small" placeholder="G&eacute;nero" value="<c:out value="${param.genre}"/>">
+	<%@ include file="directorFilter.jsp" %>
+	<%@ include file="genreList.jsp" %>
 	<button type="submit" class="btn">Filtrar</button>
 </form>
 
@@ -25,7 +25,14 @@
 		</tr>
 	</c:forEach>
 	<c:if test="${empty filmList}">
-		<tr><td colspan="3"><h4 class="muted text-center">No hay pel&iacute;culas cargadas</h4></td></tr>
+		<c:choose>
+			<c:when test="${(empty param.director) && empty param.genre}">
+				<tr><td colspan="3"><h4 class="muted text-center">No hay pel&iacute;culas cargadas</h4></td></tr>
+			</c:when>
+			<c:otherwise>
+				<tr><td colspan="3"><h4 class="muted text-center">No se encontraron pel&iacute;culas que respondan a ese criterio de b&uacute;squeda</h4></td></tr>
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 </table>
 
