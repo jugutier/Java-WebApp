@@ -12,6 +12,8 @@ import ar.edu.itba.grupo2.dao.PSQLImpl.FilmManagerPSQLImpl;
 import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
+import ar.edu.itba.grupo2.model.User;
+import ar.edu.itba.grupo2.service.FilmService;
 
 @SuppressWarnings("serial")
 public class AddComment extends HttpServlet {
@@ -27,15 +29,22 @@ public class AddComment extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+		FilmService filmService = FilmService.getInstance();
 		Film film;
-
+		User user = (User)req.getSession(false).getAttribute("user");
+		
 		try {			
 			film = fm.getFilmById(Integer.parseInt(req.getParameter("id")));
 			// TODO Add other requirements for comments
-			if(film.isReleased()) {
+			if(filmService.userHasCommentedFilm(film, user)) {
+				resp.sendRedirect("filmDetails?id="+req.getParameter("id"));
+				return ;
+			}
+			if(film.isReleased() || user.getVip()) {
 				final Comment comment = new Comment.Builder()
+					.user(user)
 					.text(req.getParameter("comment"))
-					.user(null)
 					.rate(Integer.parseInt(req.getParameter("rating")))
 					.film(film)
 					.build();
@@ -43,7 +52,7 @@ public class AddComment extends HttpServlet {
 				System.out.println(film + " - " + comment);
 				req.setAttribute("newComment", "true");
 			} else {
-				// TODO throw new unreleased film exception
+				// TODO throw new unreleased exception (or add error and make a redirect)
 			}
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block

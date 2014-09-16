@@ -13,6 +13,7 @@ import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.model.Genre;
+import ar.edu.itba.grupo2.model.User;
 
 public class FilmService {
 	
@@ -51,6 +52,16 @@ public class FilmService {
 			ret.add(genre.toString());
 		}
 		return ret;
+	}
+	
+	public boolean userHasCommentedFilm(Film film, User user) throws FilmNotFoundException {
+		List<Comment> comments = filmManager.getCommentsForFilm(film);
+		for(Comment c: comments) {
+			if(c.getUser().equals(user)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public List<Film> filterTopFilms(final List<Film> filmList, final int topAmount) {
