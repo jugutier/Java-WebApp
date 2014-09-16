@@ -11,6 +11,7 @@ import java.util.List;
 
 import ar.edu.itba.grupo2.dao.UserManagerDAO;
 import ar.edu.itba.grupo2.dao.exceptions.ConnectionException;
+import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.utils.ConnectionUtilities;
 
@@ -150,5 +151,12 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 			throw new ConnectionException();
 		}
 		return user;
+	}
+
+	@Override
+	public List<Comment> getCommentsByUser(User user)
+			throws ConnectionException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
