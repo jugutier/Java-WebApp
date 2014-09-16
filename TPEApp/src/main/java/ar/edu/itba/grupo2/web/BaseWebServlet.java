@@ -20,6 +20,20 @@ public class BaseWebServlet extends HttpServlet{
 		//User user = userService.getLoggedInUser();
 		
 		//req.setAttribute("loggedInUser", user);
+		req.setAttribute("fromPage", getCurrentPath(req));
+	}
+	
+	protected String getCurrentPath(HttpServletRequest req) {
+		StringBuffer stringBuffer = new StringBuffer();
+		String queryString = req.getQueryString();
+		stringBuffer.append(req.getRequestURI());
+		
+		if (queryString != null && !queryString.isEmpty()) {
+			stringBuffer.append("?");
+			stringBuffer.append(queryString);
+		}
+		
+		return stringBuffer.toString();
 	}
 	
 	@Override

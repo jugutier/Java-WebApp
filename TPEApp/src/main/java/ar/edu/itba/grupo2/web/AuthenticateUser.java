@@ -19,6 +19,12 @@ public class AuthenticateUser extends HttpServlet{
 		UserService userService = UserService.getInstance();
 		String email = req.getParameter(UserManager.EMAIL);
 		String password = req.getParameter(UserManager.PASSWORD);
+		String fromPage = req.getParameter("fromPage");
+		
+		if (fromPage == null) {
+			fromPage = "home";
+		}
+		
 		System.out.println(email);
 		System.out.println(password);
 		UserManager userManager = new UserManager(req);
@@ -27,10 +33,17 @@ public class AuthenticateUser extends HttpServlet{
 		
 		if (authenticated){
 			userManager.setUser(email, password);
-			resp.sendRedirect(resp.encodeRedirectURL("home"));
+			resp.sendRedirect(resp.encodeRedirectURL(fromPage));
 		}
 		else{
-			resp.sendRedirect(resp.encodeRedirectURL("filmList"));
+			char separator;
+			if (fromPage.contains("?")) {
+				separator = '&';
+			}
+			else {
+				separator = '?';
+			}
+			resp.sendRedirect(resp.encodeRedirectURL(fromPage + separator + "auth_fail=wrongUser"));
 		}
 	}
 

@@ -51,5 +51,8 @@
 				</div>
 			</div>
 		</div>
+		<c:if test="${not empty param.auth_fail}">
+			<%@ include file="error/login-error.jsp" %>
+		</c:if>
 
 		
