@@ -35,8 +35,8 @@ public class AddComment extends HttpServlet {
 			if(film.isReleased()) {
 				final Comment comment = new Comment.Builder()
 					.message(req.getParameter("comment"))
-					.username("l@lo.com")
-					.score(Integer.parseInt(req.getParameter("rating")))
+					.user("l@lo.com")
+					.rate(Integer.parseInt(req.getParameter("rating")))
 					.film(film)
 					.build();
 				fm.addCommentToFilm(film, comment);

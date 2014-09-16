@@ -24,7 +24,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 	private UserManagerPSQLImpl() {
 	}
 
-	public static UserManagerPSQLImpl getInstance() {
+	public synchronized static UserManagerPSQLImpl getInstance() {
 		if (user_manager == null) {
 			user_manager = new UserManagerPSQLImpl();
 		}

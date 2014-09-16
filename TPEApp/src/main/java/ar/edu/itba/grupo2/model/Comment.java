@@ -1,65 +1,89 @@
 package ar.edu.itba.grupo2.model;
 
+import java.util.Date;
+
 public class Comment extends BaseType {
-	
-	private String message;
-	private String username;
-	private int score;
+
 	private Film film;
-	
+	private User user;
+	private Date creationDate;
+	private String text;
+	private int rate;
+
 	private Comment(final Builder builder) {
-		this.message = builder.message;
-		this.username = builder.username;
-		this.score = builder.score;
+		setId(builder.id);
 		this.film = builder.film;
+		this.user = builder.user;
+		this.creationDate = builder.creationDate;
+		this.text = builder.text;
+		this.rate = builder.rate;
 	}
-	
-	public String getMessage() {
-		return message;
+
+	public Film getFilm() {
+		return film;
 	}
-	
-	public String getUsername() {
-		return username;
+
+	public User getUser() {
+		return user;
 	}
-	
-	public int getScore() {
-		return score;
+
+	public Date getCreationDate() {
+		return creationDate;
 	}
-	
+
+	public String getText() {
+		return text;
+	}
+
+	public int getRate() {
+		return rate;
+	}
+
 	public static class Builder {
-		
-		private String message;
-		private String username;
-		private int score;
+		private int id;
 		private Film film;
-		
-		public Builder message(final String message) {
-			this.message = message;
+		private User user;
+		private Date creationDate;
+		private String text;
+		private int rate;
+
+		public Builder id(final int id) {
+			this.id = id;
 			return this;
 		}
-		
-		public Builder username(final String username) {
-			this.username = username;
-			return this;
-		}
-		
-		public Builder score(final int score) {
-			this.score = score;
-			return this;
-		}
-		
+
 		public Builder film(final Film film) {
 			this.film = film;
 			return this;
 		}
-		
+
+		public Builder user(final User user) {
+			this.user = user;
+			return this;
+		}
+
+		public Builder creationDate(final Date creationDate) {
+			this.creationDate = creationDate;
+			return this;
+		}
+
+		public Builder text(String text) {
+			this.text = text;
+			return this;
+		}
+
+		public Builder rate(final int score) {
+			this.rate = score;
+			return this;
+		}
+
 		public Comment build() {
 			return new Comment(this);
 		}
 	}
-	
+
 	@Override
 	public String toString() {
-		return this.username + " > " + this.message;
+		return this.user + " > " + this.text;
 	}
 }

@@ -17,18 +17,18 @@ import ar.edu.itba.grupo2.utils.ConnectionUtilities;
 
 public class FilmManagerPSQLImpl implements FilmManagerDAO {
 	private static final String TABLENAME = "FILM";
-	
+
 	private static FilmManagerPSQLImpl instance = null;
-	
+
 	private FilmManagerPSQLImpl() {
-		
+
 	}
-	
-	public static FilmManagerPSQLImpl getInstance() {
+
+	public synchronized static FilmManagerPSQLImpl getInstance() {
 		if (instance == null) {
 			instance = new FilmManagerPSQLImpl();
 		}
-		
+
 		return instance;
 	}
 
@@ -185,6 +185,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 
 	}
 
+	@Deprecated
 	@Override
 	public void deleteFilm(Film film) {
 		Connection c = ConnectionUtilities.getInstance().getConnection();
@@ -213,8 +214,44 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 
 	@Override
 	public List<Comment> getCommentsForFilm(Film film) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection c = ConnectionUtilities.getInstance().getConnection();
+		Statement s = null;
+		List<Comment> ret = null;
+		if (c != null) {
+			try {
+				s = c.createStatement();
+				ResultSet rs = s.executeQuery("SELECT * COMMENT " + TABLENAME);
+				ret = new ArrayList<Comment>(rs.getFetchSize());
+				while (rs.next()) {
+					Comment comment = new Comment.Builder()
+							.id(rs.getInt("ID"))
+							.film(getFilmById(rs.getInt("FILM_ID")))
+							.user(UserManagerPSQLImpl.getInstance()
+									.getUserById(rs.getInt("USER_ID")))
+							// TODO: verify
+							.creationDate(
+									new Date(rs.getDate("CREATIONDATE")
+											.getTime()))
+							.text(rs.getString("TEXT")).rate(rs.getInt("RATE"))
+
+							.build();
+
+					ret.add(comment);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				if (s != null) {
+					try {
+						s.close();
+						c.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		return ret;
 	}
 
 	@Override
