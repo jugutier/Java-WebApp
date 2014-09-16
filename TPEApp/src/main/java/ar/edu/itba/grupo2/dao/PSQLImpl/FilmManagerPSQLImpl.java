@@ -25,12 +25,12 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 		Film ret = null;
 		if (c != null) {
 			try {
-				s = c.prepareStatement("SELECT * FROM " + TABLENAME+" WHERE ID = ?");
+				s = c.prepareStatement("SELECT * FROM " + TABLENAME
+						+ " WHERE ID = ?");
 				s.setInt(1, id);
 				ResultSet rs = s.executeQuery();
 				if (rs.next()) {
-					ret = new Film.Builder().id(id)
-							.name(rs.getString("NAME"))
+					ret = new Film.Builder().id(id).name(rs.getString("NAME"))
 							.director(rs.getString("DIRECTOR"))
 							.releaseDate(rs.getDate("RELEASEDATE"))
 							.genre(rs.getString("GENRE"))
@@ -69,11 +69,16 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 				ResultSet rs = s.executeQuery("SELECT * FROM " + TABLENAME);
 				ret = new ArrayList<Film>(rs.getFetchSize());
 				while (rs.next()) {
-					Film f = new Film.Builder().id(rs.getInt("ID"))
+					Film f = new Film.Builder()
+							.id(rs.getInt("ID"))
 							.name(rs.getString("NAME"))
 							.director(rs.getString("DIRECTOR"))
-							.creationDate(new Date(rs.getDate("CREATIONDATE").getTime()))
-							.releaseDate(new Date(rs.getDate("RELEASEDATE").getTime()))
+							.creationDate(
+									new Date(rs.getDate("CREATIONDATE")
+											.getTime()))
+							.releaseDate(
+									new Date(rs.getDate("RELEASEDATE")
+											.getTime()))
 							.genre(rs.getString("GENRE"))
 							.description(rs.getString("DESCRIPTION"))
 							.length(rs.getInt("LENGTH"))
@@ -143,9 +148,9 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 
 					s.execute();
 					ResultSet rs = s.getResultSet();
-					if(rs.next()){
+					if (rs.next()) {
 						int newId = rs.getInt(1);
-						System.out.println("ID:"+newId);
+						System.out.println("ID:" + newId);
 						film.setId(newId);
 					}
 				}
@@ -168,8 +173,28 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 
 	@Override
 	public void deleteFilm(Film film) {
-		// TODO Auto-generated method stub
+		Connection c = ConnectionUtilities.getInstance().getConnection();
+		PreparedStatement s = null;
+		if (c != null) {
+			try {
+				s = c.prepareStatement("DELETE FROM " + TABLENAME
+						+ " WHERE ID = ?");
+				s.setInt(1, film.getId());
+				s.executeQuery();
 
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				if (s != null) {
+					try {
+						s.close();
+						c.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 	}
 
 	@Override

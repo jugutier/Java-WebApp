@@ -1,8 +1,6 @@
 package ar.edu.itba.grupo2.web;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.grupo2.dao.FilmManagerDAO;
 import ar.edu.itba.grupo2.dao.PSQLImpl.FilmManagerPSQLImpl;
-import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.service.FilmService;
 

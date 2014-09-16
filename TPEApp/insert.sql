@@ -19,5 +19,11 @@ INSERT INTO GAJAMDBUSER VALUES (4,'jugutier@itba.edu.ar','123456', 'Julian','Gut
 ALTER SEQUENCE gajamdbuser_id_seq RESTART WITH 5;
 
 INSERT INTO COMMENT VALUES (1,2,2, 'Este es un comentario de prueba, porque me encanta comentar',3);
+INSERT INTO COMMENT VALUES (2,2,1, 'Este es un comentario de prueba, porque a ale le encanta comentar',3);
+INSERT INTO COMMENT VALUES (3,8,3, 'Esta pelicula es tan mala como mi codigo',3);
+INSERT INTO COMMENT VALUES (4,6,2, 'No me gusto mucho. Al final nos juntamos el viernes?',1);
+INSERT INTO COMMENT VALUES (5,6,4, 'A mi me parecio buena. Dale, si no tenes nada del SABF si.',4);
+INSERT INTO COMMENT VALUES (6,6,3, 'Yo no me voy a juntar, ya hice todas mis tareas.',0);
+INSERT INTO COMMENT VALUES (7,6,1, 'Viernes pre con minas, voy a estar roto.',5);
 
-ALTER SEQUENCE comment_id_seq RESTART WITH 2;
+ALTER SEQUENCE comment_id_seq RESTART WITH 8;
