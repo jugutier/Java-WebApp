@@ -55,6 +55,9 @@ public class UserService {
 				.matches("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$")) {
 			errors.add("Email invalido");
 		}
+			else if(UserManagerPSQLImpl.getInstance().getUserByEmail(email)!= null){
+				errors.add("El mail que ingreso ya esta usado");
+			}
 		if (name == null) {
 			errors.add("Debe ingresar un nombre");
 		}

@@ -124,7 +124,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 						+ "SET password = ? WHERE email= ?");
 				s.setString(1, user.getPassword());
 				s.setString(2, user.getEmail());
-				s.executeUpdate();
+				s.execute();
 			} else {
 				s = c.prepareStatement("INSERT INTO "
 						+ TABLENAME
@@ -137,7 +137,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 				s.setString(6, user.getSecretQuestion());
 				s.setString(7, user.getSecretAnswer());
 				s.setBoolean(8, false);
-				s.executeUpdate();
+				s.execute();
 				ResultSet rs = s.getResultSet();
 				if (rs.next()) {
 					user.setId(rs.getInt(1));
