@@ -66,7 +66,7 @@ public class FilmService {
 
 			@Override
 			public int compare(Film arg0, Film arg1) {
-				return Double.compare(arg0.getScore(), arg1.getScore());
+				return Double.compare(arg1.getScore(), arg0.getScore());
 			}
 			
 		});
