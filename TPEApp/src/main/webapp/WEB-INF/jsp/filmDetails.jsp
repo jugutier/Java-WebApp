@@ -35,13 +35,13 @@
 	<h4 class="muted">No hay comentarios acerca de esta pel&iacute;cula</h4>
 </c:if>
 
-<c:if test="${showLogin}">
-	<%@ include file="login.jsp" %>
-</c:if>
-
-<c:if test="${showNewComment}">
-	<%@ include file="newComment.jsp" %>
-</c:if>
-<%@ include file="newComment.jsp" %>
+<c:choose>
+	<c:when test="${empty loggedInUser}">
+		<h4 class="muted">Debe iniciar sesi&oacute;n para comentar acerca de esta pel&iacute;cula</h4>
+	</c:when>
+	<c:otherwise>
+		<%@ include file="newComment.jsp" %>
+	</c:otherwise>
+</c:choose>
 
 <%@ include file="footer.jsp" %>

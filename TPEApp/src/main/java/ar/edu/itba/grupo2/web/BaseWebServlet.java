@@ -7,15 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ar.edu.itba.grupo2.model.User;
+import ar.edu.itba.grupo2.service.UserService;
+
 @SuppressWarnings("serial")
 public class BaseWebServlet extends HttpServlet{
 	
 	protected void setLoginInformation(HttpServletRequest req, HttpServletResponse resp) {
 		//TODO: get a User reference here, and pass it as argument
-//		User u = new User().
-//		u.name = "pipi";
-//		
-//		req.setAttribute("loggedInUser", u);
+		UserService userService = UserService.getInstance();
+		
+		//User user = userService.getLoggedInUser();
+		
+		//req.setAttribute("loggedInUser", user);
 	}
 	
 	@Override
