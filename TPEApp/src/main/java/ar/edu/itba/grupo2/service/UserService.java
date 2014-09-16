@@ -61,15 +61,20 @@ public class UserService {
 		if (lastname == null) {
 			errors.add("Debe ingresar un apellido");
 		}
+		if(birthdate == null){
+			errors.add("Debe ingresar una fecha");
+		}
+		if(secretQuestion == null){
+			errors.add("Debe ingresar una pregunta secreta");
+		}
+		if(secretAnswer == null){
+			errors.add("Debe ingresar una pregunta respuesta");
+		}
 		if (errors.size() == 0) {
 			newUser = new User.Builder().email(email).lastname(lastname)
 					.name(name).password(password).birthdate(birthdate).secretQuestion(secretQuestion).secretAnswer(secretAnswer).build();
-			try {
-				UserManagerPSQLImpl.getInstance().saveUser(newUser);
-			} catch (ConnectionException e) {
 
-				e.printStackTrace();
-			}
+			UserManagerPSQLImpl.getInstance().saveUser(newUser);
 		}
 		return errors;
 	}

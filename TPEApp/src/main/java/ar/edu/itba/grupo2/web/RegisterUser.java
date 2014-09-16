@@ -35,16 +35,18 @@ public class RegisterUser extends HttpServlet {
 		String secretQuestion = (String) req.getParameter("secretQuestion");
 		String secretAnswer = (String) req.getParameter("secretAnswer");
 		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-mm-dd");
-		Date birthdate;
+		Date birthdate = null;
 		try {
-			birthdate = outputDateFormat.parse(req.getParameter("birthdate"));
-			errors = UserService.getInstance().registerUser(email, password, passwordConfirm, name, lastname, birthdate,secretQuestion,secretAnswer);
+			birthdate = outputDateFormat.parse(req.getParameter("birthdate"));			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			errors = UserService.getInstance().registerUser(email, password, passwordConfirm, name, lastname, birthdate,secretQuestion,secretAnswer);
+			System.out.println("errors: "+errors.size());
+			req.setAttribute("errors", errors);
+			req.setAttribute("status", "auth_fail");
+			resp.sendRedirect("register");
 		}
-		
-		req.setAttribute("errors", errors);
 		
 
 	}
