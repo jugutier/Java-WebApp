@@ -9,7 +9,7 @@
 	<dt>Director</dt>
 	<dd><c:out value="${film.director}"/></dd>
 	<dt>G&eacute;nero</dt>
-	<dd><c:out value="${film.genre.description}"/></dd>
+	<dd><c:out value="${film.genre}"/></dd>
 	<dt>Fecha de estreno</dt>
 	<dd><fmt:formatDate value="${film.releaseDate}" pattern="dd-MM-yyyy"/></dd>
 	<dt>Duraci&oacute;n</dt>

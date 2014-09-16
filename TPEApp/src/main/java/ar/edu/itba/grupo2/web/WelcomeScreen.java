@@ -24,13 +24,9 @@ public class WelcomeScreen extends HttpServlet {
 			throws ServletException, IOException {
 		FilmService filmService = FilmService.getInstance();
 
-		List<Film> filmList = filmService.getAllFilms();
-	
+		List<Film> filmList = filmService.getAllFilms();	
 		
-		List<Film> topfive = filmService.filterTopFilms(filmList, 5);//TODO: fix method, values arriving correctly from filmlist
-		for (Film film : topfive) {
-			System.out.println(film.getScore());
-		}
+		List<Film> topfive = filmService.filterTopFilms(filmList, 5);		
 		req.setAttribute("topfive",topfive);
 		req.setAttribute("latest", filmService.filterRecentlyAdded(filmList, 5));
 		req.setAttribute("newReleases",
