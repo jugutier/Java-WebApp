@@ -35,7 +35,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 	}
 
 	@Override
-	public Film getFilmById(int id) throws FilmNotFoundException {
+	public Film getFilmById(int id) {
 		Connection c = ConnectionUtilities.getInstance().getConnection();
 		PreparedStatement s = null;
 		Film ret = null;
@@ -229,8 +229,8 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 		List<Comment> ret = null;
 		if (c != null) {
 			try {
-				s = c.prepareStatement("SELECT * FROM "
-						+ COMMENT_TABLENAME + " WHERE FILM_ID = ?");
+				s = c.prepareStatement("SELECT * FROM " + COMMENT_TABLENAME
+						+ " WHERE FILM_ID = ?");
 				s.setInt(1, film.getId());
 				ResultSet rs = s.executeQuery();
 				ret = new ArrayList<Comment>(rs.getFetchSize());
@@ -240,7 +240,6 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 							.film(getFilmById(rs.getInt("FILM_ID")))
 							.user(UserManagerPSQLImpl.getInstance()
 									.getUserById(rs.getInt("USER_ID")))
-							// TODO: verify
 							.creationDate(
 									new Date(rs.getDate("CREATIONDATE")
 											.getTime()))
@@ -277,7 +276,8 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 		PreparedStatement s = null;
 		if (c != null) {
 			try {
-				s = c.prepareStatement("INSERT INTO " + COMMENT_TABLENAME
+				s = c.prepareStatement("INSERT INTO "
+						+ COMMENT_TABLENAME
 						+ " (film_id,user_id,text,rate) VALUES (?, ?  ,? ,?) returning id");
 				s.setInt(1, film.getId());
 				s.setInt(2, comment.getUser().getId());

@@ -6,6 +6,7 @@ import java.util.List;
 
 import ar.edu.itba.grupo2.dao.PSQLImpl.UserManagerPSQLImpl;
 import ar.edu.itba.grupo2.dao.exceptions.ConnectionException;
+import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.User;
 
 public class UserService {
@@ -81,6 +82,10 @@ public class UserService {
 			UserManagerPSQLImpl.getInstance().saveUser(newUser);
 		}
 		return errors;
+	}
+	
+	public List<Comment> getCommentsByUser(final User user) {
+		return UserManagerPSQLImpl.getInstance().getCommentsByUser(user);
 	}
 
 }
