@@ -44,12 +44,12 @@ public class UserService {
 			String passwordConfirm, String name, String lastname, Date birthdate, String secretQuestion, String secretAnswer) {
 		User newUser;
 		List<String> errors = new ArrayList<String>();
-		if (password == null) {
+		if (password == "") {
 			errors.add("Debe ingresar una contraseña");
 		} else if (!password.equals(passwordConfirm)) {
 			errors.add("Las contraseñas no coinciden");
 		}
-		if (email == null) {
+		if (email == "") {
 			errors.add("Debe ingeresar un email");
 		} else if (!email
 				.matches("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$")) {
@@ -58,19 +58,19 @@ public class UserService {
 			else if(UserManagerPSQLImpl.getInstance().getUserByEmail(email)!= null){
 				errors.add("El mail que ingreso ya esta usado");
 			}
-		if (name == null) {
+		if (name == "") {
 			errors.add("Debe ingresar un nombre");
 		}
-		if (lastname == null) {
+		if (lastname == "") {
 			errors.add("Debe ingresar un apellido");
 		}
 		if(birthdate == null){
 			errors.add("Debe ingresar una fecha");
 		}
-		if(secretQuestion == null){
+		if(secretQuestion == ""){
 			errors.add("Debe ingresar una pregunta secreta");
 		}
-		if(secretAnswer == null){
+		if(secretAnswer == ""){
 			errors.add("Debe ingresar una pregunta respuesta");
 		}
 		if (errors.size() == 0) {
