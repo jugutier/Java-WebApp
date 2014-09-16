@@ -20,6 +20,9 @@
 
 <c:forEach items="${commentList}" var="comment">
 	<p>
+		<c:if test="${comment.user.vip}">
+			<i class="icon-ok"></i>
+		</c:if>
 		<strong><c:out value="${comment.user.name}"/></strong>
 		<c:forEach begin="1" end="${comment.rate}" var="i">  
 			<i class="icon-star"></i>
