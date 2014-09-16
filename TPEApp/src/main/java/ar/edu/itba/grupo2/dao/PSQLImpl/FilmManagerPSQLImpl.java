@@ -287,6 +287,13 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 				ResultSet rs = s.getResultSet();
 				if (rs.next()) {
 					comment.setId(rs.getInt(1));
+					s.close();
+					s = c.prepareStatement("UPDATE "
+							+ FILM_TABLENAME
+							+ " SET (sumcomments,totalcomments) = (sumcomments + ?,totalcomments+1) WHERE ID = ?");
+					s.setInt(1, comment.getRate());
+					s.setInt(2, film.getId());
+					s.execute();
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -305,5 +312,4 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 		}
 		return comment;
 	}
-
 }
