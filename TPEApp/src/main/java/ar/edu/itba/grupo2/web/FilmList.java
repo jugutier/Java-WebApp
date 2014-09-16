@@ -1,7 +1,6 @@
 package ar.edu.itba.grupo2.web;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,55 +8,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tools.ant.util.StringUtils;
-
-import ar.edu.itba.grupo2.dao.FilmManagerDAO;
-import ar.edu.itba.grupo2.dao.memory.MemoryFilmManager;
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.service.FilmService;
 
 @SuppressWarnings("serial")
 public class FilmList extends HttpServlet{
 	
-	FilmManagerDAO fm;
-	
 	@Override
 	public void init() throws ServletException{
 		super.init();
-		fm = MemoryFilmManager.getInstance();
 	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
-		final Film film = new Film.Builder()
-				.name("JG")
-				.director("PURI")
-				.releaseDate(new Date())
-				.creationDate(new Date())
-				.genre("De tiros")
-				.description("Chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken")
-				.length(20)
-				.build();
-		fm.saveFilm(film);
-		
-		final Film film2 = new Film.Builder()
-		.name("JG")
-		.director("xx")
-		.releaseDate(new Date())
-		.creationDate(new Date())
-		.genre("De tiros")
-		.description("Chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken chicken")
-		.length(20)
-		.build();
-fm.saveFilm(film2);
-		
 		FilmService filmService = FilmService.getInstance();
 		
 		String genreFilter = req.getParameter("genre");
 		String directorFilter = req.getParameter("director");
 		
-		List<Film> filmList = fm.getAllFilms();
+		List<Film> filmList = filmService.getAllFilms();
 		
 		if (genreFilter != null) {
 			filmList = filmService.filterByGenre(filmList, genreFilter);

@@ -11,11 +11,15 @@ import java.util.TreeSet;
 
 import ar.edu.itba.grupo2.dao.FilmManagerDAO;
 import ar.edu.itba.grupo2.dao.PSQLImpl.FilmManagerPSQLImpl;
+import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
+import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 
 public class FilmService {
 	
 	private static FilmService instance = null;
+	
+	private final FilmManagerDAO filmManager = FilmManagerPSQLImpl.getInstance();
 	
 	private FilmService(){
 		
@@ -29,9 +33,20 @@ public class FilmService {
 		return instance;
 	}
 	
+	public List<Film> getAllFilms() {
+		return filmManager.getAllFilms();
+	}
+	
+	public Film getFilmById(final int id) throws FilmNotFoundException{
+		return filmManager.getFilmById(id);
+	}
+	
+	public List<Comment> getCommentsForFilm(Film film) {
+		return filmManager.getCommentsForFilm(film);
+	}
+	
 	public List<String> getGenres() {
-		FilmManagerDAO fmDAO = new FilmManagerPSQLImpl();
-		List<Film> films = fmDAO.getAllFilms();
+		List<Film> films = filmManager.getAllFilms();
 		SortedSet<String> genres = new TreeSet<String>();
 		for (Film f : films) {
 			genres.add(f.getGenre());

@@ -17,6 +17,20 @@ import ar.edu.itba.grupo2.utils.ConnectionUtilities;
 
 public class FilmManagerPSQLImpl implements FilmManagerDAO {
 	private static final String TABLENAME = "FILM";
+	
+	private static FilmManagerPSQLImpl instance = null;
+	
+	private FilmManagerPSQLImpl() {
+		
+	}
+	
+	public static FilmManagerPSQLImpl getInstance() {
+		if (instance == null) {
+			instance = new FilmManagerPSQLImpl();
+		}
+		
+		return instance;
+	}
 
 	@Override
 	public Film getFilmById(int id) throws FilmNotFoundException {
