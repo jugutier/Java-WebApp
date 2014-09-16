@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ar.edu.itba.grupo2.service.UserService;
 import ar.edu.itba.it.paw.model.API;
 import ar.edu.itba.it.paw.model.UserManager;
 
@@ -20,10 +21,9 @@ public class AuthenticateUser extends HttpServlet{
 		String password = req.getParameter(UserManager.PASSWORD);
 		System.out.println(email);
 		System.out.println(password);
+		
 		UserManager userManager = new UserManager(req);
-		
-		boolean authenticated = API.authenticateUser(email, password);
-		
+		boolean authenticated = UserService.getInstance().logIn(email,password);
 		if (authenticated){
 			userManager.setUser(email, password);
 			req.getRequestDispatcher("/WEB-INF/jsp/filmList.jsp").forward(req, resp);

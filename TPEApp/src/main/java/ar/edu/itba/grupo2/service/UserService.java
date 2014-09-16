@@ -1,6 +1,6 @@
 package ar.edu.itba.grupo2.service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +9,8 @@ import ar.edu.itba.grupo2.dao.exceptions.ConnectionException;
 import ar.edu.itba.it.paw.model.User;
 
 public class UserService {
-	
+
 	private static UserService user_service;
-	
 
 	private UserService() {
 	}
@@ -23,25 +22,27 @@ public class UserService {
 
 		return user_service;
 	}
-	
-	public boolean logIn(User user){
-		User loggedUser=null;
-		if(user.getEmail()==null || user.getPassword()==null){
+
+	public boolean logIn(String email, String password) {
+		User loggedUser = null;
+		if (email == null || password == null) {
 			return false;
 		}
 		try {
-			loggedUser = UserManagerPSQLImpl.getInstance().getUserByEmail(user.getEmail());
+			loggedUser = UserManagerPSQLImpl.getInstance().getUserByEmail(
+					email);
 		} catch (ConnectionException e) {
 			e.printStackTrace();
 		}
-		if (loggedUser==null){
+		if (loggedUser == null) {
 			return false;
-		} 
-			return true;	
+		}
+		return true;
 	}
-	
-	public List<String> registerUser(String email,String password,String passwordConfirm,String name,String lastname,Date birthdate){
-		
+
+	public List<String> registerUser(String email, String password,
+			String passwordConfirm, String name, String lastname, Date birthdate, String secretQuestion, String secretAnswer) {
+		User newUser;
 		List<String> errors = new ArrayList<String>();
 		if (password == null) {
 			errors.add("Debe ingresar una contraseña");
@@ -59,6 +60,16 @@ public class UserService {
 		}
 		if (lastname == null) {
 			errors.add("Debe ingresar un apellido");
+		}
+		if (errors.size() == 0) {
+			newUser = new User.Builder().email(email).lastname(lastname)
+					.name(name).password(password).birthdate(birthdate).secretQuestion(secretQuestion).secretAnswer(secretAnswer).build();
+			try {
+				UserManagerPSQLImpl.getInstance().saveUser(newUser);
+			} catch (ConnectionException e) {
+
+				e.printStackTrace();
+			}
 		}
 		return errors;
 	}

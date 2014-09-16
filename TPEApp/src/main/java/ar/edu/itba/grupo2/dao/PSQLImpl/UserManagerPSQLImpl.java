@@ -107,7 +107,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 				newUser = new User.Builder().email(rs.getString("email"))
 						.name(rs.getString("name")).lastname("lastname")
 						.password(rs.getString("password")).id(rs.getInt("id"))
-						.birthdate(rs.getDate("date"))
+						.birthdate(rs.getDate("birthdate"))
 						.vip(rs.getBoolean("vip")).build();
 			}
 		} catch (SQLException e) {
@@ -118,36 +118,36 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 
 	@Override
 	public User saveUser(User user) throws ConnectionException {
-		User newUser = null;
 		try {
 			Connection c = ConnectionUtilities.getInstance().getConnection();
 			PreparedStatement s;
-			s = c.prepareStatement("SELECT * FROM " + TABLENAME
-					+ " WHERE ID= ?");
-			s.setInt(1, user.getId());
-			ResultSet rs = s.executeQuery();
-			if (rs.next()) {
+			if (!user.isNew()) {
 				s= c.prepareStatement("UPDATE "+ TABLENAME + "SET password = ? WHERE email= ?");
 				s.setString(1, user.getPassword());
 				s.setString(2, user.getEmail());
 				s.executeUpdate();
 			}
 			else{
-				s= c.prepareStatement("INSERT INTO "+ TABLENAME +"(email,password,name,lastname,birthdate,secretquestion,secretanswer,vip) VALUES(?,?,?,?,?,?,?,?)");
+				s= c.prepareStatement("INSERT INTO "+ TABLENAME +"(email,password,name,lastname,birthdate,secretquestion,secretanswer,vip) VALUES(?,?,?,?,?,?,?,?) returning id");
 				s.setString(1, user.getEmail());
 				s.setString(2, user.getPassword());
 				s.setString(3, user.getName());
 				s.setString(4, user.getLastname());
-				s.setDate(5, (Date)user.getBirthdate());
+				s.setDate(5, (new Date(user.getBirthdate().getTime())));
 				s.setString(6, user.getSecretQuestion());
 				s.setString(7, user.getSecretAnswer());
 				s.setBoolean(8, false);
 				s.executeUpdate();
+				ResultSet rs = s.getResultSet();
+				if (rs.next()) {
+					user.setId(rs.getInt(1));
+				}
+
 			}
 			c.close();
 		} catch (SQLException e) {
 			throw new ConnectionException();
 		}
-		return newUser;
+		return user;
 	}
 }

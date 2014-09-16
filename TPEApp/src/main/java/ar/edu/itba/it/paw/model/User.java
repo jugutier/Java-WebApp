@@ -123,4 +123,5 @@ public class User extends BaseType {
 	public String getSecretAnswer() {
 		return secretAnswer;
 	}
+	
 }

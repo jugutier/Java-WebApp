@@ -14,10 +14,10 @@ public class BaseWebServlet extends HttpServlet{
 	
 	protected void setLoginInformation(HttpServletRequest req, HttpServletResponse resp) {
 		//TODO: get a User reference here, and pass it as argument
-		User u = new User();
-		u.name = "pipi";
-		
-		req.setAttribute("loggedInUser", u);
+//		User u = new User().
+//		u.name = "pipi";
+//		
+//		req.setAttribute("loggedInUser", u);
 	}
 	
 	@Override
