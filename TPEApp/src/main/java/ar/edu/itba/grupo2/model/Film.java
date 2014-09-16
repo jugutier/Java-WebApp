@@ -144,4 +144,6 @@ public class Film extends BaseType {
 			return true;
 		return false;
 	}
+	
+	//TODO generate hashcode and equals
 }
