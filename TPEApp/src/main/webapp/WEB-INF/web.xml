@@ -77,6 +77,16 @@
 		<url-pattern>/userComments</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>AuthenticateUser</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.AuthenticateUser</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AuthenticateUser</servlet-name>
+		<url-pattern>/authenticateUser</url-pattern>
+	</servlet-mapping>
+
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/WEB-INF/jsp/error/dispatch-error.jsp</location>
