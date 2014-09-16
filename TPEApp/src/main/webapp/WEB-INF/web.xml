@@ -77,7 +77,11 @@
 		<url-pattern>/userComments</url-pattern>
 	</servlet-mapping>
 
-
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/WEB-INF/jsp/error/dispatch-error.jsp</location>
+	</error-page>
+	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
