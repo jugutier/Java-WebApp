@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.grupo2.service.UserService;
 
+@SuppressWarnings("serial")
 public class RegisterUser extends HttpServlet {
 
 	public void init() throws ServletException {

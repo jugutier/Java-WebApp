@@ -13,11 +13,14 @@ public interface FilmManagerDAO {
 	public List<Film> getAllFilms();
 	
 	public Film saveFilm(Film film);
-	
-	public void deleteFilm(final Film film);
-	
-	public List<Comment> getCommentsForFilm(final Film film);
-	
-	public void addCommentToFilm(final Film film, final Comment comment);
+		
+	public List<Comment> getCommentsForFilm(final Film film) throws FilmNotFoundException;
+	/**
+	 * 
+	 * @param film
+	 * @param comment
+	 * @return same comment with the generated id
+	 */
+	public Comment addCommentToFilm(final Film film, final Comment comment);
 	
 }

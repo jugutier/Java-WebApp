@@ -10,13 +10,15 @@ import java.util.Date;
 import java.util.List;
 
 import ar.edu.itba.grupo2.dao.FilmManagerDAO;
+import ar.edu.itba.grupo2.dao.exceptions.ConnectionException;
 import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.utils.ConnectionUtilities;
 
 public class FilmManagerPSQLImpl implements FilmManagerDAO {
-	private static final String TABLENAME = "FILM";
+	private static final String FILM_TABLENAME = "FILM";
+	private static final String COMMENT_TABLENAME = "COMMENT";
 
 	private static FilmManagerPSQLImpl instance = null;
 
@@ -39,7 +41,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 		Film ret = null;
 		if (c != null) {
 			try {
-				s = c.prepareStatement("SELECT * FROM " + TABLENAME
+				s = c.prepareStatement("SELECT * FROM " + FILM_TABLENAME
 						+ " WHERE ID = ?");
 				s.setInt(1, id);
 				ResultSet rs = s.executeQuery();
@@ -58,6 +60,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
+				throw new ConnectionException();
 			} finally {
 				if (s != null) {
 					try {
@@ -65,6 +68,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 						c.close();
 					} catch (SQLException e) {
 						e.printStackTrace();
+						throw new ConnectionException();
 					}
 				}
 			}
@@ -80,7 +84,8 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 		if (c != null) {
 			try {
 				s = c.createStatement();
-				ResultSet rs = s.executeQuery("SELECT * FROM " + TABLENAME);
+				ResultSet rs = s
+						.executeQuery("SELECT * FROM " + FILM_TABLENAME);
 				ret = new ArrayList<Film>(rs.getFetchSize());
 				while (rs.next()) {
 					Film f = new Film.Builder()
@@ -105,6 +110,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
+				throw new ConnectionException();
 			} finally {
 				if (s != null) {
 					try {
@@ -112,6 +118,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 						c.close();
 					} catch (SQLException e) {
 						e.printStackTrace();
+						throw new ConnectionException();
 					}
 				}
 			}
@@ -127,7 +134,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 			try {
 				if (!film.isNew()) {
 					s = c.prepareStatement("UPDATE "
-							+ TABLENAME
+							+ FILM_TABLENAME
 							+ "SET (name,director,creationdate,releasedate,genre,description,length,sumcomments,totalcomments) = ( ? ,?, ?, ?, ?, ?, ?, ?, ?) WHERE ID = ?");
 					s.setString(1, film.getName());
 					s.setString(2, film.getDirector());
@@ -135,7 +142,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 							.getTime()));
 					s.setDate(4, new java.sql.Date(film.getReleaseDate()
 							.getTime()));
-					s.setString(5, film.getGenre());
+					s.setString(5, film.getGenre().toString());
 					s.setString(6, film.getDescription());
 					s.setInt(7, film.getLength());
 					s.setInt(8, film.getSumComments());
@@ -146,7 +153,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 				} else {
 					// INSERT
 					s = c.prepareStatement("INSERT INTO "
-							+ TABLENAME
+							+ FILM_TABLENAME
 							+ " (name,director,creationdate,releasedate,genre,description,length,sumcomments,totalcomments) VALUES ( ? ,?, ?, ?, ?, ?, ?, ?, ?) returning id");
 					s.setString(1, film.getName());
 					s.setString(2, film.getDirector());
@@ -154,7 +161,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 							.getTime()));
 					s.setDate(4, new java.sql.Date(film.getReleaseDate()
 							.getTime()));
-					s.setString(5, film.getGenre());
+					s.setString(5, film.getGenre().toString());
 					s.setString(6, film.getDescription());
 					s.setInt(7, film.getLength());
 					s.setInt(8, film.getSumComments());
@@ -164,12 +171,12 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 					ResultSet rs = s.getResultSet();
 					if (rs.next()) {
 						int newId = rs.getInt(1);
-						System.out.println("ID:" + newId);
 						film.setId(newId);
 					}
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
+				throw new ConnectionException();
 			} finally {
 				if (s != null) {
 					try {
@@ -177,6 +184,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 						c.close();
 					} catch (SQLException e) {
 						e.printStackTrace();
+						throw new ConnectionException();
 					}
 				}
 			}
@@ -186,19 +194,19 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 	}
 
 	@Deprecated
-	@Override
 	public void deleteFilm(Film film) {
 		Connection c = ConnectionUtilities.getInstance().getConnection();
 		PreparedStatement s = null;
 		if (c != null) {
 			try {
-				s = c.prepareStatement("DELETE FROM " + TABLENAME
+				s = c.prepareStatement("DELETE FROM " + FILM_TABLENAME
 						+ " WHERE ID = ?");
 				s.setInt(1, film.getId());
 				s.executeQuery();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
+				throw new ConnectionException();
 			} finally {
 				if (s != null) {
 					try {
@@ -206,6 +214,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 						c.close();
 					} catch (SQLException e) {
 						e.printStackTrace();
+						throw new ConnectionException();
 					}
 				}
 			}
@@ -213,14 +222,17 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 	}
 
 	@Override
-	public List<Comment> getCommentsForFilm(Film film) {
+	public List<Comment> getCommentsForFilm(Film film)
+			throws FilmNotFoundException {
 		Connection c = ConnectionUtilities.getInstance().getConnection();
-		Statement s = null;
+		PreparedStatement s = null;
 		List<Comment> ret = null;
 		if (c != null) {
 			try {
-				s = c.createStatement();
-				ResultSet rs = s.executeQuery("SELECT * COMMENT " + TABLENAME);
+				s = c.prepareStatement("SELECT * FROM "
+						+ COMMENT_TABLENAME + " WHERE FILM_ID = ?");
+				s.setInt(1, film.getId());
+				ResultSet rs = s.executeQuery();
 				ret = new ArrayList<Comment>(rs.getFetchSize());
 				while (rs.next()) {
 					Comment comment = new Comment.Builder()
@@ -240,6 +252,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
+				throw new ConnectionException();
 			} finally {
 				if (s != null) {
 					try {
@@ -247,6 +260,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 						c.close();
 					} catch (SQLException e) {
 						e.printStackTrace();
+						throw new ConnectionException();
 					}
 				}
 			}
@@ -254,10 +268,42 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 		return ret;
 	}
 
+	/**
+	 * creationDate is set to 'now' by the database
+	 */
 	@Override
-	public void addCommentToFilm(Film film, Comment comment) {
-		// TODO Auto-generated method stub
-
+	public Comment addCommentToFilm(Film film, Comment comment) {
+		Connection c = ConnectionUtilities.getInstance().getConnection();
+		PreparedStatement s = null;
+		if (c != null) {
+			try {
+				s = c.prepareStatement("INSERT INTO " + COMMENT_TABLENAME
+						+ " (film_id,user_id,text,rate) VALUES (?, ?  ,? ,?) returning id");
+				s.setInt(1, film.getId());
+				s.setInt(2, comment.getUser().getId());
+				s.setString(3, comment.getText());
+				s.setInt(4, comment.getRate());
+				s.execute();
+				ResultSet rs = s.getResultSet();
+				if (rs.next()) {
+					comment.setId(rs.getInt(1));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new ConnectionException();
+			} finally {
+				if (s != null) {
+					try {
+						s.close();
+						c.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+						throw new ConnectionException();
+					}
+				}
+			}
+		}
+		return comment;
 	}
 
 }

@@ -11,7 +11,6 @@ import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.service.FilmService;
-import ar.edu.itba.it.paw.model.Utilities;
 
 @SuppressWarnings("serial")
 public class FilmDetails extends BaseWebServlet{
@@ -26,10 +25,11 @@ public class FilmDetails extends BaseWebServlet{
 	throws ServletException, IOException {
 		super.doGet(req, resp);
 		FilmService filmService = FilmService.getInstance();
-		final int id = Integer.valueOf(Utilities.getQueryMap(req.getQueryString()).get("id"));
+		final int id = Integer.valueOf(req.getParameter("id"));
 		
 		try{
-			final Film film = filmService.getFilmById(id);			
+			final Film film = filmService.getFilmById(id);
+			System.out.println("GENRE:"+film.getGenre());
 			final List<Comment> commentList = filmService.getCommentsForFilm(film);
 			
 			req.setAttribute("commentList", commentList);

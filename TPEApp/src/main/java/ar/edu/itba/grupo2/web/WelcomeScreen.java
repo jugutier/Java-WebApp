@@ -23,12 +23,17 @@ public class WelcomeScreen extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		FilmService filmService = FilmService.getInstance();
-		
-		List<Film> filmList = filmService.getAllFilms();
 
-		req.setAttribute("topfive", filmService.filterTopFilms(filmList, 5));
+		List<Film> filmList = filmService.getAllFilms();
+		
+		List<Film> topfive = filmService.filterTopFilms(filmList, 5);//TODO: fix method, values arriving correctly from filmlist
+		for (Film film : topfive) {
+			System.out.println(film.getScore());
+		}
+		req.setAttribute("topfive",topfive);
 		req.setAttribute("latest", filmService.filterRecentlyAdded(filmList, 5));
-		req.setAttribute("newReleases",	filmService.filterNewReleases(filmList, 7));
+		req.setAttribute("newReleases",
+				filmService.filterNewReleases(filmList, 7));
 
 		req.getRequestDispatcher("/WEB-INF/jsp/welcome.jsp").forward(req, resp);
 	}

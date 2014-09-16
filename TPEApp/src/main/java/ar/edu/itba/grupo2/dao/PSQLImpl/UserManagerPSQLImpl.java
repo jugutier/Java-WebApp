@@ -11,10 +11,8 @@ import java.util.List;
 
 import ar.edu.itba.grupo2.dao.UserManagerDAO;
 import ar.edu.itba.grupo2.dao.exceptions.ConnectionException;
-import ar.edu.itba.grupo2.dao.exceptions.UserAlreadyExistsException;
-import ar.edu.itba.grupo2.dao.exceptions.UserNotFoundException;
+import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.utils.ConnectionUtilities;
-import ar.edu.itba.it.paw.model.User;
 
 public final class UserManagerPSQLImpl implements UserManagerDAO {
 
@@ -33,31 +31,30 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 	}
 
 	@Override
-	public User getUserById(int id) throws ConnectionException  {
+	public User getUserById(int id) throws ConnectionException {
 		User newUser = null;
 		try {
 			Connection c = ConnectionUtilities.getInstance().getConnection();
 			PreparedStatement s;
 			s = c.prepareStatement("SELECT * FROM " + TABLENAME
-					+ " WHERE ID= ?");
+					+ " WHERE ID = ?");
 			s.setInt(1, id);
 			ResultSet rs = s.executeQuery();
 			if (rs.next()) {
 				newUser = new User.Builder().email(rs.getString("email"))
 						.name(rs.getString("name")).lastname("lastname")
 						.password(rs.getString("password")).id(rs.getInt("id"))
-						.birthdate(rs.getDate("date"))
+						.birthdate(rs.getDate("birthdate"))
 						.vip(rs.getBoolean("vip")).build();
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new ConnectionException();
 		}
 		return newUser;
 	}
 
-
 	@Deprecated
-	@Override
 	public List<User> getAllUsers() {
 		Connection c = ConnectionUtilities.getInstance().getConnection();
 		Statement s = null;
@@ -72,7 +69,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 					newUser = new User.Builder().email(rs.getString("email"))
 							.name(rs.getString("name")).lastname("lastname")
 							.password(rs.getString("password"))
-							.id(rs.getInt("id")).birthdate(rs.getDate("date"))
+							.id(rs.getInt("id")).birthdate(rs.getDate("birthdate"))
 							.vip(rs.getBoolean("vip")).build();
 					users.add(newUser);
 
@@ -111,6 +108,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 						.vip(rs.getBoolean("vip")).build();
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new ConnectionException();
 		}
 		return newUser;
@@ -122,13 +120,15 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 			Connection c = ConnectionUtilities.getInstance().getConnection();
 			PreparedStatement s;
 			if (!user.isNew()) {
-				s= c.prepareStatement("UPDATE "+ TABLENAME + "SET password = ? WHERE email= ?");
+				s = c.prepareStatement("UPDATE " + TABLENAME
+						+ "SET password = ? WHERE email= ?");
 				s.setString(1, user.getPassword());
 				s.setString(2, user.getEmail());
 				s.executeUpdate();
-			}
-			else{
-				s= c.prepareStatement("INSERT INTO "+ TABLENAME +"(email,password,name,lastname,birthdate,secretquestion,secretanswer,vip) VALUES(?,?,?,?,?,?,?,?) returning id");
+			} else {
+				s = c.prepareStatement("INSERT INTO "
+						+ TABLENAME
+						+ "(email,password,name,lastname,birthdate,secretquestion,secretanswer,vip) VALUES(?,?,?,?,?,?,?,?) returning id");
 				s.setString(1, user.getEmail());
 				s.setString(2, user.getPassword());
 				s.setString(3, user.getName());
@@ -146,6 +146,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 			}
 			c.close();
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new ConnectionException();
 		}
 		return user;

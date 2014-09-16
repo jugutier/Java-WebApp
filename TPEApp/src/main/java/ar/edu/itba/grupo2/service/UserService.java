@@ -1,12 +1,12 @@
 package ar.edu.itba.grupo2.service;
 
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ar.edu.itba.grupo2.dao.PSQLImpl.UserManagerPSQLImpl;
 import ar.edu.itba.grupo2.dao.exceptions.ConnectionException;
-import ar.edu.itba.it.paw.model.User;
+import ar.edu.itba.grupo2.model.User;
 
 public class UserService {
 

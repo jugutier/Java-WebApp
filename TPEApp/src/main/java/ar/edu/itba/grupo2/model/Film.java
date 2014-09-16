@@ -7,7 +7,7 @@ public class Film extends BaseType {
 	private String director;
 	private Date creationDate;
 	private Date releaseDate;
-	private String genre;
+	private Genre genre;
 	private String description;
 	private int length;
 	private int sumComments;
@@ -42,7 +42,7 @@ public class Film extends BaseType {
 		return releaseDate;
 	}
 
-	public String getGenre() {
+	public Genre getGenre() {
 		return genre;
 	}
 
@@ -71,7 +71,7 @@ public class Film extends BaseType {
 		private String name;
 		private String director;
 		private Date releaseDate;
-		private String genre;
+		private Genre genre;
 		private String description;
 		private int length;
 		private int totalComments;
@@ -104,7 +104,7 @@ public class Film extends BaseType {
 		}
 
 		public Builder genre(final String genre) {
-			this.genre = genre;
+			this.genre = Genre.fromString(genre);
 			return this;
 		}
 

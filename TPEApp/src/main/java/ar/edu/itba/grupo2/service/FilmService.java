@@ -6,14 +6,13 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import ar.edu.itba.grupo2.dao.FilmManagerDAO;
 import ar.edu.itba.grupo2.dao.PSQLImpl.FilmManagerPSQLImpl;
 import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
+import ar.edu.itba.grupo2.model.Genre;
 
 public class FilmService {
 	
@@ -41,19 +40,16 @@ public class FilmService {
 		return filmManager.getFilmById(id);
 	}
 	
-	public List<Comment> getCommentsForFilm(Film film) {
+	public List<Comment> getCommentsForFilm(Film film) throws FilmNotFoundException {
 		return filmManager.getCommentsForFilm(film);
 	}
 	
 	public List<String> getGenres() {
-		List<Film> films = filmManager.getAllFilms();
-		SortedSet<String> genres = new TreeSet<String>();
-		for (Film f : films) {
-			genres.add(f.getGenre());
-		}
+		Genre [] genres = Genre.values();
 		List<String> ret = new LinkedList<String>();
-		ret.addAll(genres);
-
+		for (Genre genre : genres) {
+			ret.add(genre.toString());
+		}
 		return ret;
 	}
 	
@@ -125,10 +121,14 @@ public class FilmService {
 		final List<Film> result = new ArrayList<Film>();
 		
 		boolean dontFilter = (genre == null || genre.isEmpty());
-		
-		for (Film f : filmList) {
-			if (dontFilter || genre.compareTo(f.getGenre()) == 0) {
-				result.add(f);
+		if(dontFilter){
+			return filmList;
+		}else{
+			Genre filter = Genre.fromString(genre);
+			for (Film f : filmList) {
+				if (f.getGenre().equals(filter)) {
+					result.add(f);
+				}
 			}
 		}
 		

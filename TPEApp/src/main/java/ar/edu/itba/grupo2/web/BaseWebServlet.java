@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ar.edu.itba.grupo2.model.User;
-
 @SuppressWarnings("serial")
 public class BaseWebServlet extends HttpServlet{
 	

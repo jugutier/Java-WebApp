@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.grupo2.dao.FilmManagerDAO;
+import ar.edu.itba.grupo2.dao.PSQLImpl.FilmManagerPSQLImpl;
 import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
-import ar.edu.itba.grupo2.dao.memory.MemoryFilmManager;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 
@@ -21,7 +21,7 @@ public class AddComment extends HttpServlet {
 	@Override
 	public void init() throws ServletException{
 		super.init();
-		fm = MemoryFilmManager.getInstance();
+		fm = FilmManagerPSQLImpl.getInstance();
 	}
 	
 	@Override
@@ -34,8 +34,8 @@ public class AddComment extends HttpServlet {
 			// TODO Add other requirements for comments
 			if(film.isReleased()) {
 				final Comment comment = new Comment.Builder()
-					.message(req.getParameter("comment"))
-					.user("l@lo.com")
+					.text(req.getParameter("comment"))
+					.user(null)
 					.rate(Integer.parseInt(req.getParameter("rating")))
 					.film(film)
 					.build();
