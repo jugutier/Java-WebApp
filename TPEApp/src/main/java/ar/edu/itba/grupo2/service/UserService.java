@@ -24,10 +24,11 @@ public class UserService {
 		return user_service;
 	}
 
-	public boolean logIn(String email, String password) {
+	public User logIn(String email, String password) {
 		User loggedUser = null;
+		
 		if (email == null || password == null) {
-			return false;
+			return loggedUser;
 		}
 		try {
 			loggedUser = UserManagerPSQLImpl.getInstance().getUserByEmail(
@@ -35,10 +36,10 @@ public class UserService {
 		} catch (ConnectionException e) {
 			e.printStackTrace();
 		}
-		if (loggedUser == null) {
-			return false;
+		if (!loggedUser.getPassword().equals(password)) {
+			loggedUser=null;
 		}
-		return true;
+		return loggedUser;
 	}
 
 	public List<String> registerUser(String email, String password,
@@ -84,7 +85,7 @@ public class UserService {
 	}
 	
 	public List<Comment> getCommentsByUser(final User user) {
-		return null;
+		return UserManagerPSQLImpl.getInstance().getCommentsByUser(user);
 	}
 
 }

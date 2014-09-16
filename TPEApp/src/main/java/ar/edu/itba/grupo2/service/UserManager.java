@@ -3,9 +3,10 @@ package ar.edu.itba.grupo2.service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import ar.edu.itba.grupo2.model.User;
+
 public class UserManager {
-	public static String EMAIL = "email";
-	public static String PASSWORD = "password";
+	public static String USER = "user";
 	private HttpServletRequest request;
 	
 	public UserManager(HttpServletRequest request) {
@@ -14,45 +15,34 @@ public class UserManager {
 	
 	public boolean existsUser() {
 		HttpSession session = request.getSession(false);
-		return (session != null && ((session.getAttribute(EMAIL) != null && session.getAttribute(PASSWORD) != null) ||
-				(request.getParameter(EMAIL) != null && request.getParameter(PASSWORD) != null)));
+		return session != null && (session.getAttribute(USER) != null);
 	}
 	
 	public String getName() {
-		return getByID(EMAIL);
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			return null;
+		}
+		User userAttribute = (User)session.getAttribute(USER);
+		if (userAttribute != null) {
+			return userAttribute.getName();
+		}
+		else{
+			return null;
+		}
 	}
 	
-	
-	public String getPassword() {
-		return getByID(PASSWORD);
-	}
-	
-	public void setUser(String username, String password) {
+	public void setUser(User loggedUser) {
 		HttpSession session = request.getSession();
-		session.setAttribute(EMAIL, username);
-		session.setAttribute(PASSWORD, password);
+		session.setAttribute(USER, loggedUser);
+	
 	}
 	
 	public void resetUser(String username) {
 		HttpSession session = request.getSession(false);
 		
 		if (session != null){
-			session.setAttribute(EMAIL, null);
-			session.setAttribute(PASSWORD, null);
-		}
-	}
-	
-	private String getByID(String id) {
-		HttpSession session = request.getSession(false);
-		
-		if (session == null) {
-			return null;
-		}
-		String value = (String)session.getAttribute(id);
-		if (value != null) {
-			return value;
-		} else {
-			return request.getParameter(id);
+			session.setAttribute(USER, null);
 		}
 	}
 
