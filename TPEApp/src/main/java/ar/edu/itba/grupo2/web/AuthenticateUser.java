@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.service.UserManager;
 import ar.edu.itba.grupo2.service.UserService;
 
@@ -16,23 +17,22 @@ public class AuthenticateUser extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
+		User loggedUser=null;
 		UserService userService = UserService.getInstance();
-		String email = req.getParameter(UserManager.EMAIL);
-		String password = req.getParameter(UserManager.PASSWORD);
+		String email = req.getParameter("email");
+		String password = req.getParameter("password");
 		String fromPage = req.getParameter("fromPage");
 		
 		if (fromPage == null) {
 			fromPage = "home";
 		}
-		
-		System.out.println(email);
-		System.out.println(password);
+	
 		UserManager userManager = new UserManager(req);
 		
-		boolean authenticated = userService.logIn(email, password);
+		 loggedUser = userService.logIn(email, password);
 		
-		if (authenticated){
-			userManager.setUser(email, password);
+		if (!(loggedUser==null)){
+			userManager.setUser(loggedUser);
 			resp.sendRedirect(resp.encodeRedirectURL(fromPage));
 		}
 		else{

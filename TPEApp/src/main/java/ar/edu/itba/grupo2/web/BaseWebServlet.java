@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.grupo2.model.User;
+import ar.edu.itba.grupo2.service.UserManager;
 import ar.edu.itba.grupo2.service.UserService;
 
 @SuppressWarnings("serial")
@@ -16,10 +17,9 @@ public class BaseWebServlet extends HttpServlet{
 	protected void setLoginInformation(HttpServletRequest req, HttpServletResponse resp) {
 		//TODO: get a User reference here, and pass it as argument
 		UserService userService = UserService.getInstance();
-		
 		//User user = userService.getLoggedInUser();
 		
-		//req.setAttribute("loggedInUser", user);
+		req.setAttribute("loggedInUser", (User)req.getSession().getAttribute("user"));
 		req.setAttribute("fromPage", getCurrentPath(req));
 	}
 	
