@@ -83,11 +83,11 @@ public class FilmService {
 			result.add(f);
 		}
 		
-		Collections.sort(filmList, new Comparator<Film>(){
+		Collections.sort(result, new Comparator<Film>(){
 
 			@Override
 			public int compare(Film arg0, Film arg1) {
-				return arg0.getCreationDate().compareTo(arg1.getCreationDate());
+				return -arg0.getCreationDate().compareTo(arg1.getCreationDate());
 			}
 			
 		});
