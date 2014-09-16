@@ -9,22 +9,15 @@ public enum Genre {
 		this.description = description;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
 	@Override
 	public String toString() {
 		return description;
 	}
 
 	public static Genre fromString(String genre) {		
-		//TODO: fix
-		System.out.println("from string genre:"+genre + genre.equalsIgnoreCase("Suspenso") +"Suspenso");
 		if (genre.equals("Accion")) {
 			return ACTION;
-		} else if (genre.compareTo("Suspenso")==0) {
-			System.out.println("Not null");
+		} else if (genre.equals("Suspenso")) {
 			return THRILLER;
 		} else if (genre.equals("Terror")) {
 			return HORROR;

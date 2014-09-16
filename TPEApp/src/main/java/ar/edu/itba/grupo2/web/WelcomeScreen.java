@@ -25,6 +25,7 @@ public class WelcomeScreen extends HttpServlet {
 		FilmService filmService = FilmService.getInstance();
 
 		List<Film> filmList = filmService.getAllFilms();
+	
 		
 		List<Film> topfive = filmService.filterTopFilms(filmList, 5);//TODO: fix method, values arriving correctly from filmlist
 		for (Film film : topfive) {
