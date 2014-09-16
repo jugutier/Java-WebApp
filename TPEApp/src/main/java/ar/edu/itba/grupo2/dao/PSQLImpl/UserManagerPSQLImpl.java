@@ -18,7 +18,8 @@ import ar.edu.itba.grupo2.utils.ConnectionUtilities;
 public final class UserManagerPSQLImpl implements UserManagerDAO {
 
 	private static UserManagerPSQLImpl user_manager = null;
-	public static final String TABLENAME = "GAJAMDBUSER";
+	public static final String USER_TABLENAME = "GAJAMDBUSER";
+	private static final String COMMENT_TABLENAME = "COMMENT";
 
 	private UserManagerPSQLImpl() {
 	}
@@ -37,7 +38,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 		try {
 			Connection c = ConnectionUtilities.getInstance().getConnection();
 			PreparedStatement s;
-			s = c.prepareStatement("SELECT * FROM " + TABLENAME
+			s = c.prepareStatement("SELECT * FROM " + USER_TABLENAME
 					+ " WHERE ID = ?");
 			s.setInt(1, id);
 			ResultSet rs = s.executeQuery();
@@ -64,13 +65,15 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 		if (c != null) {
 			try {
 				s = c.createStatement();
-				ResultSet rs = s.executeQuery("SELECT * FROM " + TABLENAME);
+				ResultSet rs = s
+						.executeQuery("SELECT * FROM " + USER_TABLENAME);
 				users = new ArrayList<User>(rs.getFetchSize());
 				while (rs.next()) {
 					newUser = new User.Builder().email(rs.getString("email"))
 							.name(rs.getString("name")).lastname("lastname")
 							.password(rs.getString("password"))
-							.id(rs.getInt("id")).birthdate(rs.getDate("birthdate"))
+							.id(rs.getInt("id"))
+							.birthdate(rs.getDate("birthdate"))
 							.vip(rs.getBoolean("vip")).build();
 					users.add(newUser);
 
@@ -97,7 +100,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 		try {
 			Connection c = ConnectionUtilities.getInstance().getConnection();
 			PreparedStatement s;
-			s = c.prepareStatement("SELECT * FROM " + TABLENAME
+			s = c.prepareStatement("SELECT * FROM " + USER_TABLENAME
 					+ " WHERE EMAIL= ?");
 			s.setString(1, email);
 			ResultSet rs = s.executeQuery();
@@ -121,14 +124,14 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 			Connection c = ConnectionUtilities.getInstance().getConnection();
 			PreparedStatement s;
 			if (!user.isNew()) {
-				s = c.prepareStatement("UPDATE " + TABLENAME
+				s = c.prepareStatement("UPDATE " + USER_TABLENAME
 						+ "SET password = ? WHERE email= ?");
 				s.setString(1, user.getPassword());
 				s.setString(2, user.getEmail());
 				s.execute();
 			} else {
 				s = c.prepareStatement("INSERT INTO "
-						+ TABLENAME
+						+ USER_TABLENAME
 						+ "(email,password,name,lastname,birthdate,secretquestion,secretanswer,vip) VALUES(?,?,?,?,?,?,?,?) returning id");
 				s.setString(1, user.getEmail());
 				s.setString(2, user.getPassword());
@@ -156,7 +159,45 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 	@Override
 	public List<Comment> getCommentsByUser(User user)
 			throws ConnectionException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection c = ConnectionUtilities.getInstance().getConnection();
+		PreparedStatement s = null;
+		List<Comment> ret = null;
+		if (c != null) {
+			try {
+				s = c.prepareStatement("SELECT * FROM " + COMMENT_TABLENAME
+						+ " WHERE USER_ID = ?");
+				s.setInt(1, user.getId());
+				ResultSet rs = s.executeQuery();
+				ret = new ArrayList<Comment>(rs.getFetchSize());
+				while (rs.next()) {
+					Comment comment = new Comment.Builder()
+							.id(rs.getInt("ID"))
+							.film(FilmManagerPSQLImpl.getInstance()
+									.getFilmById(rs.getInt("FILM_ID")))
+							.user(getUserById(rs.getInt("USER_ID")))
+							.creationDate(
+									new Date(rs.getDate("CREATIONDATE")
+											.getTime()))
+							.text(rs.getString("TEXT")).rate(rs.getInt("RATE"))
+							.build();
+
+					ret.add(comment);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new ConnectionException();
+			} finally {
+				if (s != null) {
+					try {
+						s.close();
+						c.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+						throw new ConnectionException();
+					}
+				}
+			}
+		}
+		return ret;
 	}
 }
