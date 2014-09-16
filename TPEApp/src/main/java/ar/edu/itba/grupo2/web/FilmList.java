@@ -29,6 +29,7 @@ public class FilmList extends BaseWebServlet{
 		String directorFilter = req.getParameter("director");
 		
 		List<Film> filmList = filmService.getAllFilms();
+		List<String> genreList = filmService.getGenres();
 		
 		if (genreFilter != null) {
 			filmList = filmService.filterByGenre(filmList, genreFilter);
@@ -39,6 +40,7 @@ public class FilmList extends BaseWebServlet{
 		}
 		
 		req.setAttribute("filmList", filmList);
+		req.setAttribute("genreList", genreList);
 		req.getRequestDispatcher("/WEB-INF/jsp/filmList.jsp").forward(req, resp);
 	}
 }
