@@ -92,7 +92,7 @@ public class User extends BaseType {
 		return name;
 	}
 	
-	public boolean getVip(){
+	public boolean isVip(){
 		return vip;
 	}
 	

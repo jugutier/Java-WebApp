@@ -36,6 +36,4 @@
 	</c:if>
 </table>
 
-<a href="addHotel" class="btn btn-primary pull-right"><i class="icon-plus"></i> A&ntilde;adir pel&iacute;cula</a>
-
 <%@ include file="footer.jsp" %>
