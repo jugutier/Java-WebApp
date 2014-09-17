@@ -41,7 +41,7 @@ public class AddComment extends HttpServlet {
 				resp.sendRedirect("filmDetails?id="+req.getParameter("id"));
 				return ;
 			}
-			if(film.isReleased() || user.getVip()) {
+			if(film.isReleased() || user.isVip()) {
 				final Comment comment = new Comment.Builder()
 					.user(user)
 					.text(req.getParameter("comment"))
