@@ -96,6 +96,26 @@
 		<servlet-name>AuthenticateUser</servlet-name>
 		<url-pattern>/authenticateUser</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ResetPasswordScreen</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.ResetPasswordScreen</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ResetPasswordScreen</servlet-name>
+		<url-pattern>/resetPassword</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ResetPasswordAction</servlet-name>
+		<servlet-class>ar.edu.itba.grupo2.web.ResetPasswordAction</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ResetPasswordAction</servlet-name>
+		<url-pattern>/resetPasswordAction</url-pattern>
+	</servlet-mapping>
 
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>

@@ -109,7 +109,10 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 						.name(rs.getString("name")).lastname("lastname")
 						.password(rs.getString("password")).id(rs.getInt("id"))
 						.birthdate(rs.getDate("birthdate"))
-						.vip(rs.getBoolean("vip")).build();
+						.vip(rs.getBoolean("vip"))
+						.secretQuestion(rs.getString("secretquestion"))
+						.secretAnswer(rs.getString("secretanswer"))
+						.build();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -125,7 +128,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 			PreparedStatement s;
 			if (!user.isNew()) {
 				s = c.prepareStatement("UPDATE " + USER_TABLENAME
-						+ "SET password = ? WHERE email= ?");
+						+ " SET password = ? WHERE email= ?");
 				s.setString(1, user.getPassword());
 				s.setString(2, user.getEmail());
 				s.execute();

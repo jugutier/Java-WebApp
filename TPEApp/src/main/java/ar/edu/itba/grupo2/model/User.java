@@ -119,6 +119,10 @@ public class User extends BaseType {
 	public String getSecretAnswer() {
 		return secretAnswer;
 	}
+	
+	public void setPassword(final String password) {
+		this.password = password;
+	}
 
 	@Override
 	public int hashCode() {
@@ -144,7 +148,5 @@ public class User extends BaseType {
 			return false;
 		return true;
 	}
-	
-	
 	
 }
