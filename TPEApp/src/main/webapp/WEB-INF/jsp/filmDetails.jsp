@@ -43,7 +43,7 @@
 		<h4 class="muted">Debe iniciar sesi&oacute;n para comentar acerca de esta pel&iacute;cula</h4>
 	</c:when>
 	<c:when test="${userCantComment}">
-		<h4 class="muted">No puede comentar</h4>
+		<h4 class="muted">No puede comentar m&aacute;s de una vez en una misma pel&iacute;cula</h4>
 	</c:when>
 	<c:otherwise>
 		<%@ include file="newComment.jsp" %>

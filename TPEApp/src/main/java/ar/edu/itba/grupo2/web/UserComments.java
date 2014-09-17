@@ -13,11 +13,13 @@ import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.service.UserService;
 
 @SuppressWarnings("serial")
-public class UserComments extends HttpServlet{
+public class UserComments extends BaseWebServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
+		super.doGet(req, resp);
+		
 		UserService userService = UserService.getInstance();
 		User user = (User)req.getSession().getAttribute("user");
 		
