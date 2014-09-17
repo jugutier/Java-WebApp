@@ -41,7 +41,6 @@ public class FilmDetails extends BaseWebServlet{
 			if(filmService.userHasCommentedFilm(film, user) 
 					|| (!film.isReleased() && !user.isVip())) {
 				req.setAttribute("userCantComment", true);
-				System.out.println("No puede comentar");
 			}
 		}
 		catch(FilmNotFoundException e){
