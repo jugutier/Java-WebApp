@@ -39,7 +39,7 @@ public class FilmDetails extends BaseWebServlet{
 			req.setAttribute("film", film);
 			
 			if(filmService.userHasCommentedFilm(film, user) 
-					|| (!film.isReleased() && !user.getVip())) {
+					|| (!film.isReleased() && !user.isVip())) {
 				req.setAttribute("userCantComment", true);
 				System.out.println("No puede comentar");
 			}
