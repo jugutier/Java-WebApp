@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
+import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.service.FilmService;
 
 @SuppressWarnings("serial")
@@ -29,15 +30,25 @@ public class FilmDetails extends BaseWebServlet{
 		
 		try{
 			final Film film = filmService.getFilmById(id);
+			User user = (User)req.getSession(false).getAttribute("user");
+			
 			System.out.println("GENRE:"+film.getGenre());
 			final List<Comment> commentList = filmService.getCommentsForFilm(film);
 			
 			req.setAttribute("commentList", commentList);
 			req.setAttribute("film", film);
+			
+			if(filmService.userHasCommentedFilm(film, user) 
+					|| (!film.isReleased() && !user.getVip())) {
+				req.setAttribute("userCantComment", true);
+				System.out.println("No puede comentar");
+			}
 		}
 		catch(FilmNotFoundException e){
 			
 		}
+		
+		
 		
 		
 		req.getRequestDispatcher("/WEB-INF/jsp/filmDetails.jsp").forward(req, resp);
