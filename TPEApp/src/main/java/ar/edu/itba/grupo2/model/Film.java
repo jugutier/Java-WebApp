@@ -63,7 +63,7 @@ public class Film extends BaseType {
 	}
 
 	public double getScore() {
-		return totalComments == 0 ? 0 : sumComments / totalComments;
+		return totalComments == 0 ? 0 : (double)sumComments / totalComments;
 	}
 
 	public static class Builder {
