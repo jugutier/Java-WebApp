@@ -50,9 +50,40 @@ public class FilmDetails extends HttpServlet{
 			
 		}
 		
-		
-		
-		
 		req.getRequestDispatcher("/WEB-INF/jsp/filmDetails.jsp").forward(req, resp);
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		
+		req.setCharacterEncoding("UTF-8");
+		
+		FilmService filmService = FilmService.getInstance();
+		Film film;
+		User user = (User)req.getSession(false).getAttribute("user");
+		
+		try {		
+			film = filmService.getFilmById(Integer.parseInt(req.getParameter("id")));
+			if(filmService.userCanComment(film, user)){
+				final Comment comment = new Comment.Builder()
+					.user(user)
+					.text(req.getParameter("comment"))
+					.rate(Integer.parseInt(req.getParameter("rating")))
+					.film(film)
+					.build();
+				filmService.addCommentToFilm(film, comment);
+				System.out.println(film + " - " + comment);
+				req.setAttribute("newComment", "true");
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FilmNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		this.doGet(req, resp);
 	}
 }
