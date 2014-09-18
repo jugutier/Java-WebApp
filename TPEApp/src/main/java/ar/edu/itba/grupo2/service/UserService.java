@@ -6,6 +6,7 @@ import java.util.List;
 
 import ar.edu.itba.grupo2.dao.PSQLImpl.UserManagerPSQLImpl;
 import ar.edu.itba.grupo2.dao.exceptions.ConnectionException;
+import ar.edu.itba.grupo2.dao.exceptions.RegisterErrorException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.User;
 
@@ -42,8 +43,8 @@ public class UserService {
 		return loggedUser;
 	}
 
-	public List<String> registerUser(String email, String password,
-			String passwordConfirm, String name, String lastname, Date birthdate, String secretQuestion, String secretAnswer) {
+	public User registerUser(String email, String password,
+			String passwordConfirm, String name, String lastname, Date birthdate, String secretQuestion, String secretAnswer) throws RegisterErrorException {
 		User newUser;
 		List<String> errors = new ArrayList<String>();
 		if (password == "") {
@@ -80,8 +81,11 @@ public class UserService {
 					.name(name).password(password).birthdate(birthdate).secretQuestion(secretQuestion).secretAnswer(secretAnswer).build();
 
 			UserManagerPSQLImpl.getInstance().saveUser(newUser);
+		}else{
+			throw new RegisterErrorException(errors);
 		}
-		return errors;
+		return newUser;
+		
 	}
 	
 	public List<Comment> getCommentsByUser(final User user) {

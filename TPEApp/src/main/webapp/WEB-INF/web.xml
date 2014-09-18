@@ -18,16 +18,6 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>RegisterUser</servlet-name>
-		<servlet-class>ar.edu.itba.grupo2.web.RegisterUser</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>RegisterUser</servlet-name>
-		<url-pattern>/registerUser</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
 		<servlet-name>AddComment</servlet-name>
 		<servlet-class>ar.edu.itba.grupo2.web.AddComment</servlet-class>
 	</servlet>
