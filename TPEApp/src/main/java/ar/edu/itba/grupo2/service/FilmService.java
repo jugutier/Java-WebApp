@@ -161,4 +161,23 @@ public class FilmService {
 		
 		return result;
 	}
+	
+	public List<Film> orderByReleaseDate(final List<Film> filmList) {
+		final List<Film> result = new ArrayList<Film>();
+		
+		for (Film f : filmList) {
+			result.add(f);
+		}
+		
+		Collections.sort(result, new Comparator<Film>(){
+
+			@Override
+			public int compare(Film arg0, Film arg1) {
+				return -arg0.getReleaseDate().compareTo(arg1.getReleaseDate());
+			}
+			
+		});
+		
+		return result;
+	}
 }

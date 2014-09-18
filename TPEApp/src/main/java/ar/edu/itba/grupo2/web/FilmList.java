@@ -28,7 +28,7 @@ public class FilmList extends HttpServlet{
 		String genreFilter = req.getParameter("genre");
 		String directorFilter = req.getParameter("director");
 		
-		List<Film> filmList = filmService.getAllFilms();
+		List<Film> filmList = filmService.orderByReleaseDate(filmService.getAllFilms());
 		List<String> genreList = filmService.getGenres();
 		
 		if (genreFilter != null) {
