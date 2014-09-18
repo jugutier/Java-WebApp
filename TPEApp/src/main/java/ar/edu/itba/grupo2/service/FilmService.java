@@ -189,4 +189,11 @@ public class FilmService {
 		}
 		return false;		
 	}
+	
+	public Comment addCommentToFilm(Film film, Comment comment) {
+		if(comment.getText() == "") {
+			return null;
+		}
+		return filmManager.addCommentToFilm(film, comment);
+	}
 }
