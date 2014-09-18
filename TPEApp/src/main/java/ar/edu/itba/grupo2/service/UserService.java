@@ -37,8 +37,8 @@ public class UserService {
 		} catch (ConnectionException e) {
 			e.printStackTrace();
 		}
-		if (!loggedUser.getPassword().equals(password)) {
-			loggedUser=null;
+		if (loggedUser != null && !loggedUser.getPassword().equals(password)) {
+			loggedUser = null;
 		}
 		return loggedUser;
 	}

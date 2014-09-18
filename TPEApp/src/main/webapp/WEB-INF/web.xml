@@ -108,13 +108,48 @@
 	</servlet-mapping>
 
 	<filter>
-	<filter-name>LoggedUserFilter</filter-name>
-	<filter-class>ar.edu.itba.grupo2.filter.LoggedUserFilter</filter-class>
+		<filter-name>LoggedUserFilter</filter-name>
+		<filter-class>ar.edu.itba.grupo2.filter.LoggedUserFilter</filter-class>
 	</filter>
 
 	<filter-mapping>
 		<filter-name>LoggedUserFilter</filter-name>
 		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>FromPageFilter</filter-name>
+		<filter-class>ar.edu.itba.grupo2.filter.FromPageFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>FromPageFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>GuestsOnlyFilter</filter-name>
+		<filter-class>ar.edu.itba.grupo2.filter.GuestsOnlyFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>GuestsOnlyFilter</filter-name>
+		<url-pattern>/resetPassword</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>GuestsOnlyFilter</filter-name>
+		<url-pattern>/register</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>UsersOnlyFilter</filter-name>
+		<filter-class>ar.edu.itba.grupo2.filter.UsersOnlyFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>UsersOnlyFilter</filter-name>
+		<url-pattern>/userComments</url-pattern>
 	</filter-mapping>
 
 	<error-page>

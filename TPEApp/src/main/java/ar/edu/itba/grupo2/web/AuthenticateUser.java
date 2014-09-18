@@ -17,7 +17,7 @@ public class AuthenticateUser extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
-		User loggedUser=null;
+		User loggedUser = null;
 		UserService userService = UserService.getInstance();
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
@@ -29,11 +29,11 @@ public class AuthenticateUser extends HttpServlet{
 	
 		UserManager userManager = new UserManager(req);
 		
-		 loggedUser = userService.logIn(email, password);
+		loggedUser = userService.logIn(email, password);
 		
-		if (!(loggedUser==null)){
+		if (loggedUser != null) {
 			userManager.setUser(loggedUser);
-			resp.sendRedirect(resp.encodeRedirectURL(fromPage));
+			resp.sendRedirect(resp.encodeRedirectURL(fromPage.replace("auth_fail=wrongUser", "")));
 		}
 		else{
 			char separator;
