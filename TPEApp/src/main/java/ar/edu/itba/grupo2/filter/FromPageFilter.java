@@ -9,15 +9,29 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import ar.edu.itba.grupo2.model.User;
+public class FromPageFilter implements Filter {
 
-public class LoggedUserFilter implements Filter {
-
+	private String getCurrentPath(HttpServletRequest req) {
+		StringBuffer stringBuffer = new StringBuffer();
+		String queryString = req.getQueryString();
+		stringBuffer.append(req.getRequestURI());
+		
+		if (queryString != null && !queryString.isEmpty()) {
+			stringBuffer.append("?");
+			stringBuffer.append(queryString);
+		}
+		
+		return stringBuffer.toString();
+	}
+	
 	public void doFilter(ServletRequest req, ServletResponse resp,
             FilterChain chain) throws IOException, ServletException {
 
-		req.setAttribute("loggedInUser", (User)((HttpServletRequest) req).getSession().getAttribute("user"));
+		HttpServletRequest request = (HttpServletRequest) req;
+		
+		req.setAttribute("fromPage", getCurrentPath(request));
 		chain.doFilter(req, resp);
 	}
 
