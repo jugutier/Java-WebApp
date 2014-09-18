@@ -23,7 +23,7 @@ public class ConnectionUtilities {
 
 		try {
 
-			input = new FileInputStream("config.properties");
+			input = getClass().getClassLoader().getResourceAsStream("config.properties");
 
 			prop.load(input);
 
