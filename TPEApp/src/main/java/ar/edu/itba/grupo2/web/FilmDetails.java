@@ -39,10 +39,13 @@ public class FilmDetails extends HttpServlet{
 			req.setAttribute("commentList", commentList);
 			req.setAttribute("film", film);
 			
-			if(filmService.userHasCommentedFilm(film, user) 
-					|| (!film.isReleased() && !user.isVip())) {
-				req.setAttribute("userCantComment", true);
-			}
+			if(user != null) {
+				if(filmService.userHasCommentedFilm(film, user)){
+					req.setAttribute("userAlreadyCommented", true);
+				}else if (!film.isReleased() && !user.isVip()){
+					req.setAttribute("filmUnreleased", true);
+				}
+			}			
 		}
 		catch(FilmNotFoundException e){
 			
