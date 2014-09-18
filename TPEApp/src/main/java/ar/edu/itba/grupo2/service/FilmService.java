@@ -180,4 +180,13 @@ public class FilmService {
 		
 		return result;
 	}
+	
+	public boolean userCanComment(final Film film, final User user) throws FilmNotFoundException {
+		if(userHasCommentedFilm(film, user)){
+			return false;
+		}else if(film.isReleased() || user.isVip()){			
+			return true;
+		}
+		return false;		
+	}
 }

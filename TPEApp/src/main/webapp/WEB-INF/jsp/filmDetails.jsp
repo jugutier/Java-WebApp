@@ -42,11 +42,8 @@
 	<c:when test="${empty loggedInUser}">
 		<h4 class="muted">Debe iniciar sesi&oacute;n para comentar acerca de esta pel&iacute;cula</h4>
 	</c:when>
-	<c:when test="${userAlreadyCommented}">
-		<h4 class="muted">No puede comentar m&aacute;s de una vez en una misma pel&iacute;cula</h4>
-	</c:when>
-	<c:when test="${filmUnreleased}">
-		<h4 class="muted">No puede comentar antes del estreno de la pel&iacute;cula si no es usuario VIP.</h4>
+	<c:when test="${!userCanComment}">
+		<h4 class="muted">No puede comentar</h4>
 	</c:when>
 	<c:otherwise>
 		<%@ include file="newComment.jsp" %>

@@ -30,18 +30,15 @@ public class AddComment extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
+		req.setCharacterEncoding("UTF-8");
+		
 		FilmService filmService = FilmService.getInstance();
 		Film film;
 		User user = (User)req.getSession(false).getAttribute("user");
 		
 		try {			
 			film = fm.getFilmById(Integer.parseInt(req.getParameter("id")));
-			// TODO Add other requirements for comments
-			if(filmService.userHasCommentedFilm(film, user)) {
-				resp.sendRedirect("filmDetails?id="+req.getParameter("id"));
-				return ;
-			}
-			if(film.isReleased() || user.isVip()) {
+			if(filmService.userCanComment(film, user)){
 				final Comment comment = new Comment.Builder()
 					.user(user)
 					.text(req.getParameter("comment"))
@@ -51,8 +48,6 @@ public class AddComment extends HttpServlet {
 				fm.addCommentToFilm(film, comment);
 				System.out.println(film + " - " + comment);
 				req.setAttribute("newComment", "true");
-			} else {
-				// TODO throw new unreleased exception (or add error and make a redirect)
 			}
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
