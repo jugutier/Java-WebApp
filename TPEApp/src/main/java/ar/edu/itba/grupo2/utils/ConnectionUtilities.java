@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Properties;
 
 public class ConnectionUtilities {
@@ -80,29 +78,5 @@ public class ConnectionUtilities {
 		return connection;
 	}
 
-	@Deprecated
-	public void testQuery(Connection c) {
-		Statement s = null;
-		if (c != null) {
-			try {
-				s = c.createStatement();
-				ResultSet rs = s.executeQuery("SELECT * FROM FILM");
-				while (rs.next()) {
-					System.out.println(rs.getString("NAME"));
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				if (s != null) {
-					try {
-						s.close();
-						c.close();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-	}
 
 }
