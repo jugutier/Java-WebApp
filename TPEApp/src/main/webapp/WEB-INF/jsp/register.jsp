@@ -1,4 +1,8 @@
 <%@ include file="header.jsp" %>
+<c:if test="${not empty errors}">
+<%@ include file="error/register-error.jsp" %>
+</c:if>
+
 
 <c:if test="${param.status == 'auth_fail'}"> 
 	<div class="alert alert-error">
@@ -6,7 +10,7 @@
 	</div>
 </c:if>
 
-<form class="form-signin" action="registerUser" method="POST">
+<form class="form-signin" action="register" method="POST">
 	<h2 class="form-signin-heading">Registrese gratis!</h2>
 	<input type="text" name="email" class="input-block-level" placeholder="Direccion de email">
 	<input type="password" name="password" class="input-block-level" placeholder="Contrase&ntilde;a">

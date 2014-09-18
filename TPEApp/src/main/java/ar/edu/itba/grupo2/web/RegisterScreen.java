@@ -41,15 +41,16 @@ public class RegisterScreen extends HttpServlet{
 		try {
 			birthdate = outputDateFormat.parse(req.getParameter("birthdate"));			
 		} catch (ParseException e) {
-			e.printStackTrace();
+			errors.add("WrongDate");
+			this.doGet(req, resp);
 		}finally{
 			try {
 				UserService.getInstance().registerUser(email, password, passwordConfirm, name, lastname, birthdate,secretQuestion,secretAnswer);
 			} catch (RegisterErrorException e) {
+				errors= e.getErrors();
 				req.setAttribute("errors", e.getErrors());
 			}
-			System.out.println("errors: "+errors.size());
-			req.setAttribute("errors", errors);
+			//req.setAttribute("errors", errors);
 			req.setAttribute("status", "auth_fail");
 			if(errors.size()!=0){
 				this.doGet(req, resp);

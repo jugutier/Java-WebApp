@@ -48,33 +48,33 @@ public class UserService {
 		User newUser;
 		List<String> errors = new ArrayList<String>();
 		if (password == "") {
-			errors.add("Debe ingresar una contraseña");
+			errors.add("NoPass");
 		} else if (!password.equals(passwordConfirm)) {
-			errors.add("Las contraseñas no coinciden");
+			errors.add("NoCoincidence");
 		}
 		if (email == "") {
-			errors.add("Debe ingeresar un email");
+			errors.add("NoMail");
 		} else if (!email
 				.matches("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4})$")) {
-			errors.add("Email invalido");
+			errors.add("InvalidMail");
 		}
 			else if(UserManagerPSQLImpl.getInstance().getUserByEmail(email)!= null){
-				errors.add("El mail que ingreso ya esta usado");
+				errors.add("MailUsed");
 			}
 		if (name == "") {
-			errors.add("Debe ingresar un nombre");
+			errors.add("NoName");
 		}
 		if (lastname == "") {
-			errors.add("Debe ingresar un apellido");
+			errors.add("NoLastname");
 		}
 		if(birthdate == null){
-			errors.add("Debe ingresar una fecha");
+			errors.add("NoDate");
 		}
 		if(secretQuestion == ""){
-			errors.add("Debe ingresar una pregunta secreta");
+			errors.add("NoSQ");
 		}
 		if(secretAnswer == ""){
-			errors.add("Debe ingresar una pregunta respuesta");
+			errors.add("NoSA");
 		}
 		if (errors.size() == 0) {
 			newUser = new User.Builder().email(email).lastname(lastname)
