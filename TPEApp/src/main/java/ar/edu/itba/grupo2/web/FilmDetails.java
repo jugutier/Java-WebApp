@@ -72,7 +72,7 @@ public class FilmDetails extends HttpServlet{
 					.rate(Integer.parseInt(req.getParameter("rating")))
 					.film(film)
 					.build();
-				filmService.addCommentToFilm(film, comment);
+				filmService.addComment(comment);
 				System.out.println(film + " - " + comment);
 				req.setAttribute("newComment", "true");
 			}

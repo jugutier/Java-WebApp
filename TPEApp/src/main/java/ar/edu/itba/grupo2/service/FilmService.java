@@ -208,10 +208,10 @@ public class FilmService {
 		return false;
 	}
 	
-	public Comment addCommentToFilm(Film film, Comment comment) {
+	public Comment addComment(Comment comment) {
 		if(comment.getText() == "") {
 			return null;
 		}
-		return filmManager.addCommentToFilm(film, comment);
+		return filmManager.saveComment(comment);
 	}
 }
