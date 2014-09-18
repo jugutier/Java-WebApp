@@ -180,4 +180,8 @@ public class FilmService {
 		
 		return result;
 	}
+	public Comment saveComment(Comment comment){		
+		filmManager.saveFilm(comment.getFilm());
+		return filmManager.saveComment(comment);
+	}
 }

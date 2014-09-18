@@ -270,8 +270,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 	/**
 	 * creationDate is set to 'now' by the database
 	 */
-	@Override
-	public Comment addCommentToFilm(Film film, Comment comment) {
+	/*public Comment addCommentToFilm(Film film, Comment comment) {
 		Connection c = ConnectionUtilities.getInstance().getConnection();
 		PreparedStatement s = null;
 		if (c != null) {
@@ -294,6 +293,41 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 					s.setInt(1, comment.getRate());
 					s.setInt(2, film.getId());
 					s.execute();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new ConnectionException();
+			} finally {
+				if (s != null) {
+					try {
+						s.close();
+						c.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+						throw new ConnectionException();
+					}
+				}
+			}
+		}
+		return comment;
+	}*/
+	@Override
+	public Comment saveComment(Comment comment){
+		Connection c = ConnectionUtilities.getInstance().getConnection();
+		PreparedStatement s = null;
+		if (c != null) {
+			try {
+				s = c.prepareStatement("INSERT INTO "
+						+ COMMENT_TABLENAME
+						+ " (film_id,user_id,text,rate) VALUES (?, ?  ,? ,?) returning id");
+				s.setInt(1, comment.getFilm().getId());
+				s.setInt(2, comment.getUser().getId());
+				s.setString(3, comment.getText());
+				s.setInt(4, comment.getRate());
+				s.execute();
+				ResultSet rs = s.getResultSet();
+				if (rs.next()) {
+					comment.setId(rs.getInt(1));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

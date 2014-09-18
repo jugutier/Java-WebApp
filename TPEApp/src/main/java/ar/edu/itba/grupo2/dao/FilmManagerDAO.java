@@ -15,12 +15,7 @@ public interface FilmManagerDAO {
 	public Film saveFilm(Film film);
 		
 	public List<Comment> getCommentsForFilm(final Film film) throws FilmNotFoundException;
-	/**
-	 * 
-	 * @param film
-	 * @param comment
-	 * @return same comment with the generated id
-	 */
-	public Comment addCommentToFilm(final Film film, final Comment comment);
+		
+	public Comment saveComment(Comment c);
 	
 }

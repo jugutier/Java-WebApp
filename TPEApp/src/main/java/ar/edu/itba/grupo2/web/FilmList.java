@@ -24,12 +24,13 @@ public class FilmList extends HttpServlet{
 	throws ServletException, IOException {
 
 		FilmService filmService = FilmService.getInstance();
-		
+		req.setCharacterEncoding("UTF-8");
 		String genreFilter = req.getParameter("genre");
 		String directorFilter = req.getParameter("director");
 		
 		List<Film> filmList = filmService.orderByReleaseDate(filmService.getAllFilms());
 		List<String> genreList = filmService.getGenres();
+		System.out.println(directorFilter);
 		
 		if (genreFilter != null) {
 			filmList = filmService.filterByGenre(filmList, genreFilter);
