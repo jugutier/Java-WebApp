@@ -12,7 +12,7 @@ import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.service.FilmService;
 
 @SuppressWarnings("serial")
-public class FilmList extends BaseWebServlet{
+public class FilmList extends HttpServlet{
 	
 	@Override
 	public void init() throws ServletException{
@@ -22,7 +22,7 @@ public class FilmList extends BaseWebServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
-		super.doGet(req, resp);
+
 		FilmService filmService = FilmService.getInstance();
 		
 		String genreFilter = req.getParameter("genre");
