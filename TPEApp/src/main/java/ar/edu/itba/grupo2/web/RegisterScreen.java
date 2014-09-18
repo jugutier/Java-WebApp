@@ -17,14 +17,15 @@ import ar.edu.itba.grupo2.dao.exceptions.RegisterErrorException;
 import ar.edu.itba.grupo2.service.UserService;
 
 @SuppressWarnings("serial")
-public class RegisterScreen extends HttpServlet{
-	
+public class RegisterScreen extends HttpServlet {
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-	throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(req, resp);
+			throws ServletException, IOException {
+		req.getRequestDispatcher("/WEB-INF/jsp/register.jsp")
+				.forward(req, resp);
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -39,27 +40,26 @@ public class RegisterScreen extends HttpServlet{
 		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-mm-dd");
 		Date birthdate = null;
 		try {
-			birthdate = outputDateFormat.parse(req.getParameter("birthdate"));			
+			birthdate = outputDateFormat.parse(req.getParameter("birthdate"));
 		} catch (ParseException e) {
 			errors.add("WrongDate");
 			this.doGet(req, resp);
-		}finally{
+		} finally {
 			try {
-				UserService.getInstance().registerUser(email, password, passwordConfirm, name, lastname, birthdate,secretQuestion,secretAnswer);
+				UserService.getInstance().registerUser(email, password,
+						passwordConfirm, name, lastname, birthdate,
+						secretQuestion, secretAnswer);
 			} catch (RegisterErrorException e) {
-				errors= e.getErrors();
-				req.setAttribute("errors", e.getErrors());
+				errors.addAll(e.getErrors());
 			}
-			//req.setAttribute("errors", errors);
+			req.setAttribute("errors", errors);
 			req.setAttribute("status", "auth_fail");
-			if(errors.size()!=0){
+			if (errors.size() != 0) {
 				this.doGet(req, resp);
-			}
-			else{
+			} else {
 				resp.sendRedirect("home");
 			}
 		}
-		
 
 	}
 }

@@ -5,10 +5,10 @@
 	<li>
 		<c:choose>
 			<c:when test="${error=='NoPass'}">
-				No ingreso una contrasena valida.
+				No ingreso una contrase&ntilde;a valida.
 			</c:when>
 			<c:when test="${error=='NoCoincidence'}">
-				No coinciden las contrasenas ingresadas.
+				No coinciden las contrase&ntilde;as ingresadas.
 			</c:when>
 			<c:when test="${error=='NoMail'}">
 				No ingreso email
