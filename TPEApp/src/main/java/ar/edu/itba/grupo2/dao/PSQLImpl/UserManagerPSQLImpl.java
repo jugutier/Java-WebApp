@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,48 +49,9 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 						.vip(rs.getBoolean("vip")).build();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new ConnectionException();
 		}
 		return newUser;
-	}
-
-	@Deprecated
-	public List<User> getAllUsers() {
-		Connection c = ConnectionUtilities.getInstance().getConnection();
-		Statement s = null;
-		User newUser = null;
-		List<User> users = null;
-		if (c != null) {
-			try {
-				s = c.createStatement();
-				ResultSet rs = s
-						.executeQuery("SELECT * FROM " + USER_TABLENAME);
-				users = new ArrayList<User>(rs.getFetchSize());
-				while (rs.next()) {
-					newUser = new User.Builder().email(rs.getString("email"))
-							.name(rs.getString("name")).lastname("lastname")
-							.password(rs.getString("password"))
-							.id(rs.getInt("id"))
-							.birthdate(rs.getDate("birthdate"))
-							.vip(rs.getBoolean("vip")).build();
-					users.add(newUser);
-
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				if (s != null) {
-					try {
-						s.close();
-						c.close();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		return users;
 	}
 
 	@Override
@@ -115,7 +75,6 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 						.build();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new ConnectionException();
 		}
 		return newUser;
@@ -153,7 +112,6 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 			}
 			c.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new ConnectionException();
 		}
 		return user;
@@ -187,7 +145,6 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 					ret.add(comment);
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
 				throw new ConnectionException();
 			} finally {
 				if (s != null) {
@@ -195,7 +152,6 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 						s.close();
 						c.close();
 					} catch (SQLException e) {
-						e.printStackTrace();
 						throw new ConnectionException();
 					}
 				}

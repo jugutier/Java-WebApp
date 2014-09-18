@@ -1,6 +1,5 @@
 package ar.edu.itba.grupo2.utils;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -23,7 +22,7 @@ public class ConnectionUtilities {
 
 		try {
 
-			input = new FileInputStream("config.properties");
+			input = getClass().getClassLoader().getResourceAsStream("config.properties");
 
 			prop.load(input);
 
@@ -42,7 +41,7 @@ public class ConnectionUtilities {
 				try {
 					input.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					throw new ConfigPropertiesException();
 				}
 			}
 		}
@@ -56,23 +55,15 @@ public class ConnectionUtilities {
 	}
 
 	public Connection getConnection() {
-		System.out.println("-------- PostgreSQL "
-				+ "JDBC Connection Testing ------------");
 
 		try {
 
 			Class.forName("org.postgresql.Driver");
 
 		} catch (ClassNotFoundException e) {
-
-			System.out.println("Where is your PostgreSQL JDBC Driver? "
-					+ "Include in your library path!");
-			e.printStackTrace();
 			return null;
 
 		}
-
-		System.out.println("PostgreSQL JDBC Driver Registered!");
 
 		Connection connection = null;
 
@@ -82,9 +73,6 @@ public class ConnectionUtilities {
 					+ database, dbuser, dbpassword);
 
 		} catch (SQLException e) {
-
-			System.out.println("Connection Failed! Check output console");
-			e.printStackTrace();
 			return null;
 
 		}
