@@ -187,32 +187,6 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 
 	}
 
-	@Deprecated
-	public void deleteFilm(Film film) {
-		Connection c = ConnectionUtilities.getInstance().getConnection();
-		PreparedStatement s = null;
-		if (c != null) {
-			try {
-				s = c.prepareStatement("DELETE FROM " + FILM_TABLENAME
-						+ " WHERE ID = ?");
-				s.setInt(1, film.getId());
-				s.executeQuery();
-
-			} catch (SQLException e) {
-				throw new ConnectionException();
-			} finally {
-				if (s != null) {
-					try {
-						s.close();
-						c.close();
-					} catch (SQLException e) {
-						throw new ConnectionException();
-					}
-				}
-			}
-		}
-	}
-
 	@Override
 	public List<Comment> getCommentsForFilm(Film film)
 			throws FilmNotFoundException {
