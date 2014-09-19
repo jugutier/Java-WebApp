@@ -44,7 +44,7 @@
 <c:if test="${empty commentList}">
 	<h4 class="muted">No hay comentarios acerca de esta pel&iacute;cula</h4>
 </c:if>
-
+<hr/>
 <c:choose>
 	<c:when test="${empty loggedInUser}">
 		<h4 class="muted">Debe iniciar sesi&oacute;n para comentar acerca de esta pel&iacute;cula</h4>

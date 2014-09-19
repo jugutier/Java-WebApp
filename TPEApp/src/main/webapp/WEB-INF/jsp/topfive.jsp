@@ -27,16 +27,11 @@
 		</tr>
 
 	</c:forEach>
-	<tr>
-		<td colspan="4">
-		<c:choose>
-			<c:when test="${empty topfive}">
+	<c:if test="${empty topfive}">
+		<tr>
+			<td colspan="4">
 				<h4 class="muted text-center">No hay pel&iacute;culas cargadas</h4>
-			</c:when>
-			<c:otherwise>
-				<a href="filmList" class="btn btn-large btn-block btn-primary" type="button">Ver el listado completo</a>
-			</c:otherwise>
-		</c:choose>
-		</td>
-	</tr>
+			</td>
+		</tr>
+	</c:if>
 </table>

@@ -24,16 +24,11 @@
 			</td>
 		</tr>
 	</c:forEach>
-	<tr>
-		<td colspan="4">
-		<c:choose>
-			<c:when test="${empty newReleases}">
-				<h4 class="muted text-center">No hay estrenos esta semana</h4>
-			</c:when>
-			<c:otherwise>
-				<a href="filmList" class="btn btn-large btn-block btn-primary" type="button">Ver el listado completo</a>
-			</c:otherwise>
-		</c:choose>
-		</td>
-	</tr>
+	<c:if test="${empty newReleases}">
+		<tr>
+			<td colspan="4">				
+					<h4 class="muted text-center">No hay estrenos esta semana</h4>		
+			</td>
+		</tr>
+	</c:if>
 </table>

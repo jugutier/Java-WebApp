@@ -1,6 +1,7 @@
 package ar.edu.itba.grupo2.web;
 
 import java.io.IOException;
+import java.rmi.UnexpectedException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -57,10 +58,7 @@ public class FilmDetails extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		
-		req.setCharacterEncoding("UTF-8");
-		
+			throws ServletException, IOException {		
 		FilmService filmService = FilmService.getInstance();
 		Film film;
 		User user = (User)req.getSession(false).getAttribute("user");
@@ -75,17 +73,11 @@ public class FilmDetails extends HttpServlet{
 					.film(film)
 					.build();
 				filmService.addComment(comment);
-				System.out.println(film + " - " + comment);
-				req.setAttribute("newComment", "true");
+				req.setAttribute("newComment", true);
 			}
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (FilmNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+			throw new UnexpectedException("Internal Error");
+		}		
 		//resp.sendRedirect(arg0);
 		this.doGet(req, resp);
 	}

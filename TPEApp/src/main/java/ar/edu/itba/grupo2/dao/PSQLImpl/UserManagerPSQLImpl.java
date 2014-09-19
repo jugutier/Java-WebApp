@@ -129,7 +129,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 						+ " WHERE USER_ID = ?");
 				s.setInt(1, user.getId());
 				ResultSet rs = s.executeQuery();
-				ret = new ArrayList<Comment>(rs.getFetchSize());
+				ret = new ArrayList<Comment>();
 				while (rs.next()) {
 					Comment comment = new Comment.Builder()
 							.id(rs.getInt("ID"))

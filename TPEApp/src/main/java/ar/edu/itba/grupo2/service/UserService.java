@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import ar.edu.itba.grupo2.dao.PSQLImpl.UserManagerPSQLImpl;
-import ar.edu.itba.grupo2.dao.exceptions.ConnectionException;
 import ar.edu.itba.grupo2.dao.exceptions.RegisterErrorException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.User;
