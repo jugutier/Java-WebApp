@@ -11,7 +11,6 @@ import java.util.List;
 
 import ar.edu.itba.grupo2.dao.FilmManagerDAO;
 import ar.edu.itba.grupo2.dao.exceptions.ConnectionException;
-import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.utils.ConnectionUtilities;
@@ -124,6 +123,9 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 
 	@Override
 	public Film saveFilm(Film film) {
+		if (film == null) {
+			throw new IllegalArgumentException();
+		}
 		Connection c = ConnectionUtilities.getInstance().getConnection();
 		PreparedStatement s = null;
 		if (c != null) {
@@ -188,8 +190,10 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 	}
 
 	@Override
-	public List<Comment> getCommentsForFilm(Film film)
-			throws FilmNotFoundException {
+	public List<Comment> getCommentsForFilm(Film film) {
+		if (film == null) {
+			throw new IllegalArgumentException();
+		}
 		Connection c = ConnectionUtilities.getInstance().getConnection();
 		PreparedStatement s = null;
 		List<Comment> ret = null;
@@ -199,7 +203,11 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 						+ " WHERE FILM_ID = ?");
 				s.setInt(1, film.getId());
 				ResultSet rs = s.executeQuery();
-				ret = new ArrayList<Comment>(rs.getFetchSize());
+				int fetchSize = rs.getFetchSize();
+				if (fetchSize == 0) {
+					return null;
+				}
+				ret = new ArrayList<Comment>(fetchSize);
 				while (rs.next()) {
 					Comment comment = new Comment.Builder()
 							.id(rs.getInt("ID"))
@@ -235,7 +243,10 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 	 * creationDate is set to 'now' by the database
 	 */
 	@Override
-	public Comment saveComment(Comment comment){
+	public Comment saveComment(Comment comment) {
+		if (comment == null) {
+			throw new IllegalArgumentException();
+		}
 		Connection c = ConnectionUtilities.getInstance().getConnection();
 		PreparedStatement s = null;
 		if (c != null) {

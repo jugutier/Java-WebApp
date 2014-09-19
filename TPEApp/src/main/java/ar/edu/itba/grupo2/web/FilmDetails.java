@@ -29,33 +29,31 @@ public class FilmDetails extends HttpServlet{
 		FilmService filmService = FilmService.getInstance();
 		String strId = req.getParameter("id");
 		Film film = null;
-		
-		try{
-			if (strId == null) {
-				throw new FilmNotFoundException();
+		if (strId != null) {
+			try{
+				int id = Integer.valueOf(req.getParameter("id"));
+				film = filmService.getFilmById(id);
+				User user = (User)req.getSession(false).getAttribute("user");
+				
+				final List<Comment> commentList = filmService.getCommentsForFilm(film);
+				
+				req.setAttribute("commentList", commentList);
+				req.setAttribute("film", film);
+				
+				if (!filmService.userCanComment(film, user)) {
+					req.setAttribute("userCanComment", false);
+				}
+				else {
+					req.setAttribute("userCanComment", true);
+				}
+	
 			}
-			int id = Integer.valueOf(req.getParameter("id"));
-			film = filmService.getFilmById(id);
-			User user = (User)req.getSession(false).getAttribute("user");
-			
-			final List<Comment> commentList = filmService.getCommentsForFilm(film);
-			
-			req.setAttribute("commentList", commentList);
-			req.setAttribute("film", film);
-			
-			if (!filmService.userCanComment(film, user)) {
-				req.setAttribute("userCanComment", false);
+			catch(FilmNotFoundException e) {
+				film = null;
 			}
-			else {
-				req.setAttribute("userCanComment", true);
+			catch(NumberFormatException e) {
+				film = null;
 			}
-
-		}
-		catch(FilmNotFoundException e) {
-			film = null;
-		}
-		catch(NumberFormatException e) {
-			film = null;
 		}
 		
 		req.getRequestDispatcher("/WEB-INF/jsp/filmDetails.jsp").forward(req, resp);
