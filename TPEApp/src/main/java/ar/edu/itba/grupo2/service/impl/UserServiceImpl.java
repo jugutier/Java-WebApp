@@ -26,8 +26,11 @@ public class UserServiceImpl implements UserService {
 		return user_service;
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.UserService#logIn(java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see ar.edu.itba.grupo2.service.impl.UserService#logIn(java.lang.String,
+	 * java.lang.String)
 	 */
 	@Override
 	public User logIn(String email, String password) {
@@ -43,51 +46,54 @@ public class UserServiceImpl implements UserService {
 		return loggedUser;
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.UserService#registerUser(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.util.Date, java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ar.edu.itba.grupo2.service.impl.UserService#registerUser(java.lang.String
+	 * , java.lang.String, java.lang.String, java.lang.String, java.lang.String,
+	 * java.util.Date, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public User registerUser(String email, String password,
 			String passwordConfirm, String name, String lastname,
-			Date birthdate, String secretQuestion, String secretAnswer)
-			throws RegisterErrorException {
+			Date birthdate, String secretQuestion, String secretAnswer) {
 		User newUser;
-		List<String> errors = new ArrayList<String>();
-
-		if (!ValidationUtilities.paramEmpty(email)
-				&& ValidationUtilities.isEmail(email)) {
-			if (UserManagerPSQLImpl.getInstance().getUserByEmail(email) != null) {
-				errors.add("MailUsed");
-			}
-		}
 		if (ValidationUtilities.paramEmpty(name)
 				|| ValidationUtilities.paramEmpty(lastname)
 				|| ValidationUtilities.paramEmpty(secretQuestion)
 				|| ValidationUtilities.paramEmpty(secretAnswer)
 				|| ValidationUtilities.paramEmpty(password)
-				|| !(password.equals(passwordConfirm)) || (birthdate == null)) {
-
+				|| !(password.equals(passwordConfirm))
+				|| (birthdate == null)
+				|| ValidationUtilities.paramEmpty(email)
+				|| !ValidationUtilities.isEmail(email)
+				|| (UserManagerPSQLImpl.getInstance().getUserByEmail(email) != null)) {
+			throw new IllegalArgumentException();
 		}
-		if (errors.size() == 0) {
-			newUser = new User.Builder().email(email).lastname(lastname)
-					.name(name).password(password).birthdate(birthdate)
-					.secretQuestion(secretQuestion).secretAnswer(secretAnswer)
-					.build();
+		newUser = new User.Builder().email(email).lastname(lastname).name(name)
+				.password(password).birthdate(birthdate)
+				.secretQuestion(secretQuestion).secretAnswer(secretAnswer)
+				.build();
 
-			UserManagerPSQLImpl.getInstance().saveUser(newUser);
-		} else {
-			throw new RegisterErrorException(errors);
-		}
+		UserManagerPSQLImpl.getInstance().saveUser(newUser);
 		return newUser;
-
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.UserService#getCommentsByUser(ar.edu.itba.grupo2.model.User)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * ar.edu.itba.grupo2.service.impl.UserService#getCommentsByUser(ar.edu.
+	 * itba.grupo2.model.User)
 	 */
 	@Override
 	public List<Comment> getCommentsByUser(final User user) {
 		return UserManagerPSQLImpl.getInstance().getCommentsByUser(user);
+	}
+
+	public boolean existsUser(String email) {
+		return UserManagerPSQLImpl.getInstance().getUserByEmail(email) != null;
 	}
 
 }

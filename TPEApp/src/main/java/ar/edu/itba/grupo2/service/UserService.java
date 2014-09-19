@@ -13,9 +13,10 @@ public interface UserService {
 
 	public abstract User registerUser(String email, String password,
 			String passwordConfirm, String name, String lastname,
-			Date birthdate, String secretQuestion, String secretAnswer)
-			throws RegisterErrorException;
+			Date birthdate, String secretQuestion, String secretAnswer);
 
 	public abstract List<Comment> getCommentsByUser(User user);
+	
+	public abstract boolean existsUser(String email);
 
 }

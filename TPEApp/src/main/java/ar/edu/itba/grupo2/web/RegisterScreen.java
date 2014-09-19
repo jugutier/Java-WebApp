@@ -47,20 +47,15 @@ public class RegisterScreen extends HttpServlet {
 		} finally {
 			errors.addAll(validate(email, name, lastname, password,
 					passwordConfirm, secretQuestion, secretAnswer, birthdate));
-			try {
+			if(errors.size()!=0){
+			req.setAttribute("errors", errors);
+			this.doGet(req, resp);
+			}
 				UserServiceImpl.getInstance().registerUser(email, password,
 						passwordConfirm, name, lastname, birthdate,
 						secretQuestion, secretAnswer);
-			} catch (RegisterErrorException e) {
-				errors.addAll(e.getErrors());
-			}
-			req.setAttribute("errors", errors);
-			if (errors.size() != 0) {
-				this.doGet(req, resp);
-			} else {
 				resp.sendRedirect("home");
 			}
-		}
 	}
 
 	private List<String> validate(String email, String name, String lastname,
@@ -92,6 +87,10 @@ public class RegisterScreen extends HttpServlet {
 		if (birthdate == null) {
 			errors.add("NoDate");
 		}
+		if(UserServiceImpl.getInstance().existsUser(email)){
+			errors.add("MailUsed");
+		}
+		
 
 		return errors;
 
