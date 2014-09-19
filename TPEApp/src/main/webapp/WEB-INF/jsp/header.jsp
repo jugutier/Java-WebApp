@@ -28,6 +28,12 @@
 			<div class="navbar-inner">
 				<div class="container-narrow">
 					<a class="brand" href="home">GAJAmdb</a>
+					<ul class="nav nav-pills">
+  						<li>
+  							<a href="filmList" type="button">Pel&iacute;culas</a>
+  						</li>
+  					</ul>
+					
 					<ul class="nav pull-right">
 						<c:choose>
 						    <c:when test="${empty loggedInUser}">
