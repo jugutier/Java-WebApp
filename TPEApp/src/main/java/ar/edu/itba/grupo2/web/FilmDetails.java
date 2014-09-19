@@ -83,7 +83,8 @@ public class FilmDetails extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+		
+		//resp.sendRedirect(arg0);
 		this.doGet(req, resp);
 	}
 }
