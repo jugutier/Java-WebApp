@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.grupo2.service.UserManager;
+import ar.edu.itba.grupo2.service.impl.UserManagerImpl;
 
 public class GuestsOnlyFilter implements Filter {
 
@@ -20,7 +21,7 @@ public class GuestsOnlyFilter implements Filter {
 		
 		HttpServletResponse response = (HttpServletResponse) resp;
 
-		UserManager userManager = new UserManager((HttpServletRequest)req);
+		UserManager userManager = new UserManagerImpl((HttpServletRequest)req);
 		
 		if (userManager.existsUser()) {
 			response.sendRedirect(response.encodeRedirectURL("home"));

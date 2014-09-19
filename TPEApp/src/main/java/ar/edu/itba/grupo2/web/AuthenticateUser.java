@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.service.UserManager;
 import ar.edu.itba.grupo2.service.UserService;
+import ar.edu.itba.grupo2.service.impl.UserManagerImpl;
+import ar.edu.itba.grupo2.service.impl.UserServiceImpl;
 
 @SuppressWarnings("serial")
 public class AuthenticateUser extends HttpServlet{
@@ -18,7 +20,7 @@ public class AuthenticateUser extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
 		User loggedUser = null;
-		UserService userService = UserService.getInstance();
+		UserService userService = UserServiceImpl.getInstance();
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
 		String fromPage = req.getParameter("fromPage");
@@ -27,7 +29,7 @@ public class AuthenticateUser extends HttpServlet{
 			fromPage = "home";
 		}
 	
-		UserManager userManager = new UserManager(req);
+		UserManager userManager = new UserManagerImpl(req);
 		
 		loggedUser = userService.logIn(email, password);
 		

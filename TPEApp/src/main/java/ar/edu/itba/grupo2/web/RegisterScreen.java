@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.grupo2.dao.exceptions.RegisterErrorException;
-import ar.edu.itba.grupo2.service.UserService;
+import ar.edu.itba.grupo2.service.impl.UserServiceImpl;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
 
 @SuppressWarnings("serial")
@@ -48,7 +48,7 @@ public class RegisterScreen extends HttpServlet {
 			errors.addAll(validate(email, name, lastname, password,
 					passwordConfirm, secretQuestion, secretAnswer, birthdate));
 			try {
-				UserService.getInstance().registerUser(email, password,
+				UserServiceImpl.getInstance().registerUser(email, password,
 						passwordConfirm, name, lastname, birthdate,
 						secretQuestion, secretAnswer);
 			} catch (RegisterErrorException e) {

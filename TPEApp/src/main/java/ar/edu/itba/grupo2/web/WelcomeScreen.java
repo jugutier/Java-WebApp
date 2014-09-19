@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.service.FilmService;
+import ar.edu.itba.grupo2.service.impl.FilmServiceImpl;
 
 @SuppressWarnings("serial")
 public class WelcomeScreen extends HttpServlet {
@@ -23,7 +24,7 @@ public class WelcomeScreen extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		FilmService filmService = FilmService.getInstance();
+		FilmService filmService = FilmServiceImpl.getInstance();
 
 		List<Film> filmList = filmService.getAllFilms();	
 		

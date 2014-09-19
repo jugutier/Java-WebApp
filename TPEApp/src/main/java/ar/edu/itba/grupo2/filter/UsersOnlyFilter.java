@@ -11,13 +11,14 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import ar.edu.itba.grupo2.service.UserManager;
+import ar.edu.itba.grupo2.service.impl.UserManagerImpl;
 
 public class UsersOnlyFilter implements Filter {
 
 	public void doFilter(ServletRequest req, ServletResponse resp,
             FilterChain chain) throws IOException, ServletException {
 
-		UserManager userManager = new UserManager((HttpServletRequest)req);
+		UserManager userManager = new UserManagerImpl((HttpServletRequest)req);
 		
 		if (userManager.existsUser()) {
 			chain.doFilter(req, resp);

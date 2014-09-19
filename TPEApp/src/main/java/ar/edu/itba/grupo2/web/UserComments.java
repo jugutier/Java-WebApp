@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.service.UserService;
+import ar.edu.itba.grupo2.service.impl.UserServiceImpl;
 
 @SuppressWarnings("serial")
 public class UserComments extends HttpServlet {
@@ -19,7 +20,7 @@ public class UserComments extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
 		
-		UserService userService = UserService.getInstance();
+		UserService userService = UserServiceImpl.getInstance();
 		User user = (User)req.getSession().getAttribute("user");
 		
 		List<Comment> commentList = userService.getCommentsByUser(user);

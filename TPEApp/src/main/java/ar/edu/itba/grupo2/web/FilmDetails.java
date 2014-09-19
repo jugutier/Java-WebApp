@@ -14,6 +14,7 @@ import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.service.FilmService;
+import ar.edu.itba.grupo2.service.impl.FilmServiceImpl;
 
 @SuppressWarnings("serial")
 public class FilmDetails extends HttpServlet{
@@ -27,7 +28,7 @@ public class FilmDetails extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
 		
-		FilmService filmService = FilmService.getInstance();
+		FilmService filmService = FilmServiceImpl.getInstance();
 		String strId = req.getParameter("id");
 		Film film = null;
 		if (strId != null) {
@@ -59,7 +60,7 @@ public class FilmDetails extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {		
-		FilmService filmService = FilmService.getInstance();
+		FilmService filmService = FilmServiceImpl.getInstance();
 		Film film;
 		User user = (User)req.getSession(false).getAttribute("user");
 		

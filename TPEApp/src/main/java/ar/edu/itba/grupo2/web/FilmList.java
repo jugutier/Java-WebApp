@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.service.FilmService;
 import ar.edu.itba.grupo2.service.UserManager;
+import ar.edu.itba.grupo2.service.impl.FilmServiceImpl;
+import ar.edu.itba.grupo2.service.impl.UserManagerImpl;
 
 @SuppressWarnings("serial")
 public class FilmList extends HttpServlet{
@@ -24,11 +26,11 @@ public class FilmList extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
 
-		FilmService filmService = FilmService.getInstance();
+		FilmService filmService = FilmServiceImpl.getInstance();
 		req.setCharacterEncoding("UTF-8");
 		String genreFilter = req.getParameter("genre");
 		String directorFilter = req.getParameter("director");
-		UserManager userManager = new UserManager(req);
+		UserManager userManager = new UserManagerImpl(req);
 		
 		List<Film> filmList = filmService.orderByReleaseDate(filmService.getAllFilms());
 		List<String> genreList = filmService.getGenres();
