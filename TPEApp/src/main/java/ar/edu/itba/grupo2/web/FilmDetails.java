@@ -18,7 +18,7 @@ import ar.edu.itba.grupo2.service.FilmService;
 public class FilmDetails extends HttpServlet{
 	
 	@Override
-	public void init() throws ServletException{
+	public void init() throws ServletException {
 		super.init();
 	}
 	
@@ -27,27 +27,35 @@ public class FilmDetails extends HttpServlet{
 	throws ServletException, IOException {
 		
 		FilmService filmService = FilmService.getInstance();
-		final int id = Integer.valueOf(req.getParameter("id"));
+		String strId = req.getParameter("id");
+		Film film = null;
 		
 		try{
-			final Film film = filmService.getFilmById(id);
+			if (strId == null) {
+				throw new FilmNotFoundException();
+			}
+			int id = Integer.valueOf(req.getParameter("id"));
+			film = filmService.getFilmById(id);
 			User user = (User)req.getSession(false).getAttribute("user");
 			
-			System.out.println("GENRE:"+film.getGenre());
 			final List<Comment> commentList = filmService.getCommentsForFilm(film);
 			
 			req.setAttribute("commentList", commentList);
 			req.setAttribute("film", film);
 			
-			if(!filmService.userCanComment(film, user)){
+			if (!filmService.userCanComment(film, user)) {
 				req.setAttribute("userCanComment", false);
-			}else{
+			}
+			else {
 				req.setAttribute("userCanComment", true);
 			}
-						
+
 		}
-		catch(FilmNotFoundException e){
-			
+		catch(FilmNotFoundException e) {
+			film = null;
+		}
+		catch(NumberFormatException e) {
+			film = null;
 		}
 		
 		req.getRequestDispatcher("/WEB-INF/jsp/filmDetails.jsp").forward(req, resp);

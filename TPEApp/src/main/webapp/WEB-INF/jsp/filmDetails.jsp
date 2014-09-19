@@ -1,5 +1,12 @@
 <%@ include file="header.jsp" %>
 
+<c:choose>
+	<c:when test="${empty film}">
+		<%@ include file="error/film-not-found-error.jsp" %>
+	</c:when>
+	<c:otherwise>
+
+
 <h2><c:out value="${film.name}"/></h2>
 
 
@@ -47,6 +54,9 @@
 	</c:when>
 	<c:otherwise>
 		<%@ include file="newComment.jsp" %>
+	</c:otherwise>
+</c:choose>
+
 	</c:otherwise>
 </c:choose>
 
