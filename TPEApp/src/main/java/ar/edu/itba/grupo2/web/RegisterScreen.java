@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.grupo2.dao.exceptions.RegisterErrorException;
 import ar.edu.itba.grupo2.service.UserService;
+import ar.edu.itba.grupo2.utils.ValidationUtilities;
 
 @SuppressWarnings("serial")
 public class RegisterScreen extends HttpServlet {
@@ -40,11 +41,13 @@ public class RegisterScreen extends HttpServlet {
 		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-mm-dd");
 		Date birthdate = null;
 		try {
+			System.out.println(req.getParameter("birthdate"));
 			birthdate = outputDateFormat.parse(req.getParameter("birthdate"));
 		} catch (ParseException e) {
 			errors.add("WrongDate");
-			this.doGet(req, resp);
 		} finally {
+			errors.addAll(validate(email, name, lastname, password,
+					passwordConfirm, secretQuestion, secretAnswer, birthdate));
 			try {
 				UserService.getInstance().registerUser(email, password,
 						passwordConfirm, name, lastname, birthdate,
@@ -53,13 +56,46 @@ public class RegisterScreen extends HttpServlet {
 				errors.addAll(e.getErrors());
 			}
 			req.setAttribute("errors", errors);
-			req.setAttribute("status", "auth_fail");
 			if (errors.size() != 0) {
 				this.doGet(req, resp);
 			} else {
 				resp.sendRedirect("home");
 			}
 		}
+	}
+
+	private List<String> validate(String email, String name, String lastname,
+			String password, String passwordConfirm, String secretQuestion,
+			String secretAnswer, Date birthdate) {
+		List<String> errors = new ArrayList<String>();
+		if (ValidationUtilities.paramEmpty(email)) {
+			errors.add("NoMail");
+		} else if (ValidationUtilities.isEmail(email)) {
+			errors.add("InvalidMail");
+		}
+		if (ValidationUtilities.paramEmpty(name)) {
+			errors.add("NoName");
+		}
+		if (ValidationUtilities.paramEmpty(lastname)) {
+			errors.add("NoLastname");
+		}
+		if (ValidationUtilities.paramEmpty(password)) {
+			errors.add("NoPass");
+		} else if (!password.equals(passwordConfirm)) {
+			errors.add("NoCoincidence");
+		}
+		if (ValidationUtilities.paramEmpty(secretQuestion)) {
+			errors.add("NoSQ");
+		}
+		if (ValidationUtilities.paramEmpty(secretAnswer)) {
+			errors.add("NoSA");
+		}
+		if (birthdate == null) {
+			errors.add("NoDate");
+		}
+
+		return errors;
 
 	}
+
 }
