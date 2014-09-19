@@ -38,10 +38,9 @@ public class RegisterScreen extends HttpServlet {
 		String passwordConfirm = (String) req.getParameter("passwordConfirm");
 		String secretQuestion = (String) req.getParameter("secretQuestion");
 		String secretAnswer = (String) req.getParameter("secretAnswer");
-		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date birthdate = null;
 		try {
-			System.out.println(req.getParameter("birthdate"));
 			birthdate = outputDateFormat.parse(req.getParameter("birthdate"));
 		} catch (ParseException e) {
 			errors.add("WrongDate");
