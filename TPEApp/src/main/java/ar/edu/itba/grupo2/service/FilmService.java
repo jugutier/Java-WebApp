@@ -46,12 +46,13 @@ public class FilmService {
 		return ret;
 	}
 
-	public List<Comment> getCommentsForFilm(Film film)
+	public List<Comment> getCommentsForFilm(final Film film)
 			throws FilmNotFoundException {
-		List<Comment> ret = filmManager.getCommentsForFilm(film);
-		if (ret == null) {
-			throw new FilmNotFoundException();
+		if (film == null) {
+			throw new IllegalArgumentException();
 		}
+		getFilmById(film.getId());// validate for non existent film
+		List<Comment> ret = filmManager.getCommentsForFilm(film);
 		return ret;
 	}
 
@@ -64,10 +65,13 @@ public class FilmService {
 		return ret;
 	}
 
-	public boolean userHasCommentedFilm(Film film, User user)
+	public boolean userHasCommentedFilm(final Film film, final User user)
 			throws FilmNotFoundException {
+		if (film == null || user == null) {
+			throw new IllegalArgumentException();
+		}
 		List<Comment> comments = filmManager.getCommentsForFilm(film);
-		if(comments == null){
+		if (comments == null) {
 			throw new FilmNotFoundException();
 		}
 		for (Comment c : comments) {
@@ -80,6 +84,9 @@ public class FilmService {
 
 	public List<Film> filterTopFilms(final List<Film> filmList,
 			final int topAmount) {
+		if (filmList == null || topAmount <= 0) {
+			throw new IllegalArgumentException();
+		}
 		final List<Film> result = new ArrayList<Film>(topAmount);
 		int originalSize = filmList.size();
 		int top = (topAmount > originalSize) ? originalSize : topAmount;
@@ -102,6 +109,9 @@ public class FilmService {
 
 	public List<Film> filterRecentlyAdded(final List<Film> filmList,
 			final int amount) {
+		if (filmList == null || amount <= 0) {
+			throw new IllegalArgumentException();
+		}
 		final List<Film> result = new ArrayList<Film>(amount);
 		int originalSize = filmList.size();
 		int top = (amount > originalSize) ? originalSize : amount;
@@ -125,6 +135,9 @@ public class FilmService {
 
 	public List<Film> filterNewReleases(final List<Film> filmList,
 			final int dayTolerance) {
+		if (filmList == null || dayTolerance < 0) {
+			throw new IllegalArgumentException();
+		}
 		final List<Film> result = new ArrayList<Film>();
 		final Date today = new Date();
 		long startTime = 0;
@@ -148,6 +161,9 @@ public class FilmService {
 
 	public List<Film> filterByGenre(final List<Film> filmList,
 			final String genre) {
+		if (filmList == null || genre == null) {
+			throw new IllegalArgumentException();
+		}
 		final List<Film> result = new ArrayList<Film>();
 
 		boolean dontFilter = (genre == null || genre.isEmpty());
@@ -169,6 +185,9 @@ public class FilmService {
 
 	public List<Film> filterByDirector(final List<Film> filmList,
 			final String director) {
+		if (filmList == null || director == null) {
+			throw new IllegalArgumentException();
+		}
 		final List<Film> result = new ArrayList<Film>();
 		boolean dontFilter = (director == null || director.isEmpty());
 
@@ -186,6 +205,9 @@ public class FilmService {
 	}
 
 	public List<Film> orderByReleaseDate(final List<Film> filmList) {
+		if (filmList == null) {
+			throw new IllegalArgumentException();
+		}
 		final List<Film> result = new ArrayList<Film>();
 
 		for (Film f : filmList) {
@@ -204,13 +226,19 @@ public class FilmService {
 		return result;
 	}
 
-	public Comment saveComment(Comment comment) {
+	public Comment saveComment(final Comment comment) {
+		if (comment == null) {
+			throw new IllegalArgumentException();
+		}
 		filmManager.saveFilm(comment.getFilm());
 		return filmManager.saveComment(comment);
 	}
 
 	public boolean userCanComment(final Film film, final User user)
 			throws FilmNotFoundException {
+		if (film == null || user == null) {
+			throw new IllegalArgumentException();
+		}
 		if (userHasCommentedFilm(film, user)) {
 			return false;
 		} else if (film.isReleased() || user.isVip()) {
@@ -219,7 +247,7 @@ public class FilmService {
 		return false;
 	}
 
-	public Comment addComment(Comment comment) {
+	public Comment addComment(final Comment comment) {
 		if (comment == null || comment.getText() == "") {
 			throw new IllegalArgumentException();
 		}

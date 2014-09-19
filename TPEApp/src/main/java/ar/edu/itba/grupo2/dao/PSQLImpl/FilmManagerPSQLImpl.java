@@ -218,10 +218,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 							.build();
 
 					ret.add(comment);
-				}
-				if(ret.size() == 0){
-					ret = null;
-				}				
+				}			
 			} catch (SQLException e) {
 				throw new ConnectionException();
 			} finally {
