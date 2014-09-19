@@ -39,12 +39,20 @@ public class FilmService {
 	}
 
 	public Film getFilmById(final int id) throws FilmNotFoundException {
-		return filmManager.getFilmById(id);
+		Film ret = filmManager.getFilmById(id);
+		if (ret == null) {
+			throw new FilmNotFoundException();
+		}
+		return ret;
 	}
 
 	public List<Comment> getCommentsForFilm(Film film)
 			throws FilmNotFoundException {
-		return filmManager.getCommentsForFilm(film);
+		List<Comment> ret = filmManager.getCommentsForFilm(film);
+		if (ret == null) {
+			throw new FilmNotFoundException();
+		}
+		return ret;
 	}
 
 	public List<String> getGenres() {
@@ -59,6 +67,9 @@ public class FilmService {
 	public boolean userHasCommentedFilm(Film film, User user)
 			throws FilmNotFoundException {
 		List<Comment> comments = filmManager.getCommentsForFilm(film);
+		if(comments == null){
+			throw new FilmNotFoundException();
+		}
 		for (Comment c : comments) {
 			if (c.getUser().equals(user)) {
 				return true;
@@ -69,7 +80,7 @@ public class FilmService {
 
 	public List<Film> filterTopFilms(final List<Film> filmList,
 			final int topAmount) {
-		final List<Film> result = new ArrayList<Film>();
+		final List<Film> result = new ArrayList<Film>(topAmount);
 		int originalSize = filmList.size();
 		int top = (topAmount > originalSize) ? originalSize : topAmount;
 
@@ -91,7 +102,7 @@ public class FilmService {
 
 	public List<Film> filterRecentlyAdded(final List<Film> filmList,
 			final int amount) {
-		final List<Film> result = new ArrayList<Film>();
+		final List<Film> result = new ArrayList<Film>(amount);
 		int originalSize = filmList.size();
 		int top = (amount > originalSize) ? originalSize : amount;
 
@@ -207,10 +218,10 @@ public class FilmService {
 		}
 		return false;
 	}
-	
+
 	public Comment addComment(Comment comment) {
-		if(comment.getText() == "") {
-			return null;
+		if (comment == null || comment.getText() == "") {
+			throw new IllegalArgumentException();
 		}
 		return filmManager.saveComment(comment);
 	}
