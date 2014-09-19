@@ -1,11 +1,9 @@
 package ar.edu.itba.grupo2.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import ar.edu.itba.grupo2.dao.PSQLImpl.UserManagerPSQLImpl;
-import ar.edu.itba.grupo2.dao.exceptions.RegisterErrorException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.service.UserService;
@@ -26,12 +24,6 @@ public class UserServiceImpl implements UserService {
 		return user_service;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see ar.edu.itba.grupo2.service.impl.UserService#logIn(java.lang.String,
-	 * java.lang.String)
-	 */
 	@Override
 	public User logIn(String email, String password) {
 		User loggedUser = null;
@@ -46,14 +38,6 @@ public class UserServiceImpl implements UserService {
 		return loggedUser;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ar.edu.itba.grupo2.service.impl.UserService#registerUser(java.lang.String
-	 * , java.lang.String, java.lang.String, java.lang.String, java.lang.String,
-	 * java.util.Date, java.lang.String, java.lang.String)
-	 */
 	@Override
 	public User registerUser(String email, String password,
 			String passwordConfirm, String name, String lastname,
@@ -79,14 +63,6 @@ public class UserServiceImpl implements UserService {
 		UserManagerPSQLImpl.getInstance().saveUser(newUser);
 		return newUser;
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * ar.edu.itba.grupo2.service.impl.UserService#getCommentsByUser(ar.edu.
-	 * itba.grupo2.model.User)
-	 */
 	@Override
 	public List<Comment> getCommentsByUser(final User user) {
 		return UserManagerPSQLImpl.getInstance().getCommentsByUser(user);

@@ -3,7 +3,6 @@ package ar.edu.itba.grupo2.service;
 import java.util.Date;
 import java.util.List;
 
-import ar.edu.itba.grupo2.dao.exceptions.RegisterErrorException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.User;
 

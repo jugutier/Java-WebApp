@@ -13,19 +13,13 @@ public class UserManagerImpl implements UserManager {
 	public UserManagerImpl(HttpServletRequest request) {
 		this.request = request;
 	}
-	
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.UserManager#existsUser()
-	 */
+
 	@Override
 	public boolean existsUser() {
 		HttpSession session = request.getSession(false);
 		return session != null && (session.getAttribute(USER) != null);
 	}
-	
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.UserManager#getName()
-	 */
+
 	@Override
 	public String getName() {
 		HttpSession session = request.getSession(false);
@@ -40,20 +34,14 @@ public class UserManagerImpl implements UserManager {
 			return null;
 		}
 	}
-	
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.UserManager#setUser(ar.edu.itba.grupo2.model.User)
-	 */
+
 	@Override
 	public void setUser(User loggedUser) {
 		HttpSession session = request.getSession();
 		session.setAttribute(USER, loggedUser);
 	
 	}
-	
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.UserManager#resetUser(java.lang.String)
-	 */
+
 	@Override
 	public void resetUser(String username) {
 		HttpSession session = request.getSession(false);

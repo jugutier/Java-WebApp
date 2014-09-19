@@ -32,7 +32,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 	}
 
 	@Override
-	public User getUserById(int id) throws ConnectionException {
+	public User getUserById(int id){
 		User newUser = null;
 		try {
 			Connection c = ConnectionUtilities.getInstance().getConnection();
@@ -55,7 +55,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 	}
 
 	@Override
-	public User getUserByEmail(String email) throws ConnectionException {
+	public User getUserByEmail(String email){
 		User newUser = null;
 		try {
 			Connection c = ConnectionUtilities.getInstance().getConnection();
@@ -81,7 +81,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 	}
 
 	@Override
-	public User saveUser(User user) throws ConnectionException {
+	public User saveUser(User user){
 		try {
 			Connection c = ConnectionUtilities.getInstance().getConnection();
 			PreparedStatement s;
@@ -118,8 +118,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 	}
 
 	@Override
-	public List<Comment> getCommentsByUser(User user)
-			throws ConnectionException {
+	public List<Comment> getCommentsByUser(User user){
 		Connection c = ConnectionUtilities.getInstance().getConnection();
 		PreparedStatement s = null;
 		List<Comment> ret = null;
