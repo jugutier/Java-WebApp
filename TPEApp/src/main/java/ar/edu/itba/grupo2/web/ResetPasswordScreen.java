@@ -36,11 +36,34 @@ public class ResetPasswordScreen extends HttpServlet {
 		String answer = req.getParameter("answer");
 		
 		if (email != null) {
-			if (answer != null)
 			user = u.getUserByEmail(email);
-			req.setAttribute("email", email);
-			req.setAttribute("secretQuestion", user.getSecretQuestion());
-			req.setAttribute("stage", "question");
+			
+			if (user == null) {
+				// invalid email
+			}
+			else {
+				if (answer != null && password != null && passwordConfirm != null) {
+					// Do password change
+					if (user.getSecretAnswer().compareTo(answer) == 0 && password.compareTo(passwordConfirm) == 0) {
+						// Password successfully changed
+						resp.sendRedirect(resp.encodeRedirectURL("filmList"));
+						user.setPassword(password);
+						u.saveUser(user);
+						return;
+					}
+					else{
+						// Wrong answer
+						resp.sendRedirect(resp.encodeRedirectURL("home"));
+						return;
+					}
+				}
+				else {
+					// Display Secret Question
+					req.setAttribute("email", email);
+					req.setAttribute("secretQuestion", user.getSecretQuestion());
+					req.setAttribute("stage", "question");
+				}
+			}
 		}
 		else {
 			doGet(req, resp);
