@@ -10,6 +10,8 @@ public interface UserManager {
 
 	public abstract void setUser(User loggedUser);
 
-	public abstract void resetUser(String username);
+	public abstract void resetUser();
+	
+	public abstract User getUser();
 
 }
