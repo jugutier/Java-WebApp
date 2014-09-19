@@ -27,13 +27,8 @@ public class ConnectionUtilities {
 			database = prop.getProperty("database");
 			dbuser = prop.getProperty("dbuser");
 			dbpassword = prop.getProperty("dbpassword");
-
-			System.out.println(database);
-			System.out.println(dbuser);
-			System.out.println(dbpassword);
-
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			throw new ConfigPropertiesException();
 		} finally {
 			if (input != null) {
 				try {

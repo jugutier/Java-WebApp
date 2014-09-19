@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>El TPE de PAW</title>
+		<title>GAJAmdb</title>
 
 		<link href="css/bootstrap.css" rel="stylesheet">
 		<link href="css/bootstrap-responsive.css" rel="stylesheet">
@@ -27,7 +27,7 @@
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container-narrow">
-					<a class="brand" href="home">El TPE de PAW</a>
+					<a class="brand" href="home">GAJAmdb</a>
 					<ul class="nav pull-right">
 						<c:choose>
 						    <c:when test="${empty loggedInUser}">

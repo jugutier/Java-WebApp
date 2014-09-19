@@ -203,11 +203,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 						+ " WHERE FILM_ID = ?");
 				s.setInt(1, film.getId());
 				ResultSet rs = s.executeQuery();
-				int fetchSize = rs.getFetchSize();
-				if (fetchSize == 0) {
-					return null;
-				}
-				ret = new ArrayList<Comment>(fetchSize);
+				ret = new ArrayList<Comment>();
 				while (rs.next()) {
 					Comment comment = new Comment.Builder()
 							.id(rs.getInt("ID"))
@@ -223,6 +219,9 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 
 					ret.add(comment);
 				}
+				if(ret.size() == 0){
+					ret = null;
+				}				
 			} catch (SQLException e) {
 				throw new ConnectionException();
 			} finally {
