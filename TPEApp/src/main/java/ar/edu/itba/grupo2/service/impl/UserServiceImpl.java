@@ -26,9 +26,6 @@ public class UserServiceImpl implements UserService {
 		return user_service;
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.UserService#logIn(java.lang.String, java.lang.String)
-	 */
 	@Override
 	public User logIn(String email, String password) {
 		User loggedUser = null;
@@ -43,9 +40,6 @@ public class UserServiceImpl implements UserService {
 		return loggedUser;
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.UserService#registerUser(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.util.Date, java.lang.String, java.lang.String)
-	 */
 	@Override
 	public User registerUser(String email, String password,
 			String passwordConfirm, String name, String lastname,
@@ -82,9 +76,6 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.UserService#getCommentsByUser(ar.edu.itba.grupo2.model.User)
-	 */
 	@Override
 	public List<Comment> getCommentsByUser(final User user) {
 		return UserManagerPSQLImpl.getInstance().getCommentsByUser(user);

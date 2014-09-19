@@ -35,17 +35,11 @@ public class FilmServiceImpl implements FilmService {
 		return instance;
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.FilmService#getAllFilms()
-	 */
 	@Override
 	public List<Film> getAllFilms() {
 		return filmManager.getAllFilms();
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.FilmService#getFilmById(int)
-	 */
 	@Override
 	public Film getFilmById(final int id) throws FilmNotFoundException {
 		Film ret = filmManager.getFilmById(id);
@@ -55,9 +49,6 @@ public class FilmServiceImpl implements FilmService {
 		return ret;
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.FilmService#getCommentsForFilm(ar.edu.itba.grupo2.model.Film)
-	 */
 	@Override
 	public List<Comment> getCommentsForFilm(final Film film)
 			throws FilmNotFoundException {
@@ -69,9 +60,6 @@ public class FilmServiceImpl implements FilmService {
 		return ret;
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.FilmService#getGenres()
-	 */
 	@Override
 	public List<String> getGenres() {
 		Genre[] genres = Genre.values();
@@ -82,9 +70,6 @@ public class FilmServiceImpl implements FilmService {
 		return ret;
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.FilmService#userHasCommentedFilm(ar.edu.itba.grupo2.model.Film, ar.edu.itba.grupo2.model.User)
-	 */
 	@Override
 	public boolean userHasCommentedFilm(final Film film, final User user)
 			throws FilmNotFoundException {
@@ -103,9 +88,6 @@ public class FilmServiceImpl implements FilmService {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.FilmService#filterTopFilms(java.util.List, int)
-	 */
 	@Override
 	public List<Film> filterTopFilms(final List<Film> filmList,
 			final int topAmount) {
@@ -132,9 +114,6 @@ public class FilmServiceImpl implements FilmService {
 		return result.subList(0, top);
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.FilmService#filterRecentlyAdded(java.util.List, int)
-	 */
 	@Override
 	public List<Film> filterRecentlyAdded(final List<Film> filmList,
 			final int amount) {
@@ -162,9 +141,6 @@ public class FilmServiceImpl implements FilmService {
 		return result.subList(0, top);
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.FilmService#filterNewReleases(java.util.List, int)
-	 */
 	@Override
 	public List<Film> filterNewReleases(final List<Film> filmList,
 			final int dayTolerance) {
@@ -192,9 +168,6 @@ public class FilmServiceImpl implements FilmService {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.FilmService#filterByGenre(java.util.List, java.lang.String)
-	 */
 	@Override
 	public List<Film> filterByGenre(final List<Film> filmList,
 			final String genre) {
@@ -220,9 +193,6 @@ public class FilmServiceImpl implements FilmService {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.FilmService#filterByDirector(java.util.List, java.lang.String)
-	 */
 	@Override
 	public List<Film> filterByDirector(final List<Film> filmList,
 			final String director) {
@@ -245,9 +215,6 @@ public class FilmServiceImpl implements FilmService {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.FilmService#orderByReleaseDate(java.util.List)
-	 */
 	@Override
 	public List<Film> orderByReleaseDate(final List<Film> filmList) {
 		if (filmList == null) {
@@ -271,9 +238,6 @@ public class FilmServiceImpl implements FilmService {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.FilmService#saveComment(ar.edu.itba.grupo2.model.Comment)
-	 */
 	@Override
 	public Comment saveComment(final Comment comment) {
 		if (comment == null) {
@@ -283,9 +247,6 @@ public class FilmServiceImpl implements FilmService {
 		return filmManager.saveComment(comment);
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.FilmService#userCanComment(ar.edu.itba.grupo2.model.Film, ar.edu.itba.grupo2.model.User)
-	 */
 	@Override
 	public boolean userCanComment(final Film film, final User user)
 			throws FilmNotFoundException {
@@ -300,9 +261,6 @@ public class FilmServiceImpl implements FilmService {
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see ar.edu.itba.grupo2.service.impl.FilmService#addComment(ar.edu.itba.grupo2.model.Comment)
-	 */
 	@Override
 	public Comment addComment(final Comment comment) {
 		if (comment == null || comment.getText() == "") {
