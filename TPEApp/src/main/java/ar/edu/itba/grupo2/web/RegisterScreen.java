@@ -49,12 +49,14 @@ public class RegisterScreen extends HttpServlet {
 			if(errors.size()!=0){
 			req.setAttribute("errors", errors);
 			this.doGet(req, resp);
-			}
+			
+			}else{
 				UserServiceImpl.getInstance().registerUser(email, password,
 						passwordConfirm, name, lastname, birthdate,
 						secretQuestion, secretAnswer);
 				resp.sendRedirect("home");
 			}
+		}
 	}
 
 	private List<String> validate(String email, String name, String lastname,
@@ -89,7 +91,7 @@ public class RegisterScreen extends HttpServlet {
 		if(UserServiceImpl.getInstance().existsUser(email)){
 			errors.add("MailUsed");
 		}
-		
+		System.out.println(errors.size());
 
 		return errors;
 
