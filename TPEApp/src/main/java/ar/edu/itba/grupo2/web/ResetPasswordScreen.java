@@ -31,8 +31,12 @@ public class ResetPasswordScreen extends HttpServlet {
 		User user = null;
 		
 		String email = req.getParameter("email");
+		String password = req.getParameter("password");
+		String passwordConfirm = req.getParameter("passwordConfirm");
+		String answer = req.getParameter("answer");
 		
 		if (email != null) {
+			if (answer != null)
 			user = u.getUserByEmail(email);
 			req.setAttribute("email", email);
 			req.setAttribute("secretQuestion", user.getSecretQuestion());
