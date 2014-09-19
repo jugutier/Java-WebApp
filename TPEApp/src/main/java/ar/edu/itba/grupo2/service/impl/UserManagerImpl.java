@@ -43,12 +43,17 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
-	public void resetUser(String username) {
+	public void resetUser() {
 		HttpSession session = request.getSession(false);
 		
 		if (session != null){
 			session.setAttribute(USER, null);
 		}
+	}
+	
+	@Override
+	public User getUser() {
+		return (User)request.getSession().getAttribute(USER);
 	}
 
 }
