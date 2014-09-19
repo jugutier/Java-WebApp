@@ -43,10 +43,11 @@ public class FilmDetails extends HttpServlet{
 			req.setAttribute("commentList", commentList);
 			req.setAttribute("film", film);
 			
-			if (!filmService.userCanComment(film, user)) {
+			if(user == null) {
+				req.setAttribute("noUser", false);
+			}else if (!filmService.userCanComment(film, user)) {
 				req.setAttribute("userCanComment", false);
-			}
-			else {
+			} else {
 				req.setAttribute("userCanComment", true);
 			}
 
