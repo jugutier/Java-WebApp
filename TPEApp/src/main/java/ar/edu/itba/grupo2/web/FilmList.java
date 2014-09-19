@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.service.FilmService;
+import ar.edu.itba.grupo2.service.UserManager;
 
 @SuppressWarnings("serial")
 public class FilmList extends HttpServlet{
@@ -27,17 +28,22 @@ public class FilmList extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		String genreFilter = req.getParameter("genre");
 		String directorFilter = req.getParameter("director");
+		UserManager userManager = new UserManager(req);
 		
 		List<Film> filmList = filmService.orderByReleaseDate(filmService.getAllFilms());
 		List<String> genreList = filmService.getGenres();
-		System.out.println(directorFilter);
 		
 		if (genreFilter != null) {
 			filmList = filmService.filterByGenre(filmList, genreFilter);
 		}
 		
 		if (directorFilter != null) {
-			filmList = filmService.filterByDirector(filmList, directorFilter);
+			if (userManager.existsUser()) {
+				filmList = filmService.filterByDirector(filmList, directorFilter);
+			}
+			else {
+				req.setAttribute("directorFilterError", "unauthorized");
+			}
 		}
 		
 		req.setAttribute("filmList", filmList);

@@ -1,5 +1,9 @@
 <%@ include file="header.jsp" %>
 
+<c:if test="${not empty directorFilterError}">
+	<%@ include file="error/director-filter-warning.jsp" %>
+</c:if>
+
 <h2>Lista de pel&iacute;culas</h2>
 
 <form class="form-inline" action="filmList" method="GET">
