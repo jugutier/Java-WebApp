@@ -30,9 +30,11 @@ public class FilmDetails extends HttpServlet{
 		String strId = req.getParameter("id");
 		Film film = null;
 		if (strId != null) {
-			try{
+			try {
 				int id = Integer.valueOf(req.getParameter("id"));
-				film = filmService.getFilmById(id);
+				
+					film = filmService.getFilmById(id);
+				
 				User user = (User)req.getSession(false).getAttribute("user");
 				
 				final List<Comment> commentList = filmService.getCommentsForFilm(film);
@@ -40,20 +42,14 @@ public class FilmDetails extends HttpServlet{
 				req.setAttribute("commentList", commentList);
 				req.setAttribute("film", film);
 				
-				if (!filmService.userCanComment(film, user)) {
-					req.setAttribute("userCanComment", false);
+				if(user != null) {
+					boolean userCanComment = filmService.userCanComment(film, user);
+					req.setAttribute("userCanComment", userCanComment);
 				}
-				else {
-					req.setAttribute("userCanComment", true);
-				}
+			} catch (FilmNotFoundException e) {
+				film = null;
+			}
 	
-			}
-			catch(FilmNotFoundException e) {
-				film = null;
-			}
-			catch(NumberFormatException e) {
-				film = null;
-			}
 		}
 		
 		req.getRequestDispatcher("/WEB-INF/jsp/filmDetails.jsp").forward(req, resp);
