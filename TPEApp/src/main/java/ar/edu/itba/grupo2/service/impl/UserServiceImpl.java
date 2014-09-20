@@ -3,6 +3,7 @@ package ar.edu.itba.grupo2.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import ar.edu.itba.grupo2.dao.UserManagerDAO;
 import ar.edu.itba.grupo2.dao.PSQLImpl.UserManagerPSQLImpl;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.User;
@@ -67,9 +68,43 @@ public class UserServiceImpl implements UserService {
 	public List<Comment> getCommentsByUser(final User user) {
 		return UserManagerPSQLImpl.getInstance().getCommentsByUser(user);
 	}
-
+	
+	@Override
 	public boolean existsUser(String email) {
 		return UserManagerPSQLImpl.getInstance().getUserByEmail(email) != null;
 	}
+	
+	@Override
+	public boolean resetPasswordForEmail(String email, String password, String answer) {
+		UserManagerDAO userManager = UserManagerPSQLImpl.getInstance();
+		User user = userManager.getUserByEmail(email);
+		
+		if (user == null) {
+			return false;
+		}
+		
+		if (user.getSecretAnswer().compareTo(answer) != 0) {
+			return false;
+		}
+		
+		user.setPassword(password);
+		
+		userManager.saveUser(user);
+		
+		return true;
+	}
+	
+	@Override
+	public String getSecretQuestionForEmail(String email) {
+		UserManagerDAO userManager = UserManagerPSQLImpl.getInstance();
+		User user = userManager.getUserByEmail(email);
+		
+		if (email == null || user == null) {
+			return null;
+		}
+		
+		return user.getSecretQuestion();
+	}
+
 
 }
