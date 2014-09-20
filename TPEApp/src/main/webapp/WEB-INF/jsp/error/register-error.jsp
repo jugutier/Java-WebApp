@@ -25,8 +25,8 @@
 			<c:when test="${error=='NoLastname'}">
 				No ingreso apellido.
 			</c:when>
-			<c:when test="${error=='NoDate'}">
-				No ingreso fecha.
+			<c:when test="${error=='WrongDate'}">
+				La fecha que ingreso no es valida.(Revise el formato)
 			</c:when>
 			<c:when test="${error=='NoSQ'}">
 				No ingreso una pregunta secreta.

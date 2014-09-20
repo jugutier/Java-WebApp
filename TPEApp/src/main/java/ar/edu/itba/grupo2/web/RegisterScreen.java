@@ -85,9 +85,6 @@ public class RegisterScreen extends HttpServlet {
 		if (ValidationUtilities.paramEmpty(secretAnswer)) {
 			errors.add("NoSA");
 		}
-		if (birthdate == null) {
-			errors.add("NoDate");
-		}
 		if(UserServiceImpl.getInstance().existsUser(email)){
 			errors.add("MailUsed");
 		}
