@@ -45,7 +45,13 @@ public class AuthenticateUser extends HttpServlet{
 			else {
 				separator = '?';
 			}
-			resp.sendRedirect(resp.encodeRedirectURL(fromPage + separator + "auth_fail=wrongUser"));
+			if (fromPage.contains("auth_fail=wrongUser")) {
+				resp.sendRedirect(resp.encodeRedirectURL(fromPage));
+			}
+			else {
+				resp.sendRedirect(resp.encodeRedirectURL(fromPage + separator + "auth_fail=wrongUser"));
+			}
+			
 		}
 	}
 
