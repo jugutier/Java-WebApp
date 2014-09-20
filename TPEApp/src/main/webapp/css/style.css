@@ -7,10 +7,6 @@ body {
   max-width:700px;
 }
 
-.uneven-row{
-  background-color: #FAFAFA;
-}
-
 .form-signin {
   max-width: 300px;
   padding: 19px 29px 29px;
@@ -50,6 +46,10 @@ body {
   -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
   -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
   box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+
+.alert ul {
+  margin-bottom: 0px;
 }
 
 .login-form-mini {

@@ -7,7 +7,7 @@ public class ValidationUtilities {
 	}
 
 	public static boolean paramEmpty(String param) {
-		return (param.matches("^\\s*$") || param.isEmpty());
+		return (param == null || (param.matches("^\\s*$") || param.isEmpty()));
 	}
 
 	public static boolean isWithinLength(String value, int min, int max) {
