@@ -86,16 +86,6 @@
 		<servlet-name>ResetPasswordScreen</servlet-name>
 		<url-pattern>/resetPassword</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>ResetPasswordAction</servlet-name>
-		<servlet-class>ar.edu.itba.grupo2.web.ResetPasswordAction</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>ResetPasswordAction</servlet-name>
-		<url-pattern>/resetPasswordAction</url-pattern>
-	</servlet-mapping>
 
 	<filter>
 		<filter-name>LoggedUserFilter</filter-name>

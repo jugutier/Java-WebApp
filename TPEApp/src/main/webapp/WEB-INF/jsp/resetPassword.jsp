@@ -9,7 +9,7 @@
 <c:choose>
 	<c:when test="${stage == 'getEmail'}">
 		<h3>Escriba su direcci&oacute;n de e-mail</h3>
-		<form class="form-signin" action="resetPassword" method="POST">
+		<form action="resetPassword" method="POST">
 			<input type="hidden" name="stage" class="input-block-level" value="getEmail">
 			<input type="text" name="email" class="input-block-level" placeholder="Direccion de email">
 			<button class="btn btn-large btn-primary" type="submit">Siguiente</button>
@@ -17,7 +17,7 @@
 	</c:when>
 	<c:when test="${stage == 'question'}">
 		<h3>Responda su pregunta secreta</h3>
-		<form class="form-signin" action="resetPassword" method="POST">
+		<form action="resetPassword" method="POST">
 			<h4><c:out value="${secretQuestion}"/></h4>
 			<input type="hidden" name="stage" class="input-block-level" value="question">
 			<input type="hidden" name="email" class="input-block-level" value="<c:out value="${email}"/>">
