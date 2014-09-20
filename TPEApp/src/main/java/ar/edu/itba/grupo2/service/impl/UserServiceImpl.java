@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
 				|| !(password.equals(passwordConfirm))
 				|| (birthdate == null)
 				|| ValidationUtilities.paramEmpty(email)
-				|| ValidationUtilities.isEmail(email)
+				|| !ValidationUtilities.isEmail(email)
 				|| (UserManagerPSQLImpl.getInstance().getUserByEmail(email) != null)) {
 			throw new IllegalArgumentException();
 		}

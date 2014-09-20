@@ -65,7 +65,7 @@ public class RegisterScreen extends HttpServlet {
 		List<String> errors = new ArrayList<String>();
 		if (ValidationUtilities.paramEmpty(email)) {
 			errors.add("NoMail");
-		} else if (ValidationUtilities.isEmail(email)) {
+		} else if (!ValidationUtilities.isEmail(email)) {
 			errors.add("InvalidMail");
 		}
 		if (ValidationUtilities.paramEmpty(name)) {
