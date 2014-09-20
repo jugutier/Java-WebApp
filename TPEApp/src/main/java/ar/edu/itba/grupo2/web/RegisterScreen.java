@@ -46,11 +46,11 @@ public class RegisterScreen extends HttpServlet {
 		} finally {
 			errors.addAll(validate(email, name, lastname, password,
 					passwordConfirm, secretQuestion, secretAnswer, birthdate));
-			if(errors.size()!=0){
-			req.setAttribute("errors", errors);
-			this.doGet(req, resp);
-			
-			}else{
+			if (errors.size() != 0) {
+				req.setAttribute("errors", errors);
+				this.doGet(req, resp);
+
+			} else {
 				UserServiceImpl.getInstance().registerUser(email, password,
 						passwordConfirm, name, lastname, birthdate,
 						secretQuestion, secretAnswer);
@@ -85,10 +85,9 @@ public class RegisterScreen extends HttpServlet {
 		if (ValidationUtilities.paramEmpty(secretAnswer)) {
 			errors.add("NoSA");
 		}
-		if(UserServiceImpl.getInstance().existsUser(email)){
+		if (UserServiceImpl.getInstance().existsUser(email)) {
 			errors.add("MailUsed");
 		}
-		System.out.println(errors.size());
 
 		return errors;
 

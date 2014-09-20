@@ -64,47 +64,48 @@ public class UserServiceImpl implements UserService {
 		UserManagerPSQLImpl.getInstance().saveUser(newUser);
 		return newUser;
 	}
+
 	@Override
 	public List<Comment> getCommentsByUser(final User user) {
 		return UserManagerPSQLImpl.getInstance().getCommentsByUser(user);
 	}
-	
+
 	@Override
 	public boolean existsUser(String email) {
 		return UserManagerPSQLImpl.getInstance().getUserByEmail(email) != null;
 	}
-	
+
 	@Override
-	public boolean resetPasswordForEmail(String email, String password, String answer) {
+	public boolean resetPasswordForEmail(String email, String password,
+			String answer) {
 		UserManagerDAO userManager = UserManagerPSQLImpl.getInstance();
 		User user = userManager.getUserByEmail(email);
-		
+
 		if (user == null) {
 			return false;
 		}
-		
+
 		if (user.getSecretAnswer().compareTo(answer) != 0) {
 			return false;
 		}
-		
+
 		user.setPassword(password);
-		
+
 		userManager.saveUser(user);
-		
+
 		return true;
 	}
-	
+
 	@Override
 	public String getSecretQuestionForEmail(String email) {
 		UserManagerDAO userManager = UserManagerPSQLImpl.getInstance();
 		User user = userManager.getUserByEmail(email);
-		
+
 		if (email == null || user == null) {
 			return null;
 		}
-		
+
 		return user.getSecretQuestion();
 	}
-
 
 }
