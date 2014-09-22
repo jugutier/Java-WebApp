@@ -95,6 +95,9 @@ public class ResetPasswordScreen extends HttpServlet {
 		if (ValidationUtilities.paramEmpty(answer)) {
 			errors.add("noAnswer");
 		}
+		else if (!userService.resetPasswordForEmail(email, passwordConfirm, answer)) {
+			errors.add("wrongAnswer");
+		}
 		if (ValidationUtilities.paramEmpty(password)) {
 			errors.add("noPassword");
 		}
@@ -103,9 +106,6 @@ public class ResetPasswordScreen extends HttpServlet {
 		}
 		if (password.compareTo(passwordConfirm) != 0) {
 			errors.add("noCoincidence");
-		}
-		if (!userService.resetPasswordForEmail(email, passwordConfirm, answer)) {
-			errors.add("wrongAnswer");
 		}
 		
 		return errors;
