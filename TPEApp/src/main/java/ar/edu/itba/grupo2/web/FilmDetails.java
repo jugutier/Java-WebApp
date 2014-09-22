@@ -63,22 +63,26 @@ public class FilmDetails extends HttpServlet{
 		FilmService filmService = FilmServiceImpl.getInstance();
 		Film film;
 		User user = (User)req.getSession(false).getAttribute("user");
-		
-		try {		
-			film = filmService.getFilmById(Integer.parseInt(req.getParameter("id")));
-			if(filmService.userCanComment(film, user)){
-				final Comment comment = new Comment.Builder()
-					.user(user)
-					.text(req.getParameter("comment"))
-					.rate(Integer.parseInt(req.getParameter("rating")))
-					.film(film)
-					.build();
-				filmService.addComment(comment);
-				req.setAttribute("newComment", true);
+		if (req.getParameter("comment") != ""){
+			try {		
+				film = filmService.getFilmById(Integer.parseInt(req.getParameter("id")));
+				if(filmService.userCanComment(film, user)){
+					final Comment comment = new Comment.Builder()
+						.user(user)
+						.text(req.getParameter("comment"))
+						.rate(Integer.parseInt(req.getParameter("rating")))
+						.film(film)
+						.build();
+					filmService.addComment(comment);
+					req.setAttribute("newComment", true);
+				}
+			} catch (FilmNotFoundException e) {
+				throw new UnexpectedException("Internal Error");
 			}
-		} catch (FilmNotFoundException e) {
-			throw new UnexpectedException("Internal Error");
-		}		
+		}else{
+			req.setAttribute("error", "NoComment");
+		}	
+		
 		//resp.sendRedirect(arg0);
 		this.doGet(req, resp);
 	}
