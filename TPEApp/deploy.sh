@@ -1,4 +1,4 @@
-rm log.txt
+rm log.txt > /dev/null 2>&1
 touch log.txt
 psql -U postgres postgres -f src/test/resources/createDb.sql > log.txt 2>&1
 echo "Database created."
@@ -7,7 +7,7 @@ echo "Tables created."
 echo "Inserting rows ..."
 psql -U paw -d paw2 -a -f src/test/resources/insert.sql > log.txt 2>&1
 echo "Rows inserted."
-echo "Building .war"
+echo "Building .war ..."
 mvn clean package > log.txt 2>&1
 echo "Done."
 rm $CATALINA_HOME/webapps/GAJAmdb.war > log.txt 2>&1

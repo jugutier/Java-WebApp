@@ -1,10 +1,6 @@
-### What is this repository for? ###
+GAJAmdb
+====
 
-
-### Setup ###
-
-Commands for creating de DB and inserting test data:
-
-* psql -U postgres postgres -f createDb.sql 
-* psql -U paw -d paw2 -a -f createTables.sql
-* psql -U paw -d paw2 -a -f insert.sql
+1) Open a terminal
+2) Run `./deploy.sh` (`chmod +x` if necessary)
+3) See `log.txt` for output and errors.
