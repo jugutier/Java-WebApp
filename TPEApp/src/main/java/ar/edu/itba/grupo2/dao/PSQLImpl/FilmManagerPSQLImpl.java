@@ -47,6 +47,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 				if (rs.next()) {
 					ret = new Film.Builder().id(id).name(rs.getString("NAME"))
 							.director(rs.getString("DIRECTOR"))
+							.creationDate(rs.getDate("CREATIONDATE"))
 							.releaseDate(rs.getDate("RELEASEDATE"))
 							.genre(rs.getString("GENRE"))
 							.description(rs.getString("DESCRIPTION"))
@@ -133,7 +134,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 				if (!film.isNew()) {
 					s = c.prepareStatement("UPDATE "
 							+ FILM_TABLENAME
-							+ "SET (name,director,creationdate,releasedate,genre,description,length,sumcomments,totalcomments) = ( ? ,?, ?, ?, ?, ?, ?, ?, ?) WHERE ID = ?");
+							+ " SET (name,director,creationdate,releasedate,genre,description,length,sumcomments,totalcomments) = ( ? ,?, ?, ?, ?, ?, ?, ?, ?) WHERE ID = ?");
 					s.setString(1, film.getName());
 					s.setString(2, film.getDirector());
 					s.setDate(3, new java.sql.Date(film.getCreationDate()

@@ -266,6 +266,21 @@ public class FilmServiceImpl implements FilmService {
 		if (comment == null || comment.getText() == "") {
 			throw new IllegalArgumentException();
 		}
+		final Film film = comment.getFilm();
+		Film updatedFilm = new Film.Builder()
+				.id(film.getId())
+				.name(film.getName())
+				.director(film.getDirector())
+				.creationDate(film.getCreationDate())
+				.releaseDate(film.getReleaseDate())
+				.genre(film.getGenre().toString())
+				.description(film.getDescription())					
+				.length(film.getLength())
+				.sumComments(film.getSumComments()+comment.getRate())
+				.totalComments(film.getTotalComments()+1)				
+				.build();
+		
+		filmManager.saveFilm(updatedFilm);
 		return filmManager.saveComment(comment);
 	}
 }
