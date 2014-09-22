@@ -1,7 +1,7 @@
 package ar.edu.itba.grupo2.model;
 
 public enum Genre {
-	ACTION("Accion"), THRILLER("Suspenso"), HORROR("Terror"), DRAMA("Drama"), DOCUMENTARY(
+	ACTION("Acción"), THRILLER("Suspenso"), HORROR("Terror"), DRAMA("Drama"), DOCUMENTARY(
 			"Documental");
 	private String description;
 
@@ -15,7 +15,7 @@ public enum Genre {
 	}
 
 	public static Genre fromString(String genre) {		
-		if (genre.equals("Accion")) {
+		if (genre.equals("Acción")) {
 			return ACTION;
 		} else if (genre.equals("Suspenso")) {
 			return THRILLER;
