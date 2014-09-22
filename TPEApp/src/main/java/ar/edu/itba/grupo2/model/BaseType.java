@@ -1,22 +1,17 @@
 package ar.edu.itba.grupo2.model;
 
 public abstract class BaseType {
-	
 	private int id;
-	
-//	public BaseType(){
-//		id = -1;
-//	}
-	
-	public int getId(){
+
+	public int getId() {
 		return id;
 	}
-	
-	public void setId(final int id){
+
+	public void setId(final int id) {
 		this.id = id;
 	}
-	
-	public boolean isNew(){
+
+	public boolean isNew() {
 		return getId() == -1;
 	}
 }

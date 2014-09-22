@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import ar.edu.itba.grupo2.dao.exceptions.ConfigPropertiesException;
+
 public class ConnectionUtilities {
 	private static ConnectionUtilities conUt;
 	private static String database;
