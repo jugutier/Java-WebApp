@@ -10,8 +10,4 @@ public class ValidationUtilities {
 		return (param == null || (param.matches("^\\s*$") || param.isEmpty()));
 	}
 
-	public static boolean isWithinLength(String value, int min, int max) {
-		return value.length() >= min && value.length() <= max;
-	}
-
 }

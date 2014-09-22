@@ -239,15 +239,6 @@ public class FilmServiceImpl implements FilmService {
 	}
 
 	@Override
-	public Comment saveComment(final Comment comment) {
-		if (comment == null) {
-			throw new IllegalArgumentException();
-		}
-		filmManager.saveFilm(comment.getFilm());
-		return filmManager.saveComment(comment);
-	}
-
-	@Override
 	public boolean userCanComment(final Film film, final User user)
 			throws FilmNotFoundException {
 		if (film == null || user == null) {

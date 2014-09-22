@@ -17,7 +17,7 @@ import ar.edu.itba.grupo2.utils.ConnectionUtilities;
 public final class UserManagerPSQLImpl implements UserManagerDAO {
 
 	private static UserManagerPSQLImpl user_manager = null;
-	public static final String USER_TABLENAME = "GAJAMDBUSER";
+	private static final String USER_TABLENAME = "GAJAMDBUSER";
 	private static final String COMMENT_TABLENAME = "COMMENT";
 
 	private UserManagerPSQLImpl() {

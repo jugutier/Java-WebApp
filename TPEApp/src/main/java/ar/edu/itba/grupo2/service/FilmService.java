@@ -36,8 +36,6 @@ public interface FilmService {
 
 	public abstract List<Film> orderByReleaseDate(List<Film> filmList);
 
-	public abstract Comment saveComment(Comment comment);
-
 	public abstract boolean userCanComment(Film film, User user)
 			throws FilmNotFoundException;
 

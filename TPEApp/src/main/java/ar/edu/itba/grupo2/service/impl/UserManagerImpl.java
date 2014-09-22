@@ -7,7 +7,7 @@ import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.service.UserManager;
 
 public class UserManagerImpl implements UserManager {
-	public static String USER = "user";
+	private static String USER = "user";
 	private HttpServletRequest request;
 	
 	public UserManagerImpl(HttpServletRequest request) {
