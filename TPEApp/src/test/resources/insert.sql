@@ -18,8 +18,6 @@ INSERT INTO FILM VALUES (17,'Scary Movie', 'Keenen Ivory Wayans', '2014-05-22', 
 
 ALTER SEQUENCE film_id_seq RESTART WITH 18;
 
-
-
 INSERT INTO GAJAMDBUSER VALUES (1,'asciglia@itba.edu.ar','123456', 'Agustin','Scigliano','1990-11-14','Quién es tu profesor favorito?','Horacio Rinaldi',FALSE);
 INSERT INTO GAJAMDBUSER VALUES (2,'amedvede@itba.edu.ar','123456', 'Alexis','Medvedeff','1989-11-14','te gusta el SABF?','ME ENCANTA',FALSE);
 INSERT INTO GAJAMDBUSER VALUES (3,'gdelgiud@itba.edu.ar','123456', 'Gustavo','Del Giudice','1989-12-13','Que cosa no usan los vikingos?','abrigo',TRUE);
