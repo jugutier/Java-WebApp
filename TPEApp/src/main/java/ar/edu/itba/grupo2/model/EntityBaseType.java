@@ -1,9 +1,9 @@
 package ar.edu.itba.grupo2.model;
 
-public abstract class BaseType {
-	private int id;
+abstract class EntityBaseType {
+	private Integer id;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -12,6 +12,6 @@ public abstract class BaseType {
 	}
 
 	public boolean isNew() {
-		return getId() == -1;
+		return getId() == null;
 	}
 }

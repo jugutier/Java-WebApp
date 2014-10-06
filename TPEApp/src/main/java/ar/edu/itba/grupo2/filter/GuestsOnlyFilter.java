@@ -11,8 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ar.edu.itba.grupo2.service.UserManager;
-import ar.edu.itba.grupo2.service.impl.UserManagerImpl;
+import ar.edu.itba.grupo2.web.session.UserManager;
+import ar.edu.itba.grupo2.web.session.UserManagerImpl;
 
 public class GuestsOnlyFilter implements Filter {
 

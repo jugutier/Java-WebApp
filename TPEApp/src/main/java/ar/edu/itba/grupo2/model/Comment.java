@@ -2,7 +2,7 @@ package ar.edu.itba.grupo2.model;
 
 import java.util.Date;
 
-public class Comment extends BaseType {
+public class Comment extends EntityBaseType {
 
 	private Film film;
 	private User user;

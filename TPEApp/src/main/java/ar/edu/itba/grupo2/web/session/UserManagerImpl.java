@@ -1,10 +1,9 @@
-package ar.edu.itba.grupo2.service.impl;
+package ar.edu.itba.grupo2.web.session;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import ar.edu.itba.grupo2.model.User;
-import ar.edu.itba.grupo2.service.UserManager;
 
 public class UserManagerImpl implements UserManager {
 	private static String USER = "user";

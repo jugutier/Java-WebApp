@@ -2,7 +2,7 @@ package ar.edu.itba.grupo2.model;
 
 import java.util.Date;
 
-public class User extends BaseType {
+public class User extends EntityBaseType {
 	
 	private String name;
 	private String lastname;
