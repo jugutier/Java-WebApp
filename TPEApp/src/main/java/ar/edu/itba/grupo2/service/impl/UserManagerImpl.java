@@ -47,7 +47,7 @@ public class UserManagerImpl implements UserManager {
 		HttpSession session = request.getSession(false);
 		
 		if (session != null){
-			session.setAttribute(USER, null);
+			session.invalidate();
 		}
 	}
 	
