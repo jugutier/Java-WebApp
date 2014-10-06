@@ -63,7 +63,11 @@ public class FilmDetails extends HttpServlet{
 		FilmService filmService = FilmServiceImpl.getInstance();
 		Film film;
 		User user = (User)req.getSession(false).getAttribute("user");
-		if (req.getParameter("comment") != ""){
+		if (req.getParameter("comment") == "") {
+			req.setAttribute("error", "NoComment");
+		}else if(req.getParameter("comment").length() > 140){
+			req.setAttribute("error", "CommentLong");
+		}else{
 			try {		
 				film = filmService.getFilmById(Integer.parseInt(req.getParameter("id")));
 				if(filmService.userCanComment(film, user)){
@@ -79,8 +83,6 @@ public class FilmDetails extends HttpServlet{
 			} catch (FilmNotFoundException e) {
 				throw new UnexpectedException("Internal Error");
 			}
-		}else{
-			req.setAttribute("error", "NoComment");
 		}	
 		
 		//resp.sendRedirect(arg0);
