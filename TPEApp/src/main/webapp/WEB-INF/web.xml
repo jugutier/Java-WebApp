@@ -5,8 +5,19 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
 	<display-name>GAJAmdb</display-name>
-
+	
 	<servlet>
+		<servlet-name>spring</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>spring</servlet-name>
+		<url-pattern>/bin/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- <servlet>
 		<servlet-name>FilmList</servlet-name>
 		<servlet-class>ar.edu.itba.grupo2.web.FilmList</servlet-class>
 	</servlet>
@@ -88,7 +99,7 @@
 
 	<filter>
 		<filter-name>LoggedUserFilter</filter-name>
-		<filter-class>ar.edu.itba.grupo2.filter.LoggedUserFilter</filter-class>
+		<filter-class>ar.edu.itba.grupo2.web.filter.LoggedUserFilter</filter-class>
 	</filter>
 
 	<filter-mapping>
@@ -98,7 +109,7 @@
 
 	<filter>
 		<filter-name>FromPageFilter</filter-name>
-		<filter-class>ar.edu.itba.grupo2.filter.FromPageFilter</filter-class>
+		<filter-class>ar.edu.itba.grupo2.web.filter.FromPageFilter</filter-class>
 	</filter>
 
 	<filter-mapping>
@@ -108,7 +119,7 @@
 
 	<filter>
 		<filter-name>GuestsOnlyFilter</filter-name>
-		<filter-class>ar.edu.itba.grupo2.filter.GuestsOnlyFilter</filter-class>
+		<filter-class>ar.edu.itba.grupo2.web.filter.GuestsOnlyFilter</filter-class>
 	</filter>
 
 	<filter-mapping>
@@ -123,13 +134,13 @@
 
 	<filter>
 		<filter-name>UsersOnlyFilter</filter-name>
-		<filter-class>ar.edu.itba.grupo2.filter.UsersOnlyFilter</filter-class>
+		<filter-class>ar.edu.itba.grupo2.web.filter.UsersOnlyFilter</filter-class>
 	</filter>
 
 	<filter-mapping>
 		<filter-name>UsersOnlyFilter</filter-name>
 		<url-pattern>/userComments</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 
 	<error-page>
 		<exception-type>java.lang.Exception</exception-type>
