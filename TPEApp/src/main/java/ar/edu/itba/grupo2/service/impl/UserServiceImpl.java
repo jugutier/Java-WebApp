@@ -3,6 +3,8 @@ package ar.edu.itba.grupo2.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import ar.edu.itba.grupo2.dao.UserManagerDAO;
 import ar.edu.itba.grupo2.dao.PSQLImpl.UserManagerPSQLImpl;
 import ar.edu.itba.grupo2.model.Comment;
@@ -10,6 +12,7 @@ import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.service.UserService;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
 
+@Service
 public class UserServiceImpl implements UserService {
 
 	private static UserService user_service;

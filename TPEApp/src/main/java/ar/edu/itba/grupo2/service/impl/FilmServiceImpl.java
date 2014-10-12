@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import ar.edu.itba.grupo2.dao.FilmManagerDAO;
 import ar.edu.itba.grupo2.dao.PSQLImpl.FilmManagerPSQLImpl;
 import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
@@ -16,6 +18,7 @@ import ar.edu.itba.grupo2.model.Genre;
 import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.service.FilmService;
 
+@Service
 public class FilmServiceImpl implements FilmService {
 
 	private static FilmService instance = null;
