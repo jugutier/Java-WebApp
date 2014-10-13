@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import ar.edu.itba.grupo2.dao.FilmManagerDAO;
-import ar.edu.itba.grupo2.dao.exceptions.ConnectionException;
+import ar.edu.itba.grupo2.domain.dao.FilmManagerDAO;
+import ar.edu.itba.grupo2.domain.dao.exceptions.ConnectionException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.utils.ConnectionUtilities;
@@ -34,7 +34,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 	}
 
 	@Override
-	public Film getFilmById(int id) {
+	public Film get(int id) {
 		Connection c = ConnectionUtilities.getInstance().getConnection();
 		PreparedStatement s = null;
 		Film ret = null;
@@ -123,7 +123,7 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 	}
 
 	@Override
-	public Film saveFilm(Film film) {
+	public Film save(Film film) {
 		if (film == null) {
 			throw new IllegalArgumentException();
 		}
@@ -208,9 +208,9 @@ public class FilmManagerPSQLImpl implements FilmManagerDAO {
 				while (rs.next()) {
 					Comment comment = new Comment.Builder()
 							.id(rs.getInt("ID"))
-							.film(getFilmById(rs.getInt("FILM_ID")))
+							.film(get(rs.getInt("FILM_ID")))
 							.user(UserManagerPSQLImpl.getInstance()
-									.getUserById(rs.getInt("USER_ID")))
+									.get(rs.getInt("USER_ID")))
 							.creationDate(
 									new Date(rs.getDate("CREATIONDATE")
 											.getTime()))

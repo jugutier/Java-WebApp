@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
+import ar.edu.itba.grupo2.domain.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.model.User;

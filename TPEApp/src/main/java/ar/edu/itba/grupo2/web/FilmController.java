@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
+import ar.edu.itba.grupo2.domain.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.model.User;

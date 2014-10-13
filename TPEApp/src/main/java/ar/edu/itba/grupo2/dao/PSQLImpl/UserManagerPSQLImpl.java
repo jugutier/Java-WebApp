@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.edu.itba.grupo2.dao.UserManagerDAO;
-import ar.edu.itba.grupo2.dao.exceptions.ConnectionException;
+import ar.edu.itba.grupo2.domain.dao.UserManagerDAO;
+import ar.edu.itba.grupo2.domain.dao.exceptions.ConnectionException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.utils.ConnectionUtilities;
@@ -32,7 +32,7 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 	}
 
 	@Override
-	public User getUserById(int id){
+	public User get(int id){
 		User newUser = null;
 		try {
 			Connection c = ConnectionUtilities.getInstance().getConnection();
@@ -133,8 +133,8 @@ public final class UserManagerPSQLImpl implements UserManagerDAO {
 					Comment comment = new Comment.Builder()
 							.id(rs.getInt("ID"))
 							.film(FilmManagerPSQLImpl.getInstance()
-									.getFilmById(rs.getInt("FILM_ID")))
-							.user(getUserById(rs.getInt("USER_ID")))
+									.get(rs.getInt("FILM_ID")))
+							.user(get(rs.getInt("USER_ID")))
 							.creationDate(
 									new Date(rs.getDate("CREATIONDATE")
 											.getTime()))
