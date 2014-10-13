@@ -3,7 +3,7 @@
 	<%@ include file="error/register-error.jsp" %>
 </c:if>
 
-<form class="form-signin" action="register" method="POST">
+<form class="form-signin" action="registerUser" method="POST">
 	<h2 class="form-signin-heading">Registrese gratis!</h2>
 	<input type="email" required name="email" class="input-block-level" placeholder="Direccion de email" value="<c:out value="${param.email}"/>" >
 	<input type="password" required name="password" class="input-block-level" placeholder="Contrase&ntilde;a">
