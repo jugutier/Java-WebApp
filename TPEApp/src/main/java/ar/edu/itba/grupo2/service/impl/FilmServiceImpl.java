@@ -9,9 +9,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import ar.edu.itba.grupo2.dao.FilmManagerDAO;
 import ar.edu.itba.grupo2.dao.PSQLImpl.FilmManagerPSQLImpl;
-import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
+import ar.edu.itba.grupo2.domain.dao.FilmManagerDAO;
+import ar.edu.itba.grupo2.domain.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
 import ar.edu.itba.grupo2.model.Genre;
@@ -45,7 +45,7 @@ public class FilmServiceImpl implements FilmService {
 
 	@Override
 	public Film getFilmById(final int id) throws FilmNotFoundException {
-		Film ret = filmManager.getFilmById(id);
+		Film ret = filmManager.get(id);
 		if (ret == null) {
 			throw new FilmNotFoundException();
 		}
@@ -274,7 +274,7 @@ public class FilmServiceImpl implements FilmService {
 				.totalComments(film.getTotalComments()+1)				
 				.build();
 		
-		filmManager.saveFilm(updatedFilm);
+		filmManager.save(updatedFilm);
 		return filmManager.saveComment(comment);
 	}
 }

@@ -1,4 +1,4 @@
-package ar.edu.itba.grupo2.dao.exceptions;
+package ar.edu.itba.grupo2.domain.dao.exceptions;
 
 @SuppressWarnings("serial")
 public class FilmNotFoundException extends Exception{
