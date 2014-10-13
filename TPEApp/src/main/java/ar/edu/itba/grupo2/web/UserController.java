@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,19 +14,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.service.UserService;
 import ar.edu.itba.grupo2.service.impl.UserServiceImpl;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
 import ar.edu.itba.grupo2.web.session.UserManager;
-import ar.edu.itba.grupo2.web.session.UserManagerImpl;
 
 @Controller
 public class UserController {
+	
 	private final UserService userService;
+	private final UserManager userManager;
 	
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserService userService, UserManager userManager) {
 		this.userService = userService;
+		this.userManager = userManager;
 	}
 	
 	/*@RequestMapping(method=RequestMethod.GET)
@@ -124,13 +125,44 @@ public class UserController {
 
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView authenticateUser() {
-		ModelAndView mav = new ModelAndView();
+	@RequestMapping(method=RequestMethod.POST)
+	public String authenticateUser(
+			@RequestParam(value = "email", required=true) String email,
+			@RequestParam(value = "password", required=true) String password,
+			@RequestParam(value = "fromPage", required=true) String fromPage) {
 		
-		mav.setViewName("welcome");
+		User loggedUser = null;
 		
-		return mav;
+		String ret = null;
+		
+		if (fromPage == null) {
+			fromPage = "home";
+		}
+		
+		loggedUser = userService.logIn(email, password);
+		
+		if (loggedUser != null) {
+			userManager.setUser(loggedUser);
+			ret = "redirect:" + fromPage.replace("auth_fail=wrongUser", "");
+		}
+		else{
+			char separator;
+			if (fromPage.contains("?")) {
+				separator = '&';
+			}
+			else {
+				separator = '?';
+			}
+			if (fromPage.contains("auth_fail=wrongUser")) {
+				ret = "redirect:" + fromPage;
+			}
+			else {
+				ret = "redirect:" + fromPage + separator + "auth_fail=wrongUser";
+			}
+			
+		}
+		
+		return ret;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)

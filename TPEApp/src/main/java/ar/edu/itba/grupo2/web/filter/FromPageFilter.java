@@ -15,7 +15,7 @@ public class FromPageFilter implements Filter {
 	private String getCurrentPath(HttpServletRequest req) {
 		StringBuffer stringBuffer = new StringBuffer();
 		String queryString = req.getQueryString();
-		stringBuffer.append(req.getRequestURI());
+		stringBuffer.append(req.getRequestURI().substring(req.getContextPath().length()));
 		
 		if (queryString != null && !queryString.isEmpty()) {
 			stringBuffer.append("?");

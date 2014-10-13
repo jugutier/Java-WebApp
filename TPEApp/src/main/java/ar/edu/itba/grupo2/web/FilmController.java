@@ -12,23 +12,26 @@ import org.springframework.web.servlet.ModelAndView;
 import ar.edu.itba.grupo2.dao.exceptions.FilmNotFoundException;
 import ar.edu.itba.grupo2.model.Comment;
 import ar.edu.itba.grupo2.model.Film;
+import ar.edu.itba.grupo2.model.User;
 import ar.edu.itba.grupo2.service.FilmService;
-import ar.edu.itba.grupo2.service.impl.FilmServiceImpl;
+import ar.edu.itba.grupo2.web.session.UserManager;
 
 @Controller
-public class FilmController {
+public class FilmController extends BaseController {
 	
 	private final FilmService filmService;
+	private final UserManager userManager;
 	
 	@Autowired
-	public FilmController(FilmService filmService) {
+	public FilmController(FilmService filmService, UserManager userManager) {
 		this.filmService = filmService;
+		this.userManager = userManager;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView welcome() {
 		ModelAndView mav = new ModelAndView();
-
+		
 		List<Film> filmList = filmService.getAllFilms();	
 		
 		List<Film> topfive = filmService.filterTopFilms(filmList, 5);
@@ -49,18 +52,17 @@ public class FilmController {
 		Film film = null;
 		try {
 			film = filmService.getFilmById(id);
-			
-			//User user = (User)req.getSession(false).getAttribute("user");
+			User user = userManager.getUser();
 			
 			final List<Comment> commentList = filmService.getCommentsForFilm(film);
 			
 			mav.addObject("commentList", commentList);
 			mav.addObject("film", film);
 			
-			/*if(user != null) {
+			if(user != null) {
 				boolean userCanComment = filmService.userCanComment(film, user);
 				mav.addObject("userCanComment", userCanComment);
-			}*/
+			}
 		} catch (FilmNotFoundException e) {
 			film = null;
 		}
@@ -74,9 +76,6 @@ public class FilmController {
 	public ModelAndView list(@RequestParam(value = "genre", required=false) String genre, @RequestParam(value = "director", required=false) String director) {
 		ModelAndView mav = new ModelAndView();
 		
-		FilmService filmService = FilmServiceImpl.getInstance();
-		//UserManager userManager = new UserManagerImpl(req);
-		
 		List<Film> filmList = filmService.orderByReleaseDate(filmService.getAllFilms());
 		List<String> genreList = filmService.getGenres();
 		
@@ -85,12 +84,12 @@ public class FilmController {
 		}
 		
 		if (director != null) {
-			//if (userManager.existsUser()) {
+			if (userManager.existsUser()) {
 				filmList = filmService.filterByDirector(filmList, director);
-			//}
-			//else {
-			//	req.setAttribute("directorFilterError", "unauthorized");
-			//}
+			}
+			else {
+				mav.addObject("directorFilterError", "unauthorized");
+			}
 		}
 		
 		mav.addObject("filmList", filmList);
