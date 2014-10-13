@@ -2,16 +2,26 @@ package ar.edu.itba.grupo2.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+
+@Entity
+@Table(name="GAJAmdbUser")
+
 public class User extends EntityBaseType {
 	
-	private String name;
-	private String lastname;
-	private String password;
-	private String email;
-	private Date birthdate;
-	private boolean vip;
-	private String secretQuestion;
-	private String secretAnswer;
+	@Column(length=15,nullable=false)private String name;
+	@Column(length=15,nullable=false)private String lastname;
+	@Column(length=10,nullable=false)private String password;
+	@Column(length=100,nullable=false,unique=true)private String email;
+	@Temporal(TemporalType.DATE)@Column(name="birthdate", nullable=false)private Date birthdate;
+	@Column(nullable=false)private boolean vip;
+	@Column(length=140,nullable=false)private String secretQuestion;
+	@Column(length=140,nullable=false)private String secretAnswer;
 	
 	private User(final Builder builder){
 		setId(builder.id);

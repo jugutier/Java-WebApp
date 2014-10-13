@@ -2,16 +2,25 @@ package ar.edu.itba.grupo2.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+
+@Entity
 public class Film extends EntityBaseType {
-	private String name;
-	private String director;
-	private Date creationDate;
-	private Date releaseDate;
-	private Genre genre;
-	private String description;
-	private int length;
-	private int sumComments;
-	private int totalComments;
+	@Column(length=100,nullable=false)private String name;
+	@Column(length=40,nullable=false)private String director;
+	@Temporal(TemporalType.DATE)@Column(nullable=false)private Date creationDate;
+	@Temporal(TemporalType.DATE)@Column(nullable=false)private Date releaseDate;
+	@Column(length=30,nullable=false) @Enumerated(EnumType.STRING) private Genre genre;
+	@Column(length=500,nullable=false)private String description;
+	@Column(nullable=false)private int length;
+	@Column(nullable=false)private int sumComments;
+	@Column(nullable=false)private int totalComments;
 
 	private Film(final Builder builder) {
 		setId(builder.id);

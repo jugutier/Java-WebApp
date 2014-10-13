@@ -2,13 +2,18 @@ package ar.edu.itba.grupo2.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 public class Comment extends EntityBaseType {
 
-	private Film film;
-	private User user;
-	private Date creationDate;
-	private String text;
-	private int rate;
+	@OneToOne private Film film;
+	@OneToOne private User user;
+	@Temporal(TemporalType.TIMESTAMP)@Column(nullable=false)private Date creationDate;
+	@Column(length=140,nullable=false)private String text;
+	@Column(nullable=false)private int rate;
 
 	private Comment(final Builder builder) {
 		setId(builder.id);
