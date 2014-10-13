@@ -14,7 +14,7 @@
 
 	<servlet-mapping>
 		<servlet-name>spring</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/bin/*</url-pattern>
 	</servlet-mapping>
 
 	<!-- <servlet>
@@ -152,10 +152,10 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<error-page>
+	<!-- <error-page>
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/WEB-INF/jsp/error/dispatch-error.jsp</location>
-	</error-page>
+	</error-page> -->
 	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

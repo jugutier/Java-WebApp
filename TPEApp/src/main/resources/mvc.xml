@@ -46,7 +46,5 @@
 	<mvc:interceptors>
 		<bean class="ar.edu.itba.grupo2.web.filter.LoggedUserInterceptor" />
 	</mvc:interceptors>
-	
-	<mvc:resources mapping="/resources/**" location="/resources/"/>
 
 </beans>
