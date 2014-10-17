@@ -1,4 +1,4 @@
-package ar.edu.itba.grupo2.model;
+package ar.edu.itba.grupo2.domain.user;
 
 import java.util.Date;
 
@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 
 
 @Entity

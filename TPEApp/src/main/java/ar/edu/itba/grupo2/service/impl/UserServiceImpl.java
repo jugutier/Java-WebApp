@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ar.edu.itba.grupo2.dao.PSQLImpl.UserManagerPSQLImpl;
-import ar.edu.itba.grupo2.domain.dao.UserManagerDAO;
-import ar.edu.itba.grupo2.model.Comment;
-import ar.edu.itba.grupo2.model.User;
+import ar.edu.itba.grupo2.domain.comment.Comment;
+import ar.edu.itba.grupo2.domain.user.User;
+import ar.edu.itba.grupo2.domain.user.UserManagerRepo;
 import ar.edu.itba.grupo2.service.UserService;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
 
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean resetPasswordForEmail(String email, String password,
 			String answer) {
-		UserManagerDAO userManager = UserManagerPSQLImpl.getInstance();
+		UserManagerRepo userManager = UserManagerPSQLImpl.getInstance();
 		User user = userManager.getUserByEmail(email);
 
 		if (user == null) {
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String getSecretQuestionForEmail(String email) {
-		UserManagerDAO userManager = UserManagerPSQLImpl.getInstance();
+		UserManagerRepo userManager = UserManagerPSQLImpl.getInstance();
 		User user = userManager.getUserByEmail(email);
 
 		if (email == null || user == null) {

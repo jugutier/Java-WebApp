@@ -1,16 +1,20 @@
-package ar.edu.itba.grupo2.model;
+package ar.edu.itba.grupo2.domain.comment;
 
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import ar.edu.itba.grupo2.domain.common.EntityBaseType;
+import ar.edu.itba.grupo2.domain.film.Film;
+import ar.edu.itba.grupo2.domain.user.User;
+
 public class Comment extends EntityBaseType {
 
-	@OneToOne private Film film;
-	@OneToOne private User user;
+	@ManyToOne private Film film;
+	@ManyToOne private User user;
 	@Temporal(TemporalType.TIMESTAMP)@Column(nullable=false)private Date creationDate;
 	@Column(length=140,nullable=false)private String text;
 	@Column(nullable=false)private int rate;

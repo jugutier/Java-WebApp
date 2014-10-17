@@ -10,12 +10,12 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ar.edu.itba.grupo2.dao.PSQLImpl.FilmManagerPSQLImpl;
-import ar.edu.itba.grupo2.domain.dao.FilmManagerDAO;
-import ar.edu.itba.grupo2.domain.dao.exceptions.FilmNotFoundException;
-import ar.edu.itba.grupo2.model.Comment;
-import ar.edu.itba.grupo2.model.Film;
-import ar.edu.itba.grupo2.model.Genre;
-import ar.edu.itba.grupo2.model.User;
+import ar.edu.itba.grupo2.domain.comment.Comment;
+import ar.edu.itba.grupo2.domain.film.Film;
+import ar.edu.itba.grupo2.domain.film.FilmManagerRepo;
+import ar.edu.itba.grupo2.domain.film.FilmNotFoundException;
+import ar.edu.itba.grupo2.domain.genre.Genre;
+import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.service.FilmService;
 
 @Service
@@ -23,7 +23,7 @@ public class FilmServiceImpl implements FilmService {
 
 	private static FilmService instance = null;
 
-	private final FilmManagerDAO filmManager = FilmManagerPSQLImpl
+	private final FilmManagerRepo filmManager = FilmManagerPSQLImpl
 			.getInstance();
 
 	private FilmServiceImpl() {
@@ -37,12 +37,12 @@ public class FilmServiceImpl implements FilmService {
 
 		return instance;
 	}
-
+	@Deprecated
 	@Override
 	public List<Film> getAllFilms() {
 		return filmManager.getAllFilms();
 	}
-
+	@Deprecated
 	@Override
 	public Film getFilmById(final int id) throws FilmNotFoundException {
 		Film ret = filmManager.get(id);
@@ -51,7 +51,7 @@ public class FilmServiceImpl implements FilmService {
 		}
 		return ret;
 	}
-
+	@Deprecated
 	@Override
 	public List<Comment> getCommentsForFilm(final Film film)
 			throws FilmNotFoundException {

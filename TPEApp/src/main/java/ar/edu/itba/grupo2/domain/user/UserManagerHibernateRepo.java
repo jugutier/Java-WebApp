@@ -5,14 +5,12 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ar.edu.itba.grupo2.domain.baseRepo.HibernateBaseRepo;
-import ar.edu.itba.grupo2.domain.dao.UserManagerDAO;
-import ar.edu.itba.grupo2.model.Comment;
-import ar.edu.itba.grupo2.model.User;
+import ar.edu.itba.grupo2.domain.comment.Comment;
+import ar.edu.itba.grupo2.domain.common.HibernateBaseRepo;
 
-public class UserManagerHibernateImpl extends HibernateBaseRepo<User> implements UserManagerDAO{
+public class UserManagerHibernateRepo extends HibernateBaseRepo<User> implements UserManagerRepo{
 	@Autowired
-	public UserManagerHibernateImpl(SessionFactory sessionFactory) {
+	public UserManagerHibernateRepo(SessionFactory sessionFactory) {
 		super(sessionFactory);
 	}
 
@@ -27,7 +25,7 @@ public class UserManagerHibernateImpl extends HibernateBaseRepo<User> implements
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	@Deprecated
 	@Override
 	public List<Comment> getCommentsByUser(User user) {
 		// TODO Auto-generated method stub

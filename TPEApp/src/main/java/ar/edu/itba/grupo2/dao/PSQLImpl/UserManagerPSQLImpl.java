@@ -8,13 +8,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ar.edu.itba.grupo2.domain.dao.UserManagerDAO;
+import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.dao.exceptions.ConnectionException;
-import ar.edu.itba.grupo2.model.Comment;
-import ar.edu.itba.grupo2.model.User;
+import ar.edu.itba.grupo2.domain.user.User;
+import ar.edu.itba.grupo2.domain.user.UserManagerRepo;
 import ar.edu.itba.grupo2.utils.ConnectionUtilities;
 
-public final class UserManagerPSQLImpl implements UserManagerDAO {
+public final class UserManagerPSQLImpl implements UserManagerRepo {
 
 	private static UserManagerPSQLImpl user_manager = null;
 	private static final String USER_TABLENAME = "GAJAMDBUSER";

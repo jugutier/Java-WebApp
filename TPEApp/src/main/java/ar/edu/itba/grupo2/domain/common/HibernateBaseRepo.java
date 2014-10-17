@@ -1,4 +1,4 @@
-package ar.edu.itba.grupo2.domain.baseRepo;
+package ar.edu.itba.grupo2.domain.common;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -25,9 +25,9 @@ public class HibernateBaseRepo<T> implements BaseRepo<T> {
 	}
 
 	@Override
-	public List<? extends T> getAll() {
+	public List<T> getAll() {//list de T
 		@SuppressWarnings("unchecked")
-		List<? extends T> results = createCriteria().list();
+		List<T> results = createCriteria().list();
 
 		return results;
 	}

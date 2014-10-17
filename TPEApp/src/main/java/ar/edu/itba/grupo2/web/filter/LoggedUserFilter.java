@@ -10,7 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import ar.edu.itba.grupo2.model.User;
+import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.web.session.UserManager;
 import ar.edu.itba.grupo2.web.session.UserManagerImpl;
 

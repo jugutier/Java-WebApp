@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import ar.edu.itba.grupo2.model.User;
+import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.web.session.UserManager;
 
 public class LoggedUserInterceptor extends HandlerInterceptorAdapter {

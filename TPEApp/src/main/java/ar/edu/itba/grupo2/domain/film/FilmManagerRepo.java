@@ -1,13 +1,12 @@
-package ar.edu.itba.grupo2.domain.dao;
+package ar.edu.itba.grupo2.domain.film;
 
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.itba.grupo2.model.Comment;
-import ar.edu.itba.grupo2.model.Film;
+import ar.edu.itba.grupo2.domain.comment.Comment;
 
-public interface FilmManagerDAO {
+public interface FilmManagerRepo {
 	@Transactional
 	public Film get(final int id);
 	@Transactional

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ar.edu.itba.grupo2.model.Film;
+import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.service.FilmService;
 import ar.edu.itba.grupo2.service.impl.FilmServiceImpl;
 

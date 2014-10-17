@@ -29,11 +29,11 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">validate</property>
         
-        <mapping class="ar.edu.itba.grupo2.model.Comment" />
-        <mapping class="ar.edu.itba.grupo2.model.EntityBaseType" />
-        <mapping class="ar.edu.itba.grupo2.model.Film" />
-        <mapping class="ar.edu.itba.grupo2.model.Genre" />   
-        <mapping class="ar.edu.itba.grupo2.model.User" />     
+        <mapping class="ar.edu.itba.grupo2.domain.comment.Comment" />
+        <mapping class="ar.edu.itba.grupo2.domain.common.EntityBaseType" />
+        <mapping class="ar.edu.itba.grupo2.domain.film.Film" />
+        <mapping class="ar.edu.itba.grupo2.domain.user.User" />   
+        <mapping class="ar.edu.itba.grupo2.domain.genre.Genre" />     
     </session-factory>
     
 </hibernate-configuration>

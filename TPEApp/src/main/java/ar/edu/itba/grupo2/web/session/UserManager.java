@@ -1,6 +1,6 @@
 package ar.edu.itba.grupo2.web.session;
 
-import ar.edu.itba.grupo2.model.User;
+import ar.edu.itba.grupo2.domain.user.User;
 
 public interface UserManager {
 

@@ -1,13 +1,12 @@
-package ar.edu.itba.grupo2.domain.dao;
+package ar.edu.itba.grupo2.domain.user;
 
 import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.edu.itba.grupo2.model.Comment;
-import ar.edu.itba.grupo2.model.User;
+import ar.edu.itba.grupo2.domain.comment.Comment;
 
-public interface UserManagerDAO {
+public interface UserManagerRepo {
 	@Transactional
 	public User get(final int id);
 	@Transactional

@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import ar.edu.itba.grupo2.domain.dao.FilmManagerDAO;
+import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.dao.exceptions.ConnectionException;
-import ar.edu.itba.grupo2.model.Comment;
-import ar.edu.itba.grupo2.model.Film;
+import ar.edu.itba.grupo2.domain.film.Film;
+import ar.edu.itba.grupo2.domain.film.FilmManagerRepo;
 import ar.edu.itba.grupo2.utils.ConnectionUtilities;
 
-public class FilmManagerPSQLImpl implements FilmManagerDAO {
+public class FilmManagerPSQLImpl implements FilmManagerRepo {
 	private static final String FILM_TABLENAME = "FILM";
 	private static final String COMMENT_TABLENAME = "COMMENT";
 

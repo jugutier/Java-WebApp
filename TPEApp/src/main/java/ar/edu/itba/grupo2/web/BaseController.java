@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.support.WebApplicationObjectSupport;
 
-import ar.edu.itba.grupo2.model.User;
+import ar.edu.itba.grupo2.domain.user.User;
 
 @Controller
 public class BaseController extends WebApplicationObjectSupport {

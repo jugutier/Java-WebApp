@@ -1,4 +1,4 @@
-package ar.edu.itba.grupo2.model;
+package ar.edu.itba.grupo2.domain.genre;
 
 public enum Genre {
 	ADVENTURE("Aventura"), THRILLER("Suspenso"), HORROR("Terror"), DRAMA("Drama"), DOCUMENTARY(

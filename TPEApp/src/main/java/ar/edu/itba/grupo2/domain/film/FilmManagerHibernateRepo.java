@@ -6,24 +6,22 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import ar.edu.itba.grupo2.domain.baseRepo.HibernateBaseRepo;
-import ar.edu.itba.grupo2.domain.dao.FilmManagerDAO;
-import ar.edu.itba.grupo2.model.Comment;
-import ar.edu.itba.grupo2.model.Film;
+import ar.edu.itba.grupo2.domain.comment.Comment;
+import ar.edu.itba.grupo2.domain.common.HibernateBaseRepo;
 @Repository
-public class FilmManagerHibernateImpl extends HibernateBaseRepo<Film> implements FilmManagerDAO{
+public class FilmManagerHibernateRepo extends HibernateBaseRepo<Film> implements FilmManagerRepo{
 	
 	@Autowired
-	public FilmManagerHibernateImpl(SessionFactory sessionFactory) {
+	public FilmManagerHibernateRepo(SessionFactory sessionFactory) {
 		super(sessionFactory);
 	}
-
+	@Deprecated
 	@Override
 	public List<Comment> getCommentsForFilm(Film film) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	@Deprecated
 	@Override
 	public Comment saveComment(Comment c) {
 		// TODO Auto-generated method stub

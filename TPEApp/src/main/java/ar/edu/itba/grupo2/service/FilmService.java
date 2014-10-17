@@ -2,25 +2,25 @@ package ar.edu.itba.grupo2.service;
 
 import java.util.List;
 
-import ar.edu.itba.grupo2.domain.dao.exceptions.FilmNotFoundException;
-import ar.edu.itba.grupo2.model.Comment;
-import ar.edu.itba.grupo2.model.Film;
-import ar.edu.itba.grupo2.model.User;
+import ar.edu.itba.grupo2.domain.comment.Comment;
+import ar.edu.itba.grupo2.domain.film.Film;
+import ar.edu.itba.grupo2.domain.film.FilmNotFoundException;
+import ar.edu.itba.grupo2.domain.user.User;
 
 public interface FilmService {
-
+	@Deprecated
 	public abstract List<Film> getAllFilms();
-
+	@Deprecated
 	public abstract Film getFilmById(int id) throws FilmNotFoundException;
-
+	@Deprecated
 	public abstract List<Comment> getCommentsForFilm(Film film)
 			throws FilmNotFoundException;
-
+	@Deprecated
 	public abstract List<String> getGenres();
-
+	//metodo de instancia en film
 	public abstract boolean userHasCommentedFilm(Film film, User user)
 			throws FilmNotFoundException;
-
+	//al repo de peliculas
 	public abstract List<Film> filterTopFilms(List<Film> filmList, int topAmount);
 
 	public abstract List<Film> filterRecentlyAdded(List<Film> filmList,
@@ -38,7 +38,7 @@ public interface FilmService {
 
 	public abstract boolean userCanComment(Film film, User user)
 			throws FilmNotFoundException;
-
+	@Deprecated
 	public abstract Comment addComment(Comment comment);
 
 }
