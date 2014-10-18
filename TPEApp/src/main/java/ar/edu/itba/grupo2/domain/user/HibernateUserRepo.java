@@ -1,16 +1,15 @@
 package ar.edu.itba.grupo2.domain.user;
 
-import java.util.List;
+import java.util.Date;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.HibernateBaseRepo;
 
-public class UserManagerHibernateRepo extends HibernateBaseRepo<User> implements UserManagerRepo{
+public class HibernateUserRepo extends HibernateBaseRepo<User> implements UserRepo{
 	@Autowired
-	public UserManagerHibernateRepo(SessionFactory sessionFactory) {
+	public HibernateUserRepo(SessionFactory sessionFactory) {
 		super(sessionFactory);
 	}
 
@@ -25,9 +24,17 @@ public class UserManagerHibernateRepo extends HibernateBaseRepo<User> implements
 		// TODO Auto-generated method stub
 		return null;
 	}
-	@Deprecated
+
 	@Override
-	public List<Comment> getCommentsByUser(User user) {
+	public User logIn(String email, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User registerUser(String email, String password,
+			String passwordConfirm, String name, String lastname,
+			Date birthdate, String secretQuestion, String secretAnswer) {
 		// TODO Auto-generated method stub
 		return null;
 	}

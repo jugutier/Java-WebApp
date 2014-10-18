@@ -1,18 +1,11 @@
 package ar.edu.itba.grupo2.web;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import ar.edu.itba.grupo2.domain.film.Film;
-import ar.edu.itba.grupo2.service.FilmService;
-import ar.edu.itba.grupo2.service.impl.FilmServiceImpl;
-import ar.edu.itba.grupo2.web.session.UserManager;
-import ar.edu.itba.grupo2.web.session.UserManagerImpl;
 
 @SuppressWarnings("serial")
 public class FilmList extends HttpServlet{
@@ -25,7 +18,7 @@ public class FilmList extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
-
+/*
 		FilmService filmService = FilmServiceImpl.getInstance();
 		req.setCharacterEncoding("UTF-8");
 		String genreFilter = req.getParameter("genre");
@@ -50,6 +43,6 @@ public class FilmList extends HttpServlet{
 		
 		req.setAttribute("filmList", filmList);
 		req.setAttribute("genreList", genreList);
-		req.getRequestDispatcher("/WEB-INF/jsp/filmList.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/jsp/filmList.jsp").forward(req, resp);*/
 	}
 }

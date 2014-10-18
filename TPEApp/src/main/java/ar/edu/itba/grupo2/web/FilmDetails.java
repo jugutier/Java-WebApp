@@ -1,20 +1,11 @@
 package ar.edu.itba.grupo2.web;
 
 import java.io.IOException;
-import java.rmi.UnexpectedException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import ar.edu.itba.grupo2.domain.comment.Comment;
-import ar.edu.itba.grupo2.domain.film.Film;
-import ar.edu.itba.grupo2.domain.film.FilmNotFoundException;
-import ar.edu.itba.grupo2.domain.user.User;
-import ar.edu.itba.grupo2.service.FilmService;
-import ar.edu.itba.grupo2.service.impl.FilmServiceImpl;
 
 @SuppressWarnings("serial")
 public class FilmDetails extends HttpServlet{
@@ -27,7 +18,7 @@ public class FilmDetails extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
-		
+		/*
 		FilmService filmService = FilmServiceImpl.getInstance();
 		String strId = req.getParameter("id");
 		Film film = null;
@@ -54,13 +45,13 @@ public class FilmDetails extends HttpServlet{
 	
 		}
 		
-		req.getRequestDispatcher("/WEB-INF/jsp/filmDetails.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/jsp/filmDetails.jsp").forward(req, resp);*/
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {		
-		FilmService filmService = FilmServiceImpl.getInstance();
+		/*FilmService filmService = FilmServiceImpl.getInstance();
 		Film film;
 		User user = (User)req.getSession(false).getAttribute("user");
 		if (req.getParameter("comment") == "") {
@@ -86,6 +77,6 @@ public class FilmDetails extends HttpServlet{
 		}	
 		
 		//resp.sendRedirect(arg0);
-		this.doGet(req, resp);
+		this.doGet(req, resp);*/
 	}
 }

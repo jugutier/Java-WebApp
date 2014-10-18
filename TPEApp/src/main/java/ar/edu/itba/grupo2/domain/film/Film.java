@@ -1,6 +1,7 @@
 package ar.edu.itba.grupo2.domain.film;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +10,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 import ar.edu.itba.grupo2.domain.genre.Genre;
+import ar.edu.itba.grupo2.domain.user.User;
 
 
 @Entity
@@ -24,6 +27,8 @@ public class Film extends EntityBaseType {
 	@Column(nullable=false)private int length;
 	@Column(nullable=false)private int sumComments;
 	@Column(nullable=false)private int totalComments;
+	
+	List<Comment> comments;//TODO:MAPPING
 
 	private Film(final Builder builder) {
 		setId(builder.id);
@@ -36,6 +41,7 @@ public class Film extends EntityBaseType {
 		this.length = builder.length;
 		this.sumComments = builder.sumComments;
 		this.totalComments = builder.totalComments;
+		this.comments = builder.comments;
 	}
 
 	public String getName() {
@@ -77,7 +83,15 @@ public class Film extends EntityBaseType {
 	public double getScore() {
 		return totalComments == 0 ? 0 : (double)sumComments / totalComments;
 	}
-
+	public List<Comment> getComments() {
+		return comments;
+	}
+	public boolean userHasCommented(User user){
+		return false;//TODO:IMPLEMENT
+	}
+	public boolean userCanComment(User user){
+		return false;//TODO:IMPLEMENT
+	}
 	public static class Builder {
 		private Integer id = -1;
 		private String name;
@@ -89,6 +103,8 @@ public class Film extends EntityBaseType {
 		private int totalComments;
 		private int sumComments;
 		private Date creationDate;
+		
+		List<Comment> comments;
 
 		public Builder id(final Integer id) {
 			this.id = id;
@@ -139,7 +155,10 @@ public class Film extends EntityBaseType {
 			this.sumComments = sumComments;
 			return this;
 		}
-
+		public Builder comments(final List<Comment> comments) {
+			this.comments = comments;
+			return this;
+		}
 		public Film build() {
 			return new Film(this);
 		}

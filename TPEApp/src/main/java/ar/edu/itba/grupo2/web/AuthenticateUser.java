@@ -7,19 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ar.edu.itba.grupo2.domain.user.User;
-import ar.edu.itba.grupo2.service.UserService;
-import ar.edu.itba.grupo2.service.impl.UserServiceImpl;
-import ar.edu.itba.grupo2.web.session.UserManager;
-import ar.edu.itba.grupo2.web.session.UserManagerImpl;
-
 @SuppressWarnings("serial")
 public class AuthenticateUser extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 	throws ServletException, IOException {
-		User loggedUser = null;
+		/*User loggedUser = null;
 		UserService userService = UserServiceImpl.getInstance();
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
@@ -52,7 +46,7 @@ public class AuthenticateUser extends HttpServlet{
 				resp.sendRedirect(resp.encodeRedirectURL(fromPage + separator + "auth_fail=wrongUser"));
 			}
 			
-		}
+		}*/
 	}
 
 }

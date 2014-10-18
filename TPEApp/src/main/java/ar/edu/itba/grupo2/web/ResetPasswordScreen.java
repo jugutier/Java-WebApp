@@ -1,17 +1,11 @@
 package ar.edu.itba.grupo2.web;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import ar.edu.itba.grupo2.service.UserService;
-import ar.edu.itba.grupo2.service.impl.UserServiceImpl;
-import ar.edu.itba.grupo2.utils.ValidationUtilities;
 
 @SuppressWarnings("serial")
 public class ResetPasswordScreen extends HttpServlet {
@@ -28,7 +22,7 @@ public class ResetPasswordScreen extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		UserService userService = UserServiceImpl.getInstance();
+		/*UserService userService = UserServiceImpl.getInstance();
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
 		String passwordConfirm = req.getParameter("passwordConfirm");
@@ -65,10 +59,10 @@ public class ResetPasswordScreen extends HttpServlet {
 		}
 		else {
 			req.getRequestDispatcher("/WEB-INF/jsp/resetPassword.jsp").forward(req, resp);
-		}
+		}*/
 	}
 	
-	private List<String> validateEmailStage(String email) {
+	/*private List<String> validateEmailStage(String email) {
 		List<String> errors = new ArrayList<String>();
 		UserService userService = UserServiceImpl.getInstance();
 		
@@ -109,5 +103,5 @@ public class ResetPasswordScreen extends HttpServlet {
 		}
 		
 		return errors;
-	}
+	}*/
 }

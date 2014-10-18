@@ -15,20 +15,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.grupo2.domain.user.User;
-import ar.edu.itba.grupo2.service.UserService;
-import ar.edu.itba.grupo2.service.impl.UserServiceImpl;
+import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
 import ar.edu.itba.grupo2.web.session.UserManager;
 
 @Controller
 public class UserController {
 	
-	private final UserService userService;
+	private final UserRepo userRepo;
 	private final UserManager userManager;
 	
 	@Autowired
-	public UserController(UserService userService, UserManager userManager) {
-		this.userService = userService;
+	public UserController(UserRepo userRepo, UserManager userManager) {
+		this.userRepo = userRepo;
 		this.userManager = userManager;
 	}
 	
@@ -116,8 +115,8 @@ public class UserController {
 		}
 		if (ValidationUtilities.paramEmpty(secretAnswer)) {
 			errors.add("NoSA");
-		}
-		if (UserServiceImpl.getInstance().existsUser(email)) {
+		}		
+		if (userRepo.getUserByEmail(email)!=null) {
 			errors.add("MailUsed");
 		}
 
@@ -139,7 +138,7 @@ public class UserController {
 			fromPage = "home";
 		}
 		
-		loggedUser = userService.logIn(email, password);
+		loggedUser = userRepo.logIn(email, password);
 		
 		if (loggedUser != null) {
 			userManager.setUser(loggedUser);

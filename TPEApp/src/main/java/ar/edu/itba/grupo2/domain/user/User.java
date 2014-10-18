@@ -1,6 +1,7 @@
 package ar.edu.itba.grupo2.domain.user;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 
 
@@ -25,6 +27,8 @@ public class User extends EntityBaseType {
 	@Column(length=140,nullable=false)private String secretQuestion;
 	@Column(length=140,nullable=false)private String secretAnswer;
 	
+	List<Comment> comments;//TODO:MAPPEAR
+	
 	private User(final Builder builder){
 		setId(builder.id);
 		this.name = builder.name;
@@ -35,6 +39,7 @@ public class User extends EntityBaseType {
 		this.vip = builder.vip;
 		this.secretQuestion = builder.secretQuestion;
 		this.secretAnswer = builder.secretAnswer;
+		this.comments = builder.comments;
 	}
 	
 	public static class Builder {
@@ -47,7 +52,7 @@ public class User extends EntityBaseType {
 		private boolean vip = false;
 		private String secretQuestion;
 		private String secretAnswer;
-		
+		private List<Comment> comments;
 
 
 		public Builder name(final String name){
@@ -94,7 +99,10 @@ public class User extends EntityBaseType {
 			this.secretAnswer = secretAnswer;
 			return this;
 		}
-		
+		public Builder comments(final List<Comment> comments){
+			this.comments = comments;
+			return this;
+		}
 		public User build() {
 			return new User(this);
 		}
@@ -135,7 +143,13 @@ public class User extends EntityBaseType {
 	public void setPassword(final String password) {
 		this.password = password;
 	}
-
+	public List<Comment> getComments() {
+		return comments;
+	}
+	public boolean resetPassword(String email, String answerToSecretQuestion,String newPassword){
+		return false;
+		
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

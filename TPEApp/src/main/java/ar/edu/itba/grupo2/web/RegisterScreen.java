@@ -1,23 +1,11 @@
 package ar.edu.itba.grupo2.web;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import ar.edu.itba.grupo2.domain.user.User;
-import ar.edu.itba.grupo2.service.impl.UserServiceImpl;
-import ar.edu.itba.grupo2.utils.ValidationUtilities;
-import ar.edu.itba.grupo2.web.session.UserManager;
-import ar.edu.itba.grupo2.web.session.UserManagerImpl;
 
 @SuppressWarnings("serial")
 public class RegisterScreen extends HttpServlet {
@@ -32,7 +20,7 @@ public class RegisterScreen extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		List<String> errors = new ArrayList<String>();
+		/*List<String> errors = new ArrayList<String>();
 		User loggedUser;
 		String email = (String) req.getParameter("email");
 		String name = (String) req.getParameter("name");
@@ -62,9 +50,9 @@ public class RegisterScreen extends HttpServlet {
 				userManager.setUser(loggedUser);
 				resp.sendRedirect("home");
 			}
-		}
+		}*/
 	}
-
+/*
 	private List<String> validate(String email, String name, String lastname,
 			String password, String passwordConfirm, String secretQuestion,
 			String secretAnswer, Date birthdate) {
@@ -98,5 +86,5 @@ public class RegisterScreen extends HttpServlet {
 		return errors;
 
 	}
-
+*/
 }
