@@ -5,8 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,7 +22,7 @@ public class Film extends EntityBaseType {
 	@Column(length=40,nullable=false)private String director;
 	@Temporal(TemporalType.DATE)@Column(nullable=false)private Date creationDate;
 	@Temporal(TemporalType.DATE)@Column(nullable=false)private Date releaseDate;
-	@Column(length=30,nullable=false) @Enumerated(EnumType.STRING) private Genre genre;
+	@ManyToOne private Genre genre;
 	@Column(length=500,nullable=false)private String description;
 	@Column(nullable=false)private int length;
 	@Column(nullable=false)private int sumComments;
@@ -139,7 +138,7 @@ public class Film extends EntityBaseType {
 		}
 
 		public Builder genre(final String genre) {
-			this.genre = Genre.fromString(genre);
+			this.genre = new Genre(genre);
 			return this;
 		}
 

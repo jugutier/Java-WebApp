@@ -48,12 +48,7 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements FilmRe
 	}
 	@Override
 	public List<Genre> getGenres() {
-		Genre[] genres = Genre.values();
-		List<Genre> ret = new LinkedList<Genre>();
-		for (Genre genre : genres) {
-			ret.add(genre);
-		}
-		return ret;
+		return null;//TODO: implement
 	}
 	
 }

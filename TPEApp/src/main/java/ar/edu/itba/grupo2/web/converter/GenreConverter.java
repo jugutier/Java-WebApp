@@ -10,6 +10,6 @@ public class GenreConverter implements Converter<String, Genre> {
 
 	
 	public Genre convert(String genre) {
-		return Genre.fromString(genre); 
+		return new Genre(genre); 
 	}
 }
