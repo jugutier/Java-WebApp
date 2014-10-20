@@ -3,14 +3,17 @@ package ar.edu.itba.grupo2.domain.comment;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.user.User;
-
+@Entity
+@Table(name="Comment")
 public class Comment extends EntityBaseType {
 
 	@ManyToOne private Film film;

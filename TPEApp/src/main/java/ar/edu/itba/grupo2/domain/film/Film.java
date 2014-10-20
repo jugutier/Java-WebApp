@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -28,8 +29,11 @@ public class Film extends EntityBaseType {
 	@Column(nullable=false)private int sumComments;
 	@Column(nullable=false)private int totalComments;
 	
-	List<Comment> comments;//TODO:MAPPING
-
+	@OneToMany(mappedBy="film") private List<Comment> comments;
+	
+	Film(){
+		
+	}
 	private Film(final Builder builder) {
 		setId(builder.id);
 		this.name = builder.name;
@@ -91,6 +95,9 @@ public class Film extends EntityBaseType {
 	}
 	public boolean userCanComment(User user){
 		return false;//TODO:IMPLEMENT
+	}
+	public void addComment(Comment c){
+		//TODO add comment to list, add comment to user
 	}
 	public static class Builder {
 		private Integer id = -1;

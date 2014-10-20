@@ -5,7 +5,7 @@ public enum Genre {
 			"Documental");
 	private String description;
 
-	private Genre(String description) {
+	Genre(String description) {
 		this.description = description;
 	}
 

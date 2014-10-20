@@ -1,7 +1,9 @@
 package ar.edu.itba.grupo2.web.session;
 
-import ar.edu.itba.grupo2.domain.user.User;
+import org.springframework.stereotype.Repository;
 
+import ar.edu.itba.grupo2.domain.user.User;
+@Repository
 public class UserManagerImpl2 implements UserManager {
 	
 	User user;

@@ -25,26 +25,26 @@
 	   <property name="suffix" value=".jsp" />
 	</bean>
 	
-	<bean id="hibernateSessionFilter" class="ar.edu.itba.grupo2.web.filter.HibernateSessionFilter">
-		<constructor-arg name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	
-	<!-- Configure Hibernate & Spring Transactions -->
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
-	</bean>
+	<mvc:annotation-driven conversion-service="conversionService"/>
+	<bean id="conversionService" class="ar.edu.itba.grupo2.web.EnhancedFormattingConversionServiceFactoryBean" />
+
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/i18n/messages" />
+		<property name="cacheSeconds" value="0" />
+	</bean> 
+	<!-- END base mvc.xml (Andy's) -->
 	
 	<!--<tx:annotation-driven />-->
-	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	<!-- <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
+	</bean>-->
 
-	<bean id="userManager" class="ar.edu.itba.grupo2.web.session.UserManagerImpl2" scope="session">
+	<!--<bean id="userManager" class="ar.edu.itba.grupo2.web.session.UserManagerImpl2" scope="session">
 		<aop:scoped-proxy/>
     </bean>
 
-	<mvc:interceptors>
+	  <mvc:interceptors>
 		<bean class="ar.edu.itba.grupo2.web.filter.LoggedUserInterceptor" />
-	</mvc:interceptors>
+	</mvc:interceptors>-->
 
 </beans>

@@ -19,17 +19,17 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements FilmRe
 	@Override
 	public List<Film> getTop(int amount) {
 		// TODO Auto-generated method stub
-		return null;
+		return getAll();
 	}
 	@Override
 	public List<Film> getLatest(int amount) {
 		// TODO Auto-generated method stub
-		return null;
+		return getAll();
 	}
 	@Override
 	public List<Film> getNewests(int dayTolerance) {
 		// TODO Auto-generated method stub
-		return null;
+		return getAll();
 	}
 	@Override
 	public List<Film> getFromGenre(Genre genre) {
@@ -39,12 +39,12 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements FilmRe
 	@Override
 	public List<Film> getFromDirector(String director) {
 		// TODO Auto-generated method stub
-		return null;
+		return getAll();
 	}
 	@Override
 	public List<Film> getByReleaseDate() {
 		// TODO Auto-generated method stub
-		return null;
+		return getAll();
 	}
 	@Override
 	public List<Genre> getGenres() {

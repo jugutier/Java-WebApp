@@ -4,18 +4,18 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-public class HibernateBaseRepo<T> implements BaseRepo<T> {
+public abstract class HibernateBaseRepo<T> implements BaseRepo<T> {
 
 	protected SessionFactory sessionFactory;
 
-	protected Class<? extends T> tClass;
+	protected Class<T> tClass;
 
 	
 	@SuppressWarnings("unchecked")
 	public HibernateBaseRepo(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 		ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
-		this.tClass = (Class<? extends T>) type.getActualTypeArguments()[0];
+		this.tClass = (Class<T>) type.getActualTypeArguments()[0];
 	}
 
 	@SuppressWarnings("unchecked")
@@ -25,7 +25,7 @@ public class HibernateBaseRepo<T> implements BaseRepo<T> {
 	}
 
 	@Override
-	public List<T> getAll() {//list de T
+	public List<T> getAll() {
 		@SuppressWarnings("unchecked")
 		List<T> results = createCriteria().list();
 
@@ -37,12 +37,12 @@ public class HibernateBaseRepo<T> implements BaseRepo<T> {
 	}
 
 	@Override
-	public void delete(T entity) {
+	public void delete(final T entity) {
 		sessionFactory.getCurrentSession().delete(entity);
 	}
 
 	@Override
-	public T save(T entity) {
+	public T save(final T entity) {
 		sessionFactory.getCurrentSession().save(entity);
 		return entity;
 	}

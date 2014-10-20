@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,8 +28,11 @@ public class User extends EntityBaseType {
 	@Column(length=140,nullable=false)private String secretQuestion;
 	@Column(length=140,nullable=false)private String secretAnswer;
 	
-	List<Comment> comments;//TODO:MAPPEAR
+	@OneToMany(mappedBy="user")private List<Comment> comments;
 	
+	User(){
+		
+	}
 	private User(final Builder builder){
 		setId(builder.id);
 		this.name = builder.name;
@@ -144,7 +148,10 @@ public class User extends EntityBaseType {
 		this.password = password;
 	}
 	public List<Comment> getComments() {
-		return comments;
+		return comments;//TODO: devolver copia
+	}
+	public void addComment(){
+		//TODO: add comment to film, add comment here
 	}
 	public boolean resetPassword(String email, String answerToSecretQuestion,String newPassword){
 		return false;

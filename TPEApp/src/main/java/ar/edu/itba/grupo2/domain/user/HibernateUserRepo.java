@@ -4,9 +4,10 @@ import java.util.Date;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.grupo2.domain.common.HibernateBaseRepo;
-
+@Repository
 public class HibernateUserRepo extends HibernateBaseRepo<User> implements UserRepo{
 	@Autowired
 	public HibernateUserRepo(SessionFactory sessionFactory) {
@@ -15,12 +16,6 @@ public class HibernateUserRepo extends HibernateBaseRepo<User> implements UserRe
 
 	@Override
 	public User getUserByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public User saveUser(User user) {
 		// TODO Auto-generated method stub
 		return null;
 	}

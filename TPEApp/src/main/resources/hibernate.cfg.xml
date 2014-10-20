@@ -1,39 +1,65 @@
-<?xml version='1.0' encoding='utf-8'?>
-<!DOCTYPE hibernate-configuration PUBLIC
-        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
-<hibernate-configuration>
-    <session-factory>
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+         http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-3.0.xsd
+         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	<context:annotation-config/>
+	
+	<bean id="properties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+	            <value>classpath:setup.properties</value>
+        	</list>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=${hibernate.dialect}
+				<!-- Validate the database schema on startup, if it is different fails. Run mirgate.sql first! -->
+				hibernate.hbm2ddl.auto=${hibernate.hbm2ddl.auto}
+				<!-- Echo all executed SQL to stdout -->
+				hibernate.show_sql=${hibernate.show_sql}				
+				hibernate.format_sql=${hibernate.format_sql}
+				<!-- End -->
+				hibernate.current_session_context_class=thread
+            	hibernate.max_fetch_depth=2
+           		hibernate.jdbc.batch_size=30  
+			</value>
+		</property>
+
+		<property name="packagesToScan">
+			<list> <value>ar.edu.itba.grupo2.domain</value> </list>
+		</property>
+
+	</bean>
+	
+</beans>
+ <!-- 
     
     	<property name="hibernate.connection.useUnicode">true</property>
     	<property name="hibernate.connection.characterEncoding">utf8</property>
     
-        <!-- Database connection settings -->
-        <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.url">jdbc:postgresql://localhost/paw2</property>
-        <property name="connection.username">paw</property>
-        <property name="connection.password">paw</property>
-
-        <!-- SQL dialect -->
-        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         
         <property name="hibernate.c3p0.min_size">1</property>
         <property name="hibernate.c3p0.max_size">4</property>
         <property name="hibernate.c3p0.timeout">300</property>
         <property name="hibernate.c3p0.max_statements">50</property>
 
-        <!-- Echo all executed SQL to stdout -->
-        <property name="show_sql">true</property>
-		<property name="format_sql">true</property>
 
-        <!-- Drop and re-create the database schema on startup -->
-        <property name="hbm2ddl.auto">validate</property>
-        
-        <mapping class="ar.edu.itba.grupo2.domain.comment.Comment" />
-        <mapping class="ar.edu.itba.grupo2.domain.common.EntityBaseType" />
-        <mapping class="ar.edu.itba.grupo2.domain.film.Film" />
-        <mapping class="ar.edu.itba.grupo2.domain.user.User" />   
-        <mapping class="ar.edu.itba.grupo2.domain.genre.Genre" />     
-    </session-factory>
-    
-</hibernate-configuration>
+-->

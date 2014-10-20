@@ -10,7 +10,7 @@ public interface UserRepo {
 	@Transactional
 	public User getUserByEmail(final String email);
 	@Transactional
-	public User saveUser(final User user);
+	public User save(final User user);
 	
 	public abstract User logIn(String email, String password);
 	
