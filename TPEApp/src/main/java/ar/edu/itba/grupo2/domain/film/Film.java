@@ -18,6 +18,7 @@ import ar.edu.itba.grupo2.domain.user.User;
 
 @Entity
 public class Film extends EntityBaseType {
+	
 	@Column(length=100,nullable=false)private String name;
 	@Column(length=40,nullable=false)private String director;
 	@Temporal(TemporalType.DATE)@Column(nullable=false)private Date creationDate;
@@ -33,6 +34,7 @@ public class Film extends EntityBaseType {
 	Film(){
 		
 	}
+	
 	private Film(final Builder builder) {
 		setId(builder.id);
 		this.name = builder.name;
@@ -86,18 +88,48 @@ public class Film extends EntityBaseType {
 	public double getScore() {
 		return totalComments == 0 ? 0 : (double)sumComments / totalComments;
 	}
+	
 	public List<Comment> getComments() {
-		return comments;
+		return comments;//TODO Return a copy?
 	}
+	
 	public boolean userHasCommented(User user){
-		return false;//TODO:IMPLEMENT
+		for(Comment c: comments){
+			if (c.getUser().equals(user)){
+				return false;
+			}
+		}
+		return true;
 	}
+	
 	public boolean userCanComment(User user){
-		return false;//TODO:IMPLEMENT
+		if(this.isReleased()){
+			if(this.userHasCommented(user)){
+				return false;
+			}else{
+				return true;
+			}
+		}else{
+			if(user.isVip()){
+				if(this.userHasCommented(user)){
+					return false;
+				}else{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
-	public void addComment(Comment c){
-		//TODO add comment to list, add comment to user
+	
+	public void addComment(Comment c) throws UserCantCommentException{
+		if(userCanComment(c.getUser())){
+			comments.add(c);
+			c.getUser().addComment(c);
+		}else{
+			throw new UserCantCommentException();
+		}
 	}
+	
 	public static class Builder {
 		private Integer id = -1;
 		private String name;

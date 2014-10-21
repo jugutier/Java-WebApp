@@ -147,16 +147,21 @@ public class User extends EntityBaseType {
 	public void setPassword(final String password) {
 		this.password = password;
 	}
+	
 	public List<Comment> getComments() {
 		return comments;//TODO: devolver copia
 	}
-	public void addComment(){
-		//TODO: add comment to film, add comment here
+	
+	public void addComment(Comment c){
+		//TODO: Check please. This should only be called from Film.addComment.
+		// How can we make it secure?
+		comments.add(c);
 	}
+	
 	public boolean resetPassword(String email, String answerToSecretQuestion,String newPassword){
 		return false;
-		
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
