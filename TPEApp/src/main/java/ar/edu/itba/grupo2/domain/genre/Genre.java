@@ -15,6 +15,14 @@ public class Genre extends EntityBaseType{
 	public String getGenre() {
 		return genre;
 	}
+	@Override
+	public String toString() {
+		return genre;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		return ((Genre)obj).genre.equals(genre);
+	}
 }/**
 public enum Genre {
 	ADVENTURE("Aventura"), THRILLER("Suspenso"), HORROR("Terror"), DRAMA("Drama"), DOCUMENTARY(

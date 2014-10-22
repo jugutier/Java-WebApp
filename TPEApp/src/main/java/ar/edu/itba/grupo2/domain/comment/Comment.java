@@ -21,7 +21,9 @@ public class Comment extends EntityBaseType {
 	@Temporal(TemporalType.TIMESTAMP)@Column(nullable=false)private Date creationDate;
 	@Column(length=140,nullable=false)private String text;
 	@Column(nullable=false)private int rate;
-
+	
+	Comment(){}
+	
 	private Comment(final Builder builder) {
 		setId(builder.id);
 		this.film = builder.film;

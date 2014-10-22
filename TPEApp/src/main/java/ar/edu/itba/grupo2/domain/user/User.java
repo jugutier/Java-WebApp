@@ -149,7 +149,7 @@ public class User extends EntityBaseType {
 	}
 	
 	public List<Comment> getComments() {
-		return comments;//TODO: devolver copia
+		return comments;//TODO: return a copy
 	}
 	
 	public void addComment(Comment c){
@@ -158,8 +158,12 @@ public class User extends EntityBaseType {
 		comments.add(c);
 	}
 	
-	public boolean resetPassword(String email, String answerToSecretQuestion,String newPassword){
-		return false;
+	public boolean resetPassword(String answerToSecretQuestion,String newPassword){
+		if(!answerToSecretQuestion.equals(this.secretAnswer)){
+			return false;
+		}
+		this.password = newPassword;
+		return true;
 	}
 	
 	@Override

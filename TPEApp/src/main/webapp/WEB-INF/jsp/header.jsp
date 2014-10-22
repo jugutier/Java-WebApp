@@ -28,7 +28,7 @@
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container-narrow">
-					<a class="brand" href="home">GAJAmdb</a>
+					<a class="brand" href="welcome">GAJAmdb</a>
 					<ul class="nav nav-pills">
   						<li>
   							<a href="filmList" type="button">Pel&iacute;culas</a>

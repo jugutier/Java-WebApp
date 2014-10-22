@@ -1,54 +1,81 @@
 package ar.edu.itba.grupo2.domain.film;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.grupo2.domain.common.HibernateBaseRepo;
 import ar.edu.itba.grupo2.domain.genre.Genre;
+
 @Repository
-public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements FilmRepo{
-	
+public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
+		FilmRepo {
+
 	@Autowired
 	public HibernateFilmRepo(SessionFactory sessionFactory) {
 		super(sessionFactory);
 	}
+
 	@Override
 	public List<Film> getTop(int amount) {
-		// TODO Auto-generated method stub
-		return getAll();
+		return limitedFind(
+				"FROM Film where totalComments > 0 ORDER BY (sumComments / totalComments) ASC",
+				amount);
 	}
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Film> getLatest(int amount) {
-		// TODO Auto-generated method stub
-		return getAll();
+		Criteria c = createCriteria().add(
+				Restrictions.lt("creationDate", new Date()));
+		c.setMaxResults(amount);
+		return (List<Film>) c.list();
 	}
+
+	// newest: Between today and +dayTolerance from now
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Film> getNewests(int dayTolerance) {
-		// TODO Auto-generated method stub
-		return getAll();
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DATE, dayTolerance);
+		return createCriteria().add(
+				Restrictions.between("releaseDate", new Date(), cal.getTime()))
+				.list();
 	}
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Film> getFromGenre(Genre genre) {
-		// TODO Auto-generated method stub
-		return null;
+		return createCriteria().add(Restrictions.eq("genre", genre)).list();
 	}
+
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Film> getFromDirector(String director) {
-		// TODO Auto-generated method stub
-		return getAll();
+		return createCriteria().add(Restrictions.eq("director", director))
+				.list();
 	}
+
 	@Override
 	public List<Film> getByReleaseDate() {
-		// TODO Auto-generated method stub
-		return getAll();
+		return find("FROM Film ORDER BY releaseDate ASC");
 	}
+
 	@Override
 	public List<Genre> getGenres() {
-		return null;//TODO: implement
+		List<Genre> list = find("from Genre");
+		List<Genre> ret = new ArrayList<Genre>(list.size());
+		for (Genre g : list) {
+			ret.add(new Genre(g.getGenre()));// TODO: ask andy
+		}
+		return list;
 	}
-	
+
 }
