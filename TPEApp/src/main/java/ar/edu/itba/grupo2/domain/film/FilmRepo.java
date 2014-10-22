@@ -12,6 +12,8 @@ public interface FilmRepo {
 	
 	public Film save(Film film);
 	
+	public Genre getGenre(String genre);
+	
 	public List<Genre> getGenres();
 	//Filter methods
 	public List<Film> getTop(int amount);
