@@ -19,18 +19,13 @@ import org.springframework.web.servlet.ModelAndView;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
-import ar.edu.itba.grupo2.web.session.UserManager;
 
 @Controller
-public class UserController {
-	
-	private final UserRepo userRepo;
-	private final UserManager userManager;
+public class UserController extends BaseController {
 	
 	@Autowired
-	public UserController(UserRepo userRepo, UserManager userManager) {
-		this.userRepo = userRepo;
-		this.userManager = userManager;
+	public UserController(UserRepo userRepo) {
+		super(userRepo);
 	}
 	
 	/*@RequestMapping(method=RequestMethod.GET)

@@ -1,6 +1,9 @@
 package ar.edu.itba.grupo2.web;
 
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,22 +12,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.film.FilmRepo;
+import ar.edu.itba.grupo2.domain.film.UserCantCommentException;
 import ar.edu.itba.grupo2.domain.genre.Genre;
 import ar.edu.itba.grupo2.domain.user.User;
-import ar.edu.itba.grupo2.web.session.UserManager;
+import ar.edu.itba.grupo2.domain.user.UserRepo;
 
 @Controller
 public class FilmController extends BaseController {
 	
 	private final FilmRepo filmRepo;
-	private final UserManager userManager;
 	
 	@Autowired
-	public FilmController(FilmRepo filmRepo, UserManager userManager) {
+	public FilmController(FilmRepo filmRepo, UserRepo userRepo) {
+		super(userRepo);
 		this.filmRepo = filmRepo;
-		this.userManager = userManager;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -41,18 +45,17 @@ public class FilmController extends BaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView filmDetails(@RequestParam(value = "id", required=false) Integer id) {
+	public ModelAndView filmDetails(HttpServletRequest req, @RequestParam(value = "id", required=false) Integer id) {
 		ModelAndView mav = new ModelAndView();
 		
 		Film film = null;
 		film = filmRepo.get(id);
-		User user = userManager.getUser();
 		
 		mav.addObject("commentList", film.getComments());
 		mav.addObject("film", film);
 		
-		if(user != null) {
-			boolean userCanComment = film.userCanComment(user);//filmRepo.userCanComment(film, user);
+		if(isLoggedIn(req)) {
+			boolean userCanComment = film.userCanComment(getLoggedInUser(req));//filmRepo.userCanComment(film, user);
 			mav.addObject("userCanComment", userCanComment);
 		}
 		
@@ -61,8 +64,34 @@ public class FilmController extends BaseController {
 		return mav;
 	}
 	
+	@RequestMapping(method=RequestMethod.POST)
+	public String addCommentToFilm(
+			HttpServletRequest req,
+			@RequestParam(value = "id") int id,
+			@RequestParam(value = "comment") String comment,
+			@RequestParam(value = "rating") Integer rating) {
+		
+		User user = getLoggedInUser(req);
+		Comment newComment = new Comment.Builder()
+								.user(user)
+								.film(filmRepo.get(id))
+								.text(comment)
+								.rate(rating)
+								.creationDate(new Date())
+								.build();
+		
+		try {
+			filmRepo.get(id).addComment(newComment);
+		}
+		catch(UserCantCommentException e) {
+			
+		}
+		
+		return "redirect:filmDetails?id=" + id;
+	}
+	
 	@RequestMapping(value = "filmList", method=RequestMethod.GET)
-	public ModelAndView list(@RequestParam(value = "genre", required=false) Genre genre, @RequestParam(value = "director", required=false) String director) {
+	public ModelAndView list(HttpServletRequest req, @RequestParam(value = "genre", required=false) Genre genre, @RequestParam(value = "director", required=false) String director) {
 		ModelAndView mav = new ModelAndView();
 		
 		//List<Film> bahui = null;
@@ -74,7 +103,7 @@ public class FilmController extends BaseController {
 		}
 		
 		if (director != null) {
-			if (userManager.existsUser()) {
+			if (isLoggedIn(req)) {
 				filmList = filmRepo.getFromDirector(director);
 			}
 			else {

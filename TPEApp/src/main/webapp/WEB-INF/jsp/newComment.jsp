@@ -1,4 +1,4 @@
-<form class="form-comment form-horizontal" action="filmDetails?id=${param.id}" method="POST">
+<form class="form-comment form-horizontal" action="addComentToFilm" method="POST">
 	<h3 class="form-comment-heading">Nuevo comentario</h3>
 	<p>
 		<label for="rating">Puntuaci&oacute;n:</label>

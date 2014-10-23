@@ -96,10 +96,10 @@ public class Film extends EntityBaseType {
 	public boolean userHasCommented(User user){
 		for(Comment c: comments){
 			if (c.getUser().equals(user)){
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	public boolean userCanComment(User user){
