@@ -48,7 +48,7 @@
 									<ul class="dropdown-menu">
 										<li><a href="userComments">Ver mis comentarios</a></li>
 										<li class="divider"></li>
-										<li><a href="logout">Cerrar sesi&oacute;n</a></li>
+										<li><a href="../user/logout">Cerrar sesi&oacute;n</a></li>
 									</ul>
 								</li>
 						    </c:otherwise>
