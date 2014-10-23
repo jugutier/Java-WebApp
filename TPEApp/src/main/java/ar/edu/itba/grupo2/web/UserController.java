@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +29,8 @@ public class UserController extends BaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String logout(HttpServletRequest req) {
-		logOut(req);
+	public String logout(HttpSession session) {
+		logOut(session);
 		
 		return "redirect:../film/welcome";
 	}
@@ -168,6 +167,14 @@ public class UserController extends BaseController {
 		userManager.resetUser();
 		
 		resp.sendRedirect(resp.encodeRedirectURL("welcome"));*/
+		return mav;
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ModelAndView userComments(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		getLoggedInUser(session);
 		return mav;
 	}
 }

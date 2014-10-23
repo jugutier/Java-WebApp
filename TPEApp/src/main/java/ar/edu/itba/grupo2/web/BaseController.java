@@ -1,6 +1,6 @@
 package ar.edu.itba.grupo2.web;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,20 +20,20 @@ public class BaseController {
 		this.userRepo = userRepo;
 	}
 	
-	protected void setLoggedInUser(HttpServletRequest req, User user) {
-		req.getSession().setAttribute(USER_ID, user.getId());
+	protected void setLoggedInUser(HttpSession session, User user) {
+		session.setAttribute(USER_ID, user.getId());
 	}
 	
-	protected boolean isLoggedIn(HttpServletRequest req) {
-		return req.getSession().getAttribute(USER_ID) != null;
+	protected boolean isLoggedIn(HttpSession session) {
+		return session.getAttribute(USER_ID) != null;
 	}
 	
-	protected User getLoggedInUser(HttpServletRequest req) {
-		return userRepo.get((Integer)req.getSession().getAttribute(USER_ID));
+	protected User getLoggedInUser(HttpSession session) {
+		return userRepo.get((Integer)session.getAttribute(USER_ID));
 	}
 	
-	protected void logOut(HttpServletRequest req) {
-		req.getSession().removeAttribute(USER_ID);
+	protected void logOut(HttpSession session) {
+		session.removeAttribute(USER_ID);
 	}
 
 }
