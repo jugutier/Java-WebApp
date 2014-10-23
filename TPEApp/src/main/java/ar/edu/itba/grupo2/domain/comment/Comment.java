@@ -54,14 +54,14 @@ public class Comment extends EntityBaseType {
 	}
 
 	public static class Builder {
-		private int id;
+		private Integer id;
 		private Film film;
 		private User user;
 		private Date creationDate;
 		private String text;
 		private int rate;
 
-		public Builder id(final int id) {
+		public Builder id(final Integer id) {
 			this.id = id;
 			return this;
 		}

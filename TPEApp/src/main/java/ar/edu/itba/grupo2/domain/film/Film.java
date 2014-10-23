@@ -3,6 +3,7 @@ package ar.edu.itba.grupo2.domain.film;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -15,26 +16,37 @@ import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 import ar.edu.itba.grupo2.domain.genre.Genre;
 import ar.edu.itba.grupo2.domain.user.User;
 
-
 @Entity
 public class Film extends EntityBaseType {
-	
-	@Column(length=100,nullable=false)private String name;
-	@Column(length=40,nullable=false)private String director;
-	@Temporal(TemporalType.DATE)@Column(nullable=false)private Date creationDate;
-	@Temporal(TemporalType.DATE)@Column(nullable=false)private Date releaseDate;
-	@ManyToOne private Genre genre;
-	@Column(length=500,nullable=false)private String description;
-	@Column(nullable=false)private int length;
-	@Column(nullable=false)private int sumComments;
-	@Column(nullable=false)private int totalComments;
-	
-	@OneToMany(mappedBy="film") private List<Comment> comments;
-	
-	Film(){
-		
+
+	@Column(length = 100, nullable = false)
+	private String name;
+	@Column(length = 40, nullable = false)
+	private String director;
+	@Temporal(TemporalType.DATE)
+	@Column(nullable = false)
+	private Date creationDate;
+	@Temporal(TemporalType.DATE)
+	@Column(nullable = false)
+	private Date releaseDate;
+	@ManyToOne
+	private Genre genre;
+	@Column(length = 500, nullable = false)
+	private String description;
+	@Column(nullable = false)
+	private int length;
+	@Column(nullable = false)
+	private int sumComments;
+	@Column(nullable = false)
+	private int totalComments;
+
+	@OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
+	private List<Comment> comments;
+
+	Film() {
+
 	}
-	
+
 	private Film(final Builder builder) {
 		setId(builder.id);
 		this.name = builder.name;
@@ -86,50 +98,50 @@ public class Film extends EntityBaseType {
 	}
 
 	public double getScore() {
-		return totalComments == 0 ? 0 : (double)sumComments / totalComments;
+		return totalComments == 0 ? 0 : (double) sumComments / totalComments;
 	}
-	
+
 	public List<Comment> getComments() {
-		return comments;//TODO Return a copy?
+		return comments;// TODO Return a copy?
 	}
-	
-	public boolean userHasCommented(User user){
-		for(Comment c: comments){
-			if (c.getUser().equals(user)){
+
+	public boolean userHasCommented(User user) {
+		for (Comment c : comments) {
+			if (c.getUser().equals(user)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	public boolean userCanComment(User user){
-		if(this.isReleased()){
-			if(this.userHasCommented(user)){
+
+	public boolean userCanComment(User user) {
+		if (this.isReleased()) {
+			if (this.userHasCommented(user)) {
 				return false;
-			}else{
+			} else {
 				return true;
 			}
-		}else{
-			if(user.isVip()){
-				if(this.userHasCommented(user)){
+		} else {
+			if (user.isVip()) {
+				if (this.userHasCommented(user)) {
 					return false;
-				}else{
+				} else {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-	
-	public void addComment(Comment c) throws UserCantCommentException{
-		if(userCanComment(c.getUser())){
+
+	public void addComment(Comment c) throws UserCantCommentException {
+		if (userCanComment(c.getUser())) {
 			comments.add(c);
 			c.getUser().addComment(c);
-		}else{
+		} else {
 			throw new UserCantCommentException();
 		}
 	}
-	
+
 	public static class Builder {
 		private Integer id = -1;
 		private String name;
@@ -141,7 +153,7 @@ public class Film extends EntityBaseType {
 		private int totalComments;
 		private int sumComments;
 		private Date creationDate;
-		
+
 		List<Comment> comments;
 
 		public Builder id(final Integer id) {
@@ -193,10 +205,12 @@ public class Film extends EntityBaseType {
 			this.sumComments = sumComments;
 			return this;
 		}
+
 		public Builder comments(final List<Comment> comments) {
 			this.comments = comments;
 			return this;
 		}
+
 		public Film build() {
 			return new Film(this);
 		}
@@ -245,6 +259,5 @@ public class Film extends EntityBaseType {
 			return false;
 		return true;
 	}
-	
-	
+
 }

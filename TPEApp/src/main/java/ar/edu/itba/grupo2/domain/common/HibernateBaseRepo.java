@@ -1,4 +1,5 @@
 package ar.edu.itba.grupo2.domain.common;
+
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -6,17 +7,18 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
+
 public abstract class HibernateBaseRepo<T> implements BaseRepo<T> {
 
 	protected SessionFactory sessionFactory;
 
 	protected Class<T> tClass;
 
-	
 	@SuppressWarnings("unchecked")
 	public HibernateBaseRepo(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
-		ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
+		ParameterizedType type = (ParameterizedType) getClass()
+				.getGenericSuperclass();
 		this.tClass = (Class<T>) type.getActualTypeArguments()[0];
 	}
 
@@ -37,18 +39,18 @@ public abstract class HibernateBaseRepo<T> implements BaseRepo<T> {
 	protected Criteria createCriteria() {
 		return sessionFactory.getCurrentSession().createCriteria(tClass);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public <E> List<E> find(String hql, Object... params) {
-		return createQuery(hql,params).list();
+		return createQuery(hql, params).list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public <E> List<E> limitedFind(String hql, int limit,Object... params) {
-		return createQuery(hql,params).setMaxResults(limit).list();
+	public <E> List<E> limitedFind(String hql, int limit, Object... params) {
+		return createQuery(hql, params).setMaxResults(limit).list();
 	}
-	
-	private Query createQuery(String hql, Object... params){
+
+	private Query createQuery(String hql, Object... params) {
 		Session session = sessionFactory.getCurrentSession();
 
 		Query query = session.createQuery(hql);
@@ -58,7 +60,6 @@ public abstract class HibernateBaseRepo<T> implements BaseRepo<T> {
 		return query;
 	}
 
-	
 	@Override
 	public void delete(final T entity) {
 		sessionFactory.getCurrentSession().delete(entity);

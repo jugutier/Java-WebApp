@@ -36,6 +36,7 @@ public class TransactionFilter extends OncePerRequestFilter {
 
 			// Commit the database transaction
 			sessionFactory.getCurrentSession().getTransaction().commit();
+			System.out.println("commit");
 
 		} catch (Throwable ex) {
 			// Rollback only

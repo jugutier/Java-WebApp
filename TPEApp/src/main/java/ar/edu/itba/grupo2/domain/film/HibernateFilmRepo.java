@@ -1,6 +1,5 @@
 package ar.edu.itba.grupo2.domain.film;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -53,7 +52,8 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Film> getFromGenre(Genre genre) {
-		return /*find("from Genre where genre = ?",genre)*/ createCriteria().add(Restrictions.eq("genre", genre)).list();
+		return /* find("from Genre where genre = ?",genre) */createCriteria()
+				.add(Restrictions.eq("genre", genre)).list();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -67,21 +67,23 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 	public List<Film> getByReleaseDate() {
 		return find("FROM Film ORDER BY releaseDate ASC");
 	}
+
 	@Override
-	public Genre getGenre(String genre){
-		List<Genre> list = find("from Genre where genre = ?",genre);
-		if(list.isEmpty()){
+	public Genre getGenre(String genre) {
+		List<Genre> list = find("from Genre where genre = ?", genre);
+		if (list.isEmpty()) {
 			return null;
 		}
 		return list.get(0);
 	}
+
 	@Override
 	public List<Genre> getGenres() {
 		List<Genre> list = find("from Genre");
-		/*List<Genre> ret = new ArrayList<Genre>(list.size());
-		for (Genre g : list) {
-			ret.add(new Genre(g.getGenre()));// TODO: ask andy
-		}*/
+		/*
+		 * List<Genre> ret = new ArrayList<Genre>(list.size()); for (Genre g :
+		 * list) { ret.add(new Genre(g.getGenre()));// TODO: ask andy }
+		 */
 		return list;
 	}
 

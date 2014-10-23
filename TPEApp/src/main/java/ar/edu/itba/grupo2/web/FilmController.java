@@ -94,12 +94,14 @@ public class FilmController extends BaseController {
 	public ModelAndView list(HttpServletRequest req, @RequestParam(value = "genre", required=false) Genre genre, @RequestParam(value = "director", required=false) String director) {
 		ModelAndView mav = new ModelAndView();
 		
-		//List<Film> bahui = null;
-		List<Film> filmList = filmRepo.getByReleaseDate();
+		List<Film> filmList = null;
 		List<Genre> genreList = filmRepo.getGenres();
 		
 		if (genre != null) {
 			filmList = filmRepo.getFromGenre(genre);
+		}
+		else{
+			filmList = filmRepo.getByReleaseDate();
 		}
 		
 		if (director != null) {

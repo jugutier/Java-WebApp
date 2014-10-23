@@ -5,17 +5,18 @@ import java.util.List;
 import ar.edu.itba.grupo2.domain.genre.Genre;
 
 public interface FilmRepo {
-	
+
 	public Film get(final int id);
-	
+
 	public List<Film> getAll();
-	
+
 	public Film save(Film film);
-	
+
 	public Genre getGenre(String genre);
-	
+
 	public List<Genre> getGenres();
-	//Filter methods
+
+	// Filter methods
 	public List<Film> getTop(int amount);
 
 	public List<Film> getLatest(int amount);
@@ -27,5 +28,5 @@ public interface FilmRepo {
 	public List<Film> getFromDirector(String director);
 
 	public List<Film> getByReleaseDate();
-	
+
 }

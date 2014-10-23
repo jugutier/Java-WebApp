@@ -16,7 +16,7 @@ abstract class EntityBaseType {
 		return id;
 	}
 
-	public void setId(final int id) {
+	public void setId(final Integer id) {
 		this.id = id;
 	}
 
