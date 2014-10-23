@@ -38,10 +38,10 @@
 
 	<!--<bean id="userManager" class="ar.edu.itba.grupo2.web.session.UserManagerImpl2" scope="session">
 		<aop:scoped-proxy/>
-    </bean>
-
-	  <mvc:interceptors>
+    </bean>-->
+	
+	<mvc:interceptors>
 		<bean class="ar.edu.itba.grupo2.web.filter.LoggedUserInterceptor" />
-	</mvc:interceptors>-->
+	</mvc:interceptors>
 
 </beans>

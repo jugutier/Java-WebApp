@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -126,6 +128,7 @@ public class UserController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public String authenticateUser(
+			HttpSession session,
 			@RequestParam(value = "email", required=true) String email,
 			@RequestParam(value = "password", required=true) String password,
 			@RequestParam(value = "fromPage", required=true) String fromPage) {
@@ -141,7 +144,8 @@ public class UserController {
 		loggedUser = userRepo.logIn(email, password);
 		
 		if (loggedUser != null) {
-			userManager.setUser(loggedUser);
+			session.setAttribute("userId", loggedUser.getId());
+			//userManager.setUser(loggedUser);
 			ret = "redirect:" + fromPage.replace("auth_fail=wrongUser", "");
 		}
 		else{
