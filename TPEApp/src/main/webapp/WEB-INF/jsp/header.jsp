@@ -46,9 +46,9 @@
 						       <li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><c:out value="${loggedInUser.name}"/> <b class="caret"></b></a>
 									<ul class="dropdown-menu">
-										<li><a href="userComments">Ver mis comentarios</a></li>
+										<li><a href="${pageContext.request.contextPath}/bin/user/userComments">Ver mis comentarios</a></li>
 										<li class="divider"></li>
-										<li><a href="../user/logout">Cerrar sesi&oacute;n</a></li>
+										<li><a href="${pageContext.request.contextPath}/bin/user/logout">Cerrar sesi&oacute;n</a></li>
 									</ul>
 								</li>
 						    </c:otherwise>

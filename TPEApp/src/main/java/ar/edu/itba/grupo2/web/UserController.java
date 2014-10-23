@@ -174,7 +174,12 @@ public class UserController extends BaseController {
 	public ModelAndView userComments(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		
-		getLoggedInUser(session);
+		User user = getLoggedInUser(session);
+		
+		mav.addObject("commentList", user.getComments());
+		
+		mav.setViewName("userComments");;
+		
 		return mav;
 	}
 }
