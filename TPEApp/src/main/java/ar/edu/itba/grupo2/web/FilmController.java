@@ -3,7 +3,7 @@ package ar.edu.itba.grupo2.web;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,7 +45,7 @@ public class FilmController extends BaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView filmDetails(HttpServletRequest req, @RequestParam(value = "id", required=false) Integer id) {
+	public ModelAndView filmDetails(HttpSession session, @RequestParam(value = "id", required=false) Integer id) {
 		ModelAndView mav = new ModelAndView();
 		
 		Film film = null;
@@ -54,8 +54,8 @@ public class FilmController extends BaseController {
 		mav.addObject("commentList", film.getComments());
 		mav.addObject("film", film);
 		
-		if(isLoggedIn(req)) {
-			boolean userCanComment = film.userCanComment(getLoggedInUser(req));//filmRepo.userCanComment(film, user);
+		if(isLoggedIn(session)) {
+			boolean userCanComment = film.userCanComment(getLoggedInUser(session));//filmRepo.userCanComment(film, user);
 			mav.addObject("userCanComment", userCanComment);
 		}
 		
@@ -66,12 +66,12 @@ public class FilmController extends BaseController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public String addCommentToFilm(
-			HttpServletRequest req,
+			HttpSession session,
 			@RequestParam(value = "id") int id,
 			@RequestParam(value = "comment") String comment,
 			@RequestParam(value = "rating") Integer rating) {
 		
-		User user = getLoggedInUser(req);
+		User user = getLoggedInUser(session);
 		Comment newComment = new Comment.Builder()
 								.user(user)
 								.film(filmRepo.get(id))
@@ -91,7 +91,7 @@ public class FilmController extends BaseController {
 	}
 	
 	@RequestMapping(value = "filmList", method=RequestMethod.GET)
-	public ModelAndView list(HttpServletRequest req, @RequestParam(value = "genre", required=false) Genre genre, @RequestParam(value = "director", required=false) String director) {
+	public ModelAndView list(HttpSession session, @RequestParam(value = "genre", required=false) Genre genre, @RequestParam(value = "director", required=false) String director) {
 		ModelAndView mav = new ModelAndView();
 		
 		List<Film> filmList = null;
@@ -105,7 +105,7 @@ public class FilmController extends BaseController {
 		}
 		
 		if (director != null) {
-			if (isLoggedIn(req)) {
+			if (isLoggedIn(session)) {
 				filmList = filmRepo.getFromDirector(director);
 			}
 			else {
