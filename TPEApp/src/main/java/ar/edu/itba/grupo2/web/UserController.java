@@ -159,16 +159,92 @@ public class UserController extends BaseController {
 		return ret;
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView resetPassword() {
+	@RequestMapping(method={RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView resetPassword(
+			@RequestParam(value = "email", required = false) String email,
+			@RequestParam(value = "password", required = false) String password,
+			@RequestParam(value = "passwordConfirm", required = false) String passwordConfirm,
+			@RequestParam(value = "answer", required = false) String answer,
+			@RequestParam(value = "stage", required = false) String stage) {
 		ModelAndView mav = new ModelAndView();
 		
 		mav.setViewName("resetPassword");
+		
+		List<String> errors = new ArrayList<String>();
+
+		if (stage != null && stage.compareTo("getEmail") == 0) {
+			errors.addAll(validateEmailStage(email));
+			
+			if (errors.isEmpty()) {
+				// Display Secret Question
+				mav.addObject("email", email);
+				mav.addObject("secretQuestion", userRepo.getUserByEmail(email).getSecretQuestion());
+				mav.addObject("stage", "question");
+			}
+		}
+		else if (stage != null && stage.compareTo("question") == 0){
+			errors.addAll(validateAnswerStage(email, answer, password, passwordConfirm));
+			
+			if (errors.isEmpty()) {
+				mav.setViewName("redirect:../film/welcome");
+			}
+		}
+		else {
+			mav.addObject("stage", "getEmail");
+		}
+
+		if (!errors.isEmpty()) {
+			mav.addObject("errors", errors);
+			mav.addObject("stage", "getEmail");
+		}
+		
 		/*UserManager userManager = new UserManagerImpl((HttpServletRequest)req);
 		userManager.resetUser();
 		
 		resp.sendRedirect(resp.encodeRedirectURL("welcome"));*/
 		return mav;
+	}
+	
+	private List<String> validateEmailStage(String email) {
+		List<String> errors = new ArrayList<String>();
+
+		if (ValidationUtilities.paramEmpty(email)) {
+			errors.add("noMail");
+		}
+		else if (!ValidationUtilities.isEmail(email)) {
+			errors.add("invalidMail");
+		}
+		else if (userRepo.getUserByEmail(email) == null){
+			errors.add("wrongMail");
+		}
+
+		return errors;
+	}
+
+	private List<String> validateAnswerStage(String email, String answer,
+			String password, String passwordConfirm) {
+		List<String> errors = new ArrayList<String>();
+		User user = userRepo.getUserByEmail(email);
+
+		errors.addAll(validateEmailStage(email));
+
+		if (ValidationUtilities.paramEmpty(password)) {
+			errors.add("noPassword");
+		}
+		if (ValidationUtilities.paramEmpty(passwordConfirm)) {
+			errors.add("noPasswordConfirm");
+		}
+		if (password.compareTo(passwordConfirm) != 0) {
+			errors.add("noCoincidence");
+		}
+		if (ValidationUtilities.paramEmpty(answer)) {
+			errors.add("noAnswer");
+		}
+		else if (!user.resetPassword(answer, passwordConfirm)) {
+			errors.add("wrongAnswer");
+		}
+
+		return errors;
 	}
 }
 
