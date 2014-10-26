@@ -19,6 +19,7 @@ import ar.edu.itba.grupo2.domain.film.UserCantCommentException;
 import ar.edu.itba.grupo2.domain.genre.Genre;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
+import ar.edu.itba.grupo2.web.command.NewCommentForm;
 
 @Controller
 public class FilmController extends BaseController {
@@ -54,6 +55,8 @@ public class FilmController extends BaseController {
 		mav.addObject("commentList", film.getComments());
 		mav.addObject("film", film);
 		
+		mav.addObject("comment", new NewCommentForm());
+		
 		if(isLoggedIn(session)) {
 			boolean userCanComment = film.userCanComment(getLoggedInUser(session));//filmRepo.userCanComment(film, user);
 			mav.addObject("userCanComment", userCanComment);
@@ -67,7 +70,7 @@ public class FilmController extends BaseController {
 	@RequestMapping(method=RequestMethod.POST)
 	public String addCommentToFilm(
 			HttpSession session,
-			@RequestParam(value = "id") int id,
+			@RequestParam(value = "filmId") int id,
 			@RequestParam(value = "comment") String comment,
 			@RequestParam(value = "rating") Integer rating) {
 		
