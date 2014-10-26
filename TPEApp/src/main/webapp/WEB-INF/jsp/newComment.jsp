@@ -12,6 +12,7 @@
 	</p>
 	<p> 
 		<form:textarea path="comment" class="input-block-level" placeholder="Comentario"></form:textarea>
+		<form:errors path="comment" />
 	</p>
 	<form:input type="hidden" path="filmId" value="${film.id}" />
 	<button class="btn btn-primary" type="submit">Enviar</button>

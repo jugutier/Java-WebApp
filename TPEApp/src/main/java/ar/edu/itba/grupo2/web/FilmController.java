@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,17 +20,20 @@ import ar.edu.itba.grupo2.domain.film.UserCantCommentException;
 import ar.edu.itba.grupo2.domain.genre.Genre;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
-import ar.edu.itba.grupo2.web.command.NewCommentForm;
+import ar.edu.itba.grupo2.web.command.CommentForm;
+import ar.edu.itba.grupo2.web.command.validator.CommentFormValidator;
 
 @Controller
 public class FilmController extends BaseController {
 	
 	private final FilmRepo filmRepo;
+	private CommentFormValidator commentValidator;
 	
 	@Autowired
-	public FilmController(FilmRepo filmRepo, UserRepo userRepo) {
+	public FilmController(FilmRepo filmRepo, UserRepo userRepo, CommentFormValidator commentValidator) {
 		super(userRepo);
 		this.filmRepo = filmRepo;
+		this.commentValidator = commentValidator;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -55,7 +59,7 @@ public class FilmController extends BaseController {
 		mav.addObject("commentList", film.getComments());
 		mav.addObject("film", film);
 		
-		mav.addObject("comment", new NewCommentForm());
+		mav.addObject("comment", new CommentForm());
 		
 		if(isLoggedIn(session)) {
 			boolean userCanComment = film.userCanComment(getLoggedInUser(session));//filmRepo.userCanComment(film, user);
@@ -70,9 +74,16 @@ public class FilmController extends BaseController {
 	@RequestMapping(method=RequestMethod.POST)
 	public String addCommentToFilm(
 			HttpSession session,
+			CommentForm commentForm,
+			Errors errors,
 			@RequestParam(value = "filmId") int id,
 			@RequestParam(value = "comment") String comment,
 			@RequestParam(value = "rating") Integer rating) {
+		
+		commentValidator.validate(commentForm, errors);
+		if (errors.hasErrors()) {
+			return "redirect:filmDetails?id=" + id;
+		}
 		
 		User user = getLoggedInUser(session);
 		Comment newComment = new Comment.Builder()
