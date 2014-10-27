@@ -59,7 +59,7 @@ public class FilmController extends BaseController {
 		mav.addObject("commentList", film.getComments());
 		mav.addObject("film", film);
 		
-		mav.addObject("comment", new CommentForm());
+		mav.addObject("commentForm", new CommentForm());
 		
 		if(isLoggedIn(session)) {
 			boolean userCanComment = film.userCanComment(getLoggedInUser(session));//filmRepo.userCanComment(film, user);
@@ -75,33 +75,31 @@ public class FilmController extends BaseController {
 	public String addCommentToFilm(
 			HttpSession session,
 			CommentForm commentForm,
-			Errors errors,
-			@RequestParam(value = "filmId") int id,
-			@RequestParam(value = "comment") String comment,
-			@RequestParam(value = "rating") Integer rating) {
+			Errors errors
+			) {
 		
 		commentValidator.validate(commentForm, errors);
 		if (errors.hasErrors()) {
-			return "redirect:filmDetails?id=" + id;
+			return "redirect:filmDetails?id=" + commentForm.getFilmId();
 		}
 		
 		User user = getLoggedInUser(session);
 		Comment newComment = new Comment.Builder()
 								.user(user)
-								.film(filmRepo.get(id))
-								.text(comment)
-								.rate(rating)
+								.film(filmRepo.get(commentForm.getFilmId()))
+								.text(commentForm.getComment())
+								.rate(commentForm.getRating())
 								.creationDate(new Date())
 								.build();
 		
 		try {
-			filmRepo.get(id).addComment(newComment);
+			filmRepo.get(commentForm.getFilmId()).addComment(newComment);
 		}
 		catch(UserCantCommentException e) {
 			
 		}
 		
-		return "redirect:filmDetails?id=" + id;
+		return "redirect:filmDetails?id=" + commentForm.getFilmId();
 	}
 	
 	@RequestMapping(value = "filmList", method=RequestMethod.GET)
