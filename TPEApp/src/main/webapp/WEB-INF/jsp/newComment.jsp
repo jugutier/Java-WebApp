@@ -1,4 +1,4 @@
-<form:form class="form-comment form-horizontal" action="addComentToFilm" method="POST" commandName="commentForm">
+<form:form class="form-comment form-horizontal" action="filmDetails?id=${film.id}" method="POST" commandName="commentForm">
 	<h3 class="form-comment-heading">Nuevo comentario</h3>
 	<p>
 		<label for="rating">Puntuaci&oacute;n:</label>
@@ -14,6 +14,8 @@
 		<form:textarea path="comment" class="input-block-level" placeholder="Comentario" />
 		
 	</p>
+	<form:errors path="comment" />
+	<form:errors path="*" />
 	<form:input type="hidden" path="filmId" value="${film.id}" />
 	<button class="btn btn-primary" type="submit">Enviar</button>
 </form:form>
