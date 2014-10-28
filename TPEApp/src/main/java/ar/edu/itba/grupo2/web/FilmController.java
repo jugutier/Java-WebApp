@@ -17,10 +17,12 @@ import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.film.FilmRepo;
 import ar.edu.itba.grupo2.domain.film.UserCantCommentException;
+import ar.edu.itba.grupo2.domain.film.UserIsntAdminException;
 import ar.edu.itba.grupo2.domain.genre.Genre;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.command.CommentForm;
+import ar.edu.itba.grupo2.web.command.FilmForm;
 import ar.edu.itba.grupo2.web.command.validator.CommentFormValidator;
 
 @Controller
@@ -53,8 +55,7 @@ public class FilmController extends BaseController {
 	public ModelAndView filmDetails(HttpSession session, @RequestParam(value = "id", required=false) Integer id) {
 		ModelAndView mav = new ModelAndView();
 		
-		Film film = null;
-		film = filmRepo.get(id);
+		Film film = filmRepo.get(id);
 		
 		mav.addObject("commentList", film.getComments());
 		mav.addObject("film", film);
@@ -71,6 +72,27 @@ public class FilmController extends BaseController {
 		return mav;
 	}
 	
+	@RequestMapping(method=RequestMethod.GET)
+	public ModelAndView editFilmDetails(HttpSession session, @RequestParam(value = "id", required=false) Integer id) {
+		ModelAndView mav = new ModelAndView();
+		
+		Film film = filmRepo.get(id);
+		
+		mav.addObject("film", film);
+		
+		mav.setViewName("editFilmDetails");
+		
+		return mav;
+	}
+	@RequestMapping(method=RequestMethod.POST)
+	public String confirmEdition(HttpSession session,FilmForm filmForm){
+		User user = getLoggedInUser(session);
+		if(user.isAdmin()){
+			System.out.println("isAdmin");
+		}
+		return "redirect:filmList";
+	}
+	
 	@RequestMapping(method=RequestMethod.POST)
 	public String addCommentToFilm(
 			HttpSession session,
@@ -84,18 +106,48 @@ public class FilmController extends BaseController {
 		}
 		
 		User user = getLoggedInUser(session);
+		Film film = filmRepo.get(commentForm.getFilmId());
 		Comment newComment = new Comment.Builder()
 								.user(user)
-								.film(filmRepo.get(commentForm.getFilmId()))
-								.text(commentForm.getComment())
+								.film(film)
+								.text(commentForm.getText())
 								.rate(commentForm.getRating())
 								.creationDate(new Date())
 								.build();
 		
 		try {
-			filmRepo.get(commentForm.getFilmId()).addComment(newComment);
+			film.addComment(newComment);
 		}
 		catch(UserCantCommentException e) {
+			
+		}
+		
+		return "redirect:filmDetails?id=" + commentForm.getFilmId();
+	}
+	@RequestMapping(method=RequestMethod.POST)
+	public String removeFilm(HttpSession session,@RequestParam(value = "id", required=true) Integer id){
+		User user = getLoggedInUser(session);
+		if(user.isAdmin()){
+			Film film = filmRepo.get(id);
+			filmRepo.delete(film);
+		}else{
+			throw new UserIsntAdminException();
+		}
+		return "redirect:filmList";
+		
+	}
+	@RequestMapping(method=RequestMethod.POST)
+	public String removeCommentFromFilm(
+			HttpSession session,
+			CommentForm commentForm
+			) {
+		Film film = filmRepo.get(commentForm.getFilmId());
+		
+		
+		try {
+			film.removeComment(commentForm.getComment());
+		}
+		catch(UserIsntAdminException e) {
 			
 		}
 		
