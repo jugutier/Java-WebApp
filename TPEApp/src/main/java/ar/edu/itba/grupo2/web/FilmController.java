@@ -60,11 +60,12 @@ public class FilmController extends BaseController {
 		mav.addObject("commentList", film.getComments());
 		mav.addObject("film", film);
 		
-		mav.addObject("commentForm", new CommentForm());
-		
 		if(isLoggedIn(session)) {
 			boolean userCanComment = film.userCanComment(getLoggedInUser(session));//filmRepo.userCanComment(film, user);
 			mav.addObject("userCanComment", userCanComment);
+			if(userCanComment){
+				mav.addObject("commentForm", new CommentForm());
+			}
 		}
 		
 		mav.setViewName("filmDetails");
@@ -94,7 +95,7 @@ public class FilmController extends BaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String addCommentToFilm(
+	public String filmDetails(
 			HttpSession session,
 			CommentForm commentForm,
 			Errors errors
@@ -102,6 +103,9 @@ public class FilmController extends BaseController {
 		
 		commentValidator.validate(commentForm, errors);
 		if (errors.hasErrors()) {
+			errors.rejectValue("comment", "required");
+			session.setAttribute("errors", errors);
+			//return null;
 			return "redirect:filmDetails?id=" + commentForm.getFilmId();
 		}
 		

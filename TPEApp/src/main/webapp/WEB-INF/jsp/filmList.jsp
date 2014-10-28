@@ -17,6 +17,7 @@
 		<th>Nombre</th>
 		<th>Director</th>
 		<th>Fecha de estreno</th>
+		<th>Acciones</th>
 	</tr>
 	<c:forEach items="${filmList}" var="film">
 		<c:url value="filmDetails" var="detailUrl">
@@ -26,6 +27,10 @@
 			<td><a href="${detailUrl}"><c:out value="${film.name}"/></a></td>
 			<td><c:out value="${film.director}"/></td>
 			<td><fmt:formatDate value="${film.releaseDate}" pattern="dd-MM-yyyy"/></td>
+			<td>
+				<a class="btn" type="button"><i class="icon-edit"></i></a>
+				<a class="btn btn-danger" type="button"><i class="icon-remove"></i></a>
+			</td>
 		</tr>
 	</c:forEach>
 	<c:if test="${empty filmList}">

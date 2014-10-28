@@ -25,21 +25,7 @@
 		
 		<h3>Comentarios</h3>
 		
-		<c:forEach items="${commentList}" var="comment">
-			<p>
-				<c:if test="${comment.user.vip}">
-					<i class="icon-ok"></i>
-				</c:if>
-				<strong><c:out value="${comment.user.name}"/></strong>
-				<c:forEach begin="1" end="${comment.rate}" var="i">  
-					<i class="icon-star"></i>
-				</c:forEach>
-				<c:forEach begin="${comment.rate + 1}" end="5" var="i">  
-					<i class="icon-star-empty"></i>
-				</c:forEach>
-			</p>
-			<p><c:out value="${comment.text}"/></p>
-		</c:forEach>
+		<%@ include file="commentList.jsp" %>
 		
 		<c:if test="${empty commentList}">
 			<h4 class="muted">No hay comentarios acerca de esta pel&iacute;cula</h4>

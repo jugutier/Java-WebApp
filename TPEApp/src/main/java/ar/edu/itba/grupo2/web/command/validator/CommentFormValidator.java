@@ -17,7 +17,7 @@ public class CommentFormValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "comment", "required", "Field is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "comment", "required","campo requerido");
 	}
 
 }
