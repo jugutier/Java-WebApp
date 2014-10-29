@@ -17,7 +17,9 @@
 		<th>Nombre</th>
 		<th>Director</th>
 		<th>Fecha de estreno</th>
-		<th>Acciones</th>
+		<c:if test="${loggedInUser.admin}">
+			<th>Acciones</th>
+		</c:if>
 	</tr>
 	<c:forEach items="${filmList}" var="film">
 		<c:url value="filmDetails" var="detailUrl">
@@ -27,10 +29,15 @@
 			<td><a href="${detailUrl}"><c:out value="${film.name}"/></a></td>
 			<td><c:out value="${film.director}"/></td>
 			<td><fmt:formatDate value="${film.releaseDate}" pattern="dd-MM-yyyy"/></td>
-			<td>
-				<a class="btn" type="button"><i class="icon-edit"></i></a>
-				<a class="btn btn-danger" type="button"><i class="icon-remove"></i></a>
-			</td>
+			<c:if test="${loggedInUser.admin}">
+				<td>
+					<form class="form-inline" action="removeFilm" method="POST">
+						<input type="hidden" name="id" class="input-block-level" value="${film.id}">
+						<a class="btn" type="button" href="editFilm"><i class="icon-edit"></i></a>
+						<button class="btn btn-danger" type="submit"><i class="icon-remove"></i></button>
+					</form>
+				</td>
+			</c:if>
 		</tr>
 	</c:forEach>
 	<c:if test="${empty filmList}">

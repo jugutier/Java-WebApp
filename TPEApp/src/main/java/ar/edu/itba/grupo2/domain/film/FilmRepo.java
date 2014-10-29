@@ -11,6 +11,8 @@ public interface FilmRepo {
 	public List<Film> getAll();
 
 	public Film save(Film film);
+	
+	public void delete(final Film film);
 
 	public Genre getGenre(String genre);
 

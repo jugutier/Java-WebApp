@@ -13,27 +13,38 @@ import javax.persistence.TemporalType;
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 
-
 @Entity
-@Table(name="GAJAmdbUser")
-
+@Table(name = "GAJAmdbUser")
 public class User extends EntityBaseType {
-	
-	@Column(length=15,nullable=false)private String name;
-	@Column(length=15,nullable=false)private String lastname;
-	@Column(length=10,nullable=false)private String password;
-	@Column(length=100,nullable=false,unique=true)private String email;
-	@Temporal(TemporalType.DATE)@Column(name="birthdate", nullable=false)private Date birthdate;
-	@Column(nullable=false)private boolean vip;
-	@Column(length=140,nullable=false)private String secretQuestion;
-	@Column(length=140,nullable=false)private String secretAnswer;
-	
-	@OneToMany(mappedBy="user")private List<Comment> comments;
-	
-	User(){
-		
+
+	@Column(length = 15, nullable = false)
+	private String name;
+	@Column(length = 15, nullable = false)
+	private String lastname;
+	@Column(length = 10, nullable = false)
+	private String password;
+	@Column(length = 100, nullable = false, unique = true)
+	private String email;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "birthdate", nullable = false)
+	private Date birthdate;
+	@Column(nullable = false)
+	private boolean admin;
+	@Column(nullable = false)
+	private boolean vip;
+	@Column(length = 140, nullable = false)
+	private String secretQuestion;
+	@Column(length = 140, nullable = false)
+	private String secretAnswer;
+
+	@OneToMany(mappedBy = "user")
+	private List<Comment> comments;
+
+	User() {
+
 	}
-	private User(final Builder builder){
+
+	private User(final Builder builder) {
 		setId(builder.id);
 		this.name = builder.name;
 		this.lastname = builder.lastname;
@@ -44,87 +55,26 @@ public class User extends EntityBaseType {
 		this.secretQuestion = builder.secretQuestion;
 		this.secretAnswer = builder.secretAnswer;
 		this.comments = builder.comments;
+		this.admin = builder.admin;
 	}
-	
-	public static class Builder {
-		private String name;
-		private String lastname;
-		private Date birthdate;
-		private String email;
-		private String password;
-		private Integer id = -1;
-		private boolean vip = false;
-		private String secretQuestion;
-		private String secretAnswer;
-		private List<Comment> comments;
 
-
-		public Builder name(final String name){
-			this.name=name;
-			return this;
-		}
-		
-		public Builder lastname(final String lastname){
-			this.lastname=lastname;
-			return this;
-		}
-		
-		public Builder vip(final boolean vip){
-			this.vip=vip;
-			return this;
-		}
-		
-		public Builder email(final String email){
-			this.email=email;
-			return this;
-		}
-		
-		public Builder password(final String password){
-			this.password=password;
-			return this;
-		}
-		
-		public Builder birthdate(final Date birthdate){
-			this.birthdate=birthdate;
-			return this;
-		}
-		
-		public Builder id(final Integer id) {
-			this.id = id;
-			return this;
-		}
-		
-		public Builder secretQuestion(final String secretQuestion){
-			this.secretQuestion = secretQuestion;
-			return this;
-		}
-		
-		public Builder secretAnswer(final String secretAnswer){
-			this.secretAnswer = secretAnswer;
-			return this;
-		}
-		public Builder comments(final List<Comment> comments){
-			this.comments = comments;
-			return this;
-		}
-		public User build() {
-			return new User(this);
-		}
-}
-	
-	public String getName(){
+	public String getName() {
 		return name;
 	}
-	
-	public boolean isVip(){
+
+	public boolean isVip() {
 		return vip;
 	}
-	
-	public String getEmail(){
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public String getEmail() {
 		return email;
 	}
-	
-	public String getPassword(){
+
+	public String getPassword() {
 		return password;
 	}
 
@@ -135,7 +85,7 @@ public class User extends EntityBaseType {
 	public Date getBirthdate() {
 		return birthdate;
 	}
-	
+
 	public String getSecretQuestion() {
 		return secretQuestion;
 	}
@@ -143,29 +93,35 @@ public class User extends EntityBaseType {
 	public String getSecretAnswer() {
 		return secretAnswer;
 	}
-	
+
 	public void setPassword(final String password) {
 		this.password = password;
 	}
-	
+
 	public List<Comment> getComments() {
-		return comments;//TODO: return a copy
+		return comments;// TODO: return a copy
 	}
-	
-	public void addComment(Comment c){
-		//TODO: Check please. This should only be called from Film.addComment.
+
+	public void addComment(Comment c) {
+		// TODO: Check please. This should only be called from Film.addComment.
 		// How can we make it secure?
 		comments.add(c);
 	}
-	
-	public boolean resetPassword(String answerToSecretQuestion,String newPassword){
-		if(!answerToSecretQuestion.equals(this.secretAnswer)){
+
+	public void removeComment(Comment c) {
+		// TODO Auto-generated method stub
+		comments.remove(c);
+	}
+
+	public boolean resetPassword(String answerToSecretQuestion,
+			String newPassword) {
+		if (!answerToSecretQuestion.equals(this.secretAnswer)) {
 			return false;
 		}
 		this.password = newPassword;
 		return true;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -190,5 +146,77 @@ public class User extends EntityBaseType {
 			return false;
 		return true;
 	}
-	
+
+	public static class Builder {
+		private String name;
+		private String lastname;
+		private Date birthdate;
+		private String email;
+		private String password;
+		private Integer id = -1;
+		private boolean vip = false;
+		private String secretQuestion;
+		private String secretAnswer;
+		private List<Comment> comments;
+		private boolean admin = false;
+
+		public Builder name(final String name) {
+			this.name = name;
+			return this;
+		}
+
+		public Builder lastname(final String lastname) {
+			this.lastname = lastname;
+			return this;
+		}
+
+		public Builder vip(final boolean vip) {
+			this.vip = vip;
+			return this;
+		}
+
+		public Builder email(final String email) {
+			this.email = email;
+			return this;
+		}
+
+		public Builder password(final String password) {
+			this.password = password;
+			return this;
+		}
+
+		public Builder birthdate(final Date birthdate) {
+			this.birthdate = birthdate;
+			return this;
+		}
+
+		public Builder id(final Integer id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder secretQuestion(final String secretQuestion) {
+			this.secretQuestion = secretQuestion;
+			return this;
+		}
+
+		public Builder secretAnswer(final String secretAnswer) {
+			this.secretAnswer = secretAnswer;
+			return this;
+		}
+
+		public Builder comments(final List<Comment> comments) {
+			this.comments = comments;
+			return this;
+		}
+
+		public Builder admin(boolean admin) {
+			this.admin = admin;
+			return this;
+		}
+
+		public User build() {
+			return new User(this);
+		}
+	}
 }

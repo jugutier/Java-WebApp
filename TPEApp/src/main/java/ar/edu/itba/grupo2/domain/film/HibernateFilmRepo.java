@@ -52,7 +52,7 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Film> getFromGenre(Genre genre) {
-		return /* find("from Genre where genre = ?",genre) */createCriteria()
+		return createCriteria()
 				.add(Restrictions.eq("genre", genre)).list();
 	}
 
@@ -80,10 +80,6 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 	@Override
 	public List<Genre> getGenres() {
 		List<Genre> list = find("from Genre");
-		/*
-		 * List<Genre> ret = new ArrayList<Genre>(list.size()); for (Genre g :
-		 * list) { ret.add(new Genre(g.getGenre()));// TODO: ask andy }
-		 */
 		return list;
 	}
 

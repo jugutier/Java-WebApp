@@ -2,13 +2,13 @@ package ar.edu.itba.grupo2.web.command;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 
-public class CommentForm {
+public class FilmForm {
 	private int filmId;
 	private int rating;
 	private String text;
 	private Comment comment;
 	
-	public CommentForm (){
+	public FilmForm (){
 	}
 	
 	public int getRating(){

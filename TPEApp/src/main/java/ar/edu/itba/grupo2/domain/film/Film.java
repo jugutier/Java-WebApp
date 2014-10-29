@@ -141,79 +141,15 @@ public class Film extends EntityBaseType {
 			throw new UserCantCommentException();
 		}
 	}
-
-	public static class Builder {
-		private Integer id = -1;
-		private String name;
-		private String director;
-		private Date releaseDate;
-		private Genre genre;
-		private String description;
-		private int length;
-		private int totalComments;
-		private int sumComments;
-		private Date creationDate;
-
-		List<Comment> comments;
-
-		public Builder id(final Integer id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder name(final String name) {
-			this.name = name;
-			return this;
-		}
-
-		public Builder director(final String director) {
-			this.director = director;
-			return this;
-		}
-
-		public Builder creationDate(final Date creationDate) {
-			this.creationDate = creationDate;
-			return this;
-		}
-
-		public Builder releaseDate(final Date releaseDate) {
-			this.releaseDate = releaseDate;
-			return this;
-		}
-
-		public Builder genre(final String genre) {
-			this.genre = new Genre(genre);
-			return this;
-		}
-
-		public Builder description(final String description) {
-			this.description = description;
-			return this;
-		}
-
-		public Builder length(final int length) {
-			this.length = length;
-			return this;
-		}
-
-		public Builder totalComments(final int totalComments) {
-			this.totalComments = totalComments;
-			return this;
-		}
-
-		public Builder sumComments(final int sumComments) {
-			this.sumComments = sumComments;
-			return this;
-		}
-
-		public Builder comments(final List<Comment> comments) {
-			this.comments = comments;
-			return this;
-		}
-
-		public Film build() {
-			return new Film(this);
-		}
+	
+	public void removeComment(Comment c) throws UserIsntAdminException {
+		User user = c.getUser();
+		if (!user.isAdmin()) {
+			throw new UserIsntAdminException();
+		}	
+		comments.remove(c);
+		user.removeComment(c);
+	
 	}
 
 	@Override
@@ -258,6 +194,80 @@ public class Film extends EntityBaseType {
 		} else if (!releaseDate.equals(other.releaseDate))
 			return false;
 		return true;
+	}
+
+	public static class Builder {
+		private Integer id = -1;
+		private String name;
+		private String director;
+		private Date releaseDate;
+		private Genre genre;
+		private String description;
+		private int length;
+		private int totalComments;
+		private int sumComments;
+		private Date creationDate;
+	
+		List<Comment> comments;
+	
+		public Builder id(final Integer id) {
+			this.id = id;
+			return this;
+		}
+	
+		public Builder name(final String name) {
+			this.name = name;
+			return this;
+		}
+	
+		public Builder director(final String director) {
+			this.director = director;
+			return this;
+		}
+	
+		public Builder creationDate(final Date creationDate) {
+			this.creationDate = creationDate;
+			return this;
+		}
+	
+		public Builder releaseDate(final Date releaseDate) {
+			this.releaseDate = releaseDate;
+			return this;
+		}
+	
+		public Builder genre(final String genre) {
+			this.genre = new Genre(genre);
+			return this;
+		}
+	
+		public Builder description(final String description) {
+			this.description = description;
+			return this;
+		}
+	
+		public Builder length(final int length) {
+			this.length = length;
+			return this;
+		}
+	
+		public Builder totalComments(final int totalComments) {
+			this.totalComments = totalComments;
+			return this;
+		}
+	
+		public Builder sumComments(final int sumComments) {
+			this.sumComments = sumComments;
+			return this;
+		}
+	
+		public Builder comments(final List<Comment> comments) {
+			this.comments = comments;
+			return this;
+		}
+	
+		public Film build() {
+			return new Film(this);
+		}
 	}
 
 }
