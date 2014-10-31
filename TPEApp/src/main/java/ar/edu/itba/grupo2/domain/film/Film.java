@@ -104,6 +104,17 @@ public class Film extends EntityBaseType {
 	public List<Comment> getComments() {
 		return comments;// TODO Return a copy?
 	}
+	
+	public List<Comment> getCommentsForUser(User user) {
+		if (user != null) {
+			for (Comment c : comments) {
+				c.belongsToUser = c.getUser().equals(user);
+				c.reportable = !c.isReportedByUser(user);
+			}
+		}
+		
+		return comments;
+	}
 
 	public boolean userHasCommented(User user) {
 		for (Comment c : comments) {
