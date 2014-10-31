@@ -17,6 +17,6 @@ public class GenreConverter implements Converter<String, Genre> {
 	}
 	
 	public Genre convert(String genre) {
-		return filmRepo.getGenre(genre);//new Genre(genre); 
+		return filmRepo.getGenre(genre);
 	}
 }
