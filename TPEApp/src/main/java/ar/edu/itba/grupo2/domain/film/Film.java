@@ -8,12 +8,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 import ar.edu.itba.grupo2.domain.genre.Genre;
+import ar.edu.itba.grupo2.domain.image.MovieImage;
 import ar.edu.itba.grupo2.domain.user.User;
 
 @Entity
@@ -39,6 +41,8 @@ public class Film extends EntityBaseType {
 	private int sumComments;
 	@Column(nullable = false)
 	private int totalComments;
+	@OneToOne
+	private MovieImage movieImage;
 
 	@OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
 	private List<Comment> comments;
@@ -58,6 +62,7 @@ public class Film extends EntityBaseType {
 		this.length = builder.length;
 		this.sumComments = builder.sumComments;
 		this.totalComments = builder.totalComments;
+		this.movieImage = builder.movieImage;
 		this.comments = builder.comments;
 	}
 
@@ -101,6 +106,10 @@ public class Film extends EntityBaseType {
 		return totalComments == 0 ? 0 : (double) sumComments / totalComments;
 	}
 
+	public MovieImage getMovieImage() {
+		return movieImage;
+	}
+
 	public List<Comment> getComments() {
 		return comments;// TODO Return a copy?
 	}
@@ -141,15 +150,19 @@ public class Film extends EntityBaseType {
 			throw new UserCantCommentException();
 		}
 	}
-	
+
+	public void setFilmImage(MovieImage image) {
+		this.movieImage = image;
+	}
+
 	public void removeComment(Comment c) throws UserIsntAdminException {
 		User user = c.getUser();
 		if (!user.isAdmin()) {
 			throw new UserIsntAdminException();
-		}	
+		}
 		comments.remove(c);
 		user.removeComment(c);
-	
+
 	}
 
 	@Override
@@ -207,64 +220,70 @@ public class Film extends EntityBaseType {
 		private int totalComments;
 		private int sumComments;
 		private Date creationDate;
-	
+		private MovieImage movieImage = null;
+
 		List<Comment> comments;
-	
+
 		public Builder id(final Integer id) {
 			this.id = id;
 			return this;
 		}
-	
+
 		public Builder name(final String name) {
 			this.name = name;
 			return this;
 		}
-	
+
 		public Builder director(final String director) {
 			this.director = director;
 			return this;
 		}
-	
+
 		public Builder creationDate(final Date creationDate) {
 			this.creationDate = creationDate;
 			return this;
 		}
-	
+
 		public Builder releaseDate(final Date releaseDate) {
 			this.releaseDate = releaseDate;
 			return this;
 		}
-	
+
 		public Builder genre(final String genre) {
 			this.genre = new Genre(genre);
 			return this;
 		}
-	
+
 		public Builder description(final String description) {
 			this.description = description;
 			return this;
 		}
-	
+
 		public Builder length(final int length) {
 			this.length = length;
 			return this;
 		}
-	
+
 		public Builder totalComments(final int totalComments) {
 			this.totalComments = totalComments;
 			return this;
 		}
-	
+
 		public Builder sumComments(final int sumComments) {
 			this.sumComments = sumComments;
 			return this;
 		}
-	
+
+		public Builder movieImage(final MovieImage movieImage) {
+			this.movieImage = movieImage;
+			return this;
+		}
+
 		public Builder comments(final List<Comment> comments) {
 			this.comments = comments;
 			return this;
 		}
-	
+
 		public Film build() {
 			return new Film(this);
 		}
