@@ -34,9 +34,9 @@
 		<form class="form-inline" action="filmDetails?id=${film.id}" method="POST" commandName="commentForm">
 			Puntuaci&oacute;n: <strong>2.6</strong>
 			<c:if test="${(not empty loggedInUser) && (not comment.belongsToUser)}">
-				<select class="span1" path="rating">
+				<select class="span1" name="rating">
 					<c:forEach begin="0" end="5" var="i">
-						<option <c:if test="${i == 3}"> selected </c:if> >
+						<option <c:if test="${i == 0}"> selected </c:if> >
 							<c:out value="${i}"/>
 						</option>
 					</c:forEach>

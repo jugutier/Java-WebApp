@@ -45,13 +45,22 @@ public class CommentController extends BaseController {
 		return mav;
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public String discardReports(HttpSession session, @RequestParam(value="id") Comment comment) {
+	@RequestMapping(value = "{id}/discardReports", method=RequestMethod.GET)
+	public String discardReports(HttpSession session, @PathVariable(value="id") Comment comment) {
 		if (isLoggedIn(session) && getLoggedInUser(session).isAdmin()) {
 			comment.discardReports();
 		}
 		
-		return "redirect:reported";
+		return "redirect:../reported";
+	}
+	
+	@RequestMapping(value = "{id}/rate", method=RequestMethod.POST)
+	public String rateComment(HttpSession session, @PathVariable(value="id") Comment comment, @RequestParam(value = "rating") int id) {
+		if (isLoggedIn(session)) {
+			comment.discardReports();
+		}
+		
+		return "redirect:../reported";
 	}
 
 }

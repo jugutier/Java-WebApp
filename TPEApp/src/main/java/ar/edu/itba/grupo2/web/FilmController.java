@@ -5,10 +5,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.postgresql.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +28,7 @@ import ar.edu.itba.grupo2.web.command.FilmForm;
 import ar.edu.itba.grupo2.web.command.validator.CommentFormValidator;
 
 @Controller
+@RequestMapping(value = "film")
 public class FilmController extends BaseController {
 	
 	private final FilmRepo filmRepo;
@@ -83,15 +84,16 @@ public class FilmController extends BaseController {
 		return mav;
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView editFilmDetails(HttpSession session, @RequestParam(value = "id", required=false) Integer id) {
+	@RequestMapping(value = "{id}/edit", method=RequestMethod.GET)
+	public ModelAndView editFilm(HttpSession session, @PathVariable(value = "id") Film film) {
 		ModelAndView mav = new ModelAndView();
-		
-		Film film = filmRepo.get(id);
+		List<Genre> genres = filmRepo.getGenres();
 		
 		mav.addObject("film", film);
+		mav.addObject("genreList", genres);
+		mav.addObject("filmForm", new FilmForm());
 		
-		mav.setViewName("editFilmDetails");
+		mav.setViewName("editFilm");
 		
 		return mav;
 	}
