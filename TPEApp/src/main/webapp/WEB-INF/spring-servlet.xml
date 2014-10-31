@@ -12,6 +12,12 @@
 
 	<!-- Beans related with Spring-MVC -->
 	<import resource="classpath:mvc.xml" />
+
+	<bean id="messageSource"
+	class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	<property name="basename" value="/WEB-INF/i18n/messages" />
+	<property name="cacheSeconds" value="0" />
+	</bean>
 	
 	<!-- Beans related with Spring-Hibernate -->
 	<import resource="classpath:hibernate.cfg.xml" />
