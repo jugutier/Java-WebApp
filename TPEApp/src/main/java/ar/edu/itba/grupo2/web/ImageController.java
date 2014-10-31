@@ -31,8 +31,9 @@ public class ImageController {
 	private FilmRepo imageService;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String addImage(@RequestParam(value = "filmId", required=false) Film film,
-			@RequestParam("file") MultipartFile file) {
+	public String addImage(@RequestParam(value = "filmId", required=true) Film film,
+			@RequestParam(value = "file", required=true) MultipartFile file) {
+		
 		if (!file.isEmpty()) {
 			String name = file.getOriginalFilename();
 			String contentType = file.getContentType();
@@ -50,7 +51,7 @@ public class ImageController {
 			film.setFilmImage(new MovieImage(name, contentType, length,
 					imageData));
 		}
-		return "redirect:/admin/manageAllImages";
+		return "redirect:../film/filmDetails?id="+film.getId();
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
