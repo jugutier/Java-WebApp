@@ -1,16 +1,22 @@
 package ar.edu.itba.grupo2.domain.comment;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cascade;
+
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 import ar.edu.itba.grupo2.domain.film.Film;
+import ar.edu.itba.grupo2.domain.report.Report;
 import ar.edu.itba.grupo2.domain.user.User;
 @Entity
 @Table(name="Comment")
@@ -18,9 +24,15 @@ public class Comment extends EntityBaseType {
 
 	@ManyToOne private Film film;
 	@ManyToOne private User user;
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@OneToMany(mappedBy="comment", cascade = CascadeType.ALL)
+	private List<Report> reports;
 	@Temporal(TemporalType.TIMESTAMP)@Column(nullable=false)private Date creationDate;
 	@Column(length=140,nullable=false)private String text;
 	@Column(nullable=false)private int rate;
+	
+	transient public boolean reportable;
+	transient public boolean belongsToUser;
 	
 	Comment(){}
 	
@@ -51,6 +63,43 @@ public class Comment extends EntityBaseType {
 
 	public int getRate() {
 		return rate;
+	}
+	
+	public boolean isReportedByUser(User user) {
+		boolean found = false;
+		if (user != null) {
+			for (Report r : reports) {
+				found = found || r.getUser().equals(user);
+			}
+		}
+		
+		return found;
+	}
+	
+	public void report(User user) {
+		if (user != null && !this.user.equals(user) && !isReportedByUser(user))
+			reports.add(new Report(this, user));
+	}
+	
+	public boolean isReportable() {
+		return reportable;
+	}
+	
+	public boolean isBelongsToUser() {
+		return belongsToUser;
+	}
+	
+	public int getReportCount() {
+		if (reports == null) {
+			return 0;
+		}
+		
+		return reports.size();
+	}
+	
+	public void discardReports() {
+		if (reports != null)
+			reports.clear();
 	}
 
 	public static class Builder {

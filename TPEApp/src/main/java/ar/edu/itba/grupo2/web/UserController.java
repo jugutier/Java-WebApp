@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.grupo2.domain.comment.Comment;
+import ar.edu.itba.grupo2.domain.comment.CommentRepo;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
@@ -274,7 +276,7 @@ public class UserController extends BaseController {
 		
 		mav.addObject("commentList", user.getComments());
 		
-		mav.setViewName("userComments");;
+		mav.setViewName("userComments");
 		
 		return mav;
 	}

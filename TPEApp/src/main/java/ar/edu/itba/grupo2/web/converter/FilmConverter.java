@@ -8,7 +8,7 @@ import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.film.FilmRepo;
 
 @Component
-public class FilmConverter implements Converter<Integer, Film> {
+public class FilmConverter implements Converter<String, Film> {
 
 	private final FilmRepo filmRepo;
 	
@@ -18,7 +18,7 @@ public class FilmConverter implements Converter<Integer, Film> {
 	}
 
 	@Override
-	public Film convert(Integer id) {
-		return filmRepo.get(id);
+	public Film convert(String id) {
+		return filmRepo.get(Integer.valueOf(id));
 	}
 }

@@ -60,7 +60,9 @@ body {
   margin-top: 10px;
   padding: 10px;
   background-color: #fff;
-  border: 1px solid #c5c5c5;
+  border-top: 1px solid #c5c5c5;
+  border-right: 1px solid #c5c5c5;
+  border-left: 1px solid #c5c5c5;
   -webkit-border-radius: 5px 5px 0px 0px;
   -moz-border-radius: 5px 5px 0px 0px;
   border-radius: 5px 5px 0px 0px;
@@ -84,4 +86,21 @@ body {
 
 .comment-controls form {
   margin-bottom: 0px;
+}
+
+.comment-controls p {
+  margin: 0px;
+  padding: 0px; 
+}
+
+.details-item-header {
+  display: inline;
+}
+
+.details-list {
+  list-style-type: none;
+}
+
+.details-list li {
+  margin-top: 10px;
 }
