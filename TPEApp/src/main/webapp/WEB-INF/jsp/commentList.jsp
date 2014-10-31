@@ -8,10 +8,13 @@
 			<a href="${removeCommentUrl}" class="btn btn-danger pull-right" type="button"><i class="icon-remove"></i></a>
 		</c:if>
 		<p>
-			<c:if test="${comment.user.vip}">
-				<i class="icon-ok"></i>
-			</c:if>
 			<strong><c:out value="${comment.user.name}"/></strong>
+			<c:if test="${comment.user.admin}">
+				 <span class="label label-important">Admin</span>
+			</c:if>
+			<c:if test="${comment.user.vip}">
+				 <span class="label label-success">V.I.P.</span>
+			</c:if>
 		</p>
 		<p>
 			<c:forEach begin="1" end="${comment.rate}" var="i">  

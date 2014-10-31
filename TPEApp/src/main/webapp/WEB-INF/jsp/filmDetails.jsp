@@ -9,53 +9,29 @@
 			<%@ include file="error/comment-error.jsp" %>
 		</c:if>
 		<h2><c:out value="${film.name}"/></h2>
-		<%-- <form:form method="post" action="../image/addImage" commandName="image" enctype="multipart/form-data">
-		<input type="hidden" name="filmId" class="input-block-level" value="${film.id}">
-		  <table>
-		    <tr>
-		      <td><form:label path="content">Image</form:label></td>
-		      <td><input type="file" name="file" id="file"></input></td>
-		    </tr>
-		    <tr>
-		      <td colspan="2">
-		        <input type="submit" value="Upload"/>
-		      </td>
-		    </tr>
-		  </table>
-		</form:form> --%>
-		<%-- <form role="form" action="../image/addImage" method="POST" enctype="multipart/form-data">
-			<div class="form-group">
-				<input type="hidden" name="filmId" class="input-block-level" value="${film.id}">
-			    <label for="exampleInputFile">Seleccione un archivo</label>
-			    <input type="file" name="file" id="file">
-			    <p class="help-block">Sera usado como imagen de esta pelicula.</p>
-			 </div>
-			 <button type="submit" class="btn btn-default">Cargar</button>
-		</form> --%>
-		<div class="row">
-			<div class="col-md-4">
-			<img data-src="holder.js/140x140" class="img-thumbnail" alt="140x140" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ0LjA0Njg3NSIgeT0iNzAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MTBwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xNDB4MTQwPC90ZXh0PjwvZz48L3N2Zz4=" data-holder-rendered="true" style="width: 140px; height: 140px;">
-				<!-- <img src="..." alt="film-Image" class="img-thumbnail"> -->
+		<c:if test="${loggedInUser.admin}">
+			<a class="btn btn-primary" type="button" href="editFilm"><i class="icon-edit"></i> Editar</a>
+			<a class="btn btn-danger" type="submit"><i class="icon-remove"></i> Eliminar</a>
+		</c:if>
+		<div class="media">
+			<div class="pull-left">
+				<img data-src="holder.js/140x140" class="img-thumbnail" alt="140x140" src="data:image/svg+xml;base64,${movieImage}" data-holder-rendered="true" style="width: 140px; height: 140px;">
 			</div>
-			<div class="col-md-4 col-md-offset-4">
-				<dl class="dl-horizontal">
-				
-					<dt>Descripcion</dt>
-					<dd><c:out value="${film.description}"/></dd>
-					<dt>Director</dt>
-					<dd><c:out value="${film.director}"/></dd>
-					<dt>G&eacute;nero</dt>
-					<dd><c:out value="${film.genre}"/></dd>
-					<dt>Fecha de estreno</dt>
-					<dd><fmt:formatDate value="${film.releaseDate}" pattern="dd-MM-yyyy"/></dd>
-					<dt>Duraci&oacute;n</dt>
-					<dd><c:out value="${film.length}"/> minutos</dd>
-				
-				</dl>
+			<div class="media-body">
+				<h4 class="media-heading">Detalles</h4>
+
+				<ul class="details-list">
+					<li><h5 class="details-item-header">Director: </h5><c:out value="${film.director}"/></li>
+					<li><h5 class="details-item-header">G&eacute;neros: </h5><c:out value="${film.genre}"/></li>
+					<li><h5 class="details-item-header">Fecha de estreno: </h5><fmt:formatDate value="${film.releaseDate}" pattern="dd-MM-yyyy"/></li>
+					<li><h5 class="details-item-header">Duraci&oacute;n: </h5><c:out value="${film.length}"/> minutos</li>
+				</ul>
 			</div>
-		  
 		</div>
-		
+
+		<h3>Resumen</h3>
+
+		<p><c:out value="${film.description}"/></p>
 		
 		<h3>Comentarios</h3>
 		
