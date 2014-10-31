@@ -25,12 +25,9 @@ import ar.edu.itba.grupo2.utils.ValidationUtilities;
 @Controller
 public class UserController extends BaseController {
 	
-	private final CommentRepo commentRepo;
-	
 	@Autowired
-	public UserController(UserRepo userRepo, CommentRepo commentRepo) {
+	public UserController(UserRepo userRepo) {
 		super(userRepo);
-		this.commentRepo = commentRepo;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -262,26 +259,5 @@ public class UserController extends BaseController {
 		mav.setViewName("userComments");
 		
 		return mav;
-	}
-	
-	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView reportList(HttpSession session) {
-		ModelAndView mav = new ModelAndView();
-		
-		List<Comment> commentList = commentRepo.getAllReported();
-		mav.addObject("commentList", commentList);
-		
-		mav.setViewName("reportList");
-		
-		return mav;
-	}
-	
-	@RequestMapping(method=RequestMethod.GET)
-	public String discardReports(HttpSession session, @RequestParam(value="id") Integer id) {
-		if (isLoggedIn(session) && getLoggedInUser(session).isAdmin()) {
-			commentRepo.get(id).discardReports();
-		}
-		
-		return "redirect:../user/reportList";
 	}
 }
