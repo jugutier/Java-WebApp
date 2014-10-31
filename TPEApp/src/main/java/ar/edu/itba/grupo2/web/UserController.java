@@ -265,13 +265,6 @@ public class UserController extends BaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public String reportComment(HttpSession session, @RequestParam(value="id") Integer id, @RequestParam(value="film") Integer film) {
-		Comment comment = commentRepo.get(id);
-		comment.report(getLoggedInUser(session));
-		return "redirect:../film/filmDetails?id=" + film;
-	}
-	
-	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView reportList(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		

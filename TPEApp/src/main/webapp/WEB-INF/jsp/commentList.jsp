@@ -26,9 +26,7 @@
 		</p>
 	</div>
 	<div class="comment-controls">
-		<c:url value="../user/reportComment" var="reportUrl">
-			<c:param name="id" value="${comment.id}" />
-			<c:param name="film" value="${film.id}" />
+		<c:url value="../comment/${comment.id}/report" var="reportUrl">
 		</c:url>
 		<form class="form-inline" action="filmDetails?id=${film.id}" method="POST" commandName="commentForm">
 			Puntuaci&oacute;n: <strong>2.6</strong>

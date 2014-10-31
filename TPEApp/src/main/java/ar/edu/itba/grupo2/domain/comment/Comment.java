@@ -67,15 +67,17 @@ public class Comment extends EntityBaseType {
 	
 	public boolean isReportedByUser(User user) {
 		boolean found = false;
-		for (Report r : reports) {
-			found = found || r.getUser().equals(user);
+		if (user != null) {
+			for (Report r : reports) {
+				found = found || r.getUser().equals(user);
+			}
 		}
 		
 		return found;
 	}
 	
 	public void report(User user) {
-		if (!isReportedByUser(user))
+		if (user != null && !this.user.equals(user) && !isReportedByUser(user))
 			reports.add(new Report(this, user));
 	}
 	
