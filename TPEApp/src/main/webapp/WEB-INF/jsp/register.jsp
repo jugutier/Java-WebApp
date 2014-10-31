@@ -3,17 +3,20 @@
 	<%@ include file="error/register-error.jsp" %>
 </c:if>
 
-<form class="form-signin" action="registerUser" method="POST">
+<form:form class="form-signin" action="register" method="POST" commandName="userForm">
 	<h2 class="form-signin-heading">Registrese gratis!</h2>
-	<input type="email" required name="email" class="input-block-level" placeholder="Direccion de email" value="<c:out value="${param.email}"/>" >
-	<input type="password" required name="password" class="input-block-level" placeholder="Contrase&ntilde;a">
-	<input type="password" required name="passwordConfirm" class="input-block-level" placeholder="Repita su contrase&ntilde;a">
-	<input type="text" required name="name" class="input-block-level" placeholder="Nombre" value="<c:out value="${param.name}"/>">
-	<input type="text" required name="lastname" class="input-block-level" placeholder="Apellido" value="<c:out value="${param.lastname}"/>">
-	<input type="date" required name="birthdate" class="input-block-level" placeholder="Fecha de nacimiento (yyyy-mm-dd)" value="<c:out value="${param.birthdate}"/>">
-	<input type="text" required name="secretQuestion" class="input-block-level" placeholder="Pregunta secreta" value="<c:out value="${param.secretQuestion}"/>">
-	<input type="text" required name="secretAnswer" class="input-block-level" placeholder="Respuesta secreta" value="<c:out value="${param.secretAnswer}"/>">
+	<form:errors path="*"/>
+	<form:input path="email" class="input-block-level" placeholder="Direccion de email" />
+	<form:password path="password" class="input-block-level" placeholder="Contrase&ntilde;a" />
+	<form:password path="passwordConfirm" class="input-block-level" placeholder="Confirmar Contrase&ntilde;a" />
+	<form:input path="name" class="input-block-level" placeholder="Nombre" />
+	<form:input path="lastname" class="input-block-level" placeholder="Apellido" />
+	<form:input path="secretQuestion" class="input-block-level" placeholder="Pregunta secreta" />
+	<form:input path="secretAnswer" class="input-block-level" placeholder="Respuesta secreta" />
+	<form:input path="birthdate" type="date" class="input-block-level" placeholder="Fecha de nacimiento" />
 	<button class="btn btn-large btn-primary" type="submit">Registrarse</button>
-</form>
+</form:form>
 
 <%@ include file="footer.jsp" %>
+	
+	
