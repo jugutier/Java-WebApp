@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.grupo2.domain.comment.Comment;
+import ar.edu.itba.grupo2.domain.comment.CommentRepo;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
@@ -23,9 +25,12 @@ import ar.edu.itba.grupo2.utils.ValidationUtilities;
 @Controller
 public class UserController extends BaseController {
 	
+	private final CommentRepo commentRepo;
+	
 	@Autowired
-	public UserController(UserRepo userRepo) {
+	public UserController(UserRepo userRepo, CommentRepo commentRepo) {
 		super(userRepo);
+		this.commentRepo = commentRepo;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -254,8 +259,36 @@ public class UserController extends BaseController {
 		
 		mav.addObject("commentList", user.getComments());
 		
-		mav.setViewName("userComments");;
+		mav.setViewName("userComments");
 		
 		return mav;
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public String reportComment(HttpSession session, @RequestParam(value="id") Integer id, @RequestParam(value="film") Integer film) {
+		Comment comment = commentRepo.get(id);
+		comment.report(getLoggedInUser(session));
+		return "redirect:../film/filmDetails?id=" + film;
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ModelAndView reportList(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		List<Comment> commentList = commentRepo.getAllReported();
+		mav.addObject("commentList", commentList);
+		
+		mav.setViewName("reportList");
+		
+		return mav;
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public String discardReports(HttpSession session, @RequestParam(value="id") Integer id) {
+		if (isLoggedIn(session) && getLoggedInUser(session).isAdmin()) {
+			commentRepo.get(id).discardReports();
+		}
+		
+		return "redirect:../user/reportList";
 	}
 }

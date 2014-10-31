@@ -56,12 +56,13 @@ public class FilmController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		
 		Film film = filmRepo.get(id);
+		User user = getLoggedInUser(session);
 		
-		mav.addObject("commentList", film.getComments());
+		mav.addObject("commentList", film.getCommentsForUser(user));
 		mav.addObject("film", film);
 		
 		if(isLoggedIn(session)) {
-			boolean userCanComment = film.userCanComment(getLoggedInUser(session));//filmRepo.userCanComment(film, user);
+			boolean userCanComment = film.userCanComment(user);//filmRepo.userCanComment(film, user);
 			mav.addObject("userCanComment", userCanComment);
 			if(userCanComment){
 				mav.addObject("commentForm", new CommentForm());

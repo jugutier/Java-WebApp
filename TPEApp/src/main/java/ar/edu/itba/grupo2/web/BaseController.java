@@ -29,7 +29,11 @@ public class BaseController {
 	}
 	
 	protected User getLoggedInUser(HttpSession session) {
-		return userRepo.get((Integer)session.getAttribute(USER_ID));
+		User user = null;
+		if (isLoggedIn(session)) {
+			user = userRepo.get((Integer)session.getAttribute(USER_ID));
+		}
+		return user;
 	}
 	
 	protected void logOut(HttpSession session) {
