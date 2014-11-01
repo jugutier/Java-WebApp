@@ -32,7 +32,16 @@
 		<c:url value="../comment/${comment.id}/report" var="reportUrl">
 		</c:url>
 		<form class="form-inline" action="../comment/${comment.id}/rate" method="POST" commandName="commentForm">
-			Puntuaci&oacute;n: <strong>${comment.rate}</strong>
+			Puntuaci&oacute;n: <strong>
+			<c:choose>
+				<c:when test="${comment.rated}">
+					${comment.rate}
+				</c:when>
+				<c:otherwise>
+					--
+				</c:otherwise>
+			</c:choose>
+			</strong>
 			<c:if test="${(not empty loggedInUser) && (not comment.belongsToUser) && (not comment.ratedByUser)}">
 				<select class="span1" name="rating">
 					<c:forEach begin="0" end="5" var="i">

@@ -72,7 +72,11 @@ public class Comment extends EntityBaseType {
 			count++;
 			sum+=cr.getRating();
 		}
-		return count == 0 ? 0 : ((float)sum)/count;
+		return count == 0 ? null : ((float)sum)/count;
+	}
+	
+	public boolean isRated(){
+		return !ratings.isEmpty();
 	}
 	
 	public int getFilmRate() {
