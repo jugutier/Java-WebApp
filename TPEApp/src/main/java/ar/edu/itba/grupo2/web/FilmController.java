@@ -114,7 +114,7 @@ public class FilmController extends BaseController {
 		
 		commentValidator.validate(commentForm, errors);
 		if (errors.hasErrors()) {
-			errors.rejectValue("comment", "required");
+			errors.rejectValue("text", "required");
 			session.setAttribute("errors", errors);
 			//return null;
 			return "redirect:filmDetails?id=" + commentForm.getFilmId();
