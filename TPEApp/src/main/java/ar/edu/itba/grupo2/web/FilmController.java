@@ -163,23 +163,6 @@ public class FilmController extends BaseController {
 		return "redirect:filmList";
 		
 	}
-	@RequestMapping(method=RequestMethod.POST)
-	public String removeCommentFromFilm(
-			HttpSession session,
-			CommentForm commentForm
-			) {
-		Film film = filmRepo.get(commentForm.getFilmId());
-		
-		
-		try {
-			//film.removeComment();
-		}
-		catch(UserIsntAdminException e) {
-			
-		}
-		
-		return "redirect:filmDetails?id=" + commentForm.getFilmId();
-	}
 	
 	@RequestMapping(value = "filmList", method=RequestMethod.GET)
 	public ModelAndView list(HttpSession session, @RequestParam(value = "genre", required=false) Genre genre, @RequestParam(value = "director", required=false) String director) {

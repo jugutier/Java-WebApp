@@ -12,6 +12,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cascade;
+
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 import ar.edu.itba.grupo2.domain.genre.Genre;
@@ -44,6 +46,7 @@ public class Film extends EntityBaseType {
 	@OneToOne
 	private MovieImage movieImage;
 
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
 	private List<Comment> comments;
 
@@ -168,9 +171,9 @@ public class Film extends EntityBaseType {
 
 	public void removeComment(Comment c) throws UserIsntAdminException {
 		User user = c.getUser();
-		if (!user.isAdmin()) {
+		/*if (!user.isAdmin()) {
 			throw new UserIsntAdminException();
-		}
+		}*/
 		comments.remove(c);
 		user.removeComment(c);
 

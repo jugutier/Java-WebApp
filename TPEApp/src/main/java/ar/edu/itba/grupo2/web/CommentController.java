@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.comment.CommentRepo;
+import ar.edu.itba.grupo2.domain.film.Film;
+import ar.edu.itba.grupo2.domain.film.UserIsntAdminException;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 
 @Controller
@@ -61,6 +63,19 @@ public class CommentController extends BaseController {
 		}
 		
 		return "redirect:../reported";
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public String removeComment(HttpSession session, @RequestParam(value = "film", required=false) Film film, @RequestParam(value="id") Comment comment ) {
+		
+		try {
+			film.removeComment(comment);
+		}
+		catch(UserIsntAdminException e) {
+			
+		}
+		
+		return "redirect:../film/filmDetails?id=" + comment.getFilm().getId();
 	}
 
 }

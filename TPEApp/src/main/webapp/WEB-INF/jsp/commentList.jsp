@@ -1,11 +1,11 @@
 <c:forEach items="${commentList}" var="comment">
 	<div class="comment-body">
-		<c:url value="../film/removeCommentFromFilm" var="removeCommentUrl">
-			<c:param name="id" value="${comment.id}" />
-			<c:param name="film" value="${film.id}" />
-		</c:url>
 		<c:if test="${loggedInUser.admin}">
-			<a href="${removeCommentUrl}" class="btn btn-danger pull-right" type="button"><i class="icon-remove"></i></a>
+			<form class="form-inline" action="../comment/removeComment" method="POST">
+			<input type="hidden" name="film" value="${film.id}" />
+			<input type="hidden" name="id" value="${comment.id}" />
+			<button href="#" class="btn btn-danger pull-right" type="submit"><i class="icon-remove"></i></button>
+		</form>
 		</c:if>
 		<p>
 			<strong><c:out value="${comment.user.name}"/></strong>
