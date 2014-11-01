@@ -12,6 +12,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cascade;
+
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 import ar.edu.itba.grupo2.domain.genre.Genre;
@@ -42,6 +44,7 @@ public class Film extends EntityBaseType {
 	@Column(nullable = false)
 	private int totalComments;
 	@OneToOne
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	private MovieImage movieImage;
 
 	@OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
