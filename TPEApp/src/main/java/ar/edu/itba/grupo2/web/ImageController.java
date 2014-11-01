@@ -19,21 +19,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import ar.edu.itba.grupo2.domain.film.Film;
-import ar.edu.itba.grupo2.domain.film.FilmRepo;
 import ar.edu.itba.grupo2.domain.image.MovieImage;
+import ar.edu.itba.grupo2.domain.user.UserRepo;
 
 @Controller
-public class ImageController {
+public class ImageController extends BaseController {
 
-	private final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
+	private final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.	
 
 	@Autowired
-	private FilmRepo imageService;
+	public ImageController(UserRepo userRepo) {
+		super(userRepo);
+	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String addImage(@RequestParam(value = "filmId", required=true) Film film,
-			@RequestParam(value = "file", required=true) MultipartFile file) {
-		
+	public String addImage(
+			@RequestParam(value = "filmId", required = true) Film film,
+			@RequestParam(value = "file", required = true) MultipartFile file) {
+
 		if (!file.isEmpty()) {
 			String name = file.getOriginalFilename();
 			String contentType = file.getContentType();
@@ -51,20 +54,21 @@ public class ImageController {
 			film.setFilmImage(new MovieImage(name, contentType, length,
 					imageData));
 		}
-		return "redirect:../film/filmDetails?id="+film.getId();
+		return "redirect:../film/filmDetails?id=" + film.getId();
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String deleteImage(@RequestParam(value = "filmId", required=false)Film film) {
+	public String deleteImage(
+			@RequestParam(value = "filmId", required = false) Film film) {
 		film.setFilmImage(null);
 		return "redirect:/admin/manageAllImages";
 	}
 
 	// Display the image...
-	@RequestMapping(method = RequestMethod.GET, value = "/image/{id}")
+	@RequestMapping(method = RequestMethod.GET, value = "/get/{id}.jpg")
 	public void getImage(Model model, @PathVariable("id") Film film,
 			HttpServletResponse response) throws ServletException, IOException {
-		if(film==null){
+		if (film == null) {
 			Logger.getRootLogger().error("null image");
 		}
 		MovieImage image = film.getMovieImage();

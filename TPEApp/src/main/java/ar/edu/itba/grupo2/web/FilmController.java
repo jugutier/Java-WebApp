@@ -69,6 +69,7 @@ public class FilmController extends BaseController {
 		
 		mav.addObject("commentList", film.getCommentsForUser(user));
 		mav.addObject("film", film);
+		mav.addObject("MovieImage", new MovieImage());
 		
 		if(isLoggedIn(session)) {
 			boolean userCanComment = film.userCanComment(user);//filmRepo.userCanComment(film, user);
@@ -83,6 +84,7 @@ public class FilmController extends BaseController {
 		return mav;
 	}
 	
+
 	@RequestMapping(value = "{id}/edit", method=RequestMethod.GET)
 	public ModelAndView editFilm(HttpSession session, @PathVariable(value = "id") Film film) {
 		ModelAndView mav = new ModelAndView();
@@ -106,6 +108,7 @@ public class FilmController extends BaseController {
 		return "redirect:filmList";
 	}
 	
+
 	@RequestMapping(method=RequestMethod.POST)
 	public String filmDetails(HttpSession session, CommentForm commentForm, Errors errors, @RequestParam(value = "id", required=false) Film film) {
 		
@@ -134,6 +137,19 @@ public class FilmController extends BaseController {
 		}
 		
 		return "redirect:filmDetails?id=" + commentForm.getFilmId();
+	}
+
+	@RequestMapping(method=RequestMethod.GET)
+	public ModelAndView editFilmDetails(HttpSession session, @RequestParam(value = "id", required=false) Integer id) {
+		ModelAndView mav = new ModelAndView();
+		
+		Film film = filmRepo.get(id);
+		
+		mav.addObject("film", film);
+		
+		mav.setViewName("editFilmDetails");
+		
+		return mav;
 	}
 	@RequestMapping(method=RequestMethod.POST)
 	public String removeFilm(HttpSession session,@RequestParam(value = "id", required=true) Integer id){
