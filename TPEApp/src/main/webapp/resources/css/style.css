@@ -109,3 +109,7 @@ body {
   list-style-type: none;
   margin: 0px;
 }
+
+.controls li {
+  margin-bottom: 5px;
+}

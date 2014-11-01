@@ -34,7 +34,6 @@ public class Film extends EntityBaseType {
 	@Column(nullable = false)
 	private Date releaseDate;
 	@ManyToMany
-	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	private List<Genre> genres;
 	@Column(length = 500, nullable = false)
 	private String description;
@@ -44,7 +43,7 @@ public class Film extends EntityBaseType {
 	private int sumComments;
 	@Column(nullable = false)
 	private int totalComments;
-	@OneToOne
+	@OneToOne(mappedBy = "film", cascade = CascadeType.ALL)
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	private MovieImage movieImage;
 
@@ -170,7 +169,8 @@ public class Film extends EntityBaseType {
 	
 	public void setGenres(List<Genre> genres) {
 		this.genres.clear();
-		this.genres.addAll(genres);
+		if (genres != null)
+			this.genres.addAll(genres);
 	}
 	
 	public void setDescription(String description) {

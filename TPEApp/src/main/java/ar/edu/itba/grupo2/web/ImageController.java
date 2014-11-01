@@ -52,7 +52,7 @@ public class ImageController extends BaseController {
 				e.printStackTrace();
 			}
 			film.setFilmImage(new MovieImage(name, contentType, length,
-					imageData));
+					imageData, film));
 		}
 		return "redirect:../film/filmDetails?id=" + film.getId();
 	}

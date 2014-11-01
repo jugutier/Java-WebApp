@@ -11,7 +11,7 @@
 </c:choose>
 </h2>
 
-<form:form class="form-horizontal" action="edit" method="POST" commandName="filmForm" modelAttribute="film" >
+<form:form class="form-horizontal" action="edit" method="POST" commandName="filmForm" modelAttribute="film" enctype="multipart/form-data" accept-charset="utf-8">
 	<fieldset>
 		<form:errors path="*"/>
 		<div class="control-group">
@@ -44,7 +44,21 @@
 		<div class="control-group">
 			<form:label class="control-label" for="movieImage" path="">Foto de portada</form:label>
 			<div class="controls">
-				<form:input type="file" id="movieImage" path="movieImage" optional="true"/>
+				<div class="media">
+					<c:if test="${not empty film.movieImage}">
+						<div class="pull-left">
+							<img data-src="holder.js/140x140" class="img-thumbnail" alt="film-Image" src="../../image/get/${film.id}" data-holder-rendered="true" style="width: 140px; height: 140px;">
+						</div>
+					</c:if>
+					<div class="media-body">
+						<input type="file" id="movieImage" name="movieImage" />
+						<c:if test="${not empty film.movieImage}">
+							<label class="checkbox">
+								<input type="checkbox"> Eliminar imagen
+							</label>
+						</c:if>
+					</div>
+				</div>				
 			</div>
 		</div>
 		<div class="control-group">
@@ -52,8 +66,12 @@
 			<div class="controls">
 				<ul>
 					<c:forEach items="${genreList}" var="genre">
-						<li><form:checkbox path="genres" value="${genre}"/>
-						<c:out value="${genre.genre}" /></li>
+						<li>
+							<label class="checkbox">
+								<form:checkbox path="genres" value="${genre}"/>
+								<c:out value="${genre.genre}" />
+							</label>
+						</li>
 					</c:forEach>
 				</ul>
 			</div>

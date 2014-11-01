@@ -1,5 +1,6 @@
 package ar.edu.itba.grupo2.web;
 
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
@@ -24,8 +26,10 @@ import ar.edu.itba.grupo2.domain.film.FilmRepo;
 import ar.edu.itba.grupo2.domain.film.UserCantCommentException;
 import ar.edu.itba.grupo2.domain.film.UserIsntAdminException;
 import ar.edu.itba.grupo2.domain.genre.Genre;
+import ar.edu.itba.grupo2.domain.image.MovieImage;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
+import ar.edu.itba.grupo2.utils.ValidationUtilities;
 import ar.edu.itba.grupo2.web.command.CommentForm;
 import ar.edu.itba.grupo2.web.command.FilmForm;
 import ar.edu.itba.grupo2.web.command.validator.CommentFormValidator;
@@ -96,7 +100,7 @@ public class FilmController extends BaseController {
 	}
 	
 	@RequestMapping(value = "{id}/edit", method=RequestMethod.POST)
-	public String editFilmSubmit(HttpSession session, Model model, FilmForm filmForm, Errors errors){
+	public String editFilmSubmit(HttpSession session, Model model, FilmForm filmForm, Errors errors, @RequestParam(value = "movieImage") MultipartFile movieImage){
 		User user = getLoggedInUser(session);
 		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date releaseDate = null;
@@ -118,6 +122,24 @@ public class FilmController extends BaseController {
 				film.setGenres(filmForm.getGenres());
 				film.setDescription(filmForm.getDescription());
 				film.setReleaseDate(releaseDate);
+				
+				if (movieImage.getSize() > 0) {
+					String name = movieImage.getName();
+					String contentType = movieImage.getContentType();
+					int length = (int) movieImage.getSize();
+					
+					byte[] imageData = new byte[length];
+
+					try {
+						InputStream fileInputStream = filmForm.getMovieImage().getInputStream();
+						fileInputStream.read(imageData);
+						fileInputStream.close();
+						film.setFilmImage(new MovieImage(name, contentType, length,
+								imageData, film));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 			else {
 				model.addAttribute("genreList", filmRepo.getGenres());
@@ -129,8 +151,7 @@ public class FilmController extends BaseController {
 			return "redirect:../../welcome";
 		}
 		return "redirect:../filmList";
-	}
-	
+	}	
 
 	@RequestMapping(method=RequestMethod.POST)
 	public String filmDetails(HttpSession session, CommentForm commentForm, Errors errors, @RequestParam(value = "id", required=false) Film film) {

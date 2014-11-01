@@ -28,7 +28,12 @@
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="/WEB-INF/i18n/messages" />
 		<property name="cacheSeconds" value="0" />
-	</bean> 
+	</bean>
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- one of the properties available; the maximum file size in bytes -->
+        <property name="maxUploadSize" value="100000"/>
+    </bean>
 	<!-- END base mvc.xml (Andy's) -->
 	
 	<!--<tx:annotation-driven />-->
