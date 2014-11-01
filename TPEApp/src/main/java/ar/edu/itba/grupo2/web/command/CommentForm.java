@@ -6,7 +6,7 @@ public class CommentForm {
 	private int filmId;
 	private int rating;
 	private String text;
-	private Comment comment;
+	//private Comment comment;
 	
 	public CommentForm (){
 	}
@@ -14,9 +14,7 @@ public class CommentForm {
 	public int getRating(){
 		return this.rating;
 	}
-	public Comment getComment(){
-		return this.comment;
-	}
+	
 	public String getText(){
 		return this.text;
 	}
@@ -29,11 +27,15 @@ public class CommentForm {
 		this.rating = rating;
 	}
 	
-	public void setComment(String comment){
-		this.text = comment;
-	}
+	//public void setComment(Comment comment){
+	//	this.comment = comment;
+	//}
 	
 	public void setFilmId(int filmId){
 		this.filmId = filmId;
+	}
+	
+	public void setText(String text){
+		this.text = text;
 	}
 }

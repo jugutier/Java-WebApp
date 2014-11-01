@@ -11,8 +11,7 @@
 		<c:url value="../film/removeCommentFromFilm" var="removeCommentUrl">
 			<c:param name="id" value="${comment.id}" />
 		</c:url>
-		<c:url value="../comment/discardReports" var="discardReportsUrl">
-			<c:param name="id" value="${comment.id}" />
+		<c:url value="../comment/${comment.id}/discardReports" var="discardReportsUrl">
 		</c:url>
 		<a href="${removeCommentUrl}" class="btn btn-danger pull-right" type="button"><i class="icon-remove"></i></a>
 		<p>
