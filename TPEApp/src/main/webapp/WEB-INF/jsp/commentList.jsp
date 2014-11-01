@@ -17,10 +17,10 @@
 			</c:if>
 		</p>
 		<p>
-			<c:forEach begin="1" end="${comment.rate}" var="i">  
+			<c:forEach begin="1" end="${comment.filmRate}" var="i">  
 				<i class="icon-star"></i>
 			</c:forEach>
-			<c:forEach begin="${comment.rate + 1}" end="5" var="i">  
+			<c:forEach begin="${comment.filmRate + 1}" end="5" var="i">  
 				<i class="icon-star-empty"></i>
 			</c:forEach>
 		</p>
@@ -31,9 +31,18 @@
 	<div class="comment-controls">
 		<c:url value="../comment/${comment.id}/report" var="reportUrl">
 		</c:url>
-		<form class="form-inline" action="filmDetails?id=${film.id}" method="POST" commandName="commentForm">
-			Puntuaci&oacute;n: <strong>2.6</strong>
-			<c:if test="${(not empty loggedInUser) && (not comment.belongsToUser)}">
+		<form class="form-inline" action="../comment/${comment.id}/rate" method="POST" commandName="commentForm">
+			Puntuaci&oacute;n: <strong>
+			<c:choose>
+				<c:when test="${comment.rated}">
+					${comment.rate}
+				</c:when>
+				<c:otherwise>
+					--
+				</c:otherwise>
+			</c:choose>
+			</strong>
+			<c:if test="${(not empty loggedInUser) && (not comment.belongsToUser) && (not comment.ratedByUser)}">
 				<select class="span1" name="rating">
 					<c:forEach begin="0" end="5" var="i">
 						<option <c:if test="${i == 0}"> selected </c:if> >

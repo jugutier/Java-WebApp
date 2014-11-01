@@ -1,5 +1,6 @@
 package ar.edu.itba.grupo2.domain.user;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -99,7 +100,9 @@ public class User extends EntityBaseType {
 	}
 
 	public List<Comment> getComments() {
-		return comments;// TODO: return a copy
+		List<Comment> copy = new ArrayList<Comment>(comments.size());
+		copy.addAll(comments);
+		return copy;
 	}
 
 	public void addComment(Comment c) {

@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.comment.CommentRepo;
+import ar.edu.itba.grupo2.domain.commentRate.CommentRate;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.film.UserIsntAdminException;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
@@ -57,12 +58,12 @@ public class CommentController extends BaseController {
 	}
 	
 	@RequestMapping(value = "{id}/rate", method=RequestMethod.POST)
-	public String rateComment(HttpSession session, @PathVariable(value="id") Comment comment, @RequestParam(value = "rating") int id) {
+	public String rateComment(HttpSession session, @PathVariable(value="id") Comment comment, @RequestParam(value = "rating") int rating) {
 		if (isLoggedIn(session)) {
-			comment.discardReports();
+			comment.rate(getLoggedInUser(session),rating);
 		}
 		
-		return "redirect:../reported";
+		return "redirect:../../film/filmDetails?id=" + comment.getFilm().getId();
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)

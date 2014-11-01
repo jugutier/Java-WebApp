@@ -123,6 +123,7 @@ public class Film extends EntityBaseType {
 			for (Comment c : comments) {
 				c.belongsToUser = c.getUser().equals(user);
 				c.reportable = !c.isReportedByUser(user);
+				c.ratedByUser = c.isRatedBy(user);
 			}
 		}
 		
@@ -139,22 +140,10 @@ public class Film extends EntityBaseType {
 	}
 
 	public boolean userCanComment(User user) {
-		if (this.isReleased()) {
-			if (this.userHasCommented(user)) {
-				return false;
-			} else {
-				return true;
-			}
-		} else {
-			if (user.isVip()) {
-				if (this.userHasCommented(user)) {
-					return false;
-				} else {
-					return true;
-				}
-			}
-		}
-		return false;
+		if(userHasCommented(user)){
+			return false;
+		}		
+		return (isReleased() || user.isVip() );
 	}
 
 	public void addComment(Comment c) throws UserCantCommentException {
@@ -175,6 +164,7 @@ public class Film extends EntityBaseType {
 		/*if (!user.isAdmin()) {
 			throw new UserIsntAdminException();
 		}*/
+		//TODO: ask andy
 		comments.remove(c);
 		user.removeComment(c);
 		sumComments-=c.getRate();
