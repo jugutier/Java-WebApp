@@ -15,7 +15,7 @@
 		</c:if>
 		<div class="media">
 			<div class="pull-left">
-				<img data-src="holder.js/140x140" class="img-thumbnail" alt="140x140" src="data:image/svg+xml;base64,${movieImage}" data-holder-rendered="true" style="width: 140px; height: 140px;">
+				<img data-src="holder.js/140x140" class="img-thumbnail" alt="film-Image" src="../image/get/${film.id}" data-holder-rendered="true" style="width: 140px; height: 140px;">
 			</div>
 			<div class="media-body">
 				<h4 class="media-heading">Detalles</h4>

@@ -44,6 +44,7 @@ public class Film extends EntityBaseType {
 	@Column(nullable = false)
 	private int totalComments;
 	@OneToOne
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	private MovieImage movieImage;
 
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
@@ -177,6 +178,8 @@ public class Film extends EntityBaseType {
 		}*/
 		comments.remove(c);
 		user.removeComment(c);
+		sumComments-=c.getRate();
+		totalComments--;
 
 	}
 

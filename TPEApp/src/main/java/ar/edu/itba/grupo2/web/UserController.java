@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.comment.CommentRepo;
+import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
@@ -42,6 +43,24 @@ public class UserController extends BaseController {
 		logOut(session);
 		
 		return "redirect:../film/welcome";
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ModelAndView list() {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("allUsers", userRepo.getAll());
+		mav.setViewName("userList");
+		
+		return mav;
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ModelAndView profile(@RequestParam(value = "id", required=true) User user) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("user", user);
+		mav.setViewName("userProfile");
+		
+		return mav;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -78,39 +97,6 @@ public class UserController extends BaseController {
 		 
 	}
 	
-	private List<String> validate(String email, String name, String lastname,
-			String password, String passwordConfirm, String secretQuestion,
-			String secretAnswer, Date birthdate) {
-		List<String> errors = new ArrayList<String>();
-		if (ValidationUtilities.paramEmpty(email)) {
-			errors.add("NoMail");
-		} else if (!ValidationUtilities.isEmail(email)) {
-			errors.add("InvalidMail");
-		}
-		if (ValidationUtilities.paramEmpty(name)) {
-			errors.add("NoName");
-		}
-		if (ValidationUtilities.paramEmpty(lastname)) {
-			errors.add("NoLastname");
-		}
-		if (ValidationUtilities.paramEmpty(password)) {
-			errors.add("NoPass");
-		} else if (!password.equals(passwordConfirm)) {
-			errors.add("NoCoincidence");
-		}
-		if (ValidationUtilities.paramEmpty(secretQuestion)) {
-			errors.add("NoSQ");
-		}
-		if (ValidationUtilities.paramEmpty(secretAnswer)) {
-			errors.add("NoSA");
-		}		
-		if (userRepo.getUserByEmail(email)!=null) {
-			errors.add("MailUsed");
-		}
-
-		return errors;
-
-	}
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public String authenticateUser(
