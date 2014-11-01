@@ -1,6 +1,5 @@
 package ar.edu.itba.grupo2.web.command;
 
-import java.util.Date;
 
 public class UserForm {
 	private String name;

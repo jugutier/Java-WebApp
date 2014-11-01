@@ -10,22 +10,22 @@ import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 import ar.edu.itba.grupo2.domain.film.Film;
 
 @Entity
-@Table
+@Table(name = "image")
 public class MovieImage extends EntityBaseType {
 
-	@Column
+	@Column(length = 50,nullable=false)
 	private String name;
 
-	@Column
+	@Column(length = 50,nullable=false)
 	private String contentType;
 
-	@Column
+	@Column(nullable=false)
 	private Integer length;
 
-	@Column
+	@Column(nullable= false)
 	@Lob
 	private byte[] content;
-	
+
 	@OneToOne
 	private Film film;
 
@@ -57,6 +57,22 @@ public class MovieImage extends EntityBaseType {
 
 	public byte[] getContent() {
 		return content;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setContent(byte[] content) {
+		this.content = content;
+	}
+
+	public void setLength(Integer length) {
+		this.length = length;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
 }

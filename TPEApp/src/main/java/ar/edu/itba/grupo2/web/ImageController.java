@@ -51,8 +51,17 @@ public class ImageController extends BaseController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			film.setFilmImage(new MovieImage(name, contentType, length,
-					imageData, film));
+			MovieImage movieImage = film.getMovieImage();
+			if(movieImage == null){
+				film.setFilmImage(new MovieImage(name, contentType, length,
+						imageData, film));
+			}else{
+				movieImage.setName(name);
+				movieImage.setContentType(contentType);
+				movieImage.setLength(length);
+				movieImage.setContent(imageData);
+			}
+			
 		}
 		return "redirect:../film/filmDetails?id=" + film.getId();
 	}
