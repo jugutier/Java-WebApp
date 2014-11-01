@@ -172,7 +172,7 @@ public class FilmController extends BaseController {
 		
 		
 		try {
-			film.removeComment(commentForm.getComment());
+			//film.removeComment();
 		}
 		catch(UserIsntAdminException e) {
 			

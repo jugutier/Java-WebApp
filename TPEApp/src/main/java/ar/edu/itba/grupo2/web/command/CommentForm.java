@@ -1,5 +1,7 @@
 package ar.edu.itba.grupo2.web.command;
 
+import ar.edu.itba.grupo2.domain.comment.Comment;
+
 public class CommentForm {
 	private int filmId;
 	private int rating;
@@ -12,10 +14,6 @@ public class CommentForm {
 	public int getRating(){
 		return this.rating;
 	}
-	
-	//public Comment getComment(){
-	//	return this.comment;
-	//}
 	
 	public String getText(){
 		return this.text;

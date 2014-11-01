@@ -11,10 +11,10 @@
 		</form:select>
 	</p>
 	<p> 
-		<form:textarea path="comment" class="input-block-level" placeholder="Comentario" />
+		<form:textarea path="text" class="input-block-level" placeholder="Comentario" />
 		
 	</p>
-	<form:errors path="comment" />
+	<form:errors path="text" />
 	<form:errors path="*" />
 	<form:input type="hidden" path="filmId" value="${film.id}" />
 	<button class="btn btn-primary" type="submit">Enviar</button>
