@@ -122,6 +122,7 @@ public class Film extends EntityBaseType {
 			for (Comment c : comments) {
 				c.belongsToUser = c.getUser().equals(user);
 				c.reportable = !c.isReportedByUser(user);
+				c.ratedByUser = c.isRatedBy(user);
 			}
 		}
 		
