@@ -11,8 +11,9 @@
 </c:choose>
 </h2>
 
-<form:form class="form-horizontal" action="filmDetails?id=${film.id}" method="POST" commandName="filmForm">
+<form:form class="form-horizontal" action="edit" method="POST" commandName="filmForm" modelAttribute="film" >
 	<fieldset>
+		<form:errors path="*"/>
 		<div class="control-group">
 			<form:label class="control-label" for="name" path="">T&iacute;tulo</form:label>
 			<div class="controls">
@@ -41,25 +42,31 @@
 			</div>
 		</div>
 		<div class="control-group">
+			<form:label class="control-label" for="movieImage" path="">Foto de portada</form:label>
+			<div class="controls">
+				<form:input type="file" id="movieImage" path="movieImage" optional="true"/>
+			</div>
+		</div>
+		<div class="control-group">
 			<form:label class="control-label" for="genres" path="">G&eacute;neros</form:label>
 			<div class="controls">
-				<c:forEach items="${genreList}" var="genre">
-					<label class="checkbox" id="genres">
-						<input type="checkbox" value="">
-						<c:out value="${genre.genre}" />
-					</label>
-				</c:forEach>
+				<ul>
+					<c:forEach items="${genreList}" var="genre">
+						<li><form:checkbox path="genres" value="${genre}"/>
+						<c:out value="${genre.genre}" /></li>
+					</c:forEach>
+				</ul>
 			</div>
 		</div>
 		<div class="control-group">
 			<form:label class="control-label" for="description" path="">Resumen</form:label>
 			<div class="controls">
-				<textarea id="description" path="description" rows="3"></textarea>
+				<form:textarea id="description" class="input-xlarge" path="description" rows="5"></form:textarea>
 			</div>
 		</div>
 		<div class="control-group">
-			<div class="controls">
-				<form:input type="hidden" path="filmId" value="${film.id}" />
+			<div class="form-actions">
+				<form:input type="hidden" path="id" />
 				<button class="btn btn-primary" type="submit">Enviar</button>
 			</div>
 		</div>

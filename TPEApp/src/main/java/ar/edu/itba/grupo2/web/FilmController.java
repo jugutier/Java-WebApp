@@ -1,5 +1,8 @@
 package ar.edu.itba.grupo2.web;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -7,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,19 +30,22 @@ import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.command.CommentForm;
 import ar.edu.itba.grupo2.web.command.FilmForm;
 import ar.edu.itba.grupo2.web.command.validator.CommentFormValidator;
+import ar.edu.itba.grupo2.web.command.validator.FilmFormValidator;
 
 @Controller
 @RequestMapping(value = "film")
 public class FilmController extends BaseController {
 	
 	private final FilmRepo filmRepo;
-	private CommentFormValidator commentValidator;
+	private final CommentFormValidator commentValidator;
+	private final FilmFormValidator filmValidator;
 	
 	@Autowired
-	public FilmController(FilmRepo filmRepo, UserRepo userRepo, CommentFormValidator commentValidator) {
+	public FilmController(FilmRepo filmRepo, UserRepo userRepo, CommentFormValidator commentValidator, FilmFormValidator filmValidator) {
 		super(userRepo);
 		this.filmRepo = filmRepo;
 		this.commentValidator = commentValidator;
+		this.filmValidator = filmValidator;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -99,13 +106,40 @@ public class FilmController extends BaseController {
 		return mav;
 	}
 	
-	@RequestMapping(method=RequestMethod.POST)
-	public String confirmEdition(HttpSession session,FilmForm filmForm){
+	@RequestMapping(value = "{id}/edit", method=RequestMethod.POST)
+	public String editFilmSubmit(HttpSession session, Model model, FilmForm filmForm, Errors errors){
 		User user = getLoggedInUser(session);
-		if(user.isAdmin()){
-			System.out.println("isAdmin");
+		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date releaseDate = null;
+		Film film = filmRepo.get(filmForm.getId());
+		
+		filmValidator.validate(filmForm, errors);
+		
+		try {
+			releaseDate = outputDateFormat.parse(filmForm.getReleaseDate());
+		} catch (ParseException e) {
+			errors.rejectValue("releaseDate", "invalid");
 		}
-		return "redirect:filmList";
+		
+		if(user.isAdmin()){
+			if (!errors.hasErrors()) {
+				film.setName(filmForm.getName());
+				film.setDirector(filmForm.getDirector());
+				film.setLength(filmForm.getLength());
+				film.setGenres(filmForm.getGenres());
+				film.setDescription(filmForm.getDescription());
+				film.setReleaseDate(releaseDate);
+			}
+			else {
+				model.addAttribute("genreList", filmRepo.getGenres());
+				model.addAttribute("film", film);
+				return "editFilm";
+			}
+		}
+		else {
+			return "redirect:../../welcome";
+		}
+		return "redirect:../filmList";
 	}
 	
 

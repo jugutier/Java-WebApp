@@ -22,7 +22,7 @@
 
 				<ul class="details-list">
 					<li><h5 class="details-item-header">Director: </h5><c:out value="${film.director}"/></li>
-					<li><h5 class="details-item-header">G&eacute;neros: </h5><c:out value="${film.genre}"/></li>
+					<li><h5 class="details-item-header">G&eacute;neros: </h5><c:out value="${film.genres}"/></li>
 					<li><h5 class="details-item-header">Fecha de estreno: </h5><fmt:formatDate value="${film.releaseDate}" pattern="dd-MM-yyyy"/></li>
 					<li><h5 class="details-item-header">Duraci&oacute;n: </h5><c:out value="${film.length}"/> minutos</li>
 				</ul>

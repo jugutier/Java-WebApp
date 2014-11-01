@@ -104,3 +104,8 @@ body {
 .details-list li {
   margin-top: 10px;
 }
+
+.controls ul {
+  list-style-type: none;
+  margin: 0px;
+}

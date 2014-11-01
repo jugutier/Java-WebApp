@@ -6,11 +6,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Cascade;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
@@ -31,8 +33,9 @@ public class Film extends EntityBaseType {
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
 	private Date releaseDate;
-	@ManyToOne
-	private Genre genre;
+	@ManyToMany
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	private List<Genre> genres;
 	@Column(length = 500, nullable = false)
 	private String description;
 	@Column(nullable = false)
@@ -57,7 +60,7 @@ public class Film extends EntityBaseType {
 		this.director = builder.director;
 		this.creationDate = builder.creationDate;
 		this.releaseDate = builder.releaseDate;
-		this.genre = builder.genre;
+		this.genres = builder.genres;
 		this.description = builder.description;
 		this.length = builder.length;
 		this.sumComments = builder.sumComments;
@@ -82,8 +85,8 @@ public class Film extends EntityBaseType {
 		return releaseDate;
 	}
 
-	public Genre getGenre() {
-		return genre;
+	public List<Genre> getGenres() {
+		return genres;
 	}
 
 	public String getDescription() {
@@ -161,6 +164,31 @@ public class Film extends EntityBaseType {
 			throw new UserCantCommentException();
 		}
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setDirector(String director) {
+		this.director = director;
+	}
+	
+	public void setLength(int length) {
+		this.length = length;
+	}
+	
+	public void setGenres(List<Genre> genres) {
+		this.genres.clear();
+		this.genres.addAll(genres);
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
+	}
 
 	public void setFilmImage(MovieImage image) {
 		this.movieImage = image;
@@ -225,7 +253,7 @@ public class Film extends EntityBaseType {
 		private String name;
 		private String director;
 		private Date releaseDate;
-		private Genre genre;
+		private List<Genre> genres;
 		private String description;
 		private int length;
 		private int totalComments;
@@ -260,8 +288,8 @@ public class Film extends EntityBaseType {
 			return this;
 		}
 
-		public Builder genre(final String genre) {
-			this.genre = new Genre(genre);
+		public Builder genres(final List<Genre> genres) {
+			this.genres = genres;
 			return this;
 		}
 

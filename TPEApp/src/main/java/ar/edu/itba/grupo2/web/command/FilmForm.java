@@ -1,30 +1,33 @@
 package ar.edu.itba.grupo2.web.command;
 
-import java.util.Date;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import ar.edu.itba.grupo2.domain.genre.Genre;
+import ar.edu.itba.grupo2.domain.image.MovieImage;
 
 public class FilmForm {
-	private int filmId;
+	private int id;
 	private String name;
-	private Date releaseDate;
+	private String releaseDate;
 	private String director;
 	private List<Genre> genres;
 	private int length;
 	private String description;
+	private MultipartFile movieImage;
 	
 	public FilmForm (){}
 	
-	public int getFilmId(){
-		return this.filmId;
+	public int getId(){
+		return this.id;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public Date getReleaseDate() {
+	public String getReleaseDate() {
 		return releaseDate;
 	}
 	
@@ -44,11 +47,15 @@ public class FilmForm {
 		return description;
 	}
 	
+	public MultipartFile getMovieImage() {
+		return movieImage;
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
 	
-	public void setReleaseDate(Date releaseDate) {
+	public void setReleaseDate(String releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 	
@@ -56,8 +63,8 @@ public class FilmForm {
 		this.director = director;
 	}
 	
-	public void setFilmId(int filmId){
-		this.filmId = filmId;
+	public void setId(int id){
+		this.id = id;
 	}
 	
 	public void setGenres(List<Genre> genres) {
@@ -70,5 +77,9 @@ public class FilmForm {
 	
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public void setMovieImage(MultipartFile movieImage) {
+		this.movieImage = movieImage;
 	}
 }
