@@ -11,21 +11,30 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ar.edu.itba.grupo2.domain.comment.Comment;
+import ar.edu.itba.grupo2.domain.comment.CommentRepo;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
+import ar.edu.itba.grupo2.web.command.CommentForm;
+import ar.edu.itba.grupo2.web.command.UserForm;
+import ar.edu.itba.grupo2.web.command.validator.UserFormValidator;
 
 @Controller
 public class UserController extends BaseController {
 	
+	private final UserFormValidator userValidator;
+	
 	@Autowired
-	public UserController(UserRepo userRepo) {
+	public UserController(UserRepo userRepo,UserFormValidator userValidator) {
 		super(userRepo);
+		this.userValidator=userValidator;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
@@ -38,48 +47,61 @@ public class UserController extends BaseController {
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView register() {
 		ModelAndView mav = new ModelAndView();
-		
 		mav.setViewName("register");
+		mav.addObject("userForm", new UserForm());
 		
 		return mav;
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String registerUser(@RequestParam(value = "email", required=true) String email, 
-			@RequestParam(value = "name", required=true) String name,
-			@RequestParam(value = "lastname", required=true) String lastname,
-			@RequestParam(value = "password", required=true) String password,
-			@RequestParam(value = "passwordConfirm", required=true) String passwordConfirm,
-			@RequestParam(value = "secretQuestion", required=true) String secretQuestion,
-			@RequestParam(value = "secretAnswer", required=true) String secretAnswer,
-			@RequestParam(value = "birthdate", required=true) String birthday) {
+	public String register(UserForm userForm, Errors errors) {
 		
-		List<String> errors = new ArrayList<String>();
 		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date birthdate = null;
-		String target;
-		try {
-			birthdate = outputDateFormat.parse(birthday);
-		} catch (ParseException e) {
-			errors.add("WrongDate");
-		} finally {
-			errors.addAll(validate(email, name, lastname, password,
-					passwordConfirm, secretQuestion, secretAnswer, birthdate));
-			if (errors.size() != 0) {
-				//req.setAttribute("errors", errors);
-				//this.doGet(req, resp);
-				target = "redirect:register";
-			} else {
-				//UserManager userManager = new UserManagerImpl(req);
-				//loggedUser=UserServiceImpl.getInstance().registerUser(email, password,
-				//		passwordConfirm, name, lastname, birthdate,
-				//		secretQuestion, secretAnswer);
-				//userManager.setUser(loggedUser);
-				target = "redirect:../film/welcome";
-			}
+		Date birthdate=null;
+		userValidator.validate(userForm, errors);
+		if(userRepo.getUserByEmail(userForm.getEmail())!= null){
+			errors.rejectValue("email", "emailExists");;
 		}
+		 try {
+		birthdate = outputDateFormat.parse(userForm.getBirthdate());
+		} catch (ParseException e) {
+			errors.rejectValue("birthdate", "invalid");
+		}
+		if(errors.hasErrors()){
+			return "register";
+		}
+		else{
+			userRepo.registerUser(userForm.getEmail(), userForm.getPassword(), userForm.getPasswordConfirm(), userForm.getName(), userForm.getLastname(), birthdate, userForm.getSecretQuestion(), userForm.getSecretAnswer());
+			return "redirect:../film/welcome";
+		}
+		 
 		
-		return target;
+//		List<String> errors = new ArrayList<String>();
+//		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		Date birthdate = null;
+//		String target;
+//		try {
+//			birthdate = outputDateFormat.parse(birthday);
+//		} catch (ParseException e) {
+//			errors.add("WrongDate");
+//		} finally {
+//			errors.addAll(validate(email, name, lastname, password,
+//					passwordConfirm, secretQuestion, secretAnswer, birthdate));
+//			if (errors.size() != 0) {
+//				//req.setAttribute("errors", errors);
+//				//this.doGet(req, resp);
+//				target = "redirect:register";
+//			} else {
+//				//UserManager userManager = new UserManagerImpl(req);
+//				//loggedUser=UserServiceImpl.getInstance().registerUser(email, password,
+//				//		passwordConfirm, name, lastname, birthdate,
+//				//		secretQuestion, secretAnswer);
+//				//userManager.setUser(loggedUser);
+//				target = "redirect:../film/welcome";
+//			}
+//		}
+//		
+//		return target;
 	}
 	
 	private List<String> validate(String email, String name, String lastname,
@@ -254,7 +276,7 @@ public class UserController extends BaseController {
 		
 		mav.addObject("commentList", user.getComments());
 		
-		mav.setViewName("userComments");;
+		mav.setViewName("userComments");
 		
 		return mav;
 	}

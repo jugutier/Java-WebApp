@@ -9,19 +9,29 @@
 			<%@ include file="error/comment-error.jsp" %>
 		</c:if>
 		<h2><c:out value="${film.name}"/></h2>
-		
-		<dl class="dl-horizontal">
-			<dt>Resumen</dt>
-			<dd><c:out value="${film.description}"/></dd>
-			<dt>Director</dt>
-			<dd><c:out value="${film.director}"/></dd>
-			<dt>G&eacute;nero</dt>
-			<dd><c:out value="${film.genre}"/></dd>
-			<dt>Fecha de estreno</dt>
-			<dd><fmt:formatDate value="${film.releaseDate}" pattern="dd-MM-yyyy"/></dd>
-			<dt>Duraci&oacute;n</dt>
-			<dd><c:out value="${film.length}"/> minutos</dd>
-		</dl>
+		<c:if test="${loggedInUser.admin}">
+			<a class="btn btn-primary" type="button" href="editFilm"><i class="icon-edit"></i> Editar</a>
+			<a class="btn btn-danger" type="submit"><i class="icon-remove"></i> Eliminar</a>
+		</c:if>
+		<div class="media">
+			<div class="pull-left">
+				<img data-src="holder.js/140x140" class="img-thumbnail" alt="140x140" src="data:image/svg+xml;base64,${movieImage}" data-holder-rendered="true" style="width: 140px; height: 140px;">
+			</div>
+			<div class="media-body">
+				<h4 class="media-heading">Detalles</h4>
+
+				<ul class="details-list">
+					<li><h5 class="details-item-header">Director: </h5><c:out value="${film.director}"/></li>
+					<li><h5 class="details-item-header">G&eacute;neros: </h5><c:out value="${film.genre}"/></li>
+					<li><h5 class="details-item-header">Fecha de estreno: </h5><fmt:formatDate value="${film.releaseDate}" pattern="dd-MM-yyyy"/></li>
+					<li><h5 class="details-item-header">Duraci&oacute;n: </h5><c:out value="${film.length}"/> minutos</li>
+				</ul>
+			</div>
+		</div>
+
+		<h3>Resumen</h3>
+
+		<p><c:out value="${film.description}"/></p>
 		
 		<h3>Comentarios</h3>
 		
