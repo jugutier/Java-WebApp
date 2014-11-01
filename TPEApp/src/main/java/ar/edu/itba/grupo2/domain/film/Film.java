@@ -177,6 +177,8 @@ public class Film extends EntityBaseType {
 		}*/
 		comments.remove(c);
 		user.removeComment(c);
+		sumComments-=c.getRate();
+		totalComments--;
 
 	}
 
