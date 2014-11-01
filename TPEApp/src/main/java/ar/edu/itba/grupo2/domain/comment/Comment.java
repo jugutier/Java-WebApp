@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cascade;
 
+import ar.edu.itba.grupo2.domain.commentRate.CommentRate;
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.report.Report;
@@ -30,9 +31,13 @@ public class Comment extends EntityBaseType {
 	@Temporal(TemporalType.TIMESTAMP)@Column(nullable=false)private Date creationDate;
 	@Column(length=140,nullable=false)private String text;
 	@Column(nullable=false)private int rate;
+	@OneToMany(mappedBy="comment", cascade = CascadeType.ALL)
+	private List<CommentRate> ratings;
+	
 	
 	transient public boolean reportable;
 	transient public boolean belongsToUser;
+	transient public boolean ratedByUser;
 	
 	Comment(){}
 	
@@ -61,8 +66,38 @@ public class Comment extends EntityBaseType {
 		return text;
 	}
 
-	public int getRate() {
-		return rate;
+	public float getRate() {
+		int count = 0, sum = 0;
+		for(CommentRate cr: ratings){
+			count++;
+			sum+=cr.getRating();
+		}
+		return count == 0 ? null : ((float)sum)/count;
+	}
+	
+	public boolean isRated(){
+		return !ratings.isEmpty();
+	}
+	
+	public int getFilmRate() {
+		return this.rate;
+	}
+	
+	public void rate(User user, int rating){
+		if (user != null && !this.user.equals(user) && !isRatedBy(user)){
+			ratings.add(new CommentRate(this, user, rating));
+		}
+	}
+	
+	public boolean isRatedBy(User user) {
+		if (user != null) {
+			for (CommentRate cr : ratings) {
+				if(cr.getUser().equals(user)){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	public boolean isReportedByUser(User user) {
@@ -87,6 +122,10 @@ public class Comment extends EntityBaseType {
 	
 	public boolean isBelongsToUser() {
 		return belongsToUser;
+	}
+	
+	public boolean isRatedByUser(){
+		return ratedByUser;
 	}
 	
 	public int getReportCount() {

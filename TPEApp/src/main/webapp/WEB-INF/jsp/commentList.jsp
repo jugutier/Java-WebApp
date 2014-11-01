@@ -1,11 +1,11 @@
 <c:forEach items="${commentList}" var="comment">
 	<div class="comment-body">
-		<c:url value="../film/removeCommentFromFilm" var="removeCommentUrl">
-			<c:param name="id" value="${comment.id}" />
-			<c:param name="film" value="${film.id}" />
-		</c:url>
 		<c:if test="${loggedInUser.admin}">
-			<a href="${removeCommentUrl}" class="btn btn-danger pull-right" type="button"><i class="icon-remove"></i></a>
+			<form class="form-inline" action="../comment/removeComment" method="POST">
+			<input type="hidden" name="film" value="${film.id}" />
+			<input type="hidden" name="id" value="${comment.id}" />
+			<button href="#" class="btn btn-danger pull-right" type="submit"><i class="icon-remove"></i></button>
+		</form>
 		</c:if>
 		<p>
 			<strong><c:out value="${comment.user.name}"/></strong>
@@ -17,10 +17,10 @@
 			</c:if>
 		</p>
 		<p>
-			<c:forEach begin="1" end="${comment.rate}" var="i">  
+			<c:forEach begin="1" end="${comment.filmRate}" var="i">  
 				<i class="icon-star"></i>
 			</c:forEach>
-			<c:forEach begin="${comment.rate + 1}" end="5" var="i">  
+			<c:forEach begin="${comment.filmRate + 1}" end="5" var="i">  
 				<i class="icon-star-empty"></i>
 			</c:forEach>
 		</p>
@@ -31,9 +31,18 @@
 	<div class="comment-controls">
 		<c:url value="../comment/${comment.id}/report" var="reportUrl">
 		</c:url>
-		<form class="form-inline" action="filmDetails?id=${film.id}" method="POST" commandName="commentForm">
-			Puntuaci&oacute;n: <strong>2.6</strong>
-			<c:if test="${(not empty loggedInUser) && (not comment.belongsToUser)}">
+		<form class="form-inline" action="../comment/${comment.id}/rate" method="POST" commandName="commentForm">
+			Puntuaci&oacute;n: <strong>
+			<c:choose>
+				<c:when test="${comment.rated}">
+					${comment.rate}
+				</c:when>
+				<c:otherwise>
+					--
+				</c:otherwise>
+			</c:choose>
+			</strong>
+			<c:if test="${(not empty loggedInUser) && (not comment.belongsToUser) && (not comment.ratedByUser)}">
 				<select class="span1" name="rating">
 					<c:forEach begin="0" end="5" var="i">
 						<option <c:if test="${i == 0}"> selected </c:if> >

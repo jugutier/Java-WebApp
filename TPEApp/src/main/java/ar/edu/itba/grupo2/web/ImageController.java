@@ -65,8 +65,8 @@ public class ImageController extends BaseController {
 	}
 
 	// Display the image...
-	@RequestMapping(method = RequestMethod.GET, value = "/get/{id}.jpg")
-	public void getImage(Model model, @PathVariable("id") Film film,
+	@RequestMapping(method = RequestMethod.GET, value = "image/get/{id}")
+	public void get(Model model, @PathVariable("id") Film film,
 			HttpServletResponse response) throws ServletException, IOException {
 		if (film == null) {
 			Logger.getRootLogger().error("null image");
@@ -74,7 +74,42 @@ public class ImageController extends BaseController {
 		MovieImage image = film.getMovieImage();
 
 		if (image == null) {
-			// load default "no-image"
+			
+//			// load default "no-image"
+//			BufferedImage originalImage = ImageIO.read( ClassLoader.getSystemResource( "resources/img/defaultFilm.png" ) );
+//			//BufferedImage originalImage = ImageIO.read(new File("resources/img/defaultFilm.png"));
+//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//			ImageIO.write( originalImage, "jpg", baos );
+//			baos.flush();
+//			byte[] imageData = baos.toByteArray();
+//			baos.close();
+			
+			//FORMA 2
+			/*FileSystemResource file = new FileSystemResource("GAJAmdb/resources/img/defaultFilm.png");
+			//File file = new File("resources/img/defaultFilm.png");
+			byte[] imageData = new byte[(int) file.getFile().length()];
+			 
+			try {
+			    InputStream fileInputStream = file.getInputStream();
+			    fileInputStream.read(imageData);
+			    fileInputStream.close();
+			} catch (Exception e) {
+			    e.printStackTrace();
+			}*/
+			//FORMA 3
+			/*File file = new File("GAJAmdb/resources/img/defaultFilm.png");
+			byte[] imageData = new byte[(int) file.length()];
+			 
+			try {
+			    FileInputStream fileInputStream = new FileInputStream(file);
+			    fileInputStream.read(imageData);
+			    fileInputStream.close();
+			} catch (Exception e) {
+			    e.printStackTrace();
+			}
+			 
+			image = new MovieImage("default.png","image/png", imageData.length,imageData);
+			*/
 		}
 
 		response.reset();

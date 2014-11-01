@@ -45,8 +45,10 @@ public class Film extends EntityBaseType {
 	@Column(nullable = false)
 	private int totalComments;
 	@OneToOne
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	private MovieImage movieImage;
 
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
 	private List<Comment> comments;
 
@@ -122,6 +124,7 @@ public class Film extends EntityBaseType {
 			for (Comment c : comments) {
 				c.belongsToUser = c.getUser().equals(user);
 				c.reportable = !c.isReportedByUser(user);
+				c.ratedByUser = c.isRatedBy(user);
 			}
 		}
 		
@@ -138,22 +141,10 @@ public class Film extends EntityBaseType {
 	}
 
 	public boolean userCanComment(User user) {
-		if (this.isReleased()) {
-			if (this.userHasCommented(user)) {
-				return false;
-			} else {
-				return true;
-			}
-		} else {
-			if (user.isVip()) {
-				if (this.userHasCommented(user)) {
-					return false;
-				} else {
-					return true;
-				}
-			}
-		}
-		return false;
+		if(userHasCommented(user)){
+			return false;
+		}		
+		return (isReleased() || user.isVip() );
 	}
 
 	public void addComment(Comment c) throws UserCantCommentException {
@@ -196,11 +187,14 @@ public class Film extends EntityBaseType {
 
 	public void removeComment(Comment c) throws UserIsntAdminException {
 		User user = c.getUser();
-		if (!user.isAdmin()) {
+		/*if (!user.isAdmin()) {
 			throw new UserIsntAdminException();
-		}
+		}*/
+		//TODO: ask andy
 		comments.remove(c);
 		user.removeComment(c);
+		sumComments-=c.getRate();
+		totalComments--;
 
 	}
 

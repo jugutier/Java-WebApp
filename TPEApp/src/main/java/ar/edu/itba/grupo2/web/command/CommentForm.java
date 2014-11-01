@@ -1,7 +1,5 @@
 package ar.edu.itba.grupo2.web.command;
 
-import ar.edu.itba.grupo2.domain.comment.Comment;
-
 public class CommentForm {
 	private int filmId;
 	private int rating;
