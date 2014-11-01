@@ -25,6 +25,8 @@
 		<c:url value="filmDetails" var="detailUrl">
 			<c:param name="id" value="${film.id}" />
 		</c:url>
+		<c:url value="${film.id}/edit" var="editUrl">
+		</c:url>
 		<tr>
 			<td><a href="${detailUrl}"><c:out value="${film.name}"/></a></td>
 			<td><c:out value="${film.director}"/></td>
@@ -33,7 +35,7 @@
 				<td>
 					<form class="form-inline" action="removeFilm" method="POST">
 						<input type="hidden" name="id" class="input-block-level" value="${film.id}">
-						<a class="btn" type="button" href="editFilm"><i class="icon-edit"></i></a>
+						<a class="btn" type="button" href="${editUrl}"><i class="icon-edit"></i></a>
 						<button class="btn btn-danger" type="submit"><i class="icon-remove"></i></button>
 					</form>
 				</td>
