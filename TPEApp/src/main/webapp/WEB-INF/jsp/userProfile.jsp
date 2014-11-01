@@ -7,14 +7,14 @@
 		<th>Pelicula</th>
 	</tr>
 
-	<c:forEach items="${user.comments}" var="comment">
-		<c:url value="filmDetails" var="detailUrl">
+	<c:forEach items="${comments}" var="comment">
+		<c:url value="../film/filmDetails" var="detailUrl">
 			<c:param name="id" value="${comment.film.id}" />
 		</c:url>
 		<tr>
 			<td><c:out value="${comment.text}"/></td>
-			<td><c:out value="${comment.creationDate}"/></td>
-			<td><a href="${detailUrl}"><c:out value="${comment.film.id}"/></a></td>
+			<td><fmt:formatDate value="${comment.creationDate}" pattern="dd-MM-yyyy"/></td>
+			<td><a href="${detailUrl}"><c:out value="${comment.film.name}"/></a></td>
 		</tr>
 	</c:forEach>
 </table>

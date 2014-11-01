@@ -58,6 +58,7 @@ public class UserController extends BaseController {
 	public ModelAndView profile(@RequestParam(value = "id", required=true) User user) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("user", user);
+		mav.addObject("comments", user.getComments());
 		mav.setViewName("userProfile");
 		
 		return mav;
@@ -66,8 +67,8 @@ public class UserController extends BaseController {
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView register() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("register");
 		mav.addObject("userForm", new UserForm());
+		mav.setViewName("register");
 		
 		return mav;
 	}
