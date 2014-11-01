@@ -24,7 +24,7 @@ public class MovieImage extends EntityBaseType {
 	@Lob
 	private byte[] content;
 
-	MovieImage() {
+	public MovieImage() {
 	}
 
 	public MovieImage(String name, String contentType, Integer length,

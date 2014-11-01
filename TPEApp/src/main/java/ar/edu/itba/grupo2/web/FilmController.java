@@ -19,6 +19,7 @@ import ar.edu.itba.grupo2.domain.film.FilmRepo;
 import ar.edu.itba.grupo2.domain.film.UserCantCommentException;
 import ar.edu.itba.grupo2.domain.film.UserIsntAdminException;
 import ar.edu.itba.grupo2.domain.genre.Genre;
+import ar.edu.itba.grupo2.domain.image.MovieImage;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.command.CommentForm;
@@ -60,6 +61,7 @@ public class FilmController extends BaseController {
 		
 		mav.addObject("commentList", film.getCommentsForUser(user));
 		mav.addObject("film", film);
+		mav.addObject("MovieImage", new MovieImage());
 		
 		if(isLoggedIn(session)) {
 			boolean userCanComment = film.userCanComment(user);//filmRepo.userCanComment(film, user);
@@ -72,27 +74,6 @@ public class FilmController extends BaseController {
 		mav.setViewName("filmDetails");
 		
 		return mav;
-	}
-	
-	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView editFilmDetails(HttpSession session, @RequestParam(value = "id", required=false) Integer id) {
-		ModelAndView mav = new ModelAndView();
-		
-		Film film = filmRepo.get(id);
-		
-		mav.addObject("film", film);
-		
-		mav.setViewName("editFilmDetails");
-		
-		return mav;
-	}
-	@RequestMapping(method=RequestMethod.POST)
-	public String confirmEdition(HttpSession session,FilmForm filmForm){
-		User user = getLoggedInUser(session);
-		if(user.isAdmin()){
-			System.out.println("isAdmin");
-		}
-		return "redirect:filmList";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
@@ -129,6 +110,28 @@ public class FilmController extends BaseController {
 		
 		return "redirect:filmDetails?id=" + commentForm.getFilmId();
 	}
+
+	@RequestMapping(method=RequestMethod.GET)
+	public ModelAndView editFilmDetails(HttpSession session, @RequestParam(value = "id", required=false) Integer id) {
+		ModelAndView mav = new ModelAndView();
+		
+		Film film = filmRepo.get(id);
+		
+		mav.addObject("film", film);
+		
+		mav.setViewName("editFilmDetails");
+		
+		return mav;
+	}
+	@RequestMapping(method=RequestMethod.POST)
+	public String confirmEdition(HttpSession session,FilmForm filmForm){
+		User user = getLoggedInUser(session);
+		if(user.isAdmin()){
+			System.out.println("isAdmin");
+		}
+		return "redirect:filmList";
+	}
+	
 	@RequestMapping(method=RequestMethod.POST)
 	public String removeFilm(HttpSession session,@RequestParam(value = "id", required=true) Integer id){
 		User user = getLoggedInUser(session);
