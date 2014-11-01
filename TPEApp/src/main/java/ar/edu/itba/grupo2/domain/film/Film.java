@@ -47,6 +47,7 @@ public class Film extends EntityBaseType {
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	private MovieImage movieImage;
 
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
 	private List<Comment> comments;
 
@@ -171,9 +172,9 @@ public class Film extends EntityBaseType {
 
 	public void removeComment(Comment c) throws UserIsntAdminException {
 		User user = c.getUser();
-		if (!user.isAdmin()) {
+		/*if (!user.isAdmin()) {
 			throw new UserIsntAdminException();
-		}
+		}*/
 		comments.remove(c);
 		user.removeComment(c);
 

@@ -29,172 +29,158 @@ import ar.edu.itba.grupo2.web.command.validator.CommentFormValidator;
 @Controller
 @RequestMapping(value = "film")
 public class FilmController extends BaseController {
-
+	
 	private final FilmRepo filmRepo;
 	private CommentFormValidator commentValidator;
-
+	
 	@Autowired
-	public FilmController(FilmRepo filmRepo, UserRepo userRepo,
-			CommentFormValidator commentValidator) {
+	public FilmController(FilmRepo filmRepo, UserRepo userRepo, CommentFormValidator commentValidator) {
 		super(userRepo);
 		this.filmRepo = filmRepo;
 		this.commentValidator = commentValidator;
 	}
-
-	@RequestMapping(method = RequestMethod.GET)
+	
+	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView welcome() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("topfive", filmRepo.getTop(5));
 		mav.addObject("latest", filmRepo.getLatest(5));
-		mav.addObject("newReleases", filmRepo.getNewests(7));
-
+		mav.addObject("newReleases",
+				filmRepo.getNewests(7));
+		
 		mav.setViewName("welcome");
-
+		
 		return mav;
 	}
-
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView filmDetails(HttpSession session,
-			@RequestParam(value = "id", required = true) Film film) {
-		ModelAndView mav = new ModelAndView();
-		User user = getLoggedInUser(session);
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ModelAndView filmDetails(HttpSession session, @RequestParam(value = "id", required=true) Film film) {
+		ModelAndView mav = new ModelAndView();		
+		User user = getLoggedInUser(session);		
 		mav.addObject("commentList", film.getCommentsForUser(user));
 		mav.addObject("film", film);
-
-		if (isLoggedIn(session)) {
+		
+		if(isLoggedIn(session)) {
 			boolean userCanComment = film.userCanComment(user);
 			mav.addObject("userCanComment", userCanComment);
-			if (userCanComment) {
+			if(userCanComment){
 				mav.addObject("commentForm", new CommentForm());
 			}
 		}
-
+		
 		mav.setViewName("filmDetails");
-
+		
 		return mav;
 	}
+	
 
-	@RequestMapping(value = "{id}/edit", method = RequestMethod.GET)
-	public ModelAndView editFilm(HttpSession session,
-			@PathVariable(value = "id") Film film) {
+	@RequestMapping(value = "{id}/edit", method=RequestMethod.GET)
+	public ModelAndView editFilm(HttpSession session, @PathVariable(value = "id") Film film) {
 		ModelAndView mav = new ModelAndView();
 		List<Genre> genres = filmRepo.getGenres();
-
+		
 		mav.addObject("film", film);
 		mav.addObject("genreList", genres);
 		mav.addObject("filmForm", new FilmForm());
-
+		
 		mav.setViewName("editFilm");
-
+		
 		return mav;
 	}
-
-	@RequestMapping(method = RequestMethod.POST)
-	public String confirmEdition(HttpSession session, FilmForm filmForm) {
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public String confirmEdition(HttpSession session,FilmForm filmForm){
 		User user = getLoggedInUser(session);
-		if (user.isAdmin()) {
+		if(user.isAdmin()){
 			System.out.println("isAdmin");
 		}
 		return "redirect:filmList";
 	}
+	
 
-	@RequestMapping(value = "filmDetails",method = RequestMethod.POST)
-	public String postComment(HttpSession session, CommentForm commentForm,
-			Errors errors) {
-
+	@RequestMapping(method=RequestMethod.POST)
+	public String filmDetails(HttpSession session, CommentForm commentForm, Errors errors, @RequestParam(value = "id", required=false) Film film) {
+		
 		commentValidator.validate(commentForm, errors);
 		if (errors.hasErrors()) {
-			errors.rejectValue("comment", "required");
+			errors.rejectValue("text", "required");
 			session.setAttribute("errors", errors);
-			// return null;
+			//return null;
 			return "redirect:filmDetails?id=" + commentForm.getFilmId();
 		}
-
+		
 		User user = getLoggedInUser(session);
-		Film film = filmRepo.get(commentForm.getFilmId());
-		Comment newComment = new Comment.Builder().user(user).film(film)
-				.text(commentForm.getText()).rate(commentForm.getRating())
-				.creationDate(new Date()).build();
-
+		Comment newComment = new Comment.Builder()
+								.user(user)
+								.film(film)
+								.text(commentForm.getText())
+								.rate(commentForm.getRating())
+								.creationDate(new Date())
+								.build();
+		
 		try {
 			film.addComment(newComment);
-		} catch (UserCantCommentException e) {
-
 		}
-
+		catch(UserCantCommentException e) {
+			
+		}
+		
 		return "redirect:filmDetails?id=" + commentForm.getFilmId();
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView editFilmDetails(HttpSession session,
-			@RequestParam(value = "id", required = false) Integer id) {
+	@RequestMapping(method=RequestMethod.GET)
+	public ModelAndView editFilmDetails(HttpSession session, @RequestParam(value = "id", required=false) Integer id) {
 		ModelAndView mav = new ModelAndView();
-
+		
 		Film film = filmRepo.get(id);
-
+		
 		mav.addObject("film", film);
-
+		
 		mav.setViewName("editFilmDetails");
-
+		
 		return mav;
 	}
-
-	@RequestMapping(method = RequestMethod.POST)
-	public String removeFilm(HttpSession session,
-			@RequestParam(value = "id", required = true) Integer id) {
+	@RequestMapping(method=RequestMethod.POST)
+	public String removeFilm(HttpSession session,@RequestParam(value = "id", required=true) Integer id){
 		User user = getLoggedInUser(session);
-		if (user.isAdmin()) {
+		if(user.isAdmin()){
 			Film film = filmRepo.get(id);
 			filmRepo.delete(film);
-		} else {
+		}else{
 			throw new UserIsntAdminException();
 		}
 		return "redirect:filmList";
-
+		
 	}
-
-	@RequestMapping(method = RequestMethod.POST)
-	public String removeCommentFromFilm(HttpSession session,
-			CommentForm commentForm) {
-		Film film = filmRepo.get(commentForm.getFilmId());
-
-		try {
-			film.removeComment(commentForm.getComment());
-		} catch (UserIsntAdminException e) {
-
-		}
-
-		return "redirect:filmDetails?id=" + commentForm.getFilmId();
-	}
-
-	@RequestMapping(value = "filmList", method = RequestMethod.GET)
-	public ModelAndView list(HttpSession session,
-			@RequestParam(value = "genre", required = false) Genre genre,
-			@RequestParam(value = "director", required = false) String director) {
+	
+	@RequestMapping(value = "filmList", method=RequestMethod.GET)
+	public ModelAndView list(HttpSession session, @RequestParam(value = "genre", required=false) Genre genre, @RequestParam(value = "director", required=false) String director) {
 		ModelAndView mav = new ModelAndView();
-
+		
 		List<Film> filmList = null;
 		List<Genre> genreList = filmRepo.getGenres();
-
+		
 		if (genre != null) {
 			filmList = filmRepo.getFromGenre(genre);
-		} else {
+		}
+		else{
 			filmList = filmRepo.getByReleaseDate();
 		}
-
+		
 		if (director != null) {
 			if (isLoggedIn(session)) {
 				filmList = filmRepo.getFromDirector(director);
-			} else {
+			}
+			else {
 				mav.addObject("directorFilterError", "unauthorized");
 			}
 		}
-
+		
 		mav.addObject("filmList", filmList);
 		mav.addObject("genreList", genreList);
-
+		
 		mav.setViewName("filmList");
-
+		
 		return mav;
 	}
 }
