@@ -54,8 +54,8 @@ public class UserController extends BaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String register(UserForm userForm, Errors errors) {
-		
+	public String register(UserForm userForm, Errors errors,HttpSession session) {
+		User newUser=null;
 		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date birthdate=null;
 		userValidator.validate(userForm, errors);
@@ -71,37 +71,11 @@ public class UserController extends BaseController {
 			return "register";
 		}
 		else{
-			userRepo.registerUser(userForm.getEmail(), userForm.getPassword(), userForm.getPasswordConfirm(), userForm.getName(), userForm.getLastname(), birthdate, userForm.getSecretQuestion(), userForm.getSecretAnswer());
+			newUser=userRepo.registerUser(userForm.getEmail(), userForm.getPassword(), userForm.getPasswordConfirm(), userForm.getName(), userForm.getLastname(), birthdate, userForm.getSecretQuestion(), userForm.getSecretAnswer());
+			this.setLoggedInUser(session, newUser);
 			return "redirect:../film/welcome";
 		}
 		 
-		
-//		List<String> errors = new ArrayList<String>();
-//		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//		Date birthdate = null;
-//		String target;
-//		try {
-//			birthdate = outputDateFormat.parse(birthday);
-//		} catch (ParseException e) {
-//			errors.add("WrongDate");
-//		} finally {
-//			errors.addAll(validate(email, name, lastname, password,
-//					passwordConfirm, secretQuestion, secretAnswer, birthdate));
-//			if (errors.size() != 0) {
-//				//req.setAttribute("errors", errors);
-//				//this.doGet(req, resp);
-//				target = "redirect:register";
-//			} else {
-//				//UserManager userManager = new UserManagerImpl(req);
-//				//loggedUser=UserServiceImpl.getInstance().registerUser(email, password,
-//				//		passwordConfirm, name, lastname, birthdate,
-//				//		secretQuestion, secretAnswer);
-//				//userManager.setUser(loggedUser);
-//				target = "redirect:../film/welcome";
-//			}
-//		}
-//		
-//		return target;
 	}
 	
 	private List<String> validate(String email, String name, String lastname,

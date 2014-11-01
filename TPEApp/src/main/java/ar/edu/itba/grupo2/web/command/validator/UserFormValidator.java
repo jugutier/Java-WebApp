@@ -34,7 +34,7 @@ public class UserFormValidator implements Validator{
 			errors.rejectValue("lastname","empty");
 		}
 		if (ValidationUtilities.paramEmpty(user.getPassword())) {
-			errors.rejectValue("passwords","empty");
+			errors.rejectValue("password","empty");
 		} else if (!user.getPassword().equals(user.getPasswordConfirm())) {
 			errors.rejectValue("passwordConfirm","noCoincidence");
 		}
