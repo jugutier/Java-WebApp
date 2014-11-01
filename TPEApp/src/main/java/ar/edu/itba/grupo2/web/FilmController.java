@@ -52,10 +52,10 @@ public class FilmController extends BaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView filmDetails(HttpSession session, @RequestParam(value = "id", required=false) Integer id) {
+	public ModelAndView filmDetails(HttpSession session, @RequestParam(value = "id", required=false) Film film) {
 		ModelAndView mav = new ModelAndView();
 		
-		Film film = filmRepo.get(id);
+		//Film film = filmRepo.get(id);
 		
 		mav.addObject("commentList", film.getComments());
 		mav.addObject("film", film);
@@ -74,10 +74,8 @@ public class FilmController extends BaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView editFilmDetails(HttpSession session, @RequestParam(value = "id", required=false) Integer id) {
+	public ModelAndView editFilmDetails(HttpSession session, @RequestParam(value = "id", required=false) Film film) {
 		ModelAndView mav = new ModelAndView();
-		
-		Film film = filmRepo.get(id);
 		
 		mav.addObject("film", film);
 		
@@ -85,6 +83,7 @@ public class FilmController extends BaseController {
 		
 		return mav;
 	}
+	
 	@RequestMapping(method=RequestMethod.POST)
 	public String confirmEdition(HttpSession session,FilmForm filmForm){
 		User user = getLoggedInUser(session);
@@ -95,11 +94,7 @@ public class FilmController extends BaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String filmDetails(
-			HttpSession session,
-			CommentForm commentForm,
-			Errors errors
-			) {
+	public String filmDetails(HttpSession session, CommentForm commentForm, Errors errors, @RequestParam(value = "id", required=false) Film film) {
 		
 		commentValidator.validate(commentForm, errors);
 		if (errors.hasErrors()) {
@@ -110,7 +105,6 @@ public class FilmController extends BaseController {
 		}
 		
 		User user = getLoggedInUser(session);
-		Film film = filmRepo.get(commentForm.getFilmId());
 		Comment newComment = new Comment.Builder()
 								.user(user)
 								.film(film)
