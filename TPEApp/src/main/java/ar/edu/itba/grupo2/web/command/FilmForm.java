@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import ar.edu.itba.grupo2.domain.genre.Genre;
-import ar.edu.itba.grupo2.domain.image.MovieImage;
 
 public class FilmForm {
 	private int id;

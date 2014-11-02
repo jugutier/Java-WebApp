@@ -10,3 +10,10 @@ alter table film drop column if exists genre;
 
 update gajamdbuser set admin=false;
 update gajamdbuser set admin=true where id = 4;
+
+CREATE TABLE IMAGE(
+	ID SERIAL PRIMARY KEY     NOT NULL,
+	CONTENTTYPE           VARCHAR(50)    NOT NULL,
+	LENGTH	INTEGER NOT NULL,
+	
+);

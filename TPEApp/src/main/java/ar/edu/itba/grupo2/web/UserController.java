@@ -17,13 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import ar.edu.itba.grupo2.domain.comment.Comment;
-import ar.edu.itba.grupo2.domain.comment.CommentRepo;
-import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
-import ar.edu.itba.grupo2.web.command.CommentForm;
 import ar.edu.itba.grupo2.web.command.UserForm;
 import ar.edu.itba.grupo2.web.command.validator.UserFormValidator;
 

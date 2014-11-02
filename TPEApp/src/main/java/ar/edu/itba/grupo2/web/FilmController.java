@@ -29,7 +29,6 @@ import ar.edu.itba.grupo2.domain.genre.Genre;
 import ar.edu.itba.grupo2.domain.image.MovieImage;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
-import ar.edu.itba.grupo2.utils.ValidationUtilities;
 import ar.edu.itba.grupo2.web.command.CommentForm;
 import ar.edu.itba.grupo2.web.command.FilmForm;
 import ar.edu.itba.grupo2.web.command.validator.CommentFormValidator;
@@ -84,6 +83,36 @@ public class FilmController extends BaseController {
 		return mav;
 	}
 	
+
+	@RequestMapping(method=RequestMethod.POST)
+	public String filmDetails(HttpSession session, CommentForm commentForm, Errors errors, @RequestParam(value = "id", required=false) Film film) {
+		
+		commentValidator.validate(commentForm, errors);
+		if (errors.hasErrors()) {
+			errors.rejectValue("text", "required");
+			session.setAttribute("errors", errors);
+			//return null;
+			return "redirect:filmDetails?id=" + commentForm.getFilmId();
+		}
+		
+		User user = getLoggedInUser(session);
+		Comment newComment = new Comment.Builder()
+								.user(user)
+								.film(film)
+								.text(commentForm.getText())
+								.rate(commentForm.getRating())
+								.creationDate(new Date())
+								.build();
+		
+		try {
+			film.addComment(newComment);
+		}
+		catch(UserCantCommentException e) {
+			
+		}
+		
+		return "redirect:filmDetails?id=" + commentForm.getFilmId();
+	}
 
 	@RequestMapping(value = "{id}/edit", method=RequestMethod.GET)
 	public ModelAndView editFilm(HttpSession session, @PathVariable(value = "id") Film film) {
@@ -152,36 +181,6 @@ public class FilmController extends BaseController {
 		}
 		return "redirect:../filmList";
 	}	
-
-	@RequestMapping(method=RequestMethod.POST)
-	public String filmDetails(HttpSession session, CommentForm commentForm, Errors errors, @RequestParam(value = "id", required=false) Film film) {
-		
-		commentValidator.validate(commentForm, errors);
-		if (errors.hasErrors()) {
-			errors.rejectValue("text", "required");
-			session.setAttribute("errors", errors);
-			//return null;
-			return "redirect:filmDetails?id=" + commentForm.getFilmId();
-		}
-		
-		User user = getLoggedInUser(session);
-		Comment newComment = new Comment.Builder()
-								.user(user)
-								.film(film)
-								.text(commentForm.getText())
-								.rate(commentForm.getRating())
-								.creationDate(new Date())
-								.build();
-		
-		try {
-			film.addComment(newComment);
-		}
-		catch(UserCantCommentException e) {
-			
-		}
-		
-		return "redirect:filmDetails?id=" + commentForm.getFilmId();
-	}
 
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView editFilmDetails(HttpSession session, @RequestParam(value = "id", required=false) Integer id) {

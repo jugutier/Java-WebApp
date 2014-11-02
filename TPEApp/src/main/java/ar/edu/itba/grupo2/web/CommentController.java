@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.comment.CommentRepo;
-import ar.edu.itba.grupo2.domain.commentRate.CommentRate;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.film.UserIsntAdminException;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
