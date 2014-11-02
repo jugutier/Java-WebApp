@@ -8,10 +8,10 @@
 
 <c:forEach items="${commentList}" var="comment">
 	<div class="comment-body">
-		<c:url value="../film/removeCommentFromFilm" var="removeCommentUrl">
+		<c:url value="${pageContext.request.contextPath}/bin/film/removeCommentFromFilm" var="removeCommentUrl">
 			<c:param name="id" value="${comment.id}" />
 		</c:url>
-		<c:url value="../comment/${comment.id}/discardReports" var="discardReportsUrl">
+		<c:url value="${pageContext.request.contextPath}/bin/comment/${comment.id}/discardReports" var="discardReportsUrl">
 		</c:url>
 		<a href="${removeCommentUrl}" class="btn btn-danger pull-right" type="button"><i class="icon-remove"></i></a>
 		<p>

@@ -31,7 +31,7 @@
 					<a class="brand" href="${pageContext.request.contextPath}/bin/film/welcome">GAJAmdb</a>
 					<ul class="nav nav-pills">
   						<li>
-  							<a href="filmList" type="button">Pel&iacute;culas</a>
+  							<a href="${pageContext.request.contextPath}/bin/film/filmList" type="button">Pel&iacute;culas</a>
   						</li>
   					</ul>
 					
