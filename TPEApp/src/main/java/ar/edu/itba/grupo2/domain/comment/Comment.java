@@ -68,11 +68,11 @@ public class Comment extends EntityBaseType {
 
 	public float getRate() {
 		int count = 0, sum = 0;
-		for(CommentRate cr: ratings){
+		for(CommentRate cr : ratings){
 			count++;
-			sum+=cr.getRating();
+			sum += cr.getRating();
 		}
-		return count == 0 ? null : ((float)sum)/count;
+		return count == 0 ? 0 : ((float)sum)/count;
 	}
 	
 	public boolean isRated(){
