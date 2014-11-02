@@ -10,8 +10,13 @@
 		</c:if>
 		<h2><c:out value="${film.name}"/></h2>
 		<c:if test="${loggedInUser.admin}">
-			<a class="btn btn-primary" type="button" href="editFilm"><i class="icon-edit"></i> Editar</a>
-			<a class="btn btn-danger" type="submit"><i class="icon-remove"></i> Eliminar</a>
+			<div class="row">
+				<a class="btn btn span1" type="button" href="${pageContext.request.contextPath}/bin/film/${film.id}/edit"><i class="icon-edit"></i> Editar</a>
+				<form class="form-inline" action="removeFilm" method="POST">
+					<input type="hidden" name="id" class="input-block-level" value="${film.id}">
+					<button class="btn btn-danger" type="submit"><i class="icon-remove"></i> Eliminar</button>
+				</form>
+			</div>
 		</c:if>
 		<div class="media">
 			<div class="pull-left">

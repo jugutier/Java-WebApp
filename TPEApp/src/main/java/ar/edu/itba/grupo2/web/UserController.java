@@ -137,7 +137,7 @@ public class UserController extends BaseController {
 		return ret;
 	}
 	
-	@RequestMapping(method={RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="resetPassword", method={RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView resetPassword(
 			@RequestParam(value = "email", required = false) String email,
 			@RequestParam(value = "password", required = false) String password,

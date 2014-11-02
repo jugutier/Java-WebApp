@@ -1,11 +1,12 @@
 <c:forEach items="${commentList}" var="comment">
 	<div class="comment-body">
 		<c:if test="${loggedInUser.admin}">
-			<form class="form-inline" action="${pageContext.request.contextPath}/bin/comment/removeComment" method="POST">
-			<input type="hidden" name="film" value="${film.id}" />
-			<input type="hidden" name="id" value="${comment.id}" />
-			<button href="#" class="btn btn-danger pull-right" type="submit"><i class="icon-remove"></i></button>
-		</form>
+			<form class="form-inline pull-right" action="${pageContext.request.contextPath}/bin/comment/removeComment" method="POST">
+				<input type="hidden" name="fromPage" value="${fromPage}" />
+				<input type="hidden" name="film" value="${film.id}" />
+				<input type="hidden" name="id" value="${comment.id}" />
+				<button href="#" class="btn btn-danger" type="submit"><i class="icon-remove"></i></button>
+			</form>
 		</c:if>
 		<p>
 			<strong><c:out value="${comment.user.name}"/></strong>
@@ -29,13 +30,13 @@
 		</p>
 	</div>
 	<div class="comment-controls">
-		<c:url value="${pageContext.request.contextPath}/bin/comment/${comment.id}/report" var="reportUrl">
+		<c:url value="/bin/comment/${comment.id}/report" var="reportUrl">
 		</c:url>
 		<form class="form-inline" action="${pageContext.request.contextPath}/bin/comment/${comment.id}/rate" method="POST" commandName="commentForm">
 			Puntuaci&oacute;n: <strong>
 			<c:choose>
 				<c:when test="${comment.rated}">
-					${comment.rate}
+					<fmt:formatNumber value="${comment.rate}" maxFractionDigits="2" />
 				</c:when>
 				<c:otherwise>
 					--

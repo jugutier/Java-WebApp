@@ -22,7 +22,7 @@
 				<c:forEach begin="${film.score + 1}" end="5" var="i">  
 					<i class="icon-star-empty"></i>
 				</c:forEach>
-				(<c:out value="${film.score}"/>)
+				(<fmt:formatNumber value="${film.score}" maxFractionDigits="2" />)
 			</td>
 		</tr>
 

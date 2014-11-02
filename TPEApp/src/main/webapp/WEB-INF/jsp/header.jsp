@@ -30,25 +30,30 @@
 				<div class="container-narrow">
 					<a class="brand" href="${pageContext.request.contextPath}/bin/film/welcome">GAJAmdb</a>
 					<ul class="nav nav-pills">
-  						<li>
-  							<a href="${pageContext.request.contextPath}/bin/film/filmList" type="button">Pel&iacute;culas</a>
-  						</li>
-  					</ul>
-					
+						<li>
+							<a href="${pageContext.request.contextPath}/bin/film/filmList" type="button">Pel&iacute;culas</a>
+						</li>
+						<c:if test="${not empty loggedInUser}">
+							<li>
+								<a href="${pageContext.request.contextPath}/bin/user/list" type="button">Usuarios</a>
+							</li>
+						</c:if>
+					</ul>
+
 					<ul class="nav pull-right">
 						<c:choose>
-						    <c:when test="${empty loggedInUser}">
-						        <li class="dropdown">
+							<c:when test="${empty loggedInUser}">
+								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Iniciar sesi&oacute;n <b class="caret"></b></a>
 									<%@ include file="loginFormMini.jsp" %>
 								</li>
-						    </c:when>
-						    <c:otherwise>
-						       <li class="dropdown">
+							</c:when>
+							<c:otherwise>
+								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><c:out value="${loggedInUser.name}"/> <b class="caret"></b></a>
 									<%@ include file="userMenu.jsp" %>
 								</li>
-						    </c:otherwise>
+							</c:otherwise>
 						</c:choose>
 					</ul>
 				</div>
@@ -57,5 +62,3 @@
 		<c:if test="${not empty param.auth_fail}">
 			<%@ include file="error/login-error.jsp" %>
 		</c:if>
-
-		

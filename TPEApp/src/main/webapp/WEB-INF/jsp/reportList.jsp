@@ -8,12 +8,14 @@
 
 <c:forEach items="${commentList}" var="comment">
 	<div class="comment-body">
-		<c:url value="${pageContext.request.contextPath}/bin/film/removeCommentFromFilm" var="removeCommentUrl">
-			<c:param name="id" value="${comment.id}" />
+		<c:url value="/bin/comment/${comment.id}/discardReports" var="discardReportsUrl">
 		</c:url>
-		<c:url value="${pageContext.request.contextPath}/bin/comment/${comment.id}/discardReports" var="discardReportsUrl">
-		</c:url>
-		<a href="${removeCommentUrl}" class="btn btn-danger pull-right" type="button"><i class="icon-remove"></i></a>
+		<form class="form-inline pull-right" action="${pageContext.request.contextPath}/bin/comment/removeComment" method="POST">
+			<input type="hidden" name="fromPage" value="${fromPage}" />
+			<input type="hidden" name="film" value="${comment.film.id}" />
+			<input type="hidden" name="id" value="${comment.id}" />
+			<button href="#" class="btn btn-danger" type="submit"><i class="icon-remove"></i></button>
+		</form>
 		<p>
 			<strong><c:out value="${comment.user.name}"/></strong>
 			<c:if test="${comment.user.admin}">

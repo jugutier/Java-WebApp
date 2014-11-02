@@ -66,7 +66,10 @@ public class CommentController extends BaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public String removeComment(HttpSession session, @RequestParam(value = "film", required=false) Film film, @RequestParam(value="id") Comment comment ) {
+	public String removeComment(HttpSession session,
+			@RequestParam(value = "film", required=false) Film film,
+			@RequestParam(value="id") Comment comment,
+			@RequestParam(value = "fromPage") String fromPage ) {
 		
 		try {
 			film.removeComment(comment);
@@ -75,7 +78,7 @@ public class CommentController extends BaseController {
 			
 		}
 		
-		return "redirect:../film/filmDetails?id=" + comment.getFilm().getId();
+		return "redirect:" + fromPage;
 	}
 
 }
