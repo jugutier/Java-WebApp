@@ -148,6 +148,8 @@ public class Film extends EntityBaseType {
 
 	public void addComment(Comment c) throws UserCantCommentException {
 		if (userCanComment(c.getUser())) {
+			totalComments++;
+			sumComments+=c.getFilmRate();
 			comments.add(c);
 			c.getUser().addComment(c);
 		} else {
