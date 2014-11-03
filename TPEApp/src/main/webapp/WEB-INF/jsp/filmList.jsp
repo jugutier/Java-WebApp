@@ -10,6 +10,9 @@
 	<%@ include file="directorFilter.jsp" %>
 	<%@ include file="genreList.jsp" %>
 	<button type="submit" class="btn">Filtrar</button>
+	<c:if test="${loggedInUser.admin}">
+		<a class="btn btn-primary pull-right" type="button" href="add"><i class="icon-plus"></i> A&ntilde;adir pel&iacute;cula</a>
+	</c:if>
 </form>
 
 <table class="table table-bordered">

@@ -179,7 +179,20 @@ public class FilmController extends BaseController {
 			return "redirect:../../welcome";
 		}
 		return "redirect:../list";
-	}	
+	}
+	
+	@RequestMapping(value = "add", method=RequestMethod.GET)
+	public ModelAndView addFilm(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		List<Genre> genres = filmRepo.getGenres();
+		
+		mav.addObject("genreList", genres);
+		mav.addObject("filmForm", new FilmForm());
+		
+		mav.setViewName("addFilm");
+		
+		return mav;
+	}
 
 	@RequestMapping(method=RequestMethod.POST)
 	public String removeFilm(HttpSession session,@RequestParam(value = "id", required=true) Integer id){
