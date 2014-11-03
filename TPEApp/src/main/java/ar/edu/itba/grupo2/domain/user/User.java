@@ -131,13 +131,10 @@ public class User extends EntityBaseType {
 	}
 
 	public void addComment(Comment c) {
-		// TODO: Check please. This should only be called from Film.addComment.
-		// How can we make it secure?
 		comments.add(c);
 	}
 
 	public void removeComment(Comment c) {
-		// TODO Auto-generated method stub
 		comments.remove(c);
 	}
 

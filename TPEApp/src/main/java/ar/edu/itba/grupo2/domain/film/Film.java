@@ -1,5 +1,6 @@
 package ar.edu.itba.grupo2.domain.film;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -115,7 +116,9 @@ public class Film extends EntityBaseType {
 	}
 
 	public List<Comment> getComments() {
-		return comments;// TODO Return a copy?
+		List<Comment> copy = new ArrayList<Comment>(comments.size());
+		copy.addAll(comments);
+		return copy;
 	}
 	
 	public List<Comment> getCommentsForUser(User user) {
@@ -151,7 +154,6 @@ public class Film extends EntityBaseType {
 			totalComments++;
 			sumComments+=c.getFilmRate();
 			comments.add(c);
-			c.getUser().addComment(c);
 		} else {
 			throw new UserCantCommentException();
 		}
@@ -187,14 +189,8 @@ public class Film extends EntityBaseType {
 		this.movieImage = image;
 	}
 
-	public void removeComment(Comment c) throws UserIsntAdminException {
-		User user = c.getUser();
-		/*if (!user.isAdmin()) {
-			throw new UserIsntAdminException();
-		}*/
-		//TODO: ask andy
+	public void removeComment(Comment c){
 		comments.remove(c);
-		user.removeComment(c);
 		sumComments-=c.getRate();
 		totalComments--;
 

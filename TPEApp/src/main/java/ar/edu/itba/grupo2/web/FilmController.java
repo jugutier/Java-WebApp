@@ -105,7 +105,6 @@ public class FilmController extends BaseController {
 			return mav;
 		}
 		
-		//User user = getLoggedInUser(session);
 		Comment newComment = new Comment.Builder()
 								.user(user)
 								.film(film)
@@ -116,6 +115,7 @@ public class FilmController extends BaseController {
 		
 		try {
 			film.addComment(newComment);
+			user.addComment(newComment);
 			//mav.addObject("userCanComment", false);
 		}
 		catch(UserCantCommentException e) {
