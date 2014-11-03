@@ -5,9 +5,11 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,10 +28,14 @@ import ar.edu.itba.grupo2.domain.user.UserRepo;
 public class ImageController extends BaseController {
 
 	private final int DEFAULT_BUFFER_SIZE = 10240; // 10KB.	
-
+	private final ServletContext servletContext;
+	
+	private static final String DEFAULT_MOVIE_IMAGE = "/resources/img/default.png";
+	
 	@Autowired
-	public ImageController(UserRepo userRepo) {
+	public ImageController(UserRepo userRepo, ServletContext servletContext) {
 		super(userRepo);
+		this.servletContext = servletContext;
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -72,6 +78,16 @@ public class ImageController extends BaseController {
 		film.setFilmImage(null);
 		return "redirect:/admin/manageAllImages";
 	}
+	
+	private byte[] getDefaultImage() throws IOException {
+		InputStream in = servletContext.getResourceAsStream(DEFAULT_MOVIE_IMAGE);
+		try {
+		    return IOUtils.toByteArray(in);
+		}
+		finally {
+		    in.close();
+		}
+	}
 
 	// Display the image...
 	@RequestMapping(method = RequestMethod.GET, value = "image/get/{id}")
@@ -80,45 +96,12 @@ public class ImageController extends BaseController {
 		if (film == null) {
 			Logger.getRootLogger().error("null image");
 		}
+		
 		MovieImage image = film.getMovieImage();
 
 		if (image == null) {
-			
-//			// load default "no-image"
-//			BufferedImage originalImage = ImageIO.read( ClassLoader.getSystemResource( "resources/img/defaultFilm.png" ) );
-//			//BufferedImage originalImage = ImageIO.read(new File("resources/img/defaultFilm.png"));
-//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//			ImageIO.write( originalImage, "jpg", baos );
-//			baos.flush();
-//			byte[] imageData = baos.toByteArray();
-//			baos.close();
-			
-			//FORMA 2
-			/*FileSystemResource file = new FileSystemResource("GAJAmdb/resources/img/defaultFilm.png");
-			//File file = new File("resources/img/defaultFilm.png");
-			byte[] imageData = new byte[(int) file.getFile().length()];
-			 
-			try {
-			    InputStream fileInputStream = file.getInputStream();
-			    fileInputStream.read(imageData);
-			    fileInputStream.close();
-			} catch (Exception e) {
-			    e.printStackTrace();
-			}*/
-			//FORMA 3
-			/*File file = new File("GAJAmdb/resources/img/defaultFilm.png");
-			byte[] imageData = new byte[(int) file.length()];
-			 
-			try {
-			    FileInputStream fileInputStream = new FileInputStream(file);
-			    fileInputStream.read(imageData);
-			    fileInputStream.close();
-			} catch (Exception e) {
-			    e.printStackTrace();
-			}
-			 
-			image = new MovieImage("default.png","image/png", imageData.length,imageData);
-			*/
+			byte[] bytes = getDefaultImage();
+			image = new MovieImage("", "image/png", bytes.length, bytes, null);
 		}
 
 		response.reset();

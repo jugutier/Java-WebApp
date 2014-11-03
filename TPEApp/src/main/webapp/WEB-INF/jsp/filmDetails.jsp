@@ -20,7 +20,7 @@
 		</c:if>
 		<div class="media">
 			<div class="pull-left">
-				<img data-src="holder.js/140x140" class="img-thumbnail" alt="film-Image" src="${pageContext.request.contextPath}/bin/image/get/${film.id}" data-holder-rendered="true" style="width: 140px; height: 140px;">
+				<img data-src="holder.js/140x140" class="img-thumbnail film-thumbnail" alt="film-Image" src="${pageContext.request.contextPath}/bin/image/get/${film.id}" data-holder-rendered="true">
 			</div>
 			<div class="media-body">
 				<h4 class="media-heading">Detalles</h4>

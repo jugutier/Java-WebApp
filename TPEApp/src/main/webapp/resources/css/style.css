@@ -126,3 +126,16 @@ body {
   -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
   box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
+
+.film-thumbnail {
+  width: 140px;
+  max-height: 190px;
+  background-color: #eee;
+  border: 2px solid #aaa;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
