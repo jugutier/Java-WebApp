@@ -33,7 +33,7 @@ public class CommentController extends BaseController {
 	@RequestMapping(value = "{id}/report", method = RequestMethod.GET)
 	public String report(HttpSession session, @PathVariable(value = "id") Comment comment) {
 		comment.report(getLoggedInUser(session));
-		return "redirect:../../film/filmDetails?id=" + comment.getFilm().getId();
+		return "redirect:../../film/" + comment.getFilm().getId() + "/details";
 	}
 	
 	@RequestMapping(value = "reported", method = RequestMethod.GET)
@@ -62,7 +62,7 @@ public class CommentController extends BaseController {
 			comment.rate(getLoggedInUser(session),rating);
 		}
 		
-		return "redirect:../../film/filmDetails?id=" + comment.getFilm().getId();
+		return "redirect:../../film/" + comment.getFilm().getId() + "/details";
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)

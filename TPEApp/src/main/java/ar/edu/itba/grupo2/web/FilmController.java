@@ -63,8 +63,8 @@ public class FilmController extends BaseController {
 		return mav;
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView filmDetails(HttpSession session, @RequestParam(value = "id", required=true) Film film) {
+	@RequestMapping(value = "{id}/details", method=RequestMethod.GET)
+	public ModelAndView filmDetails(HttpSession session, @PathVariable(value = "id") Film film) {
 		ModelAndView mav = new ModelAndView();		
 		User user = getLoggedInUser(session);		
 		mav.addObject("commentList", film.getCommentsForUser(user));
@@ -84,15 +84,14 @@ public class FilmController extends BaseController {
 	}
 	
 
-	@RequestMapping(method=RequestMethod.POST)
-	public String filmDetails(HttpSession session, CommentForm commentForm, Errors errors, @RequestParam(value = "id", required=false) Film film) {
+	@RequestMapping(value = "{id}/comment", method=RequestMethod.POST)
+	public String addComment(HttpSession session, CommentForm commentForm, Errors errors, @PathVariable(value = "id") Film film, @RequestParam(value = "fromPage") String fromPage) {
 		
 		commentValidator.validate(commentForm, errors);
 		if (errors.hasErrors()) {
 			errors.rejectValue("text", "required");
 			session.setAttribute("errors", errors);
-			//return null;
-			return "redirect:filmDetails?id=" + commentForm.getFilmId();
+			return "redirect:" + fromPage;
 		}
 		
 		User user = getLoggedInUser(session);
@@ -111,7 +110,7 @@ public class FilmController extends BaseController {
 			
 		}
 		
-		return "redirect:filmDetails?id=" + commentForm.getFilmId();
+		return "redirect:" + fromPage;
 	}
 
 	@RequestMapping(value = "{id}/edit", method=RequestMethod.GET)
@@ -179,21 +178,9 @@ public class FilmController extends BaseController {
 		else {
 			return "redirect:../../welcome";
 		}
-		return "redirect:../filmList";
+		return "redirect:../list";
 	}	
 
-	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView editFilmDetails(HttpSession session, @RequestParam(value = "id", required=false) Integer id) {
-		ModelAndView mav = new ModelAndView();
-		
-		Film film = filmRepo.get(id);
-		
-		mav.addObject("film", film);
-		
-		mav.setViewName("editFilmDetails");
-		
-		return mav;
-	}
 	@RequestMapping(method=RequestMethod.POST)
 	public String removeFilm(HttpSession session,@RequestParam(value = "id", required=true) Integer id){
 		User user = getLoggedInUser(session);
@@ -203,11 +190,11 @@ public class FilmController extends BaseController {
 		}else{
 			throw new UserIsntAdminException();
 		}
-		return "redirect:filmList";
+		return "redirect:list";
 		
 	}
 	
-	@RequestMapping(value = "filmList", method=RequestMethod.GET)
+	@RequestMapping(value = "list", method=RequestMethod.GET)
 	public ModelAndView list(HttpSession session, @RequestParam(value = "genre", required=false) Genre genre, @RequestParam(value = "director", required=false) String director) {
 		ModelAndView mav = new ModelAndView();
 		

@@ -69,7 +69,7 @@ public class ImageController extends BaseController {
 			}
 			
 		}
-		return "redirect:../film/filmDetails?id=" + film.getId();
+		return "redirect:../film/" + film.getId() + "/details";
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

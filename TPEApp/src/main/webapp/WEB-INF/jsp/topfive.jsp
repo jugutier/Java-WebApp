@@ -8,11 +8,8 @@
 		<th>Calificaci&oacute;n</th>
 	</tr>
 	<c:forEach items="${topfive}" var="film">
-		<c:url value="filmDetails" var="detailUrl">
-			<c:param name="id" value="${film.id}" />
-		</c:url>
 		<tr>
-			<td><a href="${detailUrl}"><c:out value="${film.name}"/></a></td>
+			<td><a href="${film.id}/details"><c:out value="${film.name}"/></a></td>
 			<td><c:out value="${film.director}"/></td>
 			<td><fmt:formatDate value="${film.releaseDate}" pattern="dd-MM-yyyy"/></td>
 			<td>

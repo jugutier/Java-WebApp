@@ -8,13 +8,10 @@
 		<th># Comentarios</th>
 	</tr>
 	<c:forEach items="${latest}" var="film">
-		<c:url value="filmDetails" var="detailUrl">
-			<c:param name="id" value="${film.id}" />
-		</c:url>
 		<tr>
 			<td><fmt:formatDate value="${film.creationDate}" pattern="dd-MM-yyyy"/></td>
 			<td><fmt:formatDate value="${film.releaseDate}" pattern="dd-MM-yyyy"/></td>
-			<td><a href="${detailUrl}"><c:out value="${film.name}"/></a></td>
+			<td><a href="${film.id}/details"><c:out value="${film.name}"/></a></td>
 			<td><c:out value="${film.totalComments}"/></td>
 		</tr>
 	</c:forEach>

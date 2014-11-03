@@ -6,11 +6,8 @@
 		<th>Descripci&oacute;n</th>
 	</tr>
 	<c:forEach items="${newReleases}" var="film">
-		<c:url value="filmDetails" var="detailUrl">
-			<c:param name="id" value="${film.id}" />
-		</c:url>
 		<tr>
-			<td><a href="${detailUrl}"><c:out value="${film.name}"/></a></td>
+			<td><a href="${film.id}/details"><c:out value="${film.name}"/></a></td>
 			<td>
 				<c:choose>
 					<c:when test="${fn:length(film.description) <= 300}">
