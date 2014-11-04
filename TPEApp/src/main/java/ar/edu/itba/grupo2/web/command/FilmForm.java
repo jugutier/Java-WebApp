@@ -1,9 +1,11 @@
 package ar.edu.itba.grupo2.web.command;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.genre.Genre;
 
 public class FilmForm {
@@ -17,6 +19,17 @@ public class FilmForm {
 	private MultipartFile movieImage;
 	
 	public FilmForm (){}
+	
+	public FilmForm(final Film film) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		setId(film.getId());
+		setName(film.getName());
+		setReleaseDate(dateFormat.format(film.getReleaseDate()));
+		setDirector(film.getDirector());
+		setGenres(film.getGenres());
+		setLength(film.getLength());
+		setDescription(film.getDescription());
+	}
 	
 	public int getId(){
 		return this.id;

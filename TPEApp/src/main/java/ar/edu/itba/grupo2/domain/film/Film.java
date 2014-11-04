@@ -172,9 +172,14 @@ public class Film extends EntityBaseType {
 	}
 	
 	public void setGenres(List<Genre> genres) {
-		this.genres.clear();
-		if (genres != null)
-			this.genres.addAll(genres);
+		if (this.genres != null) {
+			this.genres.clear();
+			if (genres != null)
+				this.genres.addAll(genres);
+		}
+		else {
+			this.genres = genres;
+		}
 	}
 	
 	public void setDescription(String description) {
@@ -186,6 +191,9 @@ public class Film extends EntityBaseType {
 	}
 
 	public void setFilmImage(MovieImage image) {
+		if (this.movieImage != null) {
+			this.movieImage.setFilm(null);
+		}
 		this.movieImage = image;
 	}
 
