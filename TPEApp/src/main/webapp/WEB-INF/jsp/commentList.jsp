@@ -43,23 +43,25 @@
 				</c:otherwise>
 			</c:choose>
 			</strong>
-			<c:if test="${(not empty loggedInUser) && (not comment.belongsToUser) && (not comment.ratedByUser)}">
-				<select class="span1" name="rating">
-					<c:forEach begin="0" end="5" var="i">
-						<option <c:if test="${i == 0}"> selected </c:if> >
-							<c:out value="${i}"/>
-						</option>
-					</c:forEach>
-				</select>
-				<button class="btn btn-primary" type="submit">Puntuar</button>
-				<c:choose>
-					<c:when test="${comment.reportable}">
-						<a href="${reportUrl}" class="btn btn-warning pull-right" type="button"><i class="icon-flag"></i> Denunciar</a>
-					</c:when>
-					<c:otherwise>
-						<button href="#" class="btn btn-warning pull-right disabled" type="button"><i class="icon-flag"></i> Denunciar</button>
-					</c:otherwise>
-				</c:choose>
+			<c:if test="${(not empty loggedInUser) && (not comment.belongsToUser)}">
+					<c:if test="${(not comment.ratedByUser)}">
+						<select class="span1" name="rating">
+							<c:forEach begin="0" end="5" var="i">
+								<option <c:if test="${i == 0}"> selected </c:if> >
+									<c:out value="${i}"/>
+								</option>
+							</c:forEach>
+						</select>
+						<button class="btn btn-primary" type="submit">Puntuar</button>
+					</c:if>
+					<c:choose>
+						<c:when test="${comment.reportable}">
+							<a href="${reportUrl}" class="btn btn-warning pull-right" type="button"><i class="icon-flag"></i> Denunciar</a>
+						</c:when>
+						<c:otherwise>
+							<button href="#" class="btn btn-warning pull-right disabled" type="button"><i class="icon-flag"></i> Denunciar</button>
+						</c:otherwise>
+					</c:choose>
 			</c:if>
 		</form>
 	</div>
