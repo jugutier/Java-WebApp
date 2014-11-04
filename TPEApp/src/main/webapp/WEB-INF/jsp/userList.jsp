@@ -2,16 +2,13 @@
 <h2>Usuarios</h2>
 
 	<c:forEach items="${allUsers}" var="user">
-		<c:url value="profile" var="detailUrl">
-			<c:param name="id" value="${user.id}" />
-		</c:url>
 		<div class="user-list-item">
 			<div class="media">
 				<div class="pull-left">
 					<!-- INSERT POSSIBLE AVATAR HERE -->
 				</div>
 				<div class="media-body">
-					<a href="${detailUrl}">
+					<a href="${user.id}/profile">
 						<h4 class="media-heading">
 							<c:out value="${user.name}"/> <c:out value="${user.lastname}"/>
 							<c:if test="${user.admin}">

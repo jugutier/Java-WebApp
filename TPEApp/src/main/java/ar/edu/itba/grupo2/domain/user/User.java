@@ -44,6 +44,8 @@ public class User extends EntityBaseType {
 	
 	@ManyToMany
 	private List<User> follows;
+	
+	transient boolean isFollowable;
 
 	User() {
 
@@ -100,6 +102,10 @@ public class User extends EntityBaseType {
 		return secretAnswer;
 	}
 	
+	public boolean isFollowable() {
+		return isFollowable;
+	}
+	
 	public void setPassword(final String password) {
 		this.password = password;
 	}
@@ -117,6 +123,8 @@ public class User extends EntityBaseType {
 		follows.add(u);
 	}
 	
+	
+	 
 	public void unFollowUser(User u) throws UserNotFollowedException{
 		if(!follows.contains(u)){
 			throw new UserNotFollowedException();
@@ -249,5 +257,10 @@ public class User extends EntityBaseType {
 		public User build() {
 			return new User(this);
 		}
+	}
+
+	public void canBeFollowed(User u) {
+		isFollowable=!(u.getFollows().contains(this));
+		
 	}
 }

@@ -29,6 +29,8 @@ public interface FilmRepo {
 
 	public List<Film> getFromDirector(String director);
 
+	public List<Film> getFiltered(Genre genre, String director);
+	
 	public List<Film> getByReleaseDate();
 
 }

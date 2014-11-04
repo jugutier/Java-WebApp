@@ -1,6 +1,8 @@
 package ar.edu.itba.grupo2.domain.film;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -135,6 +137,7 @@ public class Film extends EntityBaseType {
 	}
 	
 	public List<Comment> getCommentsForUser(User user) {
+		List<Comment> copy = new ArrayList<Comment>(comments.size());
 		if (user != null) {
 			for (Comment c : comments) {
 				c.belongsToUser = c.getUser().equals(user);
@@ -143,7 +146,21 @@ public class Film extends EntityBaseType {
 			}
 		}
 		
-		return comments;
+		copy.addAll(comments);
+		Collections.sort(copy, new Comparator<Comment>(){
+
+			@Override
+			public int compare(Comment c1, Comment c2) {
+				if(c1.getRate() > c2.getRate())
+					return -1;
+				else if(c1.getRate() < c2.getRate())
+					return 1;
+				return 0;
+			}
+			
+		});
+		
+		return copy;
 	}
 
 	public boolean userHasCommented(User user) {

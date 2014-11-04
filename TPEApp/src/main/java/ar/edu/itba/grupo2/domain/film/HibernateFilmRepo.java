@@ -52,15 +52,31 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Film> getFromGenre(Genre genre) {
-		return createCriteria()
-				.add(Restrictions.eq("genre", genre)).list();
+		return find("FROM Film film WHERE ? IN (FROM film.genres) ORDER BY releaseDate ASC", genre);
+		//return createCriteria()
+		//		.add(Restrictions.in("genres", genre)).list();
+		//return find("FROM Film f WHERE ? in ?");
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Film> getFromDirector(String director) {
-		return createCriteria().add(Restrictions.eq("director", director))
-				.list();
+		///return createCriteria().add(Restrictions.ilike("director", director))
+		//		.list();
+		return find("FROM Film f WHERE upper(f.director) LIKE ? ORDER BY releaseDate ASC", "%" + director.toUpperCase() + "%");
+	}
+	
+	@Override
+	public List<Film> getFiltered(Genre genre, String director) {
+		if (director == null) {
+			director = "";
+		}
+		
+		if (genre == null) {
+			return getFromDirector(director);
+		}
+		
+		return find("FROM Film f WHERE upper(f.director) LIKE ? AND ? IN (FROM f.genres) ORDER BY releaseDate ASC", "%" + director.toUpperCase() + "%", genre);
 	}
 
 	@Override

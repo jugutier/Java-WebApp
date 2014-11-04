@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,9 +53,11 @@ public class UserController extends BaseController {
 		return mav;
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView profile(@RequestParam(value = "id", required=true) User user) {
+	@RequestMapping(value = "user/{id}/profile",method=RequestMethod.GET)
+	public ModelAndView profile(HttpSession session,@PathVariable(value = "id") User user) {
 		ModelAndView mav = new ModelAndView();
+		User u = getLoggedInUser(session);
+		user.canBeFollowed(u);
 		mav.addObject("user", user);
 		mav.addObject("comments", user.getComments());
 		mav.setViewName("userProfile");
@@ -253,15 +256,11 @@ public class UserController extends BaseController {
 			ret = "redirect:" + fromPage + separator + "auth_fail=wrongUser";
 		}
 		else{
-			try {
-				loggedUser.followUser(user);
-			} catch (UserAlreadyFollowedException e) {
-				
-			}
+			loggedUser.followUser(user);
 			ret =  "redirect:" + fromPage ;
 			
 		}
-		return ret;
+		return "redirect:" + fromPage;
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
@@ -277,15 +276,11 @@ public class UserController extends BaseController {
 			ret = "redirect:" + fromPage + separator + "auth_fail=wrongUser";
 		}
 		else{
-			try {
-				loggedUser.unFollowUser(user);
-			} catch (UserNotFollowedException e) {
-				
-			}
+			loggedUser.unFollowUser(user);
 			ret =  "redirect:" + fromPage ;
 			
 		}
-		return ret;
+		return "redirect:"+fromPage;
 	}
 	
 }
