@@ -2,6 +2,7 @@ package ar.edu.itba.grupo2.domain.film;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -61,14 +62,26 @@ public class Film extends EntityBaseType {
 		this.name = builder.name;
 		this.director = builder.director;
 		this.creationDate = builder.creationDate;
+		if(this.creationDate == null){
+			this.creationDate = new Date();
+		}
 		this.releaseDate = builder.releaseDate;
+		if(this.releaseDate == null){
+			this.releaseDate = new Date();
+		}
 		this.genres = builder.genres;
+		if(this.genres == null){
+			this.genres =  new LinkedList<Genre>();
+		}
 		this.description = builder.description;
 		this.length = builder.length;
 		this.sumComments = builder.sumComments;
 		this.totalComments = builder.totalComments;
 		this.movieImage = builder.movieImage;
 		this.comments = builder.comments;
+		if(this.comments == null){
+			this.comments = new LinkedList<Comment>();
+		}
 	}
 
 	public String getName() {
