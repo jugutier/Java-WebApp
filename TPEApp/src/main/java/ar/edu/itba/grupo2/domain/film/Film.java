@@ -44,7 +44,7 @@ public class Film extends EntityBaseType {
 	private int sumComments;
 	@Column(nullable = false)
 	private int totalComments;
-	@OneToOne(mappedBy = "film", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "film", cascade = CascadeType.ALL,optional = true)
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	private MovieImage movieImage;
 

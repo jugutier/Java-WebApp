@@ -75,7 +75,7 @@ public class CommentController extends BaseController {
 		if(!removingUser.isAdmin()){
 			throw new UserIsntAdminException();
 		}
-		//TODO: comment.getUser().removeComment(comment);
+		//TODO:ask andy comment.getUser().removeComment(comment);
 		film.removeComment(comment);
 		
 		
