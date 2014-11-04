@@ -17,16 +17,23 @@
 			</h2>
 		</a>
 		<h4 class="muted"><c:out value="${user.email}"/></h4>
-		<form action="${pageContext.request.contextPath}/bin/user/follow" method="POST">
-			<input type="hidden" name="fromPage" value="${fromPage}" />
-			<input type="hidden" name="id" value="${user.id}"/>
-			<button type="submit" class="btn">Seguir a <c:out value="${user.name}"/></button>
-		</form>
-		<form action="${pageContext.request.contextPath}/bin/user/unFollow" method="POST">
-			<input type="hidden" name="fromPage" value="${fromPage}" />
-			<input type="hidden" name="id" value="${user.id}"/>
-			<button type="submit" class="btn">Dejar de seguir a <c:out value="${user.name}"/></button>
-		</form>
+		
+		<c:choose>
+			<c:when test="${user.followable}">
+				<form action="${pageContext.request.contextPath}/bin/user/follow" method="POST">
+					<input type="hidden" name="fromPage" value="${fromPage}" />
+					<input type="hidden" name="id" value="${user.id}"/>
+					<button type="submit" class="btn">Seguir a <c:out value="${user.name}"/></button>
+				</form>
+			</c:when>
+			<c:otherwise>
+				<form action="${pageContext.request.contextPath}/bin/user/unFollow" method="POST">
+					<input type="hidden" name="fromPage" value="${fromPage}" />
+					<input type="hidden" name="id" value="${user.id}"/>
+					<button type="submit" class="btn">Dejar de seguir a <c:out value="${user.name}"/></button>
+				</form>
+			</c:otherwise>
+		</c:choose>
 		<h5 class="details-item-header">Fecha de nacimiento: </h5><fmt:formatDate value="${user.birthdate}" pattern="dd-MM-yyyy"/>
 	</div>
 </div>
