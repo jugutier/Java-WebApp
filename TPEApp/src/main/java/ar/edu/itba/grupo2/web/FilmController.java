@@ -86,17 +86,27 @@ public class FilmController extends BaseController {
 	}
 	
 
-	@RequestMapping(value = "{id}/comment", method=RequestMethod.POST)
-	public String addComment(HttpSession session, CommentForm commentForm, Errors errors, @PathVariable(value = "id") Film film, @RequestParam(value = "fromPage") String fromPage) {
+	@RequestMapping(value = "{id}/details", method=RequestMethod.POST)
+	public ModelAndView addComment(HttpSession session, CommentForm commentForm, Errors errors, @PathVariable(value = "id") Film film, @RequestParam(value = "fromPage") String fromPage) {
+		ModelAndView mav = new ModelAndView();
+		User user = getLoggedInUser(session);		
+		
+		mav.addObject("film", film);
+		mav.setViewName("filmDetails");
 		
 		commentValidator.validate(commentForm, errors);
 		if (errors.hasErrors()) {
-			errors.rejectValue("text", "required");
-			session.setAttribute("errors", errors);
-			return "redirect:" + fromPage;
+			mav.addObject("commentList", film.getCommentsForUser(user));
+			if(isLoggedIn(session)) {
+				boolean userCanComment = film.userCanComment(user);
+				mav.addObject("userCanComment", userCanComment);
+				if(userCanComment){
+					mav.addObject("commentForm", new CommentForm());
+				}
+			}
+			return mav;
 		}
 		
-		User user = getLoggedInUser(session);
 		Comment newComment = new Comment.Builder()
 								.user(user)
 								.film(film)
@@ -107,12 +117,16 @@ public class FilmController extends BaseController {
 		
 		try {
 			film.addComment(newComment);
+			user.addComment(newComment);
+			//mav.addObject("userCanComment", false);
 		}
 		catch(UserCantCommentException e) {
 			
 		}
 		
-		return "redirect:" + fromPage;
+		//mav.addObject("commentList", film.getCommentsForUser(user));
+		mav.setViewName("redirect:details");
+		return mav;
 	}
 
 	@RequestMapping(value = "{id}/edit", method=RequestMethod.GET)

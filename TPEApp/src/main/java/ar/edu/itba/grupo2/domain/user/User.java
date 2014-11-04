@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -40,6 +41,9 @@ public class User extends EntityBaseType {
 
 	@OneToMany(mappedBy = "user")
 	private List<Comment> comments;
+	
+	@ManyToMany
+	private List<User> follows;
 
 	User() {
 
@@ -57,6 +61,7 @@ public class User extends EntityBaseType {
 		this.secretAnswer = builder.secretAnswer;
 		this.comments = builder.comments;
 		this.admin = builder.admin;
+		this.follows=builder.follows;
 	}
 
 	public String getName() {
@@ -94,9 +99,29 @@ public class User extends EntityBaseType {
 	public String getSecretAnswer() {
 		return secretAnswer;
 	}
-
+	
 	public void setPassword(final String password) {
 		this.password = password;
+	}
+
+	public List<User> getFollows() {
+		List<User> copy = new ArrayList<User>(follows.size());
+		copy.addAll(follows);
+		return copy;
+	}
+	
+	public void followUser (User u) throws UserAlreadyFollowedException{
+		if(follows.contains(u)){
+			throw new UserAlreadyFollowedException();
+		}
+		follows.add(u);
+	}
+	
+	public void unFollowUser(User u) throws UserNotFollowedException{
+		if(!follows.contains(u)){
+			throw new UserNotFollowedException();
+		}
+		follows.remove(u);	
 	}
 
 	public List<Comment> getComments() {
@@ -106,13 +131,10 @@ public class User extends EntityBaseType {
 	}
 
 	public void addComment(Comment c) {
-		// TODO: Check please. This should only be called from Film.addComment.
-		// How can we make it secure?
 		comments.add(c);
 	}
 
 	public void removeComment(Comment c) {
-		// TODO Auto-generated method stub
 		comments.remove(c);
 	}
 
@@ -162,6 +184,7 @@ public class User extends EntityBaseType {
 		private String secretAnswer;
 		private List<Comment> comments;
 		private boolean admin = false;
+		private List<User> follows;
 
 		public Builder name(final String name) {
 			this.name = name;
@@ -215,6 +238,11 @@ public class User extends EntityBaseType {
 
 		public Builder admin(boolean admin) {
 			this.admin = admin;
+			return this;
+		}
+		
+		public Builder follows(final List<User> follows){
+			this.follows = follows;
 			return this;
 		}
 

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.grupo2.domain.user.User;
+import ar.edu.itba.grupo2.domain.user.UserAlreadyFollowedException;
+import ar.edu.itba.grupo2.domain.user.UserNotFollowedException;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
 import ar.edu.itba.grupo2.web.command.UserForm;
@@ -237,4 +239,53 @@ public class UserController extends BaseController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public String follow(HttpSession session,@RequestParam(value = "fromPage", required=true) String fromPage, @RequestParam(value = "id", required=true) User user){
+		String ret;
+		if (fromPage == null) {
+			fromPage = "welcome";
+		}
+		User loggedUser = getLoggedInUser(session);
+		if(loggedUser==null){
+			fromPage = "../film/welcome";
+			char separator='&';
+			ret = "redirect:" + fromPage + separator + "auth_fail=wrongUser";
+		}
+		else{
+			try {
+				loggedUser.followUser(user);
+			} catch (UserAlreadyFollowedException e) {
+				
+			}
+			ret =  "redirect:" + fromPage ;
+			
+		}
+		return ret;
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public String unFollow(HttpSession session,@RequestParam(value = "fromPage", required=true) String fromPage, @RequestParam(value = "id", required=true) User user){
+		String ret;
+		if (fromPage == null) {
+			fromPage = "welcome";
+		}
+		User loggedUser = getLoggedInUser(session);
+		if(loggedUser==null){
+			fromPage = "../film/welcome";
+			char separator='&';
+			ret = "redirect:" + fromPage + separator + "auth_fail=wrongUser";
+		}
+		else{
+			try {
+				loggedUser.unFollowUser(user);
+			} catch (UserNotFollowedException e) {
+				
+			}
+			ret =  "redirect:" + fromPage ;
+			
+		}
+		return ret;
+	}
+	
 }

@@ -44,7 +44,7 @@ public class HibernateUserRepo extends HibernateBaseRepo<User> implements
 			String passwordConfirm, String name, String lastname,
 			Date birthdate, String secretQuestion, String secretAnswer) {
 		if(!password.equals(passwordConfirm)){
-			throw new RuntimeException();//TODO: ask andy
+			throw new PasswordDontMatchException();
 		}
 		User user = new User.Builder()
 				.email(email)
