@@ -26,10 +26,10 @@
 			</c:if>
 		</p>
 		<p>
-			<c:forEach begin="1" end="${comment.rate}" var="i">  
+			<c:forEach begin="1" end="${comment.filmRate}" var="i">  
 				<i class="icon-star"></i>
 			</c:forEach>
-			<c:forEach begin="${comment.rate + 1}" end="5" var="i">  
+			<c:forEach begin="${comment.filmRate + 1}" end="5" var="i">  
 				<i class="icon-star-empty"></i>
 			</c:forEach>
 		</p>
