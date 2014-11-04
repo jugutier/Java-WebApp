@@ -1,6 +1,6 @@
 package ar.edu.itba.grupo2.domain;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import junit.framework.Assert;
 
@@ -49,20 +49,28 @@ public class CommentTest {
 	@Test
 	public void creationDateCommentTest() {
 		Comment testComment = new Comment.Builder()
-				.film(null)
-				.user(null)
 				.text("hi!")
-				.rate(1)
 				.build();
-		
-		Assert.assertSame(new Date(), testComment.getCreationDate());
+		//NOW
+		Calendar cal = Calendar.getInstance();
+	    int year = cal.get(Calendar.YEAR);
+	    int month = cal.get(Calendar.MONTH);
+	    int day = cal.get(Calendar.DAY_OF_MONTH);
+	    
+	    //COMMENT
+	    Calendar commentCal = Calendar.getInstance();
+	    commentCal.setTime(testComment.getCreationDate());
+	    int cYear = commentCal.get(Calendar.YEAR);
+	    int cMonth = commentCal.get(Calendar.MONTH);
+	    int cDay = commentCal.get(Calendar.DAY_OF_MONTH);
+	    Assert.assertEquals(year, cYear);
+		Assert.assertEquals(month, cMonth);
+		Assert.assertEquals(day, cDay);
 	}
 
 	@Test
 	public void okCommentTest() {
 		new Comment.Builder()
-		.film(null)
-		.user(null)
 		.text("F7n5H2PeNW1QhwmVRj9c"
 				+ "ZZB49MiySbOKbV0Yyk0j"
 				+ "HvK3WefCTptMGiCNTxMC"
@@ -70,7 +78,6 @@ public class CommentTest {
 				+ "gg8PSCfYnWSMqEeXjrNp"
 				+ "b6DA2s8FOeaDc1QLl4vQ"
 				+ "Lmmoe7h1zm046Y19XeFT")
-		.rate(1)
 		.build();
 	}
 
