@@ -74,5 +74,9 @@ public class MovieImage extends EntityBaseType {
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
+	
+	public void setFilm(Film film) {
+		this.film = film;
+	}
 
 }
