@@ -1,14 +1,24 @@
 package ar.edu.itba.grupo2.domain;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 public class FilmTest {
-
+	/**
+	 * A user cant comment twice
+	 */
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void userCantCommentTest1() {
 	}
-
+	/**
+	 * A non-VIP user cant comment an unReleasedFilm
+	 */
+	@Test
+	public void userCantCommentTest2() {
+	}
+	/**
+	 * A VIP user can comment an unReleasedFilm
+	 */
+	@Test
+	public void userCanCommentTest1() {
+	}
 }

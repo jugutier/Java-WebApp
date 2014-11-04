@@ -1,29 +1,59 @@
 <fieldset>
-	<form:errors path="*"/>
-	<div class="control-group">
-		<form:label class="control-label" for="name" path="">T&iacute;tulo</form:label>
+
+<!-- Errors variables -->
+	<c:set var="nameErrors"><form:errors path="name"/></c:set>
+	<c:if test="${not empty nameErrors}">
+		<c:set var="nameStatus">error</c:set>
+	</c:if>
+
+	<c:set var="releaseDateErrors"><form:errors path="releaseDate"/></c:set>
+	<c:if test="${not empty releaseDateErrors}">
+		<c:set var="releaseDateStatus">error</c:set>
+	</c:if>
+
+	<c:set var="directorErrors"><form:errors path="director"/></c:set>
+	<c:if test="${not empty directorErrors}">
+		<c:set var="directorStatus">error</c:set>
+	</c:if>
+
+	<c:set var="lengthErrors"><form:errors path="length"/></c:set>
+	<c:if test="${not empty lengthErrors}">
+		<c:set var="lengthStatus">error</c:set>
+	</c:if>
+
+	<c:set var="descriptionErrors"><form:errors path="description"/></c:set>
+	<c:if test="${not empty descriptionErrors}">
+		<c:set var="descriptionStatus">error</c:set>
+	</c:if>
+
+	<div class="control-group ${nameStatus}">
+		<form:label class="control-label" for="name" path="name">T&iacute;tulo</form:label>
 		<div class="controls">
 			<form:input type="text" id="name" path="name"/>
+			<span class="help-inline"><form:errors path="name"/></span>
 		</div>
 	</div>
-	<div class="control-group">
+	<div class="control-group ${releaseDateStatus}">
 		<form:label class="control-label" for="releaseDate" path="">Fecha de estreno</form:label>
 		<div class="controls">
 			<form:input type="text" id="releaseDate" path="releaseDate"/>
+			<span class="help-inline"><form:errors path="releaseDate"/></span>
 		</div>
 	</div>
-	<div class="control-group">
+	<div class="control-group ${directorStatus}">
 		<form:label class="control-label" for="director" path="">Director</form:label>
 		<div class="controls">
 			<form:input type="text" id="director" path="director"/>
+			<span class="help-inline"><form:errors path="director"/></span>
 		</div>
 	</div>
-	<div class="control-group">
+	<div class="control-group ${lengthStatus}">
 		<form:label class="control-label" for="length" path="">Longitud</form:label>
 		<div class="controls">
 			<div class="input-append">
 			<form:input type="text" id="length" path="length"/>
 			<span class="add-on">minutos</span>
+			<span class="help-inline"><form:errors path="length"/></span>
 			</div>
 		</div>
 	</div>
@@ -40,9 +70,10 @@
 					<input type="file" id="movieImage" name="movieImage" />
 					<c:if test="${not empty film.movieImage}">
 						<label class="checkbox">
-							<input type="checkbox"> Eliminar imagen
+							<input type="checkbox" name="deleteImage"> Eliminar imagen
 						</label>
 					</c:if>
+					<p>La foto debe ser de 100kb como m&aacute;ximo.</p>
 				</div>
 			</div>				
 		</div>
@@ -62,10 +93,11 @@
 			</ul>
 		</div>
 	</div>
-	<div class="control-group">
-		<form:label class="control-label" for="description" path="">Resumen</form:label>
+	<div class="control-group ${descriptionStatus}">
+		<form:label class="control-label" for="description" path="description">Resumen</form:label>
 		<div class="controls">
 			<form:textarea id="description" class="input-xlarge" path="description" rows="5"></form:textarea>
+			<span class="help-inline"><form:errors path="description"/></span>
 		</div>
 	</div>
 	<div class="control-group">
@@ -75,4 +107,3 @@
 		</div>
 	</div>
 </fieldset>
-<form:errors path="*" />

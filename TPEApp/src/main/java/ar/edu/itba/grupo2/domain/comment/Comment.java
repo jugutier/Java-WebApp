@@ -1,6 +1,7 @@
 package ar.edu.itba.grupo2.domain.comment;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -45,9 +46,17 @@ public class Comment extends EntityBaseType {
 		setId(builder.id);
 		this.film = builder.film;
 		this.user = builder.user;
+		this.reports = new LinkedList<Report>();
 		this.creationDate = builder.creationDate;
-		this.text = builder.text;
+		if(this.creationDate == null){
+			this.creationDate = new Date();
+		}
+		setText(builder.text);
 		this.rate = builder.rate;
+		this.ratings = new LinkedList<CommentRate>();
+		reportable = false;
+		belongsToUser = false;
+		ratedByUser = false;
 	}
 
 	public Film getFilm() {
@@ -140,50 +149,12 @@ public class Comment extends EntityBaseType {
 		if (reports != null)
 			reports.clear();
 	}
-
-	public static class Builder {
-		private Integer id;
-		private Film film;
-		private User user;
-		private Date creationDate;
-		private String text;
-		private int rate;
-
-		public Builder id(final Integer id) {
-			this.id = id;
-			return this;
+	private void setText(String text) {
+		if(text == null || text.equals("") || text.length()>140){
+			throw new IllegalArgumentException();
 		}
-
-		public Builder film(final Film film) {
-			this.film = film;
-			return this;
-		}
-
-		public Builder user(final User user) {
-			this.user = user;
-			return this;
-		}
-
-		public Builder creationDate(final Date creationDate) {
-			this.creationDate = creationDate;
-			return this;
-		}
-
-		public Builder text(String text) {
-			this.text = text;
-			return this;
-		}
-
-		public Builder rate(final int score) {
-			this.rate = score;
-			return this;
-		}
-
-		public Comment build() {
-			return new Comment(this);
-		}
+		this.text = text;
 	}
-
 	@Override
 	public String toString() {
 		return this.user + " > " + this.text;
@@ -225,5 +196,47 @@ public class Comment extends EntityBaseType {
 		} else if (!user.equals(other.user))
 			return false;
 		return true;
+	}
+	public static class Builder {
+		private Integer id;
+		private Film film;
+		private User user;
+		private Date creationDate;
+		private String text;
+		private int rate;
+	
+		public Builder id(final Integer id) {
+			this.id = id;
+			return this;
+		}
+	
+		public Builder film(final Film film) {
+			this.film = film;
+			return this;
+		}
+	
+		public Builder user(final User user) {
+			this.user = user;
+			return this;
+		}
+	
+		public Builder creationDate(final Date creationDate) {
+			this.creationDate = creationDate;
+			return this;
+		}
+	
+		public Builder text(String text) {
+			this.text = text;
+			return this;
+		}
+	
+		public Builder rate(final int score) {
+			this.rate = score;
+			return this;
+		}
+	
+		public Comment build() {
+			return new Comment(this);
+		}
 	}
 }

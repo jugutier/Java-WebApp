@@ -1,5 +1,8 @@
 package ar.edu.itba.grupo2.domain.film;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +46,7 @@ public class Film extends EntityBaseType {
 	private int sumComments;
 	@Column(nullable = false)
 	private int totalComments;
-	@OneToOne(mappedBy = "film", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "film", cascade = CascadeType.ALL,optional = true)
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	private MovieImage movieImage;
 
@@ -115,10 +118,13 @@ public class Film extends EntityBaseType {
 	}
 
 	public List<Comment> getComments() {
-		return comments;// TODO Return a copy?
+		List<Comment> copy = new ArrayList<Comment>(comments.size());
+		copy.addAll(comments);
+		return copy;
 	}
 	
 	public List<Comment> getCommentsForUser(User user) {
+		List<Comment> copy = new ArrayList<Comment>(comments.size());
 		if (user != null) {
 			for (Comment c : comments) {
 				c.belongsToUser = c.getUser().equals(user);
@@ -127,7 +133,21 @@ public class Film extends EntityBaseType {
 			}
 		}
 		
-		return comments;
+		copy.addAll(comments);
+		Collections.sort(copy, new Comparator<Comment>(){
+
+			@Override
+			public int compare(Comment c1, Comment c2) {
+				if(c1.getRate() > c2.getRate())
+					return -1;
+				else if(c1.getRate() < c2.getRate())
+					return 1;
+				return 0;
+			}
+			
+		});
+		
+		return copy;
 	}
 
 	public boolean userHasCommented(User user) {
@@ -148,8 +168,9 @@ public class Film extends EntityBaseType {
 
 	public void addComment(Comment c) throws UserCantCommentException {
 		if (userCanComment(c.getUser())) {
+			totalComments++;
+			sumComments+=c.getFilmRate();
 			comments.add(c);
-			c.getUser().addComment(c);
 		} else {
 			throw new UserCantCommentException();
 		}
@@ -168,9 +189,14 @@ public class Film extends EntityBaseType {
 	}
 	
 	public void setGenres(List<Genre> genres) {
-		this.genres.clear();
-		if (genres != null)
-			this.genres.addAll(genres);
+		if (this.genres != null) {
+			this.genres.clear();
+			if (genres != null)
+				this.genres.addAll(genres);
+		}
+		else {
+			this.genres = genres;
+		}
 	}
 	
 	public void setDescription(String description) {
@@ -182,17 +208,14 @@ public class Film extends EntityBaseType {
 	}
 
 	public void setFilmImage(MovieImage image) {
+		if (this.movieImage != null) {
+			this.movieImage.setFilm(null);
+		}
 		this.movieImage = image;
 	}
 
-	public void removeComment(Comment c) throws UserIsntAdminException {
-		User user = c.getUser();
-		/*if (!user.isAdmin()) {
-			throw new UserIsntAdminException();
-		}*/
-		//TODO: ask andy
+	public void removeComment(Comment c){
 		comments.remove(c);
-		user.removeComment(c);
 		sumComments-=c.getRate();
 		totalComments--;
 

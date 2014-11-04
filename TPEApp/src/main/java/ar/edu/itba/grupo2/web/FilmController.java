@@ -8,11 +8,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -84,17 +86,27 @@ public class FilmController extends BaseController {
 	}
 	
 
-	@RequestMapping(value = "{id}/comment", method=RequestMethod.POST)
-	public String addComment(HttpSession session, CommentForm commentForm, Errors errors, @PathVariable(value = "id") Film film, @RequestParam(value = "fromPage") String fromPage) {
+	@RequestMapping(value = "{id}/details", method=RequestMethod.POST)
+	public ModelAndView addComment(HttpSession session, CommentForm commentForm, Errors errors, @PathVariable(value = "id") Film film, @RequestParam(value = "fromPage") String fromPage) {
+		ModelAndView mav = new ModelAndView();
+		User user = getLoggedInUser(session);		
+		
+		mav.addObject("film", film);
+		mav.setViewName("filmDetails");
 		
 		commentValidator.validate(commentForm, errors);
 		if (errors.hasErrors()) {
-			errors.rejectValue("text", "required");
-			session.setAttribute("errors", errors);
-			return "redirect:" + fromPage;
+			mav.addObject("commentList", film.getCommentsForUser(user));
+			if(isLoggedIn(session)) {
+				boolean userCanComment = film.userCanComment(user);
+				mav.addObject("userCanComment", userCanComment);
+				if(userCanComment){
+					mav.addObject("commentForm", new CommentForm());
+				}
+			}
+			return mav;
 		}
 		
-		User user = getLoggedInUser(session);
 		Comment newComment = new Comment.Builder()
 								.user(user)
 								.film(film)
@@ -105,12 +117,16 @@ public class FilmController extends BaseController {
 		
 		try {
 			film.addComment(newComment);
+			user.addComment(newComment);
+			//mav.addObject("userCanComment", false);
 		}
 		catch(UserCantCommentException e) {
 			
 		}
 		
-		return "redirect:" + fromPage;
+		//mav.addObject("commentList", film.getCommentsForUser(user));
+		mav.setViewName("redirect:details");
+		return mav;
 	}
 
 	@RequestMapping(value = "{id}/edit", method=RequestMethod.GET)
@@ -118,9 +134,9 @@ public class FilmController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		List<Genre> genres = filmRepo.getGenres();
 		
-		mav.addObject("film", film);
 		mav.addObject("genreList", genres);
-		mav.addObject("filmForm", new FilmForm());
+		mav.addObject("film", film);
+		mav.addObject("filmForm", new FilmForm(film));
 		
 		mav.setViewName("editFilm");
 		
@@ -128,8 +144,12 @@ public class FilmController extends BaseController {
 	}
 	
 	@RequestMapping(value = "{id}/edit", method=RequestMethod.POST)
-	public String editFilmSubmit(HttpSession session, Model model, FilmForm filmForm, Errors errors, @RequestParam(value = "movieImage") MultipartFile movieImage){
-		User user = getLoggedInUser(session);
+	public String editFilmSubmit(HttpSession session, Model model, @ModelAttribute @Valid FilmForm filmForm, Errors errors, @RequestParam(value = "movieImage") MultipartFile movieImage, @RequestParam(value = "deleteImage", required = false) boolean deleteImage){
+		
+		if (!isLoggedIn(session) || !getLoggedInUser(session).isAdmin() ) {
+			return "redirect:../../welcome";
+		}
+		
 		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date releaseDate = null;
 		Film film = filmRepo.get(filmForm.getId());
@@ -142,42 +162,14 @@ public class FilmController extends BaseController {
 			errors.rejectValue("releaseDate", "invalid");
 		}
 		
-		if(user.isAdmin()){
-			if (!errors.hasErrors()) {
-				film.setName(filmForm.getName());
-				film.setDirector(filmForm.getDirector());
-				film.setLength(filmForm.getLength());
-				film.setGenres(filmForm.getGenres());
-				film.setDescription(filmForm.getDescription());
-				film.setReleaseDate(releaseDate);
-				
-				if (movieImage.getSize() > 0) {
-					String name = movieImage.getName();
-					String contentType = movieImage.getContentType();
-					int length = (int) movieImage.getSize();
-					
-					byte[] imageData = new byte[length];
-
-					try {
-						InputStream fileInputStream = filmForm.getMovieImage().getInputStream();
-						fileInputStream.read(imageData);
-						fileInputStream.close();
-						film.setFilmImage(new MovieImage(name, contentType, length,
-								imageData, film));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			else {
-				model.addAttribute("genreList", filmRepo.getGenres());
-				model.addAttribute("film", film);
-				return "editFilm";
-			}
+		if (!errors.hasErrors()) {
+			buildFilm(film, filmForm, movieImage, releaseDate, deleteImage);
 		}
 		else {
-			return "redirect:../../welcome";
+			model.addAttribute("genreList", filmRepo.getGenres());
+			return "editFilm";
 		}
+			
 		return "redirect:../list";
 	}
 	
@@ -193,6 +185,77 @@ public class FilmController extends BaseController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(value = "add", method=RequestMethod.POST)
+	public String addFilmSubmit(HttpSession session, Model model, FilmForm filmForm, Errors errors, @RequestParam(value = "movieImage") MultipartFile movieImage){
+
+		if (!isLoggedIn(session) || !getLoggedInUser(session).isAdmin() ) {
+			return "redirect:../welcome";
+		}
+		
+		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date releaseDate = null;
+		Film film = new Film.Builder().creationDate(new Date()).build();
+		
+		filmValidator.validate(filmForm, errors);
+		
+		try {
+			releaseDate = outputDateFormat.parse(filmForm.getReleaseDate());
+		} catch (ParseException e) {
+			errors.rejectValue("releaseDate", "invalid");
+		}
+
+		if (!errors.hasErrors()) {
+			buildFilm(film, filmForm, movieImage, releaseDate, false);
+			filmRepo.save(film);
+		}
+		else {
+			model.addAttribute("genreList", filmRepo.getGenres());
+			model.addAttribute("film", film);
+			return "addFilm";
+		}
+		
+		return "redirect:list";
+	}
+	
+	private void buildFilm(Film film, FilmForm filmForm, MultipartFile movieImage, Date releaseDate, boolean deleteImage) {
+		film.setName(filmForm.getName());
+		film.setDirector(filmForm.getDirector());
+		film.setLength(filmForm.getLength());
+		film.setGenres(filmForm.getGenres());
+		film.setDescription(filmForm.getDescription());
+		film.setReleaseDate(releaseDate);
+		
+		if (deleteImage) {
+			film.setFilmImage(null);
+		}
+		else if (movieImage.getSize() > 0) {
+			String name = movieImage.getName();
+			String contentType = movieImage.getContentType();
+			int length = (int) movieImage.getSize();
+			
+			byte[] imageData = new byte[length];
+
+			try {
+				InputStream fileInputStream = filmForm.getMovieImage().getInputStream();
+				MovieImage mi = film.getMovieImage();
+				fileInputStream.read(imageData);
+				fileInputStream.close();
+				if (mi == null) {
+					film.setFilmImage(new MovieImage(name, contentType, length,
+							imageData, film));
+				}
+				else {
+					mi.setName(name);
+					mi.setContentType(contentType);
+					mi.setLength(length);
+					mi.setContent(imageData);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	@RequestMapping(method=RequestMethod.POST)
 	public String removeFilm(HttpSession session,@RequestParam(value = "id", required=true) Integer id){
@@ -203,8 +266,8 @@ public class FilmController extends BaseController {
 		}else{
 			throw new UserIsntAdminException();
 		}
-		return "redirect:list";
 		
+		return "redirect:list";
 	}
 	
 	@RequestMapping(value = "list", method=RequestMethod.GET)
@@ -214,7 +277,9 @@ public class FilmController extends BaseController {
 		List<Film> filmList = null;
 		List<Genre> genreList = filmRepo.getGenres();
 		
-		if (genre != null) {
+		filmList = filmRepo.getFiltered(genre, director);
+		
+		/*if (genre != null) {
 			filmList = filmRepo.getFromGenre(genre);
 		}
 		else{
@@ -228,7 +293,7 @@ public class FilmController extends BaseController {
 			else {
 				mav.addObject("directorFilterError", "unauthorized");
 			}
-		}
+		}*/
 		
 		mav.addObject("filmList", filmList);
 		mav.addObject("genreList", genreList);

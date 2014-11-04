@@ -16,6 +16,7 @@ import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.comment.CommentRepo;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.film.UserIsntAdminException;
+import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 
 @Controller
@@ -70,13 +71,13 @@ public class CommentController extends BaseController {
 			@RequestParam(value = "film", required=false) Film film,
 			@RequestParam(value="id") Comment comment,
 			@RequestParam(value = "fromPage") String fromPage ) {
+		User removingUser = getLoggedInUser(session);
+		if(!removingUser.isAdmin()){
+			throw new UserIsntAdminException();
+		}
+		//TODO:ask andy comment.getUser().removeComment(comment);
+		film.removeComment(comment);
 		
-		try {
-			film.removeComment(comment);
-		}
-		catch(UserIsntAdminException e) {
-			
-		}
 		
 		return "redirect:" + fromPage;
 	}
