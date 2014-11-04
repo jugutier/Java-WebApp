@@ -277,7 +277,9 @@ public class FilmController extends BaseController {
 		List<Film> filmList = null;
 		List<Genre> genreList = filmRepo.getGenres();
 		
-		if (genre != null) {
+		filmList = filmRepo.getFiltered(genre, director);
+		
+		/*if (genre != null) {
 			filmList = filmRepo.getFromGenre(genre);
 		}
 		else{
@@ -291,7 +293,7 @@ public class FilmController extends BaseController {
 			else {
 				mav.addObject("directorFilterError", "unauthorized");
 			}
-		}
+		}*/
 		
 		mav.addObject("filmList", filmList);
 		mav.addObject("genreList", genreList);
