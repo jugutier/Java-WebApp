@@ -1,6 +1,9 @@
 package ar.edu.itba.grupo2.domain.film;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +38,17 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 		Criteria c = createCriteria().add(
 				Restrictions.lt("creationDate", new Date()));
 		c.setMaxResults(amount);
-		return (List<Film>) c.list();
+		List<Film> out = new ArrayList<Film>(c.list().size());
+		out.addAll(c.list());
+		Collections.sort(out, new Comparator<Film>(){
+
+			@Override
+			public int compare(Film o1, Film o2) {
+				return -o1.getCreationDate().compareTo(o2.getCreationDate());
+			}
+			
+		});
+		return out;
 	}
 
 	// newest: Between today and +dayTolerance from now
