@@ -2,6 +2,8 @@ package ar.edu.itba.grupo2.web;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +16,7 @@ import ar.edu.itba.grupo2.domain.user.UserRepo;
 @Controller
 public class BaseController {
 	
+	private static Logger logger = LoggerFactory.getLogger(BaseController.class);
 	protected UserRepo userRepo;
 	
 	private final String USER_ID = "userId";
@@ -54,7 +57,8 @@ public class BaseController {
 	}
 	
 	@ExceptionHandler({Exception.class})
-	public String generalError() {
+	public String generalError(Exception exception) {
+		logger.error(exception.toString());
 		return "error/dispatch-error";
 	}
 
