@@ -26,10 +26,11 @@ import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.film.FilmRepo;
 import ar.edu.itba.grupo2.domain.film.UserCantCommentException;
-import ar.edu.itba.grupo2.domain.film.UserIsntAdminException;
 import ar.edu.itba.grupo2.domain.genre.Genre;
 import ar.edu.itba.grupo2.domain.image.MovieImage;
 import ar.edu.itba.grupo2.domain.user.User;
+import ar.edu.itba.grupo2.domain.user.UserNotAdminException;
+import ar.edu.itba.grupo2.domain.user.UserNotAuthenticatedException;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.command.CommentForm;
 import ar.edu.itba.grupo2.web.command.FilmForm;
@@ -90,6 +91,10 @@ public class FilmController extends BaseController {
 	public ModelAndView addComment(HttpSession session, CommentForm commentForm, Errors errors, @PathVariable(value = "id") Film film, @RequestParam(value = "fromPage") String fromPage) {
 		ModelAndView mav = new ModelAndView();
 		User user = getLoggedInUser(session);		
+		
+		if (user == null) {
+			throw new UserNotAuthenticatedException();
+		}
 		
 		mav.addObject("film", film);
 		mav.setViewName("filmDetails");
@@ -260,12 +265,16 @@ public class FilmController extends BaseController {
 	@RequestMapping(method=RequestMethod.POST)
 	public String removeFilm(HttpSession session,@RequestParam(value = "id", required=true) Integer id){
 		User user = getLoggedInUser(session);
-		if(user.isAdmin()){
-			Film film = filmRepo.get(id);
-			filmRepo.delete(film);
-		}else{
-			throw new UserIsntAdminException();
+		
+		if (user == null) {
+			throw new UserNotAuthenticatedException();
 		}
+		else if(!user.isAdmin()){
+			throw new UserNotAdminException();
+		}
+		
+		Film film = filmRepo.get(id);
+		filmRepo.delete(film);
 		
 		return "redirect:list";
 	}
