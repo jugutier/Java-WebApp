@@ -170,7 +170,7 @@ public class FilmController extends BaseController {
 			return "editFilm";
 		}
 			
-		return "redirect:../list";
+		return "redirect:details";
 	}
 	
 	@RequestMapping(value = "add", method=RequestMethod.GET)
