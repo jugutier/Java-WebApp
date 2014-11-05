@@ -9,10 +9,7 @@
 			</form>
 		</c:if>
 		<p>
-			<c:url value="profile" var="detailUrl">
-				<c:param name="id" value="${comment.user.id}" />
-			</c:url>			
-			<a href="${pageContext.request.contextPath}/bin/user/${detailUrl}"><strong><c:out value="${comment.user.name}"/></strong></a>
+			<a href="${pageContext.request.contextPath}/bin/user/${comment.user.id}/profile"><strong><c:out value="${comment.user.name}"/></strong></a>
 			<c:if test="${comment.user.admin}">
 				 <span class="label label-important">Admin</span>
 			</c:if>
