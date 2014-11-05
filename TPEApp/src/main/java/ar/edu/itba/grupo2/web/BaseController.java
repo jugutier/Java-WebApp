@@ -7,17 +7,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserNotAdminException;
 import ar.edu.itba.grupo2.domain.user.UserNotAuthenticatedException;
-import ar.edu.itba.grupo2.domain.user.UserNotFollowedException;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 
 @Controller
 public class BaseController {
 	
+	@SuppressWarnings("unused")
 	private static Logger logger = LoggerFactory.getLogger(BaseController.class);
 	protected UserRepo userRepo;
 	

@@ -35,7 +35,6 @@ import ar.edu.itba.grupo2.domain.film.UserCantCommentException;
 import ar.edu.itba.grupo2.domain.genre.Genre;
 import ar.edu.itba.grupo2.domain.image.MovieImage;
 import ar.edu.itba.grupo2.domain.user.User;
-import ar.edu.itba.grupo2.domain.user.UserNotAdminException;
 import ar.edu.itba.grupo2.domain.user.UserNotAuthenticatedException;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.command.CommentForm;
@@ -62,13 +61,20 @@ public class FilmController extends BaseController {
 	@RequestMapping(method=RequestMethod.GET)
 	public ModelAndView welcome(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		User logged = getLoggedInUser(session); 
+		User user = null;
+		try {
+			user = getLoggedInUser(session); 
+		}
+		catch(UserNotAuthenticatedException e) {
+			user = null;
+		}
+		
 		mav.addObject("topfive", filmRepo.getTop(5));
 		mav.addObject("latest", filmRepo.getLatest(5));
 		mav.addObject("newReleases",
 				filmRepo.getNewests(7));
-		if(!(logged == null)){
-			mav.addObject("followedComments", userRepo.getLatestComments(logged)) ;
+		if(user != null){
+			mav.addObject("followedComments", userRepo.getLatestComments(user)) ;
 		}
 		
 		mav.setViewName("welcome");

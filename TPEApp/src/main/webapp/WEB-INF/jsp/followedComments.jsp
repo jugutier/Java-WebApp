@@ -1,5 +1,5 @@
 <c:if test="${not empty followedComments}">
-<h2>Comentarios mas recientes de usuarios que sigues</h2>
+<h2>Comentarios m&aocute;s recientes de usuarios que sigues</h2>
 
 <table class="table table-bordered">
 	<tr>

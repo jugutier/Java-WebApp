@@ -16,7 +16,6 @@ import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.comment.CommentRepo;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.user.User;
-import ar.edu.itba.grupo2.domain.user.UserNotAdminException;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 
 @Controller
@@ -34,7 +33,9 @@ public class CommentController extends BaseController {
 	@RequestMapping(value = "{id}/report", method = RequestMethod.GET)
 	public String report(HttpSession session,
 			@PathVariable(value = "id") Comment comment) {
-		comment.report(getLoggedInUser(session));
+		User user = getLoggedInUser(session);
+		
+		comment.report(user);
 		return "redirect:../../film/" + comment.getFilm().getId() + "/details";
 	}
 
@@ -52,9 +53,8 @@ public class CommentController extends BaseController {
 	@RequestMapping(value = "{id}/discardReports", method = RequestMethod.GET)
 	public String discardReports(HttpSession session,
 			@PathVariable(value = "id") Comment comment) {
-		if (isLoggedIn(session) && getLoggedInUser(session).isAdmin()) {
-			comment.discardReports();
-		}
+		authenticateAdmin(session);
+		comment.discardReports();
 
 		return "redirect:../reported";
 	}
@@ -63,10 +63,9 @@ public class CommentController extends BaseController {
 	public String rateComment(HttpSession session,
 			@PathVariable(value = "id") Comment comment,
 			@RequestParam(value = "rating") int rating) {
-		if (isLoggedIn(session)) {
-			comment.rate(getLoggedInUser(session), rating);
-		}
-
+		User user = getLoggedInUser(session);
+		comment.rate(user, rating);
+		
 		return "redirect:../../film/" + comment.getFilm().getId() + "/details";
 	}
 
@@ -75,10 +74,8 @@ public class CommentController extends BaseController {
 			@RequestParam(value = "film", required = false) Film film,
 			@RequestParam(value = "id") Comment comment,
 			@RequestParam(value = "fromPage") String fromPage) {
-		User removingUser = getLoggedInUser(session);
-		if (!removingUser.isAdmin()) {
-			throw new UserNotAdminException();
-		}
+		
+		authenticateAdmin(session);
 		film.removeComment(comment);
 
 		return "redirect:" + fromPage;
