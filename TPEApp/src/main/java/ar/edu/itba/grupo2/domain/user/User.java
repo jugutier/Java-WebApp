@@ -141,7 +141,9 @@ public class User extends EntityBaseType {
 	}
 
 	public void addComment(Comment c) throws UserCantCommentException {
-		c.getFilm().addComment(c);
+		// We need to find a way to stop recursion, allowing user.addComment to work
+		// even when it is called directly. (now, works when film.addComment is called)
+		// c.getFilm().addComment(c);
 		comments.add(c);
 	}
 
