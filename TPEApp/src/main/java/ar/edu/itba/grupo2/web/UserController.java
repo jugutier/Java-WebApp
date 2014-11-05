@@ -25,6 +25,7 @@ import ar.edu.itba.grupo2.web.command.UserForm;
 import ar.edu.itba.grupo2.web.command.validator.UserFormValidator;
 
 @Controller
+@RequestMapping(value = "user")
 public class UserController extends BaseController {
 	
 	private final UserFormValidator userValidator;
@@ -51,7 +52,7 @@ public class UserController extends BaseController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "user/{id}/profile",method=RequestMethod.GET)
+	@RequestMapping(value = "{id}/profile",method=RequestMethod.GET)
 	public ModelAndView profile(HttpSession session,@PathVariable(value = "id") User user) {
 		ModelAndView mav = new ModelAndView();
 		User u = getLoggedInUser(session);
@@ -249,34 +250,25 @@ public class UserController extends BaseController {
 		}
 		User loggedUser = getLoggedInUser(session);
 		if(loggedUser==null){
-			fromPage = "../film/welcome";
-			char separator='&';
-			ret = "redirect:" + fromPage + separator + "auth_fail=wrongUser";
+			//TODO: tirar exception 
 		}
 		else{
 			loggedUser.followUser(user);
-			ret =  "redirect:" + fromPage ;
-			
 		}
 		return "redirect:" + fromPage;
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public String unFollow(HttpSession session,@RequestParam(value = "fromPage", required=true) String fromPage, @RequestParam(value = "id", required=true) User user){
-		String ret;
 		if (fromPage == null) {
 			fromPage = "welcome";
 		}
 		User loggedUser = getLoggedInUser(session);
 		if(loggedUser==null){
-			fromPage = "../film/welcome";
-			char separator='&';
-			ret = "redirect:" + fromPage + separator + "auth_fail=wrongUser";
+			//TODO: tirar exception 
 		}
 		else{
 			loggedUser.unFollowUser(user);
-			ret =  "redirect:" + fromPage ;
-			
 		}
 		return "redirect:"+fromPage;
 	}

@@ -183,12 +183,21 @@ public class Film extends EntityBaseType {
 		if (userCanComment(c.getUser())) {
 			totalComments++;
 			sumComments+=c.getFilmRate();
+			c.getUser().addComment(c);
 			comments.add(c);
 		} else {
 			throw new UserCantCommentException();
 		}
 	}
 	
+	public void removeComment(Comment c){
+		c.getUser().removeComment(c);
+		comments.remove(c);
+		sumComments-=c.getRate();
+		totalComments--;
+	
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -227,23 +236,16 @@ public class Film extends EntityBaseType {
 		this.movieImage = image;
 	}
 
-	public void removeComment(Comment c){
-		comments.remove(c);
-		sumComments-=c.getRate();
-		totalComments--;
-
-	}
-
-	@Override
-	public String toString() {
-		return this.name + " - " + this.director;
-	}
-
 	public boolean isReleased() {
 		Date today = new Date();
 		if (today.after(this.releaseDate))
 			return true;
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return this.name + " - " + this.director;
 	}
 
 	@Override

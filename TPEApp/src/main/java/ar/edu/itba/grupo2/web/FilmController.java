@@ -1,7 +1,6 @@
 package ar.edu.itba.grupo2.web;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
@@ -61,12 +60,16 @@ public class FilmController extends BaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView welcome() {
+	public ModelAndView welcome(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		User logged = getLoggedInUser(session); 
 		mav.addObject("topfive", filmRepo.getTop(5));
 		mav.addObject("latest", filmRepo.getLatest(5));
 		mav.addObject("newReleases",
 				filmRepo.getNewests(7));
+		if(!(logged == null)){
+			mav.addObject("followedComments", userRepo.getLatestComments(logged)) ;
+		}
 		
 		mav.setViewName("welcome");
 		
@@ -134,14 +137,11 @@ public class FilmController extends BaseController {
 		
 		try {
 			film.addComment(newComment);
-			user.addComment(newComment);
-			//mav.addObject("userCanComment", false);
 		}
 		catch(UserCantCommentException e) {
 			
 		}
 		
-		//mav.addObject("commentList", film.getCommentsForUser(user));
 		mav.setViewName("redirect:details");
 		return mav;
 	}
@@ -269,9 +269,7 @@ public class FilmController extends BaseController {
 					errors.rejectValue("releaseDate", "invalid");
 				}
 			}
-		} catch (IllegalStateException e) {
-			// TODO Redirect and show error message
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Redirect and show error message
 		}
 		return "redirect:list";
@@ -334,23 +332,7 @@ public class FilmController extends BaseController {
 		List<Genre> genreList = filmRepo.getGenres();
 		
 		filmList = filmRepo.getFiltered(genre, director);
-		
-		/*if (genre != null) {
-			filmList = filmRepo.getFromGenre(genre);
-		}
-		else{
-			filmList = filmRepo.getByReleaseDate();
-		}
-		
-		if (director != null) {
-			if (isLoggedIn(session)) {
-				filmList = filmRepo.getFromDirector(director);
-			}
-			else {
-				mav.addObject("directorFilterError", "unauthorized");
-			}
-		}*/
-		
+				
 		mav.addObject("filmList", filmList);
 		mav.addObject("genreList", genreList);
 		

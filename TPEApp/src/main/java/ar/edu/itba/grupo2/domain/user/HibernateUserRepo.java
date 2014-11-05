@@ -1,5 +1,6 @@
 package ar.edu.itba.grupo2.domain.user;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.HibernateBaseRepo;
 
 @Repository
@@ -37,6 +39,25 @@ public class HibernateUserRepo extends HibernateBaseRepo<User> implements
 				Restrictions.eq("password", password));
 		List<User> list = c.list();
 		return list.size() == 0 ? null : list.get(0);
+	}
+	
+	public List<Comment> getLatestComments(User u){
+		List<User>followers = u.getFollows();
+		List<Comment>comments = new ArrayList<Comment>();
+		for (User user : followers) {
+			Comment last =null;
+			for (Comment comment : user.getComments()) {
+				if(last==null){
+					last=comment;
+				}
+				if(last.getCreationDate().before(comment.getCreationDate())){
+					last=comment;
+				}
+			}
+			comments.add(last);
+		}
+		return comments;
+
 	}
 
 	@Override
