@@ -15,14 +15,14 @@ import org.springframework.web.servlet.ModelAndView;
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.comment.CommentRepo;
 import ar.edu.itba.grupo2.domain.film.Film;
-import ar.edu.itba.grupo2.domain.film.UserIsntAdminException;
 import ar.edu.itba.grupo2.domain.user.User;
+import ar.edu.itba.grupo2.domain.user.UserNotAdminException;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 
 @Controller
 @RequestMapping(value = "comment")
 public class CommentController extends BaseController {
-	
+
 	private final CommentRepo commentRepo;
 
 	@Autowired
@@ -30,55 +30,57 @@ public class CommentController extends BaseController {
 		super(userRepo);
 		this.commentRepo = commentRepo;
 	}
-	
+
 	@RequestMapping(value = "{id}/report", method = RequestMethod.GET)
-	public String report(HttpSession session, @PathVariable(value = "id") Comment comment) {
+	public String report(HttpSession session,
+			@PathVariable(value = "id") Comment comment) {
 		comment.report(getLoggedInUser(session));
 		return "redirect:../../film/" + comment.getFilm().getId() + "/details";
 	}
-	
+
 	@RequestMapping(value = "reported", method = RequestMethod.GET)
 	public ModelAndView reportedList(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		
+
 		List<Comment> commentList = commentRepo.getAllReported();
 		mav.addObject("commentList", commentList);
-		
+
 		mav.setViewName("reportList");
 		return mav;
 	}
-	
-	@RequestMapping(value = "{id}/discardReports", method=RequestMethod.GET)
-	public String discardReports(HttpSession session, @PathVariable(value="id") Comment comment) {
+
+	@RequestMapping(value = "{id}/discardReports", method = RequestMethod.GET)
+	public String discardReports(HttpSession session,
+			@PathVariable(value = "id") Comment comment) {
 		if (isLoggedIn(session) && getLoggedInUser(session).isAdmin()) {
 			comment.discardReports();
 		}
-		
+
 		return "redirect:../reported";
 	}
-	
-	@RequestMapping(value = "{id}/rate", method=RequestMethod.POST)
-	public String rateComment(HttpSession session, @PathVariable(value="id") Comment comment, @RequestParam(value = "rating") int rating) {
+
+	@RequestMapping(value = "{id}/rate", method = RequestMethod.POST)
+	public String rateComment(HttpSession session,
+			@PathVariable(value = "id") Comment comment,
+			@RequestParam(value = "rating") int rating) {
 		if (isLoggedIn(session)) {
-			comment.rate(getLoggedInUser(session),rating);
+			comment.rate(getLoggedInUser(session), rating);
 		}
-		
+
 		return "redirect:../../film/" + comment.getFilm().getId() + "/details";
 	}
-	
-	@RequestMapping(method=RequestMethod.POST)
+
+	@RequestMapping(method = RequestMethod.POST)
 	public String removeComment(HttpSession session,
-			@RequestParam(value = "film", required=false) Film film,
-			@RequestParam(value="id") Comment comment,
-			@RequestParam(value = "fromPage") String fromPage ) {
+			@RequestParam(value = "film", required = false) Film film,
+			@RequestParam(value = "id") Comment comment,
+			@RequestParam(value = "fromPage") String fromPage) {
 		User removingUser = getLoggedInUser(session);
-		if(!removingUser.isAdmin()){
-			throw new UserIsntAdminException();
+		if (!removingUser.isAdmin()) {
+			throw new UserNotAdminException();
 		}
-		//TODO:ask andy comment.getUser().removeComment(comment);
 		film.removeComment(comment);
-		
-		
+
 		return "redirect:" + fromPage;
 	}
 

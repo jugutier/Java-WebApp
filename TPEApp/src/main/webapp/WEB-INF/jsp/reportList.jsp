@@ -17,6 +17,11 @@
 			<button href="#" class="btn btn-danger" type="submit"><i class="icon-remove"></i></button>
 		</form>
 		<p>
+			<a href="${pageContext.request.contextPath}/bin/film/${comment.film.id}/details">
+			<h4><c:out value="${comment.film.name}"/></h4>
+			</a>
+		</p>
+		<p>
 			<strong><c:out value="${comment.user.name}"/></strong>
 			<c:if test="${comment.user.admin}">
 				 <span class="label label-important">Admin</span>

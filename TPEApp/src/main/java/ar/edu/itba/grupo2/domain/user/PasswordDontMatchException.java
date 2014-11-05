@@ -1,6 +1,5 @@
 package ar.edu.itba.grupo2.domain.user;
 
-@SuppressWarnings("serial")
-public class PasswordDontMatchException extends RuntimeException {
+@SuppressWarnings("serial") class PasswordDontMatchException extends RuntimeException {
 
 }

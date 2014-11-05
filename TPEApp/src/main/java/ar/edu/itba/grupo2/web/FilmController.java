@@ -1,15 +1,21 @@
 package ar.edu.itba.grupo2.web;
 
+import java.io.File;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,10 +32,11 @@ import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.film.FilmRepo;
 import ar.edu.itba.grupo2.domain.film.UserCantCommentException;
-import ar.edu.itba.grupo2.domain.film.UserIsntAdminException;
 import ar.edu.itba.grupo2.domain.genre.Genre;
 import ar.edu.itba.grupo2.domain.image.MovieImage;
 import ar.edu.itba.grupo2.domain.user.User;
+import ar.edu.itba.grupo2.domain.user.UserNotAdminException;
+import ar.edu.itba.grupo2.domain.user.UserNotAuthenticatedException;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.command.CommentForm;
 import ar.edu.itba.grupo2.web.command.FilmForm;
@@ -95,6 +102,10 @@ public class FilmController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		User user = getLoggedInUser(session);		
 		
+		if (user == null) {
+			throw new UserNotAuthenticatedException();
+		}
+		
 		mav.addObject("film", film);
 		mav.setViewName("filmDetails");
 		
@@ -121,14 +132,11 @@ public class FilmController extends BaseController {
 		
 		try {
 			film.addComment(newComment);
-			user.addComment(newComment);
-			//mav.addObject("userCanComment", false);
 		}
 		catch(UserCantCommentException e) {
 			
 		}
 		
-		//mav.addObject("commentList", film.getCommentsForUser(user));
 		mav.setViewName("redirect:details");
 		return mav;
 	}
@@ -174,7 +182,7 @@ public class FilmController extends BaseController {
 			return "editFilm";
 		}
 			
-		return "redirect:../list";
+		return "redirect:details";
 	}
 	
 	@RequestMapping(value = "add", method=RequestMethod.GET)
@@ -222,6 +230,50 @@ public class FilmController extends BaseController {
 		return "redirect:list";
 	}
 	
+	@RequestMapping(value = "addFromCSV", method=RequestMethod.POST)
+	public String addFilmsCSV(HttpSession session, Model model, FilmForm filmForm, Errors errors, @RequestParam(value = "filmsCSV") MultipartFile filmsCSV){
+		if (!isLoggedIn(session) || !getLoggedInUser(session).isAdmin() ) {
+			return "redirect:welcome";
+		}
+		
+		File file = new File(filmsCSV.getOriginalFilename());
+        try {
+			filmsCSV.transferTo(file);
+			CSVParser parser = CSVParser.parse(file, Charset.forName("UTF-8"), 
+					CSVFormat.DEFAULT.withHeader("title","releaseDate","director","length","genre","description"));
+			List<CSVRecord> records = parser.getRecords();
+			
+			DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date releaseDate = null;
+			Film film;
+			
+			// Remove header
+			records.remove(0);
+			for(CSVRecord r: records){
+				try {
+					releaseDate = outputDateFormat.parse(r.get("releaseDate"));
+					List<Genre> genres = new ArrayList<Genre>();
+					String[] genresValues = r.get("genre").replace("\"", "").split(","); 
+					for(String genre: genresValues){
+						genres.add(filmRepo.getGenre(genre));
+					}
+					film = new Film.Builder().creationDate(new Date())
+							.releaseDate(releaseDate).name(r.get("title"))
+							.director(r.get("director"))
+							.genres(genres)
+							.length(Integer.parseInt(r.get("length").trim()))
+							.description(r.get("description")).build();
+					filmRepo.save(film);
+				} catch (ParseException e) {
+					errors.rejectValue("releaseDate", "invalid");
+				}
+			}
+		} catch (Exception e) {
+			// TODO Redirect and show error message
+		}
+		return "redirect:list";
+	}
+	
 	private void buildFilm(Film film, FilmForm filmForm, MultipartFile movieImage, Date releaseDate, boolean deleteImage) {
 		film.setName(filmForm.getName());
 		film.setDirector(filmForm.getDirector());
@@ -264,12 +316,16 @@ public class FilmController extends BaseController {
 	@RequestMapping(method=RequestMethod.POST)
 	public String removeFilm(HttpSession session,@RequestParam(value = "id", required=true) Integer id){
 		User user = getLoggedInUser(session);
-		if(user.isAdmin()){
-			Film film = filmRepo.get(id);
-			filmRepo.delete(film);
-		}else{
-			throw new UserIsntAdminException();
+		
+		if (user == null) {
+			throw new UserNotAuthenticatedException();
 		}
+		else if(!user.isAdmin()){
+			throw new UserNotAdminException();
+		}
+		
+		Film film = filmRepo.get(id);
+		filmRepo.delete(film);
 		
 		return "redirect:list";
 	}
@@ -282,23 +338,7 @@ public class FilmController extends BaseController {
 		List<Genre> genreList = filmRepo.getGenres();
 		
 		filmList = filmRepo.getFiltered(genre, director);
-		
-		/*if (genre != null) {
-			filmList = filmRepo.getFromGenre(genre);
-		}
-		else{
-			filmList = filmRepo.getByReleaseDate();
-		}
-		
-		if (director != null) {
-			if (isLoggedIn(session)) {
-				filmList = filmRepo.getFromDirector(director);
-			}
-			else {
-				mav.addObject("directorFilterError", "unauthorized");
-			}
-		}*/
-		
+				
 		mav.addObject("filmList", filmList);
 		mav.addObject("genreList", genreList);
 		

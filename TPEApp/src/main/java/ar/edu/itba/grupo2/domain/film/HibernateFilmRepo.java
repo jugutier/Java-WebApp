@@ -1,6 +1,9 @@
 package ar.edu.itba.grupo2.domain.film;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +28,7 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 	@Override
 	public List<Film> getTop(int amount) {
 		return limitedFind(
-				"FROM Film where totalComments > 0 ORDER BY (sumComments / totalComments) ASC",
+				"FROM Film where totalComments > 0 ORDER BY (sumComments / totalComments) DESC",
 				amount);
 	}
 
@@ -35,7 +38,17 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 		Criteria c = createCriteria().add(
 				Restrictions.lt("creationDate", new Date()));
 		c.setMaxResults(amount);
-		return (List<Film>) c.list();
+		List<Film> out = new ArrayList<Film>(c.list().size());
+		out.addAll(c.list());
+		Collections.sort(out, new Comparator<Film>(){
+
+			@Override
+			public int compare(Film o1, Film o2) {
+				return -o1.getCreationDate().compareTo(o2.getCreationDate());
+			}
+			
+		});
+		return out;
 	}
 
 	// newest: Between today and +dayTolerance from now
@@ -49,20 +62,13 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 				.list();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Film> getFromGenre(Genre genre) {
 		return find("FROM Film film WHERE ? IN (FROM film.genres) ORDER BY releaseDate ASC", genre);
-		//return createCriteria()
-		//		.add(Restrictions.in("genres", genre)).list();
-		//return find("FROM Film f WHERE ? in ?");
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Film> getFromDirector(String director) {
-		///return createCriteria().add(Restrictions.ilike("director", director))
-		//		.list();
 		return find("FROM Film f WHERE upper(f.director) LIKE ? ORDER BY releaseDate ASC", "%" + director.toUpperCase() + "%");
 	}
 	
@@ -97,6 +103,18 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 	public List<Genre> getGenres() {
 		List<Genre> list = find("from Genre");
 		return list;
+	}
+	/**
+	 * Validation using natural key is useful when importing films from a CSV. 
+	 * Otherwise the model will validate itself.
+	 */
+	@Override
+	public Film save(Film entity) {
+		List<Film> duplicateFilm = find("from Film where film.name = ? AND film.creationDate = ? ",entity.getName(),entity.getCreationDate());
+		if(duplicateFilm == null || duplicateFilm.size() !=0){
+			throw new DuplicateFilmException();
+		}
+		return super.save(entity);
 	}
 
 }

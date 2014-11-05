@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -63,14 +64,26 @@ public class Film extends EntityBaseType {
 		this.name = builder.name;
 		this.director = builder.director;
 		this.creationDate = builder.creationDate;
+		if(this.creationDate == null){
+			this.creationDate = new Date();
+		}
 		this.releaseDate = builder.releaseDate;
+		if(this.releaseDate == null){
+			this.releaseDate = new Date();
+		}
 		this.genres = builder.genres;
+		if(this.genres == null){
+			this.genres =  new LinkedList<Genre>();
+		}
 		this.description = builder.description;
 		this.length = builder.length;
 		this.sumComments = builder.sumComments;
 		this.totalComments = builder.totalComments;
 		this.movieImage = builder.movieImage;
 		this.comments = builder.comments;
+		if(this.comments == null){
+			this.comments = new LinkedList<Comment>();
+		}
 	}
 
 	public String getName() {
@@ -150,7 +163,7 @@ public class Film extends EntityBaseType {
 		return copy;
 	}
 
-	public boolean userHasCommented(User user) {
+	private boolean userHasCommented(User user) {
 		for (Comment c : comments) {
 			if (c.getUser().equals(user)) {
 				return true;
@@ -170,12 +183,21 @@ public class Film extends EntityBaseType {
 		if (userCanComment(c.getUser())) {
 			totalComments++;
 			sumComments+=c.getFilmRate();
+			c.getUser().addComment(c);
 			comments.add(c);
 		} else {
 			throw new UserCantCommentException();
 		}
 	}
 	
+	public void removeComment(Comment c){
+		c.getUser().removeComment(c);
+		comments.remove(c);
+		sumComments-=c.getRate();
+		totalComments--;
+	
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -214,23 +236,16 @@ public class Film extends EntityBaseType {
 		this.movieImage = image;
 	}
 
-	public void removeComment(Comment c){
-		comments.remove(c);
-		sumComments-=c.getRate();
-		totalComments--;
-
-	}
-
-	@Override
-	public String toString() {
-		return this.name + " - " + this.director;
-	}
-
 	public boolean isReleased() {
 		Date today = new Date();
 		if (today.after(this.releaseDate))
 			return true;
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return this.name + " - " + this.director;
 	}
 
 	@Override
@@ -272,13 +287,13 @@ public class Film extends EntityBaseType {
 		private Date releaseDate;
 		private List<Genre> genres;
 		private String description;
-		private int length;
-		private int totalComments;
-		private int sumComments;
-		private Date creationDate;
+		private int length = 0;
+		private int totalComments = 0;
+		private int sumComments = 0;
+		private Date creationDate = null;
 		private MovieImage movieImage = null;
 
-		List<Comment> comments;
+		private List<Comment> comments;
 
 		public Builder id(final Integer id) {
 			this.id = id;
