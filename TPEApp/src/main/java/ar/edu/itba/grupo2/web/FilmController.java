@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.film.Film;
+import ar.edu.itba.grupo2.domain.film.FilmNotFoundException;
 import ar.edu.itba.grupo2.domain.film.FilmRepo;
 import ar.edu.itba.grupo2.domain.film.UserCantCommentException;
 import ar.edu.itba.grupo2.domain.genre.Genre;
@@ -87,6 +88,10 @@ public class FilmController extends BaseController {
 		ModelAndView mav = new ModelAndView();
 		User user = null;
 		boolean userCanComment = true;
+		
+		if (film == null) {
+			throw new FilmNotFoundException();
+		}
 		
 		try {
 			user = getLoggedInUser(session);
@@ -155,6 +160,10 @@ public class FilmController extends BaseController {
 	@RequestMapping(value = "{id}/edit", method=RequestMethod.GET)
 	public ModelAndView editFilm(HttpSession session, @PathVariable(value = "id") Film film) {
 		authenticateAdmin(session);
+		
+		if (film == null) {
+			throw new FilmNotFoundException();
+		}
 		
 		ModelAndView mav = new ModelAndView();
 		List<Genre> genres = filmRepo.getGenres();

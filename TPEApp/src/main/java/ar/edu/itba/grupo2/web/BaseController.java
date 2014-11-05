@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import ar.edu.itba.grupo2.domain.film.FilmNotFoundException;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserNotAdminException;
 import ar.edu.itba.grupo2.domain.user.UserNotAuthenticatedException;
@@ -74,6 +75,11 @@ public class BaseController {
 	@ExceptionHandler(UserNotAdminException.class)
 	public String permissionDeniedError(Exception e) {
 		return "error/userNotAdmin";
+	}
+	
+	@ExceptionHandler({FilmNotFoundException.class})
+	public String filmNotFoundError(Exception e) {
+		return "error/film-not-found-error";
 	}
 
 }
