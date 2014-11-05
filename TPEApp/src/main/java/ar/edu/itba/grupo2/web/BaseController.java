@@ -43,7 +43,7 @@ public class BaseController {
 	}
 	
 	protected void logOut(HttpSession session) {
-		session.removeAttribute(USER_ID);
+		session.invalidate();
 	}
 	
 	@ExceptionHandler({UserNotFollowedException.class})
