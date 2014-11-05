@@ -118,6 +118,9 @@ public class User extends EntityBaseType {
 	}
 
 	public void followUser(User u) throws UserAlreadyFollowedException {
+		if(u.equals(this)){
+			throw new CantFollowMeException();
+		}
 		if (follows.contains(u)) {
 			throw new UserAlreadyFollowedException();
 		}

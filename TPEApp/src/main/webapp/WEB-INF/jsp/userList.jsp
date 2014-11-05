@@ -1,7 +1,7 @@
 <%@ include file="header.jsp" %>
 <h2>Usuarios</h2>
 
-	<c:forEach items="${allUsers}" var="user">
+	<c:forEach items="${toFollow}" var="user">
 		<div class="user-list-item">
 			<div class="media">
 				<div class="pull-left">
@@ -25,7 +25,7 @@
 		</div>
 	</c:forEach>
 
-	<c:if test="${empty allUsers}">
+	<c:if test="${empty toFollow}">
 		<h4 class="muted">No hay usuarios registrados</h4>
 	</c:if>
 	

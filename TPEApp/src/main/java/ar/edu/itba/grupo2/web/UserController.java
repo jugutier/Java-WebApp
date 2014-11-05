@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.grupo2.domain.user.User;
+import ar.edu.itba.grupo2.domain.user.UserNotAuthenticatedException;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
 import ar.edu.itba.grupo2.web.command.UserForm;
@@ -44,9 +45,12 @@ public class UserController extends BaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("allUsers", userRepo.getAll());
+		User logged = getLoggedInUser(session);
+		List<User> toFollow = userRepo.getAll();
+		toFollow.remove(logged);
+		mav.addObject("toFollow", toFollow);
 		mav.setViewName("userList");
 		
 		return mav;
@@ -244,32 +248,15 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public String follow(HttpSession session,@RequestParam(value = "fromPage", required=true) String fromPage, @RequestParam(value = "id", required=true) User user){
-		String ret;
-		if (fromPage == null) {
-			fromPage = "welcome";
-		}
 		User loggedUser = getLoggedInUser(session);
-		if(loggedUser==null){
-			//TODO: tirar exception 
-		}
-		else{
-			loggedUser.followUser(user);
-		}
+		loggedUser.followUser(user);
 		return "redirect:" + fromPage;
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public String unFollow(HttpSession session,@RequestParam(value = "fromPage", required=true) String fromPage, @RequestParam(value = "id", required=true) User user){
-		if (fromPage == null) {
-			fromPage = "welcome";
-		}
 		User loggedUser = getLoggedInUser(session);
-		if(loggedUser==null){
-			//TODO: tirar exception 
-		}
-		else{
-			loggedUser.unFollowUser(user);
-		}
+		loggedUser.unFollowUser(user);
 		return "redirect:"+fromPage;
 	}
 	
