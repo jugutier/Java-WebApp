@@ -31,7 +31,7 @@
 			<td><fmt:formatDate value="${film.releaseDate}" pattern="dd-MM-yyyy"/></td>
 			<c:if test="${loggedInUser.admin}">
 				<td>
-					<form class="form-inline" action="removeFilm" method="POST">
+					<form class="form-inline text-center" action="removeFilm" method="POST">
 						<input type="hidden" name="id" class="input-block-level" value="${film.id}">
 						<a class="btn" type="button" href="${film.id}/edit"><i class="icon-edit"></i></a>
 						<button class="btn btn-danger" type="submit"><i class="icon-remove"></i></button>

@@ -337,6 +337,11 @@ public class FilmController extends BaseController {
 		List<Film> filmList = null;
 		List<Genre> genreList = filmRepo.getGenres();
 		
+		if (director != null && !isLoggedIn(session)) {
+			director = null;
+			mav.addObject("directorFilterError", "unauthorized");
+		}
+		
 		filmList = filmRepo.getFiltered(genre, director);
 				
 		mav.addObject("filmList", filmList);

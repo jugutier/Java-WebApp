@@ -27,7 +27,25 @@
 
 				<ul class="details-list">
 					<li><h5 class="details-item-header">Director: </h5><c:out value="${film.director}"/></li>
-					<li><h5 class="details-item-header">G&eacute;neros: </h5><c:out value="${film.genres}"/></li>
+					<c:if test="${not empty film.genres}">
+						<li><h5 class="details-item-header">
+							<c:choose>
+								<c:when test="${fn:length(film.genres) == 1}">
+									G&eacute;nero:
+								</c:when>
+								<c:otherwise>
+									G&eacute;neros:
+								</c:otherwise>
+							</c:choose>
+							</h5>
+							<c:forEach items="${film.genres}" var="genre" varStatus="status">
+								<c:if test="${status.index != 0}">
+									|
+								</c:if>
+								<c:out value="${genre.genre}"/>
+							</c:forEach>
+						</li>
+					</c:if>
 					<li><h5 class="details-item-header">Fecha de estreno: </h5><fmt:formatDate value="${film.releaseDate}" pattern="dd-MM-yyyy"/></li>
 					<li><h5 class="details-item-header">Duraci&oacute;n: </h5><c:out value="${film.length}"/> minutos</li>
 				</ul>
