@@ -4,8 +4,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import ar.edu.itba.grupo2.domain.user.User;
+import ar.edu.itba.grupo2.domain.user.UserNotAdminException;
+import ar.edu.itba.grupo2.domain.user.UserNotFollowedException;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 
 @Controller
@@ -38,6 +41,21 @@ public class BaseController {
 	
 	protected void logOut(HttpSession session) {
 		session.removeAttribute(USER_ID);
+	}
+	
+	@ExceptionHandler({UserNotFollowedException.class})
+	public String unauthenticatedUserError() {
+		return "error/unauthenticated-user-error";
+	}
+	
+	@ExceptionHandler({UserNotAdminException.class})
+	public String permissionDeniedError() {
+		return "error/userNotAdmin";
+	}
+	
+	@ExceptionHandler({Exception.class})
+	public String generalError() {
+		return "error/dispatch-error";
 	}
 
 }
