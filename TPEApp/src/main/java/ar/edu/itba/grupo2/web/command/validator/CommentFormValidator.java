@@ -6,6 +6,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
+import ar.edu.itba.grupo2.web.command.CommentForm;
 
 @Component
 public class CommentFormValidator implements Validator {
@@ -18,6 +19,11 @@ public class CommentFormValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "text", "required");
+		CommentForm cf = (CommentForm)target;
+		// The length could go to a config file...
+		if(cf.getText().length() > 140){
+			errors.rejectValue("text","tooLong");
+		}
 	}
 
 }
