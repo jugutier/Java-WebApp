@@ -18,6 +18,7 @@
 		</a>
 		<h4 class="muted"><c:out value="${user.email}"/></h4>
 		
+		<c:if test="${user != loggedInUser}">
 		<c:choose>
 			<c:when test="${user.followable}">
 				<form action="${pageContext.request.contextPath}/bin/user/follow" method="POST">
@@ -34,6 +35,7 @@
 				</form>
 			</c:otherwise>
 		</c:choose>
+		</c:if>
 		<h5 class="details-item-header">Fecha de nacimiento: </h5><fmt:formatDate value="${user.birthdate}" pattern="dd-MM-yyyy"/>
 	</div>
 </div>
