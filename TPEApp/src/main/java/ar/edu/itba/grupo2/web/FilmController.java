@@ -53,12 +53,16 @@ public class FilmController extends BaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView welcome() {
+	public ModelAndView welcome(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		User logged = getLoggedInUser(session); 
 		mav.addObject("topfive", filmRepo.getTop(5));
 		mav.addObject("latest", filmRepo.getLatest(5));
 		mav.addObject("newReleases",
 				filmRepo.getNewests(7));
+		if(!(logged == null)){
+			mav.addObject("followedComments", userRepo.getLatestComments(logged)) ;
+		}
 		
 		mav.setViewName("welcome");
 		

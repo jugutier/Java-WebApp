@@ -12,4 +12,6 @@
 
 <%@ include file="latestMovies.jsp" %>
 
+<%@ include file="followedComments.jsp" %>
+
 <%@ include file="footer.jsp" %>
