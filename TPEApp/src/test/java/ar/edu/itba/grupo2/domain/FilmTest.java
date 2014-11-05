@@ -44,7 +44,7 @@ public class FilmTest {
 	@Test
 	public void rateUpdatesTest() throws UserCantCommentException {
 		User nonVipStub = new User.Builder().id(1).email("a@a.com").vip(false).build();
-		User vipStub = new User.Builder().id(2).email("b@b.com").vip(true).build();
+		User vipStub = new User.Builder().id(2).email("b@bebe.com").vip(true).build();
 		Calendar cal =  Calendar.getInstance();cal.set(1991, 03, 31);
 		Film filmStub  = new Film.Builder().creationDate(cal.getTime()).build();
 		

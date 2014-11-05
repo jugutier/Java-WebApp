@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.grupo2.domain.user.User;
-import ar.edu.itba.grupo2.domain.user.UserAlreadyFollowedException;
-import ar.edu.itba.grupo2.domain.user.UserNotFollowedException;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
 import ar.edu.itba.grupo2.web.command.UserForm;

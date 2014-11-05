@@ -163,7 +163,7 @@ public class Film extends EntityBaseType {
 		return copy;
 	}
 
-	public boolean userHasCommented(User user) {
+	private boolean userHasCommented(User user) {
 		for (Comment c : comments) {
 			if (c.getUser().equals(user)) {
 				return true;
@@ -285,13 +285,13 @@ public class Film extends EntityBaseType {
 		private Date releaseDate;
 		private List<Genre> genres;
 		private String description;
-		private int length;
-		private int totalComments;
-		private int sumComments;
-		private Date creationDate;
+		private int length = 0;
+		private int totalComments = 0;
+		private int sumComments = 0;
+		private Date creationDate = null;
 		private MovieImage movieImage = null;
 
-		List<Comment> comments;
+		private List<Comment> comments;
 
 		public Builder id(final Integer id) {
 			this.id = id;

@@ -34,16 +34,6 @@
         <!-- one of the properties available; the maximum file size in bytes -->
         <property name="maxUploadSize" value="100000"/>
     </bean>
-	<!-- END base mvc.xml (Andy's) -->
-	
-	<!--<tx:annotation-driven />-->
-	<!-- <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>-->
-
-	<!--<bean id="userManager" class="ar.edu.itba.grupo2.web.session.UserManagerImpl2" scope="session">
-		<aop:scoped-proxy/>
-    </bean>-->
 	
 	<mvc:interceptors>
 		<bean class="ar.edu.itba.grupo2.web.filter.LoggedUserInterceptor" />

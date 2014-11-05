@@ -62,20 +62,13 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 				.list();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Film> getFromGenre(Genre genre) {
 		return find("FROM Film film WHERE ? IN (FROM film.genres) ORDER BY releaseDate ASC", genre);
-		//return createCriteria()
-		//		.add(Restrictions.in("genres", genre)).list();
-		//return find("FROM Film f WHERE ? in ?");
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Film> getFromDirector(String director) {
-		///return createCriteria().add(Restrictions.ilike("director", director))
-		//		.list();
 		return find("FROM Film f WHERE upper(f.director) LIKE ? ORDER BY releaseDate ASC", "%" + director.toUpperCase() + "%");
 	}
 	
@@ -110,6 +103,18 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 	public List<Genre> getGenres() {
 		List<Genre> list = find("from Genre");
 		return list;
+	}
+	/**
+	 * Validation using natural key is useful when importing films from a CSV. 
+	 * Otherwise the model will validate itself.
+	 */
+	@Override
+	public Film save(Film entity) {
+		List<Film> duplicateFilm = find("from Film where film.name = ? AND film.creationDate = ? ",entity.getName(),entity.getCreationDate());
+		if(duplicateFilm == null || duplicateFilm.size() !=0){
+			throw new DuplicateFilmException();
+		}
+		return super.save(entity);
 	}
 
 }

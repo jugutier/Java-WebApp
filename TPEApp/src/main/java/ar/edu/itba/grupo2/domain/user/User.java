@@ -45,7 +45,7 @@ public class User extends EntityBaseType {
 	@ManyToMany
 	private List<User> follows;
 	
-	transient boolean isFollowable;
+	private transient boolean isFollowable;
 
 	User() {
 
