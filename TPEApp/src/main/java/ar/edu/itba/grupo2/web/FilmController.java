@@ -75,17 +75,26 @@ public class FilmController extends BaseController {
 	
 	@RequestMapping(value = "{id}/details", method=RequestMethod.GET)
 	public ModelAndView filmDetails(HttpSession session, @PathVariable(value = "id") Film film) {
-		ModelAndView mav = new ModelAndView();		
-		User user = getLoggedInUser(session);		
+		ModelAndView mav = new ModelAndView();
+		User user = null;
+		boolean userCanComment = true;
+		
+		try {
+			user = getLoggedInUser(session);
+		}
+		catch(UserNotAuthenticatedException e) {
+			user = null;
+			userCanComment = false;
+		}
+		
 		mav.addObject("commentList", film.getCommentsForUser(user));
 		mav.addObject("film", film);
 		
-		if(isLoggedIn(session)) {
-			boolean userCanComment = film.userCanComment(user);
-			mav.addObject("userCanComment", userCanComment);
-			if(userCanComment){
-				mav.addObject("commentForm", new CommentForm());
-			}
+		userCanComment |= film.userCanComment(user);
+		
+		mav.addObject("userCanComment", userCanComment);
+		if(userCanComment){
+			mav.addObject("commentForm", new CommentForm());
 		}
 		
 		mav.setViewName("filmDetails");
@@ -97,11 +106,7 @@ public class FilmController extends BaseController {
 	@RequestMapping(value = "{id}/details", method=RequestMethod.POST)
 	public ModelAndView addComment(HttpSession session, CommentForm commentForm, Errors errors, @PathVariable(value = "id") Film film, @RequestParam(value = "fromPage") String fromPage) {
 		ModelAndView mav = new ModelAndView();
-		User user = getLoggedInUser(session);		
-		
-		if (user == null) {
-			throw new UserNotAuthenticatedException();
-		}
+		User user = getLoggedInUser(session);
 		
 		mav.addObject("film", film);
 		mav.setViewName("filmDetails");
@@ -143,6 +148,8 @@ public class FilmController extends BaseController {
 
 	@RequestMapping(value = "{id}/edit", method=RequestMethod.GET)
 	public ModelAndView editFilm(HttpSession session, @PathVariable(value = "id") Film film) {
+		authenticateAdmin(session);
+		
 		ModelAndView mav = new ModelAndView();
 		List<Genre> genres = filmRepo.getGenres();
 		
@@ -157,10 +164,7 @@ public class FilmController extends BaseController {
 	
 	@RequestMapping(value = "{id}/edit", method=RequestMethod.POST)
 	public String editFilmSubmit(HttpSession session, Model model, @ModelAttribute @Valid FilmForm filmForm, Errors errors, @RequestParam(value = "movieImage") MultipartFile movieImage, @RequestParam(value = "deleteImage", required = false) boolean deleteImage){
-		
-		if (!isLoggedIn(session) || !getLoggedInUser(session).isAdmin() ) {
-			return "redirect:../../welcome";
-		}
+		authenticateAdmin(session);
 		
 		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date releaseDate = null;
@@ -187,6 +191,8 @@ public class FilmController extends BaseController {
 	
 	@RequestMapping(value = "add", method=RequestMethod.GET)
 	public ModelAndView addFilm(HttpSession session) {
+		authenticateAdmin(session);
+
 		ModelAndView mav = new ModelAndView();
 		List<Genre> genres = filmRepo.getGenres();
 		
@@ -200,10 +206,7 @@ public class FilmController extends BaseController {
 	
 	@RequestMapping(value = "add", method=RequestMethod.POST)
 	public String addFilmSubmit(HttpSession session, Model model, FilmForm filmForm, Errors errors, @RequestParam(value = "movieImage") MultipartFile movieImage){
-
-		if (!isLoggedIn(session) || !getLoggedInUser(session).isAdmin() ) {
-			return "redirect:../welcome";
-		}
+		authenticateAdmin(session);
 		
 		DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date releaseDate = null;
@@ -232,9 +235,7 @@ public class FilmController extends BaseController {
 	
 	@RequestMapping(value = "addFromCSV", method=RequestMethod.POST)
 	public String addFilmsCSV(HttpSession session, Model model, FilmForm filmForm, Errors errors, @RequestParam(value = "filmsCSV") MultipartFile filmsCSV){
-		if (!isLoggedIn(session) || !getLoggedInUser(session).isAdmin() ) {
-			return "redirect:welcome";
-		}
+		authenticateAdmin(session);
 		
 		File file = new File(filmsCSV.getOriginalFilename());
         try {
@@ -317,14 +318,7 @@ public class FilmController extends BaseController {
 
 	@RequestMapping(method=RequestMethod.POST)
 	public String removeFilm(HttpSession session,@RequestParam(value = "id", required=true) Integer id){
-		User user = getLoggedInUser(session);
-		
-		if (user == null) {
-			throw new UserNotAuthenticatedException();
-		}
-		else if(!user.isAdmin()){
-			throw new UserNotAdminException();
-		}
+		authenticateAdmin(session);
 		
 		Film film = filmRepo.get(id);
 		filmRepo.delete(film);

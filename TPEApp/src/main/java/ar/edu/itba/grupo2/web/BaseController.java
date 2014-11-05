@@ -5,9 +5,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserNotAdminException;
+import ar.edu.itba.grupo2.domain.user.UserNotAuthenticatedException;
 import ar.edu.itba.grupo2.domain.user.UserNotFollowedException;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 
@@ -31,31 +33,45 @@ public class BaseController {
 		return session.getAttribute(USER_ID) != null;
 	}
 	
-	protected User getLoggedInUser(HttpSession session) {
+	protected User getLoggedInUser(HttpSession session) throws UserNotAuthenticatedException {
 		User user = null;
+		
 		if (isLoggedIn(session)) {
 			user = userRepo.get((Integer)session.getAttribute(USER_ID));
 		}
+		else {
+			throw new UserNotAuthenticatedException();
+		}
+		
 		return user;
+	}
+	
+	protected User getLoggedInAdmin(HttpSession session) throws UserNotAuthenticatedException, UserNotAdminException {
+		User user = getLoggedInUser(session);
+		
+		if (!user.isAdmin()) {
+			throw new UserNotAdminException();
+		}
+		
+		return user;
+	}
+	
+	protected void authenticateAdmin(HttpSession session) throws UserNotAuthenticatedException, UserNotAdminException {
+		getLoggedInAdmin(session);
 	}
 	
 	protected void logOut(HttpSession session) {
 		session.removeAttribute(USER_ID);
 	}
 	
-	@ExceptionHandler({UserNotFollowedException.class})
-	public String unauthenticatedUserError() {
+	@ExceptionHandler({UserNotAuthenticatedException.class})
+	public String unauthenticatedUserError(Exception e) {
 		return "error/unauthenticated-user-error";
 	}
 	
-	@ExceptionHandler({UserNotAdminException.class})
-	public String permissionDeniedError() {
+	@ExceptionHandler(UserNotAdminException.class)
+	public String permissionDeniedError(Exception e) {
 		return "error/userNotAdmin";
-	}
-	
-	@ExceptionHandler({Exception.class})
-	public String generalError() {
-		return "error/dispatch-error";
 	}
 
 }
