@@ -1,5 +1,5 @@
 <c:if test="${not empty followedComments}">
-<h2>Comentarios m&aocute;s recientes de usuarios que sigues</h2>
+<h2>Comentarios m&aacute;s recientes de usuarios que sigues</h2>
 
 <table class="table table-bordered">
 	<tr>
@@ -13,7 +13,7 @@
 			<td><c:out value="${comment.user.name}"/></td>
 			<td><c:out value="${comment.user.email}"/></td>
 			<td><c:out value="${comment.text}"/></td>
-			<td><c:out value="${comment.creationDate}"/></td>
+			<td><fmt:formatDate value="${comment.creationDate}" pattern="dd-MM-yyyy HH:MM"/></td>
 		</tr>
 	</c:forEach>
 </table>
