@@ -25,7 +25,7 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 	@Override
 	public List<Film> getTop(int amount) {
 		return limitedFind(
-				"FROM Film where totalComments > 0 ORDER BY (sumComments / totalComments) ASC",
+				"FROM Film where totalComments > 0 ORDER BY (sumComments / totalComments) DESC",
 				amount);
 	}
 
