@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
+import ar.edu.itba.grupo2.domain.film.UserCantCommentException;
 
 @Entity
 @Table(name = "GAJAmdbUser")
@@ -41,10 +42,10 @@ public class User extends EntityBaseType {
 
 	@OneToMany(mappedBy = "user")
 	private List<Comment> comments;
-	
+
 	@ManyToMany
 	private List<User> follows;
-	
+
 	private transient boolean isFollowable;
 
 	User() {
@@ -63,7 +64,7 @@ public class User extends EntityBaseType {
 		this.secretAnswer = builder.secretAnswer;
 		this.comments = builder.comments;
 		this.admin = builder.admin;
-		this.follows=builder.follows;
+		this.follows = builder.follows;
 	}
 
 	public String getName() {
@@ -101,11 +102,11 @@ public class User extends EntityBaseType {
 	public String getSecretAnswer() {
 		return secretAnswer;
 	}
-	
+
 	public boolean isFollowable() {
 		return isFollowable;
 	}
-	
+
 	public void setPassword(final String password) {
 		this.password = password;
 	}
@@ -115,21 +116,19 @@ public class User extends EntityBaseType {
 		copy.addAll(follows);
 		return copy;
 	}
-	
-	public void followUser (User u) throws UserAlreadyFollowedException{
-		if(follows.contains(u)){
+
+	public void followUser(User u) throws UserAlreadyFollowedException {
+		if (follows.contains(u)) {
 			throw new UserAlreadyFollowedException();
 		}
 		follows.add(u);
 	}
-	
-	
-	 
-	public void unFollowUser(User u) throws UserNotFollowedException{
-		if(!follows.contains(u)){
+
+	public void unFollowUser(User u) throws UserNotFollowedException {
+		if (!follows.contains(u)) {
 			throw new UserNotFollowedException();
 		}
-		follows.remove(u);	
+		follows.remove(u);
 	}
 
 	public List<Comment> getComments() {
@@ -138,7 +137,8 @@ public class User extends EntityBaseType {
 		return copy;
 	}
 
-	public void addComment(Comment c) {
+	public void addComment(Comment c) throws UserCantCommentException {
+		c.getFilm().addComment(c);
 		comments.add(c);
 	}
 
@@ -248,8 +248,8 @@ public class User extends EntityBaseType {
 			this.admin = admin;
 			return this;
 		}
-		
-		public Builder follows(final List<User> follows){
+
+		public Builder follows(final List<User> follows) {
 			this.follows = follows;
 			return this;
 		}
@@ -260,7 +260,7 @@ public class User extends EntityBaseType {
 	}
 
 	public void canBeFollowed(User u) {
-		isFollowable=!(u.getFollows().contains(this));
-		
+		isFollowable = !(u.getFollows().contains(this));
+
 	}
 }
