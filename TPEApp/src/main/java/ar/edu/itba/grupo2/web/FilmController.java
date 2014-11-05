@@ -1,15 +1,22 @@
 package ar.edu.itba.grupo2.web;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -215,6 +222,52 @@ public class FilmController extends BaseController {
 			return "addFilm";
 		}
 		
+		return "redirect:list";
+	}
+	
+	@RequestMapping(value = "addFromCSV", method=RequestMethod.POST)
+	public String addFilmsCSV(HttpSession session, Model model, FilmForm filmForm, Errors errors, @RequestParam(value = "filmsCSV") MultipartFile filmsCSV){
+		if (!isLoggedIn(session) || !getLoggedInUser(session).isAdmin() ) {
+			return "redirect:welcome";
+		}
+		
+		File file = new File(filmsCSV.getOriginalFilename());
+        try {
+			filmsCSV.transferTo(file);
+			CSVParser parser = CSVParser.parse(file, Charset.forName("UTF-8"), 
+					CSVFormat.DEFAULT.withHeader("title","releaseDate","director","length","genre","description"));
+			List<CSVRecord> records = parser.getRecords();
+			
+			DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date releaseDate = null;
+			Film film;
+			
+			// Remove header
+			records.remove(0);
+			for(CSVRecord r: records){
+				try {
+					releaseDate = outputDateFormat.parse(r.get("releaseDate"));
+					List<Genre> genres = new ArrayList<Genre>();
+					String[] genresValues = r.get("genre").replace("\"", "").split(","); 
+					for(String genre: genresValues){
+						genres.add(filmRepo.getGenre(genre));
+					}
+					film = new Film.Builder().creationDate(new Date())
+							.releaseDate(releaseDate).name(r.get("title"))
+							.director(r.get("director"))
+							.genres(genres)
+							.length(Integer.parseInt(r.get("length").trim()))
+							.description(r.get("description")).build();
+					filmRepo.save(film);
+				} catch (ParseException e) {
+					errors.rejectValue("releaseDate", "invalid");
+				}
+			}
+		} catch (IllegalStateException e) {
+			// TODO Redirect and show error message
+		} catch (IOException e) {
+			// TODO Redirect and show error message
+		}
 		return "redirect:list";
 	}
 	
