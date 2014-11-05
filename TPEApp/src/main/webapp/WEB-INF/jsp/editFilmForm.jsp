@@ -1,6 +1,6 @@
 <fieldset>
 
-<!-- Errors variables -->
+	<!-- Errors variables -->
 	<c:set var="nameErrors"><form:errors path="name"/></c:set>
 	<c:if test="${not empty nameErrors}">
 		<c:set var="nameStatus">error</c:set>
