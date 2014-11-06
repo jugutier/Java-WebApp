@@ -2,6 +2,7 @@ package ar.edu.itba.grupo2.domain.user;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -66,6 +67,9 @@ public class User extends EntityBaseType {
 		this.secretQuestion = builder.secretQuestion;
 		this.secretAnswer = builder.secretAnswer;
 		this.comments = builder.comments;
+		if(this.comments == null){
+			this.comments = new LinkedList<Comment>();
+		}
 		this.admin = builder.admin;
 		this.follows = builder.follows;
 	}
@@ -146,7 +150,12 @@ public class User extends EntityBaseType {
 	public void addComment(Comment c) throws UserCantCommentException {
 		if(!comments.contains(c)){
 			comments.add(c);
-			c.getFilm().addComment(c);
+			try{
+				c.getFilm().addComment(c);
+			}catch(UserCantCommentException e){
+				// ... fix me please
+				return ;
+			}
 		}
 	}
 
