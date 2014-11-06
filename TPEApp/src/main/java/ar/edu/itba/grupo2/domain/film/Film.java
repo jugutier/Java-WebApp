@@ -188,7 +188,6 @@ public class Film extends EntityBaseType {
 				comments.add(c);
 				c.getUser().addComment(c);
 			}
-			
 		} else {
 			throw new UserCantCommentException();
 		}
