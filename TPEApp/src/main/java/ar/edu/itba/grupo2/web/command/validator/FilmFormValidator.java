@@ -47,9 +47,6 @@ public class FilmFormValidator implements Validator{
 		if (film.getLength() <= 0) {
 			errors.rejectValue("length", "invalid.length");
 		}
-		
-		if (!film.getMovieImage().getContentType().equals("image/jpg") || film.getMovieImage().getContentType().equals("image/png")) {
-			errors.rejectValue("movieImage", "invalid.movieImageType");
-		}
+
 	}
 }
