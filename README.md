@@ -3,6 +3,14 @@
 ![GAJAMDB icon](http://png-3.findicons.com/files/icons/1261/sticker_system/256/movie.png)
 
 
-1) Open a terminal
-2) Run `./deploy.sh` (`chmod +x` if necessary)
-3) See `log.txt` for output and errors.
+Coming from sprint1 just ran `migrate.sql` in the postgres database. (User paw will now have paw as password. As requested.)
+
+####ADMIN
+`user:` jugutier@itba.edu.ar
+
+`pass:` 123456
+
+####VIP 
+`user:` gdelguid@itba.edu.ar
+
+`pass:` 123456
