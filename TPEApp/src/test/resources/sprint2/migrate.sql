@@ -11,7 +11,9 @@ update gajamdbuser set admin=true where id = 4;
 
 create table GAJAmdbUser_GAJAmdbUser (GAJAmdbUser_id int4 not null, follows_id int4 not null);
 create table Genre (id  serial not null, genre varchar(30) not null, primary key (id));
+
 insert into genre (genre)  (select distinct(genre) from film);
+
 create table Report (id  serial not null, comment_id int4, user_id int4, primary key (id));
 create table image (id  serial not null, content oid not null, contentType varchar(50) not null, length int4 not null, name varchar(50) not null, film_id int4, primary key (id));
 alter table Comment add constraint FK9BDE863FD8DE7209 foreign key (user_id) references GAJAmdbUser;
