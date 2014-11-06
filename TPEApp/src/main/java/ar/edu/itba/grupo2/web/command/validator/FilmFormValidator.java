@@ -22,9 +22,15 @@ public class FilmFormValidator implements Validator{
 		if (ValidationUtilities.paramEmpty(film.getName())) {
 			errors.rejectValue("name", "empty");
 		}
+		else if (film.getName().length() > 100) {
+			errors.rejectValue("name", "tooLong");
+		}
 		
 		if (ValidationUtilities.paramEmpty(film.getDirector())) {
 			errors.rejectValue("director", "empty");
+		}
+		else if(film.getDirector().length() > 40) {
+			errors.rejectValue("director", "tooLong");
 		}
 		
 		if (ValidationUtilities.paramEmpty(film.getReleaseDate())) {
@@ -33,6 +39,9 @@ public class FilmFormValidator implements Validator{
 		
 		if (ValidationUtilities.paramEmpty(film.getDescription())) {
 			errors.rejectValue("description", "empty");
+		}
+		else if (film.getDescription().length() > 500) {
+			errors.rejectValue("description", "tooLong");
 		}
 		
 		if (film.getLength() <= 0) {
