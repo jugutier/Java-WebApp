@@ -57,6 +57,9 @@ public class User extends EntityBaseType {
 		this.name = builder.name;
 		this.lastname = builder.lastname;
 		this.email = builder.email;
+		if(this.email==null){
+			throw new CantCreateWithoutEmailException();
+		}
 		this.password = builder.password;
 		this.birthdate = builder.birthdate;
 		this.vip = builder.vip;
@@ -263,9 +266,6 @@ public class User extends EntityBaseType {
 		}
 
 		public User build() {
-			if(this.email==null){
-				throw new CantCreateWithoutEmailException();
-			}
 			return new User(this);
 		}
 	}
