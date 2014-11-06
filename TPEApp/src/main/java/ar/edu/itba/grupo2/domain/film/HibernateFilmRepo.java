@@ -110,7 +110,7 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 	 */
 	@Override
 	public Film save(Film entity) {
-		List<Film> duplicateFilm = find("from Film where film.name = ? AND film.creationDate = ? ",entity.getName(),entity.getCreationDate());
+		List<Film> duplicateFilm = find("from Film where name = ? AND creationDate = ? ",entity.getName(),entity.getCreationDate());
 		if(duplicateFilm == null || duplicateFilm.size() !=0){
 			throw new DuplicateFilmException();
 		}

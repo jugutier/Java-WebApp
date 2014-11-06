@@ -274,7 +274,8 @@ public class FilmController extends BaseController {
 						genres.add(filmRepo.getGenre(genre));
 					}
 					film = new Film.Builder().creationDate(new Date())
-							.releaseDate(releaseDate).name(r.get("title"))
+							.releaseDate(releaseDate)
+							.name(r.get("title"))
 							.director(r.get("director"))
 							.genres(genres)
 							.length(Integer.parseInt(r.get("length").trim()))
@@ -285,7 +286,7 @@ public class FilmController extends BaseController {
 				}
 			}
 		} catch (Exception e) {
-			// TODO Redirect and show error message
+			errors.rejectValue("csv", "invalid");
 		}
 		return "redirect:list";
 	}
