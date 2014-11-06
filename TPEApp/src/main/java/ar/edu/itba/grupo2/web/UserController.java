@@ -182,10 +182,6 @@ public class UserController extends BaseController {
 			mav.addObject("stage", "getEmail");
 		}
 		
-		/*UserManager userManager = new UserManagerImpl((HttpServletRequest)req);
-		userManager.resetUser();
-		
-		resp.sendRedirect(resp.encodeRedirectURL("welcome"));*/
 		return mav;
 	}
 	

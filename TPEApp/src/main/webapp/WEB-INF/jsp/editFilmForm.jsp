@@ -26,6 +26,11 @@
 		<c:set var="descriptionStatus">error</c:set>
 	</c:if>
 
+	<c:set var="movieImageErrors"><form:errors path="movieImage"/></c:set>
+	<c:if test="${not empty movieImageErrors}">
+		<c:set var="movieImageStatus">error</c:set>
+	</c:if>
+
 	<div class="control-group ${nameStatus}">
 		<form:label class="control-label" for="name" path="name">T&iacute;tulo</form:label>
 		<div class="controls">
@@ -36,7 +41,7 @@
 	<div class="control-group ${releaseDateStatus}">
 		<form:label class="control-label" for="releaseDate" path="">Fecha de estreno</form:label>
 		<div class="controls">
-			<form:input type="text" id="releaseDate" path="releaseDate"/>
+			<form:input type="date" id="releaseDate" path="releaseDate"/>
 			<span class="help-inline"><form:errors path="releaseDate"/></span>
 		</div>
 	</div>
@@ -57,7 +62,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="control-group">
+	<div class="control-group ${movieImageStatus}">
 		<form:label class="control-label" for="movieImage" path="">Foto de portada</form:label>
 		<div class="controls">
 			<div class="media">
@@ -67,7 +72,8 @@
 					</div>
 				</c:if>
 				<div class="media-body">
-					<input type="file" id="movieImage" name="movieImage" />
+					<input type="file" id="movieImage" name="movieImage" accept="image/*" />
+					<span class="help-inline"><form:errors path="movieImage"/></span>
 					<c:if test="${not empty film.movieImage}">
 						<label class="checkbox">
 							<input type="checkbox" name="deleteImage"> Eliminar imagen
