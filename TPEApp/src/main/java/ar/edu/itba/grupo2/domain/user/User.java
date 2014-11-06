@@ -263,6 +263,9 @@ public class User extends EntityBaseType {
 		}
 
 		public User build() {
+			if(this.email==null){
+				throw new CantCreateWithoutEmailException();
+			}
 			return new User(this);
 		}
 	}
