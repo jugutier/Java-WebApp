@@ -172,6 +172,8 @@ public class Film extends EntityBaseType {
 	}
 
 	public boolean userCanComment(User user) {
+		if(user == null)
+			return false;
 		if(userHasCommented(user)){
 			return false;
 		}		
