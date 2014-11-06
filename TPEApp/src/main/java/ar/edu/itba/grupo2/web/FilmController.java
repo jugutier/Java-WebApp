@@ -104,7 +104,7 @@ public class FilmController extends BaseController {
 		mav.addObject("commentList", film.getCommentsForUser(user));
 		mav.addObject("film", film);
 		
-		userCanComment |= film.userCanComment(user);
+		userCanComment = film.userCanComment(user);
 		
 		mav.addObject("userCanComment", userCanComment);
 		if(userCanComment){
