@@ -2,8 +2,6 @@ ALTER USER paw WITH PASSWORD 'paw';
 create table CommentRate (id  serial not null, rating int4 not null, comment_id int4, user_id int4, primary key (id));
 create table Film_Genre (Film_id int4 not null, genres_id int4 not null);
 
-insert into  Film_Genre select film.id, genre.id from film,genre where film.genre=genre.genre;
-
 alter table GAJAmdbUser add column admin bool;
 
 update gajamdbuser set admin=false;
@@ -13,6 +11,7 @@ create table GAJAmdbUser_GAJAmdbUser (GAJAmdbUser_id int4 not null, follows_id i
 create table Genre (id  serial not null, genre varchar(30) not null, primary key (id));
 
 insert into genre (genre)  (select distinct(genre) from film);
+insert into Film_Genre select film.id, genre.id from film,genre where film.genre=genre.genre;
 
 create table Report (id  serial not null, comment_id int4, user_id int4, primary key (id));
 create table image (id  serial not null, content oid not null, contentType varchar(50) not null, length int4 not null, name varchar(50) not null, film_id int4, primary key (id));
