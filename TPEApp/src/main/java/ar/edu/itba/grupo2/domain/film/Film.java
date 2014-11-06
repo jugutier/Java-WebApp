@@ -183,19 +183,23 @@ public class Film extends EntityBaseType {
 		if (userCanComment(c.getUser())) {
 			totalComments++;
 			sumComments+=c.getFilmRate();
-			c.getUser().addComment(c);
-			comments.add(c);
+			if(!comments.contains(c)){
+				comments.add(c);
+				c.getUser().addComment(c);
+			}
+			
 		} else {
 			throw new UserCantCommentException();
 		}
 	}
 	
 	public void removeComment(Comment c){
-		c.getUser().removeComment(c);
-		comments.remove(c);
-		sumComments-=c.getRate();
-		totalComments--;
-	
+		if(comments.contains(c)){
+			comments.remove(c);
+			c.getUser().removeComment(c);
+			sumComments-=c.getRate();
+			totalComments--;
+		}	
 	}
 
 	public void setName(String name) {

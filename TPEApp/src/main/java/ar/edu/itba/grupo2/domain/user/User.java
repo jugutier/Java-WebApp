@@ -141,14 +141,17 @@ public class User extends EntityBaseType {
 	}
 
 	public void addComment(Comment c) throws UserCantCommentException {
-		// We need to find a way to stop recursion, allowing user.addComment to work
-		// even when it is called directly. (now, works when film.addComment is called)
-		// c.getFilm().addComment(c);
-		comments.add(c);
+		if(!comments.contains(c)){
+			comments.add(c);
+			c.getFilm().addComment(c);
+		}
 	}
 
 	public void removeComment(Comment c) {
-		comments.remove(c);
+		if(comments.contains(c)){
+			comments.remove(c);
+			c.getFilm().removeComment(c);
+		}
 	}
 
 	public boolean resetPassword(String answerToSecretQuestion,
