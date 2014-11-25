@@ -1,145 +1,192 @@
 body {
-  padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+	background-color: #e9eaed;
 }
 
-.container-narrow{
-  margin: 0 auto;
-  max-width:700px;
+.navbar-inner {
+	border-radius: 0px;
+}
+
+.banner {
+	width: 100%;
+	background-color: #fff;
+}
+
+.page-header {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.page-header h1 {
+	margin-top: 0px;
+	display: inline;
+}
+
+.page-header img {
+	width: 100px;
+	height: 100px;
 }
 
 .form-signin {
-  max-width: 300px;
-  padding: 19px 29px 29px;
-  margin: 0 auto 20px;
-  background-color: #fff;
-  border: 1px solid #e5e5e5;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	max-width: 300px;
+	padding: 19px 29px 29px;
+	margin: 0 auto 20px;
+	background-color: #fff;
+	border: 1px solid #e5e5e5;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
 
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .form-signin input[type="text"],
 .form-signin input[type="password"] {
-  font-size: 16px;
-  height: auto;
-  margin-bottom: 15px;
-  padding: 7px 9px;
+	font-size: 16px;
+	height: auto;
+	margin-bottom: 15px;
+	padding: 7px 9px;
 }
 
 
 .form-comment {
-  max-width: 600px;
-  padding: 19px 29px 29px;
-  background-color: #fff;
-  border: 1px solid #e5e5e5;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	max-width: 600px;
+	padding: 19px 29px 29px;
+	background-color: #fff;
+	border: 1px solid #e5e5e5;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
 
 .alert ul {
-  margin-bottom: 0px;
+	margin-bottom: 0px;
 }
 
 .login-form-mini {
-  padding: 10px;
+	padding: 10px;
 }
 
 .comment-body {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #fff;
-  border-top: 1px solid #c5c5c5;
-  border-right: 1px solid #c5c5c5;
-  border-left: 1px solid #c5c5c5;
-  -webkit-border-radius: 5px 5px 0px 0px;
-  -moz-border-radius: 5px 5px 0px 0px;
-  border-radius: 5px 5px 0px 0px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	margin-top: 10px;
+	padding: 10px;
+	background-color: #fff;
+	border-top: 1px solid #c5c5c5;
+	border-right: 1px solid #c5c5c5;
+	border-left: 1px solid #c5c5c5;
+	-webkit-border-radius: 5px 5px 0px 0px;
+	-moz-border-radius: 5px 5px 0px 0px;
+	border-radius: 5px 5px 0px 0px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
 
 .comment-controls {
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #eee;
-  border: 1px solid #c5c5c5;
-  -webkit-border-radius: 0px 0px 5px 5px;
-  -moz-border-radius: 0px 0px 5px 5px;
-  border-radius: 0px 0px 5px 5px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	margin-bottom: 10px;
+	padding: 10px;
+	background-color: #eee;
+	border: 1px solid #c5c5c5;
+	-webkit-border-radius: 0px 0px 5px 5px;
+	-moz-border-radius: 0px 0px 5px 5px;
+	border-radius: 0px 0px 5px 5px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
 
 .comment-controls form {
-  margin-bottom: 0px;
+	margin-bottom: 0px;
 }
 
 .comment-controls p {
-  margin: 0px;
-  padding: 0px; 
+	margin: 0px;
+	padding: 0px; 
 }
 
 .details-item-header {
-  display: inline;
+	display: inline;
 }
 
 .details-list {
-  list-style-type: none;
+	list-style-type: none;
 }
 
 .details-list li {
-  margin-top: 10px;
+	margin-top: 10px;
 }
 
 .controls ul {
-  list-style-type: none;
-  margin: 0px;
+	list-style-type: none;
+	margin: 0px;
 }
 
 .controls li {
-  margin-bottom: 5px;
+	margin-bottom: 5px;
 }
 
 .user-list-item {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #fff;
-  border: 1px solid #c5c5c5;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	margin-top: 10px;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #c5c5c5;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
 
 .film-thumbnail {
-  width: 140px;
-  max-height: 190px;
-  background-color: #eee;
-  border: 2px solid #aaa;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	width: 140px;
+	max-height: 190px;
+	background-color: #eee;
+	border: 2px solid #aaa;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
 
 td form {
   margin-bottom: 0px;
+}
+
+.item-list {
+	list-style-type: none;
+	margin: 0px;
+}
+
+.item-container {
+	margin-top: 10px;
+	padding: 10px;
+	background-color: #fff;
+	border: 1px solid #c5c5c5;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+
+.star-list {
+	list-style-type: none;
+	display: inline;
+	margin: 0px;
+}
+
+.star-list li {
+	display: inline;
 }

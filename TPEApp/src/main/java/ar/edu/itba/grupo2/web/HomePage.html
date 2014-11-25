@@ -1,0 +1,33 @@
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+		<title>GAJAmdb</title>
+	</head>
+	<body>
+		<wicket:extend>
+			<div class="row">
+				<div class="span9">
+					<h2>Estrenos de esta semana</h2>
+					<ul class="item-list">
+						<li wicket:id="latest-released-list">
+							<div wicket:id="latest-released-item"></div>
+						</li>
+					</ul>
+				</div>
+				<div class="span3">
+					<h2>Top 5</h2>
+					<ul class="item-list"> 
+						<li wicket:id="top-films-list">
+							<div wicket:id="top-films-item"></div>
+						</li>
+					</ul>
+					<h2>Lo m&aacute;s nuevo</h2>
+					<ul class="item-list">
+						<li wicket:id="latest-list">
+							<div wicket:id="latest-item"></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</wicket:extend>
+	</body>
+</html>

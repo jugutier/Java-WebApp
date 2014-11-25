@@ -10,6 +10,8 @@
 
 	<context:component-scan base-package="ar.edu.itba.grupo2" />
 
+	<bean class="ar.edu.itba.grupo2.web.GAJAmdbApplication" />
+
 	<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" /> 
 
 	<bean id="viewNameTranslator" class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator" />

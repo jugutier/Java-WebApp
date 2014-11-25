@@ -1,0 +1,67 @@
+<html xmlns:wicket="http://wicket.apache.org">
+	<body>
+		<wicket:panel>
+			<a wicket:id="banner" href="#">
+				<div class="banner">
+					<div class="container">
+						<div class="page-header">
+							<img src="resources/img/default3.png" />
+							<h1>GAJAmdb <small>Un TPE de pel&iacute;cula</small></h1>
+						</div>
+					</div>
+				</div>
+			</a>
+
+			<div class="navbar navbar-static-top">
+				<div class="navbar-inner">
+					<div class="container">
+						<!-- Sections -->
+						<ul class="nav">
+							<li>
+								<a wicket:id="film-list-link" href="#" type="button">Pel&iacute;culas</a>
+							</li>
+							<li>
+								<a wicket:id="user-list-link" href="#" type="button">Usuarios</a>
+							</li>
+						</ul>
+
+						<!-- Login form -->
+						<div wicket:id="login-form">
+							<ul class="nav pull-right">
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Iniciar sesi&oacute;n <b class="caret"></b></a>
+									<form class="login-form-mini dropdown-menu" action="/" method="POST">
+										<input type="hidden" name="fromPage" class="input-block-level" value="${fromPage}">
+										<input type="text" name="email" class="input-block-level" placeholder="Direcci&oacute;n de email">
+										<input type="password" name="password" class="input-block-level" placeholder="Contrase&ntilde;a">
+										<p class="pull-right"><a href="#">&iquest;Olvid&oacute; su contrase&ntilde;a?</a></p>
+										<p class="pull-right"><a href="#">Registrarse</a></p>
+										<button class="btn btn-primary pull-right" type="submit">Iniciar sesi&oacute;n</button>
+									</form>
+								</li>
+							</ul>
+						</div>
+
+						<!-- User panel -->
+						<div wicket:id="user-panel">
+							<ul class="nav pull-right">								
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedro <b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="#">Ver mis comentarios</a></li>
+										<li class="divider"></li>
+										<li><a href="#">A&ntilde;adir pel&iacute;cula</a></li>
+										<li><a href="#">Ver denuncias</a></li>
+										<li class="divider"></li>
+										<li><a href="#">Cerrar sesi&oacute;n</a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</wicket:panel>
+	</body>
+</html>
