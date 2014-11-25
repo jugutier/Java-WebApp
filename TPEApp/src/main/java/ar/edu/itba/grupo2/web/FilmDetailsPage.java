@@ -7,7 +7,10 @@ import java.util.Date;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.RepeatingView;
 
+import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.film.Film;
+import ar.edu.itba.grupo2.domain.user.User;
+import ar.edu.itba.grupo2.web.widget.comment.FilmCommentListItem;
 
 public class FilmDetailsPage extends BasePage {
 	
@@ -62,5 +65,11 @@ public class FilmDetailsPage extends BasePage {
 		add(genreList);
 		add(genreSingular);
 		add(genrePlural);
+		
+		// TODO Get comment list here
+		User user = new User.Builder().admin(true).name("pepito").email("a@a.com").build();
+		Comment comment = new Comment.Builder().text("pepepepepepe").rate(3).user(user).build();
+		
+		add(new FilmCommentListItem("comment", comment));
 	}
 }

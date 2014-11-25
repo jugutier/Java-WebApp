@@ -1,0 +1,35 @@
+<html xmlns:wicket="http://wicket.apache.org">
+	<body>
+		<wicket:panel>
+			<div class="comment-body">
+				<a href="#" class="btn btn-danger pull-right" type="submit"><i class="icon-remove"></i></a>
+				<p>
+					<a href="#"><strong wicket:id="username">Pepito</strong></a>
+					<span wicket:id="admin-tag" class="label label-important">Admin</span>
+					<span wicket:id="vip-tag" class="label label-success">V.I.P.</span>
+				</p>
+				<p>
+					<div wicket:id="score-stars" class="star-list"></div>
+				</p>
+				<p>
+					Ñam ñam ñam ñam, ñam ñam ñam ñam, ñam - ñam ñam ñam.
+				</p>
+			</div>
+			<div class="comment-controls">
+				<form class="form-inline" action="#" method="POST">
+					Puntuaci&oacute;n:
+					<strong>3.4</strong>
+					<select class="span1" name="rating">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+					</select>
+					<button class="btn btn-primary" type="submit">Puntuar</button>
+					<a href="#" class="btn btn-warning pull-right" type="button"><i class="icon-flag"></i> Denunciar</a>
+				</form>
+			</div>
+		</wicket:panel>
+	</body>
+</html>
