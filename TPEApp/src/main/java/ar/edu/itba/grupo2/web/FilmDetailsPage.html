@@ -5,6 +5,40 @@
 	<body>
 		<wicket:extend>
 			<h2 wicket:id="title">T&iacute;tulo</h2>
+			
+			<div class="media">
+				<div class="pull-left">
+					<img data-src="holder.js/140x140" class="img-thumbnail film-thumbnail" alt="film-Image" src="resources/img/default.png" data-holder-rendered="true">
+				</div>
+				<div class="media-body">
+					<div class="row">
+						<div class="span4">
+							<h4 class="media-heading">Detalles</h4>
+		
+							<ul class="details-list">
+								<li><h5 class="details-item-header">Director: </h5><span wicket:id="director">Pepe</span></li>
+								<li>
+									<h5 class="details-item-header">
+									<span wicket:id="genre-plural">G&eacute;neros</span><span wicket:id="genre-singular">G&eacute;nero</span>
+									</h5>
+									<ul class="star-list">
+										<li wicket:id="genre-list"></li>
+									</ul>
+								</li>
+								<li><h5 class="details-item-header">Fecha de estreno: </h5><span wicket:id="release-date">1/1/1111</span></li>
+								<li><h5 class="details-item-header">Duraci&oacute;n: </h5><span wicket:id="length">3</span> minutos</li>
+							</ul>
+						</div>
+						<div class="span6">
+							<h4 class="media-heading">Resumen</h4>
+							
+							<p wicket:id="description">Resumen de la pel&iacute;cula</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<h3>Comentarios</h3>
 		</wicket:extend>
 	</body>
 </html>
