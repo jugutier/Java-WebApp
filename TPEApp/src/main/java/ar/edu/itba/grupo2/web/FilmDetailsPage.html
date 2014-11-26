@@ -38,9 +38,15 @@
 				</div>
 			</div>
 			
-			<h3>Comentarios</h3>
-			
-			<div wicket:id="comment"></div>
+			<div wicket:id="comment-list-container">
+				<h3>Comentarios</h3>
+				
+				<ul class="item-list">
+					<li wicket:id="comment-list">
+						<div wicket:id="comment-list-item"></div>
+					</li>
+				</ul>
+			</div>
 		</wicket:extend>
 	</body>
 </html>

@@ -3,14 +3,21 @@ package ar.edu.itba.grupo2.web;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.web.widget.comment.FilmCommentListItem;
+import ar.edu.itba.grupo2.web.widget.film.TopFilmsItem;
 
 public class FilmDetailsPage extends BasePage {
 	
@@ -29,6 +36,11 @@ public class FilmDetailsPage extends BasePage {
 		add(new Label("description", film.getDescription()));
 		add(new Label("length", String.valueOf(film.getLength())));
 		
+		loadGenreList(film);
+		loadCommentList(film);
+	}
+	
+	private void loadGenreList(final Film film) {
 		// TODO Get real genres here
 		RepeatingView genreList = new RepeatingView("genre-list");
 		Label genreSingular = new Label("genre-singular", "Género:");
@@ -65,11 +77,42 @@ public class FilmDetailsPage extends BasePage {
 		add(genreList);
 		add(genreSingular);
 		add(genrePlural);
+	}
+	
+	private void loadCommentList(final Film film) {
+		IModel<List<Comment>> commentModel = new LoadableDetachableModel<List<Comment>>() {
+			@Override
+			protected List<Comment> load() {
+				// TODO Use given Film to get comment list here
+				ArrayList<Comment> commentList = new ArrayList<Comment>();
+				User user = new User.Builder().admin(true).name("pepito").email("a@a.com").build();
+				Comment comment = new Comment.Builder().text("pepepepepepe").rate(3).text("kakaskksakask").user(user).build();
+				
+				commentList.add(comment);
+				commentList.add(comment);
+				commentList.add(comment);
+				
+				return commentList;
+				
+				//return film.getComments();
+			}
+		};
 		
-		// TODO Get comment list here
-		User user = new User.Builder().admin(true).name("pepito").email("a@a.com").build();
-		Comment comment = new Comment.Builder().text("pepepepepepe").rate(3).user(user).build();
+		WebMarkupContainer commentListContainer = new WebMarkupContainer("comment-list-container");
 		
-		add(new FilmCommentListItem("comment", comment));
+		ListView<Comment> commentListView = new ListView<Comment>("comment-list", commentModel) {
+			@Override
+			protected void populateItem(ListItem<Comment> item) {
+				item.add(new FilmCommentListItem("comment-list-item", item.getModelObject()));	
+			}
+		};
+		
+		// Hide comments section if there isn't any
+		if (commentModel.getObject() == null || commentModel.getObject().isEmpty()) {
+			commentListContainer.setVisible(false);
+		}
+		
+		commentListContainer.add(commentListView);
+		add(commentListContainer);
 	}
 }
