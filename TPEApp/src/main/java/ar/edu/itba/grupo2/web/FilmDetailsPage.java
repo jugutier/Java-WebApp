@@ -1,7 +1,6 @@
 package ar.edu.itba.grupo2.web;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,19 +11,18 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.film.Film;
-import ar.edu.itba.grupo2.domain.user.User;
+import ar.edu.itba.grupo2.domain.film.FilmRepo;
+import ar.edu.itba.grupo2.domain.genre.Genre;
 import ar.edu.itba.grupo2.web.widget.comment.FilmCommentListItem;
-import ar.edu.itba.grupo2.web.widget.film.TopFilmsItem;
 
 public class FilmDetailsPage extends BasePage {
 	
-	public FilmDetailsPage(Film film) {
+	public FilmDetailsPage(final Film film) {
 		super();
-		
-		film = new Film.Builder().name("koko").director("jajxj").releaseDate(new Date()).length(45).description("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vulputate, sem ut porta mollis, arcu risus eleifend risus, a tempus libero purus in risus. Duis facilisis, diam sit amet luctus elementum, lorem odio aliquam augue, sit amet mattis magna eros nec sapien. Fusce at nibh eget mauris viverra fermentum. Pellentesque nulla velit, ultrices non commodo ut, finibus in nibh. Nam ullamcorper massa congue magna fringilla, eu venenatis diam mollis. Vestibulum at vestibulum massa, et sollicitudin neque. Fusce felis nisi, cursus ultrices gravida vitae, mattis quis lacus. Suspendisse at commodo mi, id posuere dolor. Mauris vel mi diam. In consectetur leo magna, quis ornare dui pulvinar at. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. ").build();
 		
 		Date releaseDate = film.getReleaseDate();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -41,11 +39,11 @@ public class FilmDetailsPage extends BasePage {
 	}
 	
 	private void loadGenreList(final Film film) {
-		// TODO Get real genres here
 		RepeatingView genreList = new RepeatingView("genre-list");
 		Label genreSingular = new Label("genre-singular", "Género:");
 		Label genrePlural = new Label("genre-plural", "Géneros:");
-		ArrayList<String> genres = new ArrayList<String>();
+		
+		List<Genre> genres = film.getGenres();
 		
 		
 		if (genres.size() < 1) {
@@ -65,7 +63,7 @@ public class FilmDetailsPage extends BasePage {
 		}
 		
 		for (int i = 0; i < genres.size(); i++) {
-			String result = genres.get(i);
+			String result = genres.get(i).getGenre();
 			
 			if (i != 0) {
 				result = " | " + result;
@@ -80,21 +78,14 @@ public class FilmDetailsPage extends BasePage {
 	}
 	
 	private void loadCommentList(final Film film) {
+		
+		final int filmId = film.getId();
+		
 		IModel<List<Comment>> commentModel = new LoadableDetachableModel<List<Comment>>() {
 			@Override
 			protected List<Comment> load() {
-				// TODO Use given Film to get comment list here
-				ArrayList<Comment> commentList = new ArrayList<Comment>();
-				User user = new User.Builder().admin(true).name("pepito").email("a@a.com").build();
-				Comment comment = new Comment.Builder().text("pepepepepepe").rate(3).text("kakaskksakask").user(user).build();
-				
-				commentList.add(comment);
-				commentList.add(comment);
-				commentList.add(comment);
-				
-				return commentList;
-				
-				//return film.getComments();
+				// TODO Ask if this is the right way
+				return films.get(filmId).getComments();
 			}
 		};
 		

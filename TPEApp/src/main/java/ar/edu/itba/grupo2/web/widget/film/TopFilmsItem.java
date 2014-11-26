@@ -12,7 +12,7 @@ public class TopFilmsItem extends FilmListItem {
 		super(id, film);
 		
 		add(new StarScoreIndicator("score-stars", (int)Math.floor(film.getScore()), 5));
-		add(new Label("score", String.valueOf(film.getScore())));
+		add(new Label("score", String.format("%,.2f", film.getScore())));
 	}
 
 }

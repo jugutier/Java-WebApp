@@ -2,20 +2,29 @@ package ar.edu.itba.grupo2.web.widget.film;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.grupo2.domain.film.Film;
+import ar.edu.itba.grupo2.domain.film.FilmRepo;
 import ar.edu.itba.grupo2.utils.ValidationUtilities;
+import ar.edu.itba.grupo2.web.FilmDetailsPage;
 
 @SuppressWarnings("serial")
 public class LatestReleasedFilmsItem extends FilmListItem {
+	
+	@SpringBean
+	private FilmRepo films;
 
 	public LatestReleasedFilmsItem(String id, Film film) {
 		super(id, film);
 		
+		final int filmId = film.getId();
+		
 		Link<Void> moreLink = new Link<Void>("more") {
 			@Override
 			public void onClick() {
-				// TODO Go to film details
+				// TODO Ask if this is the right way
+				setResponsePage(new FilmDetailsPage(films.get(filmId)));
 			}
 		};
 		Label descriptionLabel = null;

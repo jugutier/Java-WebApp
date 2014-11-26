@@ -7,7 +7,6 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<import resource="classpath:system-beans.xml"/>
-	<import resource="classpath:system-data.xml"/>
+	<context:component-scan base-package="ar.edu.itba.grupo2" />
 	
 </beans>
