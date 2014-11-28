@@ -1,5 +1,7 @@
 package ar.edu.itba.grupo2.web.widget;
 
+import java.util.List;
+
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -9,10 +11,14 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import ar.edu.itba.grupo2.domain.common.EntityModel;
+import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.FilmListPage;
@@ -31,11 +37,20 @@ public class PageHeader extends Panel {
 	WebMarkupContainer loginForm;
 	WebMarkupContainer userPanel;
 	Link<Void> userListLink;
+	Label usernameLabel;
+	
+	IModel<User> userModel = null;
 
 	public PageHeader(String id) {
 		super(id);
 
 		User user = GAJAmdbSession.get().getLoggedInUser(users);
+		userModel = new LoadableDetachableModel<User>() {
+			@Override
+			protected User load() {
+				return GAJAmdbSession.get().getLoggedInUser(users);
+			}
+		};
 		
 		// Create links
 		Link<Void> bannerLink = null;
@@ -79,19 +94,31 @@ public class PageHeader extends Panel {
 		};
 		
 		// Create navbar user panels
-		loginForm = new WebMarkupContainer("login-form");
-		userPanel = new WebMarkupContainer("user-panel");
+		loginForm = new WebMarkupContainer("login-form") {
+			@Override
+			public boolean isVisible() {
+				return !GAJAmdbSession.get().isLoggedIn();
+			}
+		};
+		
+		userPanel = new WebMarkupContainer("user-panel") {
+			@Override
+			public boolean isVisible() {
+				return GAJAmdbSession.get().isLoggedIn();
+			}
+		};
 		
 		
 		
 		// If there is a user logged in, display his name in the user panel
-		Label usernameLabel = null;
+		/*Label usernameLabel = null;
 		if (user == null) {
 			usernameLabel = new Label("username", "");
 		}
 		else {
 			usernameLabel = new Label("username", new PropertyModel<User>(user, "name"));
-		}
+		}*/
+		usernameLabel = new Label("username", new PropertyModel<String>(userModel, "name"));
 		
 		add(bannerLink);
 		add(loginForm);
@@ -122,19 +149,5 @@ public class PageHeader extends Panel {
 		loginForm.add(form);
 		
 		userPanel.add(logout);
-	}
-
-	@Override
-	protected void onConfigure() {
-		super.onConfigure();
-		
-		User user = GAJAmdbSession.get().getLoggedInUser(users);
-		
-		// TODO Build nav bar here
-		// Display user list and user panel only if there is a user logged in
-		// and display the login form only if the user is a guest
-		userPanel.setVisible(user != null);
-		userListLink.setVisible(user != null);
-		loginForm.setVisible(user == null);
 	}
 }
