@@ -4,20 +4,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.IModel;
 
 import ar.edu.itba.grupo2.domain.film.Film;
 
 public class NormalFilmListItem extends FilmListItem {
 
-	public NormalFilmListItem(String id, Film film) {
+	public NormalFilmListItem(String id, final IModel<Film> film) {
 		super(id, film);
 		
-		Date releaseDate = film.getReleaseDate();
+		Date releaseDate = film.getObject().getReleaseDate();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		String strDate = simpleDateFormat.format(releaseDate);
 		
 		add(new Label("release-date", strDate));
-		add(new Label("director", film.getDirector()));
+		add(new Label("director", film.getObject().getDirector()));
 	}
 
 }

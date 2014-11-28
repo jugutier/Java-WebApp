@@ -2,6 +2,7 @@ package ar.edu.itba.grupo2.web;
 
 import java.util.List;
 
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
@@ -33,9 +34,21 @@ public class HomePage extends BasePage {
 		add(new ListView<Film>("latest-released-list", latestReleasedFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new LatestReleasedFilmsItem("latest-released-item", item.getModelObject()));	
+				item.add(new LatestReleasedFilmsItem("latest-released-item", item.getModel()));	
 			}
 		});
+		
+		// TODO Localize this String
+		Label latestReleasedEmpty = new Label("latest-released-empty", "No hay estrenos esta semana");
+		
+		if (!latestReleasedFilmsModel.getObject().isEmpty()) {
+			latestReleasedEmpty.setVisible(false);
+		}
+		else {
+			latestReleasedEmpty.setVisible(true);
+		}
+		
+		add(latestReleasedEmpty);
 	}
 	
 	private void loadTopFilms() {
@@ -49,7 +62,7 @@ public class HomePage extends BasePage {
 		add(new ListView<Film>("top-films-list", topFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new TopFilmsItem("top-films-item", item.getModelObject()));	
+				item.add(new TopFilmsItem("top-films-item", item.getModel()));	
 			}
 		});
 	}
@@ -65,7 +78,7 @@ public class HomePage extends BasePage {
 		add(new ListView<Film>("latest-list", latestAddedFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new LatestFilmsItem("latest-item", item.getModelObject()));	
+				item.add(new LatestFilmsItem("latest-item", item.getModel()));	
 			}
 		});
 	}

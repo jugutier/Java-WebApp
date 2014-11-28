@@ -1,6 +1,5 @@
 package ar.edu.itba.grupo2.web.widget.comment;
 
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
@@ -23,6 +22,7 @@ public class FilmCommentListItem extends Panel {
 		
 		Label adminTag = new Label("admin-tag", "Admin");
 		Label vipTag = new Label("vip-tag", "V.I.P.");
+		Label commentRating = new Label("comment-rating", String.format("%,.2f", comment.getRate()));
 		Link<Void> usernameLink = new Link<Void>("username-link") {
 
 			@Override
@@ -71,6 +71,7 @@ public class FilmCommentListItem extends Panel {
 		add(reportButton);
 		add(deleteButton);
 		add(ratingForm);
+		add(commentRating);
 	}
 
 }

@@ -17,32 +17,28 @@ public class FilmListItem extends Panel {
 	@SpringBean
 	private FilmRepo films;
 
-	public FilmListItem(String id, final Film film) {
-		super(id);
+	public FilmListItem(String id, final IModel<Film> film) {
+		super(id, film);
 		
-		final int filmId = film.getId();
-		
-		IModel<Film> filmModel = new LoadableDetachableModel<Film>() {
+		Link<Film> titleLink = new Link<Film>("title-link", film) {
 			@Override
-			protected Film load() {
-				return films.get(filmId); 
+			public void onClick() {
+				setResponsePage(new FilmDetailsPage(this.getModelObject()));
 			}
 		};
 		
-		Link<Film> titleLink = new Link<Film>("title-link", filmModel) {
+		Link<Void> deleteFilm = new Link<Void>("delete-button") {
+			
 			@Override
 			public void onClick() {
-				setResponsePage(new FilmDetailsPage(getModelObject()));
+				films.delete(film.getObject());
 			}
 		};
 		
 		add(titleLink);
+		add(deleteFilm);
 		
-		titleLink.add(new Label("title-label", film.getName()));
+		titleLink.add(new Label("title-label", film.getObject().getName()));
 	}
 	
-	static Film test() {
-		return new Film.Builder().name("Peli").director("Alguien").description("No se").build();
-	}
-
 }

@@ -3,14 +3,14 @@ package ar.edu.itba.grupo2.web;
 import org.apache.wicket.Session;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import ar.edu.itba.grupo2.domain.common.EntityModel;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 
 public class GAJAmdbSession extends WebSession {
 	
-	private Integer userId = null;
+	private EntityModel<User> model = null;
 
 	public static GAJAmdbSession get() {
 		return (GAJAmdbSession) Session.get();
@@ -24,7 +24,7 @@ public class GAJAmdbSession extends WebSession {
 		if (!isLoggedIn()) {
 			return null;
 		}
-		return users.get(userId);
+		return model.getObject();
 	}
 
 	public boolean authenticate(String email, String password, UserRepo users) {
@@ -33,18 +33,26 @@ public class GAJAmdbSession extends WebSession {
 			return false;
 		}
 		
-		this.userId = user.getId();
+		model = new EntityModel<User>(User.class, user);
 		
 		return true;
 	}
+	
+	@Override
+	public void detach() {
+		super.detach();
+		
+		if (model != null)
+			model.detach();
+	}
 
 	public boolean isLoggedIn() {
-		return userId != null;
+		return model != null;
 	}
 
 	public void logOut() {
         invalidate();
         clear();
-        userId = null;
+        model = null;
 	}
 }

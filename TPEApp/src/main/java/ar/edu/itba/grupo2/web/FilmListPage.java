@@ -29,7 +29,7 @@ public class FilmListPage extends BasePage {
 		add(new ListView<Film>("film-list", filmListModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new NormalFilmListItem("film-item", item.getModelObject()));
+				item.add(new NormalFilmListItem("film-item", item.getModel()));
 			}
 		});
 	}

@@ -11,19 +11,19 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
+import ar.edu.itba.grupo2.domain.common.EntityModel;
 import ar.edu.itba.grupo2.domain.film.Film;
-import ar.edu.itba.grupo2.domain.film.FilmRepo;
 import ar.edu.itba.grupo2.domain.genre.Genre;
+import ar.edu.itba.grupo2.web.widget.comment.CommentForm;
 import ar.edu.itba.grupo2.web.widget.comment.FilmCommentListItem;
 
 public class FilmDetailsPage extends BasePage {
 	
 	public FilmDetailsPage(final Film film) {
 		super();
-		
+		setDefaultModel(new EntityModel<Film>(Film.class, film));
 		Date releaseDate = film.getReleaseDate();
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		String strDate = simpleDateFormat.format(releaseDate);
@@ -33,6 +33,8 @@ public class FilmDetailsPage extends BasePage {
 		add(new Label("director", film.getDirector()));
 		add(new Label("description", film.getDescription()));
 		add(new Label("length", String.valueOf(film.getLength())));
+		
+		add(new CommentForm("comment-form"));
 		
 		loadGenreList(film);
 		loadCommentList(film);
@@ -84,8 +86,7 @@ public class FilmDetailsPage extends BasePage {
 		IModel<List<Comment>> commentModel = new LoadableDetachableModel<List<Comment>>() {
 			@Override
 			protected List<Comment> load() {
-				// TODO Ask if this is the right way
-				return films.get(filmId).getComments();
+				return getFilm().getComments();
 			}
 		};
 		
@@ -105,5 +106,9 @@ public class FilmDetailsPage extends BasePage {
 		
 		commentListContainer.add(commentListView);
 		add(commentListContainer);
+	}
+	
+	private Film getFilm() {
+		return (Film) getDefaultModelObject();
 	}
 }

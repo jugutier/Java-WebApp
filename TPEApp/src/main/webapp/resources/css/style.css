@@ -107,6 +107,10 @@ body {
 	margin-bottom: 0px;
 }
 
+.comment-controls select {
+	margin-bottom: 0px;
+}
+
 .comment-controls p {
 	margin: 0px;
 	padding: 0px; 

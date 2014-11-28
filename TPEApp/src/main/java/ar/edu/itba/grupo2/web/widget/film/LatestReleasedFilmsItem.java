@@ -2,6 +2,7 @@ package ar.edu.itba.grupo2.web.widget.film;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.grupo2.domain.film.Film;
@@ -15,22 +16,20 @@ public class LatestReleasedFilmsItem extends FilmListItem {
 	@SpringBean
 	private FilmRepo films;
 
-	public LatestReleasedFilmsItem(String id, Film film) {
+	public LatestReleasedFilmsItem(String id, final IModel<Film> film) {
 		super(id, film);
 		
-		final int filmId = film.getId();
-		
-		Link<Void> moreLink = new Link<Void>("more") {
+		Link<Film> moreLink = new Link<Film>("more", film) {
 			@Override
 			public void onClick() {
-				// TODO Ask if this is the right way
-				setResponsePage(new FilmDetailsPage(films.get(filmId)));
+				setResponsePage(new FilmDetailsPage(this.getModelObject()));
 			}
 		};
+		
 		Label descriptionLabel = null;
 		Label noDescription = new Label("no-description", "No hay resumen disponible");
 		
-		String description = film.getDescription();
+		String description = film.getObject().getDescription();
 		boolean emptyDescription = false;
 		
 		// If the Film has no description, display a proper message
