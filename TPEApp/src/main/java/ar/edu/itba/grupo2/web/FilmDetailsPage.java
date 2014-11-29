@@ -2,6 +2,7 @@ package ar.edu.itba.grupo2.web;
 
 import java.util.List;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -10,6 +11,7 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.Model;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityModel;
@@ -21,21 +23,26 @@ import ar.edu.itba.grupo2.web.widget.comment.FilmCommentListItem;
 @SuppressWarnings("serial")
 public class FilmDetailsPage extends BasePage {
 	
+	private WebMarkupContainer filmDetailsContainer;
+	
 	public FilmDetailsPage(final Film film) {
 		super();
 		
 		setDefaultModel(new CompoundPropertyModel<Film>(new EntityModel<Film>(Film.class, film)));
 		
-		add(new Label("releaseDate"));
-		add(new Label("name"));
-		add(new Label("director"));
-		add(new Label("description"));
-		add(new Label("length"));
+		filmDetailsContainer = new WebMarkupContainer("filmDetailsContainer");
 		
-		add(new CommentForm("commentForm"));
+		filmDetailsContainer.add(new Label("releaseDate"));
+		add(new Label("name"));
+		filmDetailsContainer.add(new Label("director"));
+		filmDetailsContainer.add(new Label("description"));
+		filmDetailsContainer.add(new Label("length"));
 		
 		loadGenreList(film);
 		loadCommentList(film);
+		addCommentForm(film);
+		
+		add(filmDetailsContainer);
 	}
 	
 	private void loadGenreList(final Film film) {
@@ -72,9 +79,9 @@ public class FilmDetailsPage extends BasePage {
 			genreList.add(new Label(genreList.newChildId(), result));
 		}
 		
-		add(genreList);
-		add(genreSingular);
-		add(genrePlural);
+		filmDetailsContainer.add(genreList);
+		filmDetailsContainer.add(genreSingular);
+		filmDetailsContainer.add(genrePlural);
 	}
 	
 	private void loadCommentList(final Film film) {
@@ -82,11 +89,16 @@ public class FilmDetailsPage extends BasePage {
 		IModel<List<Comment>> commentModel = new LoadableDetachableModel<List<Comment>>() {
 			@Override
 			protected List<Comment> load() {
-				return getFilm().getComments();
+				return film().getComments();
 			}
 		};
 		
-		WebMarkupContainer commentListContainer = new WebMarkupContainer("commentListContainer");
+		WebMarkupContainer commentListContainer = new WebMarkupContainer("commentListContainer") {
+			@Override
+			public boolean isVisible() {
+				return !film().getComments().isEmpty();
+			}
+		};
 		
 		ListView<Comment> commentListView = new ListView<Comment>("commentList", commentModel) {
 			@Override
@@ -95,16 +107,37 @@ public class FilmDetailsPage extends BasePage {
 			}
 		};
 		
-		// Hide comments section if there isn't any
+		/*// Hide comments section if there isn't any
 		if (commentModel.getObject() == null || commentModel.getObject().isEmpty()) {
 			commentListContainer.setVisible(false);
-		}
+		}*/
 		
 		commentListContainer.add(commentListView);
 		add(commentListContainer);
 	}
 	
-	private Film getFilm() {
+	@SuppressWarnings("unchecked")
+	private void addCommentForm(final Film film) {
+		add(new CommentForm("commentForm", (IModel<Film>)getDefaultModel()));
+		
+		// Change the style of the details frame, depending if the user can comment or not
+		filmDetailsContainer.add(new AttributeModifier("class", new Model<String>() {
+			@Override
+			public String getObject() {
+				GAJAmdbSession session = GAJAmdbSession.get();
+				String frameType = "item-container";
+				
+				if (session.isLoggedIn() && film().userCanComment(session.getLoggedInUser())) {
+					frameType = "comment-body";
+				}
+				
+				return frameType;
+			}
+		}));
+		
+	}
+	
+	private Film film() {
 		return (Film) getDefaultModelObject();
 	}
 }

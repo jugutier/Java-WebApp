@@ -1,5 +1,7 @@
 package ar.edu.itba.grupo2.web.widget;
 
+import java.util.logging.ErrorManager;
+
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -126,12 +128,9 @@ public class PageHeader extends Panel {
 			protected void onSubmit() {
 				GAJAmdbSession session = GAJAmdbSession.get();
 
-				if (session.authenticate(email, password, users)) {
-					if (!continueToOriginalDestination()) {
-					//	setResponsePage(getApplication().getHomePage());
-					}
-				} else {
-					
+				if (!session.authenticate(email, password, users)) {
+					// TODO Localize
+					error("Email o contraseña incorrectos");
 				}
 			}
 		};

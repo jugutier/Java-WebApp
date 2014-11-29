@@ -1,16 +1,12 @@
 <html xmlns:wicket="http://wicket.apache.org">
 	<body>
 		<wicket:panel>
-			<form>
+			<form wicket:id="form">
 				<div class="comment-controls">
-					<textarea rows="3" class="input-block-level" placeholder="Escribe un comentario..."></textarea>
+					<div wicket:id="errorsFeedback" class="alert alert-error"></div>
+					<textarea wicket:id="message" rows="3" class="input-block-level" placeholder="Escribe un comentario..."></textarea>
 					Puntuación:
-					<select class="span1">
-						<option>1</option>
-						<option>1</option>
-						<option>1</option>
-						<option>1</option>
-						<option>1</option>
+					<select wicket:id="rate" class="span1">
 					</select>
 					
 					<button type="submit" class="btn btn-primary pull-right">Comentar</button>

@@ -66,12 +66,11 @@ public class FilmCommentListItem extends Panel {
 			
 		};
 		
-		Link<Void> deleteButton = new Link<Void>("deleteButton") {
+		Link<Comment> deleteButton = new Link<Comment>("deleteButton", comment) {
 
 			@Override
 			public void onClick() {
-				// TODO Delete this comment
-				
+				comment().getFilm().removeComment(comment());
 			}
 			
 			@Override

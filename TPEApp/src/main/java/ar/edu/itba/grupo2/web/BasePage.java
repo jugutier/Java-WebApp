@@ -1,6 +1,7 @@
 package ar.edu.itba.grupo2.web;
 
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.grupo2.domain.film.FilmRepo;
@@ -18,6 +19,15 @@ public class BasePage extends WebPage {
 	
 	public BasePage() {
 		super();
+		
+		FeedbackPanel errorsFeedback = new FeedbackPanel("errorsFeedback") {
+			@Override
+			public boolean isVisible() {
+				return this.anyErrorMessage();
+			};
+		};
+		
+		add(errorsFeedback);
 		add(new PageHeader("pageHeader"));
 	}
 	
