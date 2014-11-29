@@ -1,7 +1,5 @@
 package ar.edu.itba.grupo2.web;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -9,6 +7,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 
@@ -19,31 +18,30 @@ import ar.edu.itba.grupo2.domain.genre.Genre;
 import ar.edu.itba.grupo2.web.widget.comment.CommentForm;
 import ar.edu.itba.grupo2.web.widget.comment.FilmCommentListItem;
 
+@SuppressWarnings("serial")
 public class FilmDetailsPage extends BasePage {
 	
 	public FilmDetailsPage(final Film film) {
 		super();
-		setDefaultModel(new EntityModel<Film>(Film.class, film));
-		Date releaseDate = film.getReleaseDate();
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		String strDate = simpleDateFormat.format(releaseDate);
 		
-		add(new Label("release-date", strDate));
-		add(new Label("title", film.getName()));
-		add(new Label("director", film.getDirector()));
-		add(new Label("description", film.getDescription()));
-		add(new Label("length", String.valueOf(film.getLength())));
+		setDefaultModel(new CompoundPropertyModel<Film>(new EntityModel<Film>(Film.class, film)));
 		
-		add(new CommentForm("comment-form"));
+		add(new Label("releaseDate"));
+		add(new Label("name"));
+		add(new Label("director"));
+		add(new Label("description"));
+		add(new Label("length"));
+		
+		add(new CommentForm("commentForm"));
 		
 		loadGenreList(film);
 		loadCommentList(film);
 	}
 	
 	private void loadGenreList(final Film film) {
-		RepeatingView genreList = new RepeatingView("genre-list");
-		Label genreSingular = new Label("genre-singular", "Género:");
-		Label genrePlural = new Label("genre-plural", "Géneros:");
+		RepeatingView genreList = new RepeatingView("genreList");
+		Label genreSingular = new Label("genreSingular", "Género:");
+		Label genrePlural = new Label("genrePlural", "Géneros:");
 		
 		List<Genre> genres = film.getGenres();
 		
@@ -81,8 +79,6 @@ public class FilmDetailsPage extends BasePage {
 	
 	private void loadCommentList(final Film film) {
 		
-		final int filmId = film.getId();
-		
 		IModel<List<Comment>> commentModel = new LoadableDetachableModel<List<Comment>>() {
 			@Override
 			protected List<Comment> load() {
@@ -90,12 +86,12 @@ public class FilmDetailsPage extends BasePage {
 			}
 		};
 		
-		WebMarkupContainer commentListContainer = new WebMarkupContainer("comment-list-container");
+		WebMarkupContainer commentListContainer = new WebMarkupContainer("commentListContainer");
 		
-		ListView<Comment> commentListView = new ListView<Comment>("comment-list", commentModel) {
+		ListView<Comment> commentListView = new ListView<Comment>("commentList", commentModel) {
 			@Override
 			protected void populateItem(ListItem<Comment> item) {
-				item.add(new FilmCommentListItem("comment-list-item", item.getModelObject()));	
+				item.add(new FilmCommentListItem("commentListItem", item.getModel()));	
 			}
 		};
 		

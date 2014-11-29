@@ -4,7 +4,7 @@
 	</head>
 	<body>
 		<wicket:extend>
-			<h2 wicket:id="title">T&iacute;tulo</h2>
+			<h2 wicket:id="name">T&iacute;tulo</h2>
 			
 			<div class="item-container">
 				<div class="media">
@@ -20,13 +20,13 @@
 									<li><h5 class="details-item-header">Director: </h5><span wicket:id="director">Pepe</span></li>
 									<li>
 										<h5 class="details-item-header">
-										<span wicket:id="genre-plural">G&eacute;neros</span><span wicket:id="genre-singular">G&eacute;nero</span>
+										<span wicket:id="genrePlural">G&eacute;neros</span><span wicket:id="genreSingular">G&eacute;nero</span>
 										</h5>
 										<ul class="star-list">
-											<li wicket:id="genre-list"></li>
+											<li wicket:id="genreList"></li>
 										</ul>
 									</li>
-									<li><h5 class="details-item-header">Fecha de estreno: </h5><span wicket:id="release-date">1/1/1111</span></li>
+									<li><h5 class="details-item-header">Fecha de estreno: </h5><span wicket:id="releaseDate">1/1/1111</span></li>
 									<li><h5 class="details-item-header">Duraci&oacute;n: </h5><span wicket:id="length">3</span> minutos</li>
 								</ul>
 							</div>
@@ -40,17 +40,17 @@
 				</div>
 			</div>
 			
-			<div wicket:id="comment-list-container">
+			<div wicket:id="commentListContainer">
 				<h3>Comentarios</h3>
 				
 				<ul class="item-list">
-					<li wicket:id="comment-list">
-						<div wicket:id="comment-list-item"></div>
+					<li wicket:id="commentList">
+						<div wicket:id="commentListItem"></div>
 					</li>
 				</ul>
 			</div>
 			
-			<div wicket:id="comment-form"></div>
+			<div wicket:id="commentForm"></div>
 		</wicket:extend>
 	</body>
 </html>

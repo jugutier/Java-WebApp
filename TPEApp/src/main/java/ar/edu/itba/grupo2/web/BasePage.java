@@ -7,6 +7,7 @@ import ar.edu.itba.grupo2.domain.film.FilmRepo;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.widget.PageHeader;
 
+@SuppressWarnings("serial")
 public class BasePage extends WebPage {
 	
 	@SpringBean
@@ -17,7 +18,7 @@ public class BasePage extends WebPage {
 	
 	public BasePage() {
 		super();
-		add(new PageHeader("page-header"));
+		add(new PageHeader("pageHeader"));
 	}
 	
 	protected GAJAmdbSession getUserSession() {

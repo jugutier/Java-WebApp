@@ -12,8 +12,8 @@ public class TopFilmsItem extends FilmListItem {
 	public TopFilmsItem(String id, final IModel<Film> film) {
 		super(id, film);
 		
-		add(new StarScoreIndicator("score-stars", (int)Math.floor(film.getObject().getScore()), 5));
-		add(new Label("score", String.format("%,.2f", film.getObject().getScore())));
+		add(new StarScoreIndicator("scoreStars", (int)Math.floor(film.getObject().getScore())));
+		add(new Label("score"));
 	}
 
 }

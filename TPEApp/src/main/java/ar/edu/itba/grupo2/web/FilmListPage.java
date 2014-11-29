@@ -10,6 +10,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.web.widget.film.NormalFilmListItem;
 
+@SuppressWarnings("serial")
 public class FilmListPage extends BasePage {
 	
 	public FilmListPage() {
@@ -26,10 +27,10 @@ public class FilmListPage extends BasePage {
 			}
 		};
 		
-		add(new ListView<Film>("film-list", filmListModel) {
+		add(new ListView<Film>("filmList", filmListModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new NormalFilmListItem("film-item", item.getModel()));
+				item.add(new NormalFilmListItem("filmItem", item.getModel()));
 			}
 		});
 	}

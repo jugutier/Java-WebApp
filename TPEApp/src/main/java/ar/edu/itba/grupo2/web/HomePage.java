@@ -14,6 +14,7 @@ import ar.edu.itba.grupo2.web.widget.film.LatestReleasedFilmsItem;
 import ar.edu.itba.grupo2.web.widget.film.TopFilmsItem;
 
 
+@SuppressWarnings("serial")
 public class HomePage extends BasePage {
 	
 	public HomePage() {
@@ -31,15 +32,15 @@ public class HomePage extends BasePage {
 			}
 		};
 		
-		add(new ListView<Film>("latest-released-list", latestReleasedFilmsModel) {
+		add(new ListView<Film>("latestReleasedList", latestReleasedFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new LatestReleasedFilmsItem("latest-released-item", item.getModel()));	
+				item.add(new LatestReleasedFilmsItem("latestReleasedItem", item.getModel()));	
 			}
 		});
 		
 		// TODO Localize this String
-		Label latestReleasedEmpty = new Label("latest-released-empty", "No hay estrenos esta semana");
+		Label latestReleasedEmpty = new Label("latestReleasedEmpty", "No hay estrenos esta semana");
 		
 		if (!latestReleasedFilmsModel.getObject().isEmpty()) {
 			latestReleasedEmpty.setVisible(false);
@@ -59,10 +60,10 @@ public class HomePage extends BasePage {
 			}
 		};
 		
-		add(new ListView<Film>("top-films-list", topFilmsModel) {
+		add(new ListView<Film>("topFilmsList", topFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new TopFilmsItem("top-films-item", item.getModel()));	
+				item.add(new TopFilmsItem("topFilmsItem", item.getModel()));	
 			}
 		});
 	}
@@ -75,10 +76,10 @@ public class HomePage extends BasePage {
 			}
 		};
 		
-		add(new ListView<Film>("latest-list", latestAddedFilmsModel) {
+		add(new ListView<Film>("latestList", latestAddedFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new LatestFilmsItem("latest-item", item.getModel()));	
+				item.add(new LatestFilmsItem("latestItem", item.getModel()));	
 			}
 		});
 	}

@@ -1,7 +1,5 @@
 package ar.edu.itba.grupo2.web.widget;
 
-import java.util.List;
-
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -17,8 +15,6 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import ar.edu.itba.grupo2.domain.common.EntityModel;
-import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.FilmListPage;
@@ -44,11 +40,10 @@ public class PageHeader extends Panel {
 	public PageHeader(String id) {
 		super(id);
 
-		User user = GAJAmdbSession.get().getLoggedInUser(users);
 		userModel = new LoadableDetachableModel<User>() {
 			@Override
 			protected User load() {
-				return GAJAmdbSession.get().getLoggedInUser(users);
+				return GAJAmdbSession.get().getLoggedInUser();
 			}
 		};
 		
@@ -82,6 +77,11 @@ public class PageHeader extends Panel {
 				setResponsePage(new FilmListPage());
 			}
 			
+			@Override
+			public boolean isVisible() {
+				return GAJAmdbSession.get().isLoggedIn();
+			}
+			
 		};
 		
 		logout = new Link<Void>("logout") {
@@ -111,13 +111,6 @@ public class PageHeader extends Panel {
 		
 		
 		// If there is a user logged in, display his name in the user panel
-		/*Label usernameLabel = null;
-		if (user == null) {
-			usernameLabel = new Label("username", "");
-		}
-		else {
-			usernameLabel = new Label("username", new PropertyModel<User>(user, "name"));
-		}*/
 		usernameLabel = new Label("username", new PropertyModel<String>(userModel, "name"));
 		
 		add(bannerLink);

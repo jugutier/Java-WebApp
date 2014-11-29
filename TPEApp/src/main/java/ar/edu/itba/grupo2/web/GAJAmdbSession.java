@@ -8,6 +8,7 @@ import ar.edu.itba.grupo2.domain.common.EntityModel;
 import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 
+@SuppressWarnings("serial")
 public class GAJAmdbSession extends WebSession {
 	
 	private EntityModel<User> model = null;
@@ -20,7 +21,7 @@ public class GAJAmdbSession extends WebSession {
 		super(request);
 	}
 
-	public User getLoggedInUser(UserRepo users) {
+	public User getLoggedInUser() {
 		if (!isLoggedIn()) {
 			return null;
 		}
