@@ -120,6 +120,10 @@ public class Comment extends EntityBaseType {
 		return found;
 	}
 	
+	public void remove() {
+		film.removeComment(this);
+	}
+	
 	public void report(User user) {
 		if (user != null && !this.user.equals(user) && !isReportedByUser(user))
 			reports.add(new Report(this, user));

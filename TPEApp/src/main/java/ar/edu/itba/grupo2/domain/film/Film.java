@@ -197,7 +197,7 @@ public class Film extends EntityBaseType {
 		if(comments.contains(c)){
 			comments.remove(c);
 			c.getUser().removeComment(c);
-			sumComments-=c.getRate();
+			sumComments -= c.getFilmRate();
 			totalComments--;
 		}	
 	}

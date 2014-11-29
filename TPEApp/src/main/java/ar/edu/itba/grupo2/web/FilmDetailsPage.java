@@ -38,19 +38,20 @@ public class FilmDetailsPage extends BasePage {
 		filmDetailsContainer.add(new Label("description"));
 		filmDetailsContainer.add(new Label("length"));
 		
-		loadGenreList(film);
-		loadCommentList(film);
-		addCommentForm(film);
+		loadGenreList();
+		loadCommentList();
+		addCommentForm();
 		
 		add(filmDetailsContainer);
 	}
 	
-	private void loadGenreList(final Film film) {
+	private void loadGenreList() {
+		// TODO Implement model here
 		RepeatingView genreList = new RepeatingView("genreList");
 		Label genreSingular = new Label("genreSingular", "Género:");
 		Label genrePlural = new Label("genrePlural", "Géneros:");
 		
-		List<Genre> genres = film.getGenres();
+		List<Genre> genres = film().getGenres();
 		
 		
 		if (genres.size() < 1) {
@@ -84,7 +85,7 @@ public class FilmDetailsPage extends BasePage {
 		filmDetailsContainer.add(genrePlural);
 	}
 	
-	private void loadCommentList(final Film film) {
+	private void loadCommentList() {
 		
 		IModel<List<Comment>> commentModel = new LoadableDetachableModel<List<Comment>>() {
 			@Override
@@ -117,7 +118,7 @@ public class FilmDetailsPage extends BasePage {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private void addCommentForm(final Film film) {
+	private void addCommentForm() {
 		add(new CommentForm("commentForm", (IModel<Film>)getDefaultModel()));
 		
 		// Change the style of the details frame, depending if the user can comment or not

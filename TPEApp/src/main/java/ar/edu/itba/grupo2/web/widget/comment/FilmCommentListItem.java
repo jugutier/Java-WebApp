@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
@@ -70,7 +71,7 @@ public class FilmCommentListItem extends Panel {
 
 			@Override
 			public void onClick() {
-				comment().getFilm().removeComment(comment());
+				comment().remove();
 			}
 			
 			@Override
@@ -93,7 +94,7 @@ public class FilmCommentListItem extends Panel {
 		add(usernameLink);
 		usernameLink.add(new Label("username", compoundModel.bind("user.name")));
 		// TODO Revise this
-		add(new StarScoreIndicator("scoreStars", 3));
+		add(new StarScoreIndicator("scoreStars", new PropertyModel<Integer>(comment, "filmRate")));
 		add(new Label("text"));
 		add(adminTag);
 		add(vipTag);
