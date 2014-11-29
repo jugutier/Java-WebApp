@@ -1,0 +1,26 @@
+<html xmlns:wicket="http://wicket.apache.org">
+	<body>
+		<wicket:panel>
+		<div class="comment-body">
+			<a wicket:id="deleteButton" href="#" class="btn btn-danger pull-right" type="submit"><i class="icon-remove"></i></a>
+			<p>
+				<a wicket:id="filmLink" href="#"><h4  wicket:id="filmName">Título</h4></a>
+			</p>
+			<p>
+				<strong wicket:id="username">Nombre de usuario</strong>
+				<span class="label label-important">Admin</span>
+				<span class="label label-success">V.I.P.</span>
+			</p>
+			<p wicket:id="message">Comentario</p>
+		</div>
+		<div class="comment-controls">
+			Su calificación: <div wicket:id="scoreStars" class="star-list"></div>
+			<span class="pull-right">
+				Denuncias: 
+				<span wicket:id="reportCount" class="badge badge-important">3</span> 
+				<a wicket:id="discardReports" href="#" class="btn btn-primary" type="button">Descartar denuncias</a>
+			</span>
+		</div>
+	</wicket:panel>
+	</body>
+</html>

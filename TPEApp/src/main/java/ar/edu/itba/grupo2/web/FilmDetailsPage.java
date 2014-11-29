@@ -31,9 +31,9 @@ public class FilmDetailsPage extends BasePage {
 		setDefaultModel(new CompoundPropertyModel<Film>(new EntityModel<Film>(Film.class, film)));
 		
 		filmDetailsContainer = new WebMarkupContainer("filmDetailsContainer");
-		
-		filmDetailsContainer.add(new Label("releaseDate"));
+
 		add(new Label("name"));
+		filmDetailsContainer.add(new Label("releaseDate"));
 		filmDetailsContainer.add(new Label("director"));
 		filmDetailsContainer.add(new Label("description"));
 		filmDetailsContainer.add(new Label("length"));
@@ -90,7 +90,7 @@ public class FilmDetailsPage extends BasePage {
 		IModel<List<Comment>> commentModel = new LoadableDetachableModel<List<Comment>>() {
 			@Override
 			protected List<Comment> load() {
-				return film().getComments();
+				return film().getCommentsForUser(GAJAmdbSession.get().getLoggedInUser());
 			}
 		};
 		
@@ -107,11 +107,6 @@ public class FilmDetailsPage extends BasePage {
 				item.add(new FilmCommentListItem("commentListItem", item.getModel()));	
 			}
 		};
-		
-		/*// Hide comments section if there isn't any
-		if (commentModel.getObject() == null || commentModel.getObject().isEmpty()) {
-			commentListContainer.setVisible(false);
-		}*/
 		
 		commentListContainer.add(commentListView);
 		add(commentListContainer);

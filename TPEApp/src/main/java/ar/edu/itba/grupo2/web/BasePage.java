@@ -4,6 +4,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import ar.edu.itba.grupo2.domain.comment.CommentRepo;
 import ar.edu.itba.grupo2.domain.film.FilmRepo;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.widget.PageHeader;
@@ -16,6 +17,9 @@ public class BasePage extends WebPage {
 	
 	@SpringBean
 	protected UserRepo users;
+	
+	@SpringBean
+	protected CommentRepo comments;
 	
 	public BasePage() {
 		super();

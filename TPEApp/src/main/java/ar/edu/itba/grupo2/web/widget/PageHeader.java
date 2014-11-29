@@ -20,6 +20,7 @@ import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.FilmListPage;
 import ar.edu.itba.grupo2.web.GAJAmdbSession;
 import ar.edu.itba.grupo2.web.HomePage;
+import ar.edu.itba.grupo2.web.ReportedCommentsPage;
 
 @SuppressWarnings("serial")
 public class PageHeader extends Panel {
@@ -51,6 +52,7 @@ public class PageHeader extends Panel {
 		Link<Void> bannerLink = null;
 		Link<Void> filmListLink = null;
 		Link<Void> logout = null;
+		Link<Void> reportedComments = null;
 		
 		bannerLink = new Link<Void>("banner") {
 
@@ -61,7 +63,7 @@ public class PageHeader extends Panel {
 			
 		};
 		
-		filmListLink = new Link<Void>("film-list-link") {
+		filmListLink = new Link<Void>("filmListLink") {
 			
 			@Override
 			public void onClick() {
@@ -70,7 +72,7 @@ public class PageHeader extends Panel {
 			
 		};
 		
-		userListLink = new Link<Void>("user-list-link") {
+		userListLink = new Link<Void>("userListLink") {
 			
 			@Override
 			public void onClick() {
@@ -80,6 +82,15 @@ public class PageHeader extends Panel {
 			@Override
 			public boolean isVisible() {
 				return GAJAmdbSession.get().isLoggedIn();
+			}
+			
+		};
+		
+		reportedComments = new Link<Void>("reportedComments") {
+
+			@Override
+			public void onClick() {
+				setResponsePage(new ReportedCommentsPage());
 			}
 			
 		};
@@ -94,14 +105,14 @@ public class PageHeader extends Panel {
 		};
 		
 		// Create navbar user panels
-		loginForm = new WebMarkupContainer("login-form") {
+		loginForm = new WebMarkupContainer("loginForm") {
 			@Override
 			public boolean isVisible() {
 				return !GAJAmdbSession.get().isLoggedIn();
 			}
 		};
 		
-		userPanel = new WebMarkupContainer("user-panel") {
+		userPanel = new WebMarkupContainer("userPanel") {
 			@Override
 			public boolean isVisible() {
 				return GAJAmdbSession.get().isLoggedIn();
@@ -138,6 +149,7 @@ public class PageHeader extends Panel {
 		form.add(new Button("submit", Model.of("")));
 		loginForm.add(form);
 		
+		userPanel.add(reportedComments);
 		userPanel.add(logout);
 	}
 }
