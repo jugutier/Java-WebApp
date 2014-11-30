@@ -21,17 +21,26 @@ public class ReportedCommentsPage extends BasePage {
 	public ReportedCommentsPage() {
 		super();
 		
-		IModel<List<Comment>> commentModel = new LoadableDetachableModel<List<Comment>>() {
+		final IModel<List<Comment>> commentModel = new LoadableDetachableModel<List<Comment>>() {
 			@Override
 			protected List<Comment> load() {
-				return comments.getAllReported();
+				List<Comment> reported = comments.getAllReported();
+				return reported;
 			}
 		};
+		
+		setDefaultModel(commentModel);
 		
 		PropertyListView<Comment> commentListView = new PropertyListView<Comment>("commentList", commentModel) {
 			@Override
 			protected void populateItem(ListItem<Comment> item) {
-				item.add(new ReportedCommentListItem("commentListItem", item.getModel()));	
+				item.add(new ReportedCommentListItem("commentListItem", item.getModel()) {
+					@Override
+					public void onDiscardReports() {
+						super.onDiscardReports();
+						commentModel.detach();
+					}
+				});	
 			}
 		};
 		

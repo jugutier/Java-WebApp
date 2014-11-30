@@ -52,11 +52,11 @@ public class CommentForm extends Panel {
 					.text(message)
 					.rate(rate)
 					.user(user)
-					.film(CommentForm.this.film())
+					.film(film())
 					.build();
 				
 				try {
-					CommentForm.this.film().addComment(comment);
+					film().addComment(comment);
 					message = null;
 					rate = 0;
 				} catch (UserCantCommentException e) {

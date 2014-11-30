@@ -14,7 +14,7 @@ import ar.edu.itba.grupo2.web.widget.StarScoreIndicator;
 @SuppressWarnings("serial")
 public class ReportedCommentListItem extends Panel {
 
-	public ReportedCommentListItem(String id, IModel<Comment> comment) {
+	public ReportedCommentListItem(String id, final IModel<Comment> comment) {
 		super(id, comment);
 		
 		Link<Film> filmLink = new Link<Film>("filmLink", new PropertyModel<Film>(comment, "film")){
@@ -38,7 +38,8 @@ public class ReportedCommentListItem extends Panel {
 
 			@Override
 			public void onClick() {
-				comment().discardReports();
+				getModelObject().discardReports();
+				onDiscardReports();
 			}
 			
 		};
@@ -52,6 +53,10 @@ public class ReportedCommentListItem extends Panel {
 		add(new Label("username", new PropertyModel<String>(comment, "user.name")));
 		add(new StarScoreIndicator("scoreStars", new PropertyModel<Integer>(comment, "filmRate")));
 		add(new Label("reportCount", new PropertyModel<String>(comment, "reportCount")));
+	}
+	
+	public void onDiscardReports() {
+		
 	}
 	
 	public Comment comment() {

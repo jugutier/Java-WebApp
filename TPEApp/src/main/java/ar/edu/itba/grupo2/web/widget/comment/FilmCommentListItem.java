@@ -27,10 +27,10 @@ public class FilmCommentListItem extends Panel {
 	
 	private int rating;
 	
-	public FilmCommentListItem(String id, IModel<Comment> comment) {
+	public FilmCommentListItem(String id, final IModel<Comment> comment) {
 		super(id, comment);
 		
-		CompoundPropertyModel<Comment> compoundModel;
+		final CompoundPropertyModel<Comment> compoundModel;
 		setDefaultModel(compoundModel = new CompoundPropertyModel<Comment>(comment));
 		
 		// TODO Localize this
@@ -79,6 +79,7 @@ public class FilmCommentListItem extends Panel {
 			@Override
 			public void onClick() {
 				comment().remove();
+				comment.detach();
 			}
 			
 			@Override

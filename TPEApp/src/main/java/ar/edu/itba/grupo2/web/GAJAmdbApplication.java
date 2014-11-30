@@ -8,9 +8,11 @@ import org.apache.wicket.request.Response;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import ar.edu.itba.grupo2.web.common.HibernateRequestCycleListener;
 
+@Component
 public class GAJAmdbApplication extends WebApplication {
 	
 	private final SessionFactory sessionFactory;
