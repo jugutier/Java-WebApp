@@ -17,6 +17,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.GAJAmdbSession;
+import ar.edu.itba.grupo2.web.ProfilePage;
 import ar.edu.itba.grupo2.web.widget.StarScoreIndicator;
 
 @SuppressWarnings("serial")
@@ -54,7 +55,7 @@ public class FilmCommentListItem extends Panel {
 
 			@Override
 			public void onClick() {
-				// TODO Go to user's profile
+				setResponsePage(new ProfilePage(comment().getUser()));
 			}
 			
 		};

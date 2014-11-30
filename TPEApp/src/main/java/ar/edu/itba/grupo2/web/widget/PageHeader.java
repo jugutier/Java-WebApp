@@ -21,6 +21,7 @@ import ar.edu.itba.grupo2.web.FilmListPage;
 import ar.edu.itba.grupo2.web.GAJAmdbSession;
 import ar.edu.itba.grupo2.web.HomePage;
 import ar.edu.itba.grupo2.web.ReportedCommentsPage;
+import ar.edu.itba.grupo2.web.ProfilePage;
 
 @SuppressWarnings("serial")
 public class PageHeader extends Panel {
@@ -53,6 +54,7 @@ public class PageHeader extends Panel {
 		Link<Void> filmListLink = null;
 		Link<Void> logout = null;
 		Link<Void> reportedComments = null;
+		Link<Void> profile = null;
 		
 		bannerLink = new Link<Void>("banner") {
 
@@ -82,6 +84,17 @@ public class PageHeader extends Panel {
 			@Override
 			public boolean isVisible() {
 				return GAJAmdbSession.get().isLoggedIn();
+			}
+			
+		};
+		
+		profile = new Link<Void>("profile") {
+
+			@Override
+			public void onClick() {
+				GAJAmdbSession session = GAJAmdbSession.get();
+				if (session.isLoggedIn())
+					setResponsePage(new ProfilePage(session.getLoggedInUser()));
 			}
 			
 		};
@@ -149,6 +162,7 @@ public class PageHeader extends Panel {
 		form.add(new Button("submit", Model.of("")));
 		loginForm.add(form);
 		
+		userPanel.add(profile);
 		userPanel.add(reportedComments);
 		userPanel.add(logout);
 	}

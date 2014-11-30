@@ -1,0 +1,31 @@
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+		<title>GAJAmdb</title>
+	</head>
+	<body>
+		<wicket:extend>
+			<div class="media">
+				<div class="pull-left">
+					<!-- INSERT POSSIBLE AVATAR HERE -->
+				</div>
+				<div class="media-body item-container">
+					<h2 class="media-heading"><span wicket:id="name">Nombre</span> <span wicket:id="lastname">Apellido</span><span class="label label-important">Admin</span><span class="label label-success">V.I.P.</span></h2>
+					<h4 wicket:id="email" class="muted">direccion@email.com</h4>
+					<p><a wicket:id="follow" href="#" class="btn">Seguir a <span wicket:id="nameFollow">usuario</span></a></p>
+					<p><a wicket:id="unfollow" href="#" class="btn">Dejar de seguir a <span wicket:id="nameUnfollow">usuario</span></a></p>
+					<p><h5 class="details-item-header">Fecha de nacimiento: </h5> <span wicket:id="birthdate">11/11/1111</span></p>
+				</div>
+			</div>
+			
+			<div wicket:id="commentSection">
+				<h3>Comentarios</h3>
+				
+				<ul class="item-list">
+					<li wicket:id="comment">
+						<div wicket:id="commentPanel"></div>
+					</li>
+				</ul>
+			</div>
+		</wicket:extend>
+	</body>
+</html>

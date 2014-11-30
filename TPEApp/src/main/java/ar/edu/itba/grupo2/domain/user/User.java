@@ -109,6 +109,10 @@ public class User extends EntityBaseType {
 	public String getSecretAnswer() {
 		return secretAnswer;
 	}
+	
+	public boolean isFollowable(User user) {
+		return !(user.getFollows().contains(this));
+	}
 
 	public boolean isFollowable() {
 		return isFollowable;
@@ -281,6 +285,5 @@ public class User extends EntityBaseType {
 
 	public void canBeFollowed(User u) {
 		isFollowable = !(u.getFollows().contains(this));
-
 	}
 }
