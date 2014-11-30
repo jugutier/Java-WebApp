@@ -46,33 +46,36 @@ public class ProfilePage extends BasePage {
 			}
 		};
 		
-		Link<Void> follow = new Link<Void>("follow") {
+		Link<User> follow = new Link<User>("follow", compoundModel) {
 			
 			@Override
 			public void onClick() {
 				GAJAmdbSession session = GAJAmdbSession.get();
 				if (session.isLoggedIn())
-					user().followUser(session.getLoggedInUser());
+					session.getLoggedInUser().followUser(user());
 			};
 			
 			@Override
 			public boolean isVisible() {
+				getDefaultModel().detach();
 				GAJAmdbSession session = GAJAmdbSession.get();
 				return session.isLoggedIn() && !user().equals(session.getLoggedInUser()) && user().isFollowable(session.getLoggedInUser());
 			}
 		};
 		
-		Link<Void> unfollow = new Link<Void>("unfollow") {
+		Link<User> unfollow = new Link<User>("unfollow", compoundModel) {
 			
 			@Override
 			public void onClick() {
 				GAJAmdbSession session = GAJAmdbSession.get();
 				if (session.isLoggedIn())
-					user().unFollowUser(session.getLoggedInUser());
+					session.getLoggedInUser().unFollowUser(user());
 			};
 			
 			@Override
 			public boolean isVisible() {
+				getDefaultModel().detach();
+				User user = (User) getDefaultModelObject();
 				GAJAmdbSession session = GAJAmdbSession.get();
 				return session.isLoggedIn() && !user().equals(session.getLoggedInUser()) && !user().isFollowable(session.getLoggedInUser());
 			}

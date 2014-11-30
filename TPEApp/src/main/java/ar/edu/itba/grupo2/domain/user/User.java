@@ -44,8 +44,21 @@ public class User extends EntityBaseType {
 	@OneToMany(mappedBy = "user")
 	private List<Comment> comments;
 
+	// TODO Uncomment to get free followers list!
+	/*@ManyToMany(mappedBy="followers", cascade=CascadeType.ALL)
+	@JoinTable(name="followers",
+	 joinColumns=@JoinColumn(name="followedUserId"),
+	 inverseJoinColumns=@JoinColumn(name="followerId")
+	)*/
 	@ManyToMany
 	private List<User> follows;
+	
+	/*@ManyToMany
+	@JoinTable(name="followers",
+	 joinColumns=@JoinColumn(name="followerId"),
+	 inverseJoinColumns=@JoinColumn(name="followedUserId")
+	)
+	private List<User> followers;*/
 
 	private transient boolean isFollowable;
 
@@ -136,6 +149,7 @@ public class User extends EntityBaseType {
 			throw new UserAlreadyFollowedException();
 		}
 		follows.add(u);
+		//u.followers.add(this);
 	}
 
 	public void unFollowUser(User u) throws UserNotFollowedException {
@@ -143,6 +157,7 @@ public class User extends EntityBaseType {
 			throw new UserNotFollowedException();
 		}
 		follows.remove(u);
+		//u.followers.remove(this);
 	}
 
 	public List<Comment> getComments() {
