@@ -3,8 +3,6 @@ package ar.edu.itba.grupo2.domain.user;
 import java.util.Date;
 import java.util.List;
 
-import ar.edu.itba.grupo2.domain.comment.Comment;
-
 public interface UserRepo {
 	
 	public User get(final int id);

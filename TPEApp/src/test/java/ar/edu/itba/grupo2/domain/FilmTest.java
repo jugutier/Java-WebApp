@@ -1,7 +1,6 @@
 package ar.edu.itba.grupo2.domain;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import junit.framework.Assert;
 

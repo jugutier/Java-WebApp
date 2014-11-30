@@ -39,6 +39,6 @@ public class UserTest {
 	
 	@Test(expected = CantCreateWithoutEmailException.class)
 	public void createUserTest(){
-		User newUser = new User.Builder().id(3).build();
+		new User.Builder().id(3).build();
 	}
 }

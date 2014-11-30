@@ -57,7 +57,6 @@ public class ProfilePage extends BasePage {
 			
 			@Override
 			public boolean isVisible() {
-				getDefaultModel().detach();
 				GAJAmdbSession session = GAJAmdbSession.get();
 				return session.isLoggedIn() && !user().equals(session.getLoggedInUser()) && user().isFollowable(session.getLoggedInUser());
 			}
@@ -74,8 +73,6 @@ public class ProfilePage extends BasePage {
 			
 			@Override
 			public boolean isVisible() {
-				getDefaultModel().detach();
-				User user = (User) getDefaultModelObject();
 				GAJAmdbSession session = GAJAmdbSession.get();
 				return session.isLoggedIn() && !user().equals(session.getLoggedInUser()) && !user().isFollowable(session.getLoggedInUser());
 			}
