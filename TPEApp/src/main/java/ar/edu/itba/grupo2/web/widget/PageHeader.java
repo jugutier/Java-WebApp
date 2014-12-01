@@ -22,6 +22,7 @@ import ar.edu.itba.grupo2.web.GAJAmdbSession;
 import ar.edu.itba.grupo2.web.HomePage;
 import ar.edu.itba.grupo2.web.ProfilePage;
 import ar.edu.itba.grupo2.web.ReportedCommentsPage;
+import ar.edu.itba.grupo2.web.ResetPasswordPage;
 import ar.edu.itba.grupo2.web.UserListPage;
 
 @SuppressWarnings("serial")
@@ -175,7 +176,7 @@ public class PageHeader extends Panel {
 		add(userListLink);
 		add(filmListLink);
 		
-		Form<PageHeader> form = new Form<PageHeader>("the-form", new CompoundPropertyModel<PageHeader>(this)) {
+		Form<PageHeader> form = new Form<PageHeader>("form", new CompoundPropertyModel<PageHeader>(this)) {
 			@Override
 			protected void onSubmit() {
 				GAJAmdbSession session = GAJAmdbSession.get();
@@ -186,7 +187,15 @@ public class PageHeader extends Panel {
 				}
 			}
 		};
-
+		
+		Link<Void> resetPassword = new Link<Void>("resetPassword") {
+			@Override
+			public void onClick() {
+				setResponsePage(new ResetPasswordPage());
+			}
+		};
+		
+		form.add(resetPassword);
 		form.add(new TextField<String>("email").setRequired(true));
 		form.add(new PasswordTextField("password"));
 		form.add(new Button("submit", Model.of("")));

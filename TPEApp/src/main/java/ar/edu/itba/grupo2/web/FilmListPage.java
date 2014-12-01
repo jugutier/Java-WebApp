@@ -55,6 +55,8 @@ public class FilmListPage extends BasePage {
 			}
 		});
 		
+		genreDropDown.setNullValid(true);
+		
 		form.add(directorText);
 		form.add(genreDropDown);
 		add(form);

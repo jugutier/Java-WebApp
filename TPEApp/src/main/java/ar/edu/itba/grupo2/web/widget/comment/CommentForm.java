@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
@@ -27,13 +26,6 @@ public class CommentForm extends Panel {
 	
 	public CommentForm(String id, IModel<Film> film) {
 		super(id, film);
-		
-		FeedbackPanel errorsFeedback = new FeedbackPanel("errorsFeedback") {
-			@Override
-			public boolean isVisible() {
-				return this.anyErrorMessage();
-			};
-		};
 		
 		Form<CommentForm> form = new Form<CommentForm>("form", new CompoundPropertyModel<CommentForm>(this)) {
 			@Override
@@ -89,8 +81,6 @@ public class CommentForm extends Panel {
 		form.add(rateDropDown);
 		form.add(messageTextArea);
 		add(form);
-		
-		form.add(errorsFeedback);
 	}
 	
 	@Override
