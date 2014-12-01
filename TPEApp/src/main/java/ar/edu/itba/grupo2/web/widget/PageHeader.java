@@ -56,6 +56,7 @@ public class PageHeader extends Panel {
 		Link<Void> logout = null;
 		Link<Void> reportedComments = null;
 		Link<Void> profile = null;
+		Link<Void> addFilm = null;
 		
 		bannerLink = new Link<Void>("banner") {
 
@@ -89,6 +90,27 @@ public class PageHeader extends Panel {
 			
 		};
 		
+		WebMarkupContainer addFilmContainer = new WebMarkupContainer("addFilmContainer"){
+			@Override
+			public boolean isVisible() {
+				return user().isAdmin();
+			}
+		};
+		
+		WebMarkupContainer reportedCommentsContainer = new WebMarkupContainer("reportedCommentsContainer"){
+			@Override
+			public boolean isVisible() {
+				return user().isAdmin();
+			}
+		};
+		
+		WebMarkupContainer dividerContainer = new WebMarkupContainer("dividerContainer"){
+			@Override
+			public boolean isVisible() {
+				return user().isAdmin();
+			}
+		};
+		
 		profile = new Link<Void>("profile") {
 
 			@Override
@@ -96,6 +118,15 @@ public class PageHeader extends Panel {
 				GAJAmdbSession session = GAJAmdbSession.get();
 				if (session.isLoggedIn())
 					setResponsePage(new ProfilePage(session.getLoggedInUser()));
+			}
+			
+		};
+		
+		addFilm = new Link<Void>("addFilm") {
+
+			@Override
+			public void onClick() {
+				// TODO Add film page
 			}
 			
 		};
@@ -144,8 +175,6 @@ public class PageHeader extends Panel {
 		add(userListLink);
 		add(filmListLink);
 		
-		userPanel.add(usernameLabel);
-		
 		Form<PageHeader> form = new Form<PageHeader>("the-form", new CompoundPropertyModel<PageHeader>(this)) {
 			@Override
 			protected void onSubmit() {
@@ -163,8 +192,24 @@ public class PageHeader extends Panel {
 		form.add(new Button("submit", Model.of("")));
 		loginForm.add(form);
 		
+		userPanel.add(addFilmContainer);
+		userPanel.add(reportedCommentsContainer);
+		userPanel.add(dividerContainer);
+		userPanel.add(usernameLabel);
 		userPanel.add(profile);
-		userPanel.add(reportedComments);
 		userPanel.add(logout);
+		
+		addFilmContainer.add(addFilm);
+		reportedCommentsContainer.add(reportedComments);
+	}
+	
+	private User user() {
+		GAJAmdbSession session = GAJAmdbSession.get();
+		
+		if (!session.isLoggedIn()) {
+			return null;
+		}
+		
+		return session.getLoggedInUser();
 	}
 }

@@ -11,7 +11,7 @@ public class UserRoleBadges extends Panel {
 
 	public UserRoleBadges(String id, IModel<User> user) {
 		super(id, user);
-
+		
 		// TODO Localize
 		Label adminBadge = new Label("adminBadge", "Admin") {
 			@Override
