@@ -20,7 +20,7 @@ public class FilmListPage extends BasePage {
 	}
 	
 	private void loadFilmList() {
-		IModel<List<Film>> filmListModel = new LoadableDetachableModel<List<Film>>() {
+		final IModel<List<Film>> filmListModel = new LoadableDetachableModel<List<Film>>() {
 			@Override
 			protected List<Film> load() {
 				return films.getAll();
@@ -30,7 +30,7 @@ public class FilmListPage extends BasePage {
 		add(new ListView<Film>("filmList", filmListModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new NormalFilmListItem("filmItem", item.getModel()));
+				item.add(new NormalFilmListItem("filmItem", item.getModel(), filmListModel));
 			}
 		});
 	}

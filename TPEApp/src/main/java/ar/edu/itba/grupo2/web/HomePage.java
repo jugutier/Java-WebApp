@@ -29,7 +29,7 @@ public class HomePage extends BasePage {
 	}
 	
 	private void loadLatestReleasedFilms() {
-		IModel<List<Film>> latestReleasedFilmsModel = new LoadableDetachableModel<List<Film>>() {
+		final IModel<List<Film>> latestReleasedFilmsModel = new LoadableDetachableModel<List<Film>>() {
 			@Override
 			protected List<Film> load() {
 				return films.getNewests(7);
@@ -39,7 +39,7 @@ public class HomePage extends BasePage {
 		add(new ListView<Film>("latestReleasedFilm", latestReleasedFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new LatestReleasedFilmsItem("latestReleasedFilmPanel", item.getModel()));	
+				item.add(new LatestReleasedFilmsItem("latestReleasedFilmPanel", item.getModel(), latestReleasedFilmsModel));	
 			}
 		});
 		
@@ -57,7 +57,7 @@ public class HomePage extends BasePage {
 	}
 	
 	private void loadTopFilms() {
-		IModel<List<Film>> topFilmsModel = new LoadableDetachableModel<List<Film>>() {
+		final IModel<List<Film>> topFilmsModel = new LoadableDetachableModel<List<Film>>() {
 			@Override
 			protected List<Film> load() {
 				return films.getTop(5);
@@ -67,13 +67,13 @@ public class HomePage extends BasePage {
 		add(new ListView<Film>("topFilm", topFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new TopFilmsItem("topFilmPanel", item.getModel()));	
+				item.add(new TopFilmsItem("topFilmPanel", item.getModel(), topFilmsModel));	
 			}
 		});
 	}
 	
 	private void loadLatestAddedFilms() {
-		IModel<List<Film>> latestAddedFilmsModel = new LoadableDetachableModel<List<Film>>() {
+		final IModel<List<Film>> latestAddedFilmsModel = new LoadableDetachableModel<List<Film>>() {
 			@Override
 			protected List<Film> load() {
 				return films.getLatest(5);
@@ -83,7 +83,7 @@ public class HomePage extends BasePage {
 		add(new ListView<Film>("latestAddedFilm", latestAddedFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new LatestFilmsItem("latestAddedPanel", item.getModel()));	
+				item.add(new LatestFilmsItem("latestAddedPanel", item.getModel(), latestAddedFilmsModel));	
 			}
 		});
 	}

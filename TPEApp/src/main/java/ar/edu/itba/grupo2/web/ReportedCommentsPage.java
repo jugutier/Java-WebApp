@@ -34,13 +34,7 @@ public class ReportedCommentsPage extends BasePage {
 		PropertyListView<Comment> commentListView = new PropertyListView<Comment>("commentList", commentModel) {
 			@Override
 			protected void populateItem(ListItem<Comment> item) {
-				item.add(new ReportedCommentListItem("commentListItem", item.getModel()) {
-					@Override
-					public void onDiscardReports() {
-						super.onDiscardReports();
-						commentModel.detach();
-					}
-				});	
+				item.add(new ReportedCommentListItem("commentListItem", item.getModel(), commentModel));	
 			}
 		};
 		

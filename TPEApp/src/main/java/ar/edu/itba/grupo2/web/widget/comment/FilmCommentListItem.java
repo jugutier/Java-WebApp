@@ -30,7 +30,7 @@ public class FilmCommentListItem extends Panel {
 	
 	private int rating;
 	
-	public FilmCommentListItem(String id, final IModel<Comment> comment) {
+	public FilmCommentListItem(String id, IModel<Comment> comment, final IModel<List<Comment>> listModel) {
 		super(id, comment);
 		
 		final CompoundPropertyModel<Comment> compoundModel;
@@ -67,7 +67,7 @@ public class FilmCommentListItem extends Panel {
 			@Override
 			public void onClick() {
 				comment().remove();
-				comment.detach();
+				listModel.detach();
 			}
 			
 			@Override

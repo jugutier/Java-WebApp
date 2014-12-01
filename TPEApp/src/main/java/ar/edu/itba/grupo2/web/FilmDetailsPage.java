@@ -87,7 +87,7 @@ public class FilmDetailsPage extends BasePage {
 	
 	private void loadCommentList() {
 		
-		IModel<List<Comment>> commentModel = new LoadableDetachableModel<List<Comment>>() {
+		final IModel<List<Comment>> commentModel = new LoadableDetachableModel<List<Comment>>() {
 			@Override
 			protected List<Comment> load() {
 				return film().getCommentsForUser(GAJAmdbSession.get().getLoggedInUser());
@@ -104,7 +104,7 @@ public class FilmDetailsPage extends BasePage {
 		ListView<Comment> commentListView = new ListView<Comment>("commentList", commentModel) {
 			@Override
 			protected void populateItem(ListItem<Comment> item) {
-				item.add(new FilmCommentListItem("commentListItem", item.getModel()));	
+				item.add(new FilmCommentListItem("commentListItem", item.getModel(), commentModel));	
 			}
 		};
 		

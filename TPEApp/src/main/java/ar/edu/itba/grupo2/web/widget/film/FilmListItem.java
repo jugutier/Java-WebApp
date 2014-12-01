@@ -1,5 +1,7 @@
 package ar.edu.itba.grupo2.web.widget.film;
 
+import java.util.List;
+
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -18,7 +20,7 @@ public class FilmListItem extends Panel {
 	@SpringBean
 	private FilmRepo films;
 
-	public FilmListItem(String id, final IModel<Film> film) {
+	public FilmListItem(String id, final IModel<Film> film, final IModel<List<Film>> listModel) {
 		super(id, film);
 		
 		setDefaultModel(new CompoundPropertyModel<Film>(film));
@@ -35,6 +37,7 @@ public class FilmListItem extends Panel {
 			@Override
 			public void onClick() {
 				films.delete(this.getModelObject());
+				listModel.detach();
 			}
 			
 			@Override

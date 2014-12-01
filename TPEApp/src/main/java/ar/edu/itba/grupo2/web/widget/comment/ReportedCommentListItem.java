@@ -1,5 +1,7 @@
 package ar.edu.itba.grupo2.web.widget.comment;
 
+import java.util.List;
+
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
@@ -16,7 +18,7 @@ import ar.edu.itba.grupo2.web.widget.user.UserRoleBadges;
 @SuppressWarnings("serial")
 public class ReportedCommentListItem extends Panel {
 
-	public ReportedCommentListItem(String id, final IModel<Comment> comment) {
+	public ReportedCommentListItem(String id, IModel<Comment> comment, final IModel<List<Comment>> listModel) {
 		super(id, comment);
 		
 		Link<Film> filmLink = new Link<Film>("filmLink", new PropertyModel<Film>(comment, "film")){
@@ -33,6 +35,7 @@ public class ReportedCommentListItem extends Panel {
 			@Override
 			public void onClick() {
 				comment().remove();
+				listModel.detach();
 			}
 		};
 		
@@ -41,7 +44,7 @@ public class ReportedCommentListItem extends Panel {
 			@Override
 			public void onClick() {
 				getModelObject().discardReports();
-				onDiscardReports();
+				listModel.detach();
 			}
 			
 		};
@@ -56,10 +59,6 @@ public class ReportedCommentListItem extends Panel {
 		add(new StarScoreIndicator("scoreStars", new PropertyModel<Integer>(comment, "filmRate")));
 		add(new Label("reportCount", new PropertyModel<String>(comment, "reportCount")));
 		add(new UserRoleBadges("roleBadges", new PropertyModel<User>(comment, "user")));
-	}
-	
-	public void onDiscardReports() {
-		
 	}
 	
 	public Comment comment() {
