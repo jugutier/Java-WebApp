@@ -8,7 +8,10 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 
+import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.film.Film;
+import ar.edu.itba.grupo2.web.widget.comment.FollowedCommentListItem;
+import ar.edu.itba.grupo2.web.widget.comment.ReportedCommentListItem;
 import ar.edu.itba.grupo2.web.widget.film.LatestFilmsItem;
 import ar.edu.itba.grupo2.web.widget.film.LatestReleasedFilmsItem;
 import ar.edu.itba.grupo2.web.widget.film.TopFilmsItem;
@@ -19,9 +22,11 @@ public class HomePage extends BasePage {
 	
 	public HomePage() {
 		super();
-		loadLatestReleasedFilms();		
+		
+		loadLatestReleasedFilms();
 		loadTopFilms();
 		loadLatestAddedFilms();
+		loadFollowedUserComments();
 	}
 	
 	private void loadLatestReleasedFilms() {
@@ -32,10 +37,10 @@ public class HomePage extends BasePage {
 			}
 		};
 		
-		add(new ListView<Film>("latestReleasedList", latestReleasedFilmsModel) {
+		add(new ListView<Film>("latestReleasedFilm", latestReleasedFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new LatestReleasedFilmsItem("latestReleasedItem", item.getModel()));	
+				item.add(new LatestReleasedFilmsItem("latestReleasedFilmPanel", item.getModel()));	
 			}
 		});
 		
@@ -60,10 +65,10 @@ public class HomePage extends BasePage {
 			}
 		};
 		
-		add(new ListView<Film>("topFilmsList", topFilmsModel) {
+		add(new ListView<Film>("topFilm", topFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new TopFilmsItem("topFilmsItem", item.getModel()));	
+				item.add(new TopFilmsItem("topFilmPanel", item.getModel()));	
 			}
 		});
 	}
@@ -76,10 +81,31 @@ public class HomePage extends BasePage {
 			}
 		};
 		
-		add(new ListView<Film>("latestList", latestAddedFilmsModel) {
+		add(new ListView<Film>("latestAddedFilm", latestAddedFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new LatestFilmsItem("latestItem", item.getModel()));	
+				item.add(new LatestFilmsItem("latestAddedPanel", item.getModel()));	
+			}
+		});
+	}
+	
+	private void loadFollowedUserComments() {
+		IModel<List<Comment>> latestAddedFilmsModel = new LoadableDetachableModel<List<Comment>>() {
+			@Override
+			protected List<Comment> load() {
+				GAJAmdbSession session = GAJAmdbSession.get();
+				if (!session.isLoggedIn()) {
+					return null;
+				}
+				
+				return users.getLatestComments(session.getLoggedInUser());
+			}
+		};
+		
+		add(new ListView<Comment>("latestFollowedUser", latestAddedFilmsModel) {
+			@Override
+			protected void populateItem(ListItem<Comment> item) {
+				item.add(new FollowedCommentListItem("latestFollowedUserPanel", item.getModel()));	
 			}
 		});
 	}
