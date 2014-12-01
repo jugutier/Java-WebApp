@@ -8,8 +8,10 @@ import org.apache.wicket.model.PropertyModel;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.film.Film;
+import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.web.FilmDetailsPage;
 import ar.edu.itba.grupo2.web.widget.StarScoreIndicator;
+import ar.edu.itba.grupo2.web.widget.user.UserRoleBadges;
 
 @SuppressWarnings("serial")
 public class ReportedCommentListItem extends Panel {
@@ -53,6 +55,7 @@ public class ReportedCommentListItem extends Panel {
 		add(new Label("username", new PropertyModel<String>(comment, "user.name")));
 		add(new StarScoreIndicator("scoreStars", new PropertyModel<Integer>(comment, "filmRate")));
 		add(new Label("reportCount", new PropertyModel<String>(comment, "reportCount")));
+		add(new UserRoleBadges("roleBadges", new PropertyModel<User>(comment, "user")));
 	}
 	
 	public void onDiscardReports() {

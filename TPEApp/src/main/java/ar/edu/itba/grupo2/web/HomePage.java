@@ -11,7 +11,6 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.web.widget.comment.FollowedCommentListItem;
-import ar.edu.itba.grupo2.web.widget.comment.ReportedCommentListItem;
 import ar.edu.itba.grupo2.web.widget.film.LatestFilmsItem;
 import ar.edu.itba.grupo2.web.widget.film.LatestReleasedFilmsItem;
 import ar.edu.itba.grupo2.web.widget.film.TopFilmsItem;

@@ -15,10 +15,12 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
+import ar.edu.itba.grupo2.domain.user.User;
 import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.GAJAmdbSession;
 import ar.edu.itba.grupo2.web.ProfilePage;
 import ar.edu.itba.grupo2.web.widget.StarScoreIndicator;
+import ar.edu.itba.grupo2.web.widget.user.UserRoleBadges;
 
 @SuppressWarnings("serial")
 public class FilmCommentListItem extends Panel {
@@ -33,21 +35,6 @@ public class FilmCommentListItem extends Panel {
 		
 		final CompoundPropertyModel<Comment> compoundModel;
 		setDefaultModel(compoundModel = new CompoundPropertyModel<Comment>(comment));
-		
-		// TODO Localize this
-		Label adminTag = new Label("adminTag", "Admin") {
-			@Override
-			public boolean isVisible() {
-				return comment().getUser().isAdmin();
-			}
-		};
-		
-		Label vipTag = new Label("vipTag", "V.I.P.") {
-			@Override
-			public boolean isVisible() {
-				return comment().getUser().isVip();
-			}
-		};
 		
 		Label commentRating = new Label("rate");
 		
@@ -127,8 +114,7 @@ public class FilmCommentListItem extends Panel {
 		// TODO Revise this
 		add(new StarScoreIndicator("scoreStars", new PropertyModel<Integer>(comment, "filmRate")));
 		add(new Label("text"));
-		add(adminTag);
-		add(vipTag);
+		add(new UserRoleBadges("roleBadges", new PropertyModel<User>(comment, "user")));
 		add(reportButton);
 		add(deleteButton);
 		add(ratingForm);

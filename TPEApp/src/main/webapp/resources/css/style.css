@@ -31,6 +31,10 @@ body {
 	margin-top: 20px;
 }
 
+.label {
+	vertical-align: middle;
+}
+
 .form-signin {
 	max-width: 300px;
 	padding: 19px 29px 29px;
