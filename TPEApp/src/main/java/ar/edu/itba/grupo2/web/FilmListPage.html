@@ -4,9 +4,17 @@
 	</head>
 	<body>
 		<wicket:extend>
+			<h2>Películas</h2>
+			<form wicket:id="form" class="form-inline" action="list" method="GET">
+				<input wicket:id="director" type="text" class="span2" placeholder="Director" />
+				<select wicket:id="genre" class="span2">
+				</select>
+				<button type="submit" class="btn"><i class="icon-filter"></i> Filtrar</button>
+				<a class="btn btn-primary pull-right" type="button" href="add"><i class="icon-plus"></i> A&ntilde;adir pel&iacute;cula</a>
+			</form>
 			<ul class="item-list"> 
-				<li wicket:id="filmList">
-					<div wicket:id="filmItem"></div>
+				<li wicket:id="film">
+					<div wicket:id="filmPanel"></div>
 				</li>
 			</ul>
 		</wicket:extend>
