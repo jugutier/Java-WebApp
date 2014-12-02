@@ -1,0 +1,73 @@
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+		<title>GAJAmdb</title>
+	</head>
+	<body>
+		<wicket:panel>
+			<form wicket:id="form" class="form-horizontal">
+				<fieldset>				
+					<div class="control-group">
+						<label class="control-label" for="name">Título</label>
+						<div class="controls">
+							<input wicket:id="name" type="text" id="name"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="releaseDate">Fecha de estreno</label>
+						<div class="controls">
+							<input wicket:id="releaseDate" type="text" id="releaseDate"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="director">Director</label>
+						<div class="controls">
+							<input wicket:id="director" type="text" id="director"/>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="length">Longitud</label>
+						<div class="controls">
+							<div class="input-append">
+								<input wicket:id="length" type="number" id="length"/>
+								<span class="add-on">minutos</span>
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="movieImage">Foto de portada</label>
+						<div class="controls">
+							<div class="media">
+									<!-- Show if there is an image -->
+									<div class="pull-left">
+										<img data-src="holder.js/140x140" class="img-thumbnail film-thumbnail" alt="film-Image" src="${pageContext.request.contextPath}/bin/image/get/${film.id}" data-holder-rendered="true">
+									</div>
+								<div class="media-body">
+									<input wicket:id="movieImage" type="file" id="movieImage" accept="image/*" />
+										<!-- Show if there is an image -->
+										<div wicket:id="deleteImageContainer">
+											<label class="checkbox">
+												<input wicket:id="deleteImage" type="checkbox"> Eliminar imagen
+											</label>
+										</div>
+									<p>La foto debe ser de 100kb como máximo.</p>
+								</div>
+							</div>				
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="genres">Géneros</label>
+						<div class="controls">
+							<div wicket:id="genres" class="checkbox"></div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="description">Resumen</label>
+						<div class="controls">
+							<textarea wicket:id="description" id="description" class="input-xlarge" rows="5"></textarea>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</wicket:panel>
+	</body>
+</html>

@@ -1,9 +1,9 @@
 package ar.edu.itba.grupo2.web.command;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
 
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.genre.Genre;
@@ -11,20 +11,20 @@ import ar.edu.itba.grupo2.domain.genre.Genre;
 public class FilmForm {
 	private int id;
 	private String name;
-	private String releaseDate;
+	private Date releaseDate;
 	private String director;
 	private List<Genre> genres;
 	private int length;
 	private String description;
-	private MultipartFile movieImage;
+	private List<FileUpload> movieImage;
+	private boolean deleteImage;
 	
 	public FilmForm (){}
 	
 	public FilmForm(final Film film) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		setId(film.getId());
 		setName(film.getName());
-		setReleaseDate(dateFormat.format(film.getReleaseDate()));
+		setReleaseDate(film.getReleaseDate());
 		setDirector(film.getDirector());
 		setGenres(film.getGenres());
 		setLength(film.getLength());
@@ -39,7 +39,7 @@ public class FilmForm {
 		return name;
 	}
 	
-	public String getReleaseDate() {
+	public Date getReleaseDate() {
 		return releaseDate;
 	}
 	
@@ -59,15 +59,19 @@ public class FilmForm {
 		return description;
 	}
 	
-	public MultipartFile getMovieImage() {
+	public List<FileUpload> getMovieImage() {
 		return movieImage;
+	}
+	
+	public boolean isDeleteImage() {
+		return deleteImage;
 	}
 	
 	public void setName(String name) {
 		this.name = name;
 	}
 	
-	public void setReleaseDate(String releaseDate) {
+	public void setReleaseDate(Date releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 	
@@ -91,7 +95,11 @@ public class FilmForm {
 		this.description = description;
 	}
 	
-	public void setMovieImage(MultipartFile movieImage) {
+	public void setMovieImage(List<FileUpload> movieImage) {
 		this.movieImage = movieImage;
+	}
+	
+	public void setDeleteImage(boolean deleteImage) {
+		this.deleteImage = deleteImage;
 	}
 }

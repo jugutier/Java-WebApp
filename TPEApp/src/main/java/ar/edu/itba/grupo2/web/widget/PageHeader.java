@@ -20,6 +20,7 @@ import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.FilmListPage;
 import ar.edu.itba.grupo2.web.GAJAmdbSession;
 import ar.edu.itba.grupo2.web.HomePage;
+import ar.edu.itba.grupo2.web.NewFilmPage;
 import ar.edu.itba.grupo2.web.ProfilePage;
 import ar.edu.itba.grupo2.web.ReportedCommentsPage;
 import ar.edu.itba.grupo2.web.ResetPasswordPage;
@@ -127,7 +128,7 @@ public class PageHeader extends Panel {
 
 			@Override
 			public void onClick() {
-				// TODO Add film page
+				setResponsePage(new NewFilmPage());
 			}
 			
 		};

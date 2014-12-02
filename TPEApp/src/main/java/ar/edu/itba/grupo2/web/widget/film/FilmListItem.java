@@ -11,6 +11,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.film.FilmRepo;
+import ar.edu.itba.grupo2.web.EditFilmPage;
 import ar.edu.itba.grupo2.web.FilmDetailsPage;
 import ar.edu.itba.grupo2.web.GAJAmdbSession;
 
@@ -52,6 +53,7 @@ public class FilmListItem extends Panel {
 			@Override
 			public void onClick() {
 				// TODO Go to edit film page
+				setResponsePage(new EditFilmPage((Film) getDefaultModelObject()));
 			}
 			
 			@Override
