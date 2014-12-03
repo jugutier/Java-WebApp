@@ -112,6 +112,16 @@ public class Film extends EntityBaseType {
 	public int getLength() {
 		return length;
 	}
+	
+	public int getVisits() {
+		// TODO Make visits persistent
+		return 123;
+	}
+	
+	public int getStock() {
+		// TODO Get stock from external API
+		return 555;
+	}
 
 	public int getSumComments() {
 		return sumComments;
@@ -238,6 +248,12 @@ public class Film extends EntityBaseType {
 		if (today.after(this.releaseDate))
 			return true;
 		return false;
+	}
+	
+	public void visitFilm() {
+		// TODO Make visits persistent
+		System.out.println("Visit");
+		return;
 	}
 
 	@Override

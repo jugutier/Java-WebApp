@@ -56,8 +56,6 @@ public class FilmEditForm extends Panel {
 		lengthTextField.setMinimum(0);
 		
 		// Image
-		// TODO Implement image
-		// TODO Fix image deletion
 		FileUploadField imageUpload = new FileUploadField("movieImage");
 		Form<FilmForm> deleteImageForm = new Form<FilmForm>("deleteImageForm", new CompoundPropertyModel<FilmForm>(filmForm)) {
 			@Override

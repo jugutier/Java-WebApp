@@ -53,7 +53,6 @@ public class FilmListItem extends Panel {
 			
 			@Override
 			public void onClick() {
-				// TODO Go to edit film page
 				setResponsePage(new EditFilmPage((Film) getDefaultModelObject()));
 			}
 			

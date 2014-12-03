@@ -75,21 +75,8 @@ public class FilmDetailsPage extends BasePage {
 		filmDetailsContainer.add(new Label("director"));
 		filmDetailsContainer.add(new Label("description"));
 		filmDetailsContainer.add(new Label("length"));
-		// TODO Get Film stock here
-		filmDetailsContainer.add(new Label("stock", new Model<Integer>() {
-			@Override
-			public Integer getObject() {
-				return 666;
-			}
-		}));
-		
-		// TODO Get Film visits here
-		filmDetailsContainer.add(new Label("visits", new Model<Integer>() {
-			@Override
-			public Integer getObject() {
-				return 666;
-			}
-		}));
+		filmDetailsContainer.add(new Label("stock"));
+		filmDetailsContainer.add(new Label("visits"));
 
 		loadGenreList();
 		loadCommentList();
@@ -192,6 +179,12 @@ public class FilmDetailsPage extends BasePage {
 					}
 				}));
 
+	}
+	
+	@Override
+	protected void onConfigure() {
+		super.onConfigure();
+		film().visitFilm();
 	}
 
 	private Film film() {

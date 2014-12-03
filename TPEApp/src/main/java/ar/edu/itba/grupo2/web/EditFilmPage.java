@@ -34,7 +34,7 @@ public class EditFilmPage extends BasePage {
 		form.add(new SubmitLink("submit", filmFormModel) {
 			@Override
 			public void onSubmit() {
-				// TODO Add film
+				// TODO Edit film
 				super.onSubmit();
 				
 				FilmForm filmForm = (FilmForm) getDefaultModelObject();
@@ -51,6 +51,7 @@ public class EditFilmPage extends BasePage {
 					film.setFilmImage(null);
 				}
 				
+				// TODO Find out what gets serialized when changing a film's image
 				if (filmForm.getMovieImage() != null) {
 					FileUpload file = filmForm.getMovieImage().get(0);
 					MovieImage movieImage = new MovieImage(file.getClientFileName(), file.getContentType(), (int) file.getSize(), file.getBytes(), film);
