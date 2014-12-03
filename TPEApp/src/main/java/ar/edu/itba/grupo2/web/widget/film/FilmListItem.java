@@ -2,7 +2,6 @@ package ar.edu.itba.grupo2.web.widget.film;
 
 import java.util.List;
 
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -24,7 +23,9 @@ public class FilmListItem extends Panel {
 	public FilmListItem(String id, final IModel<Film> film, final IModel<List<Film>> listModel) {
 		super(id, film);
 		
-		setDefaultModel(new CompoundPropertyModel<Film>(film));
+		CompoundPropertyModel<Film> compoundModel = new CompoundPropertyModel<Film>(film);
+		
+		setDefaultModel(compoundModel);
 		
 		Link<Film> titleLink = new Link<Film>("nameLink", film) {
 			@Override
@@ -67,7 +68,7 @@ public class FilmListItem extends Panel {
 		add(deleteFilm);
 		add(editFilm);
 		
-		titleLink.add(new Label("name"));
+		titleLink.add(new FilmTitle("name", compoundModel));
 	}
 	
 }

@@ -20,6 +20,7 @@ import ar.edu.itba.grupo2.domain.genre.Genre;
 import ar.edu.itba.grupo2.web.widget.comment.CommentForm;
 import ar.edu.itba.grupo2.web.widget.comment.FilmCommentListItem;
 import ar.edu.itba.grupo2.web.widget.film.FilmDisplayImage;
+import ar.edu.itba.grupo2.web.widget.film.FilmTitle;
 
 @SuppressWarnings("serial")
 public class FilmDetailsPage extends BasePage {
@@ -65,7 +66,7 @@ public class FilmDetailsPage extends BasePage {
 
 		add(deleteFilm);
 		add(editFilm);
-		add(new Label("name"));
+		add(new FilmTitle("name", compoundModel));
 		filmDetailsContainer.add(new FilmDisplayImage("thumbnail", compoundModel));
 		filmDetailsContainer.add(new Label("releaseDate"));
 		filmDetailsContainer.add(new Label("director"));

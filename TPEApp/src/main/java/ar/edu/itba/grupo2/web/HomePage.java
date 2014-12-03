@@ -20,8 +20,6 @@ import ar.edu.itba.grupo2.web.widget.film.TopFilmsItem;
 @SuppressWarnings("serial")
 public class HomePage extends BasePage {
 	
-	IModel<List<Film>> latestReleasedFilmsModel = null;
-	
 	public HomePage() {
 		super();
 		
@@ -54,17 +52,17 @@ public class HomePage extends BasePage {
 	}
 	
 	private void loadLatestReleasedFilms() {
+		final IModel<List<Film>> latestReleasedFilmsModel = new LoadableDetachableModel<List<Film>>() {
+			@Override
+			protected List<Film> load() {
+				return films.getNewests(7);
+			}
+		};
+		
 		WebMarkupContainer latestReleasedFilmsContainer = new WebMarkupContainer("latestReleasedFilmsContainer") {
 			@Override
 			public boolean isVisible() {
 				return !latestReleasedFilmsModel.getObject().isEmpty();
-			}
-		};
-		
-		latestReleasedFilmsModel = new LoadableDetachableModel<List<Film>>() {
-			@Override
-			protected List<Film> load() {
-				return films.getNewests(7);
 			}
 		};
 		

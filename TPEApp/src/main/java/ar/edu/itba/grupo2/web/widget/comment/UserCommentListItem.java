@@ -5,10 +5,12 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.web.FilmDetailsPage;
+import ar.edu.itba.grupo2.web.widget.film.FilmTitle;
 
 @SuppressWarnings("serial")
 public class UserCommentListItem extends Panel {
@@ -31,7 +33,7 @@ public class UserCommentListItem extends Panel {
 		add(new Label("creationDate"));
 		add(new Label("text"));
 		add(film);
-		film.add(new Label("filmName", compoundModel.bind("film.name")));
+		film.add(new FilmTitle("filmName", new PropertyModel<Film>(compoundModel, "film")));
 	}
 	
 }
