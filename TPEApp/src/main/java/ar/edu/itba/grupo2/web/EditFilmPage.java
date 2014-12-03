@@ -47,6 +47,10 @@ public class EditFilmPage extends BasePage {
 				film.setGenres(filmForm.getGenres());
 				film.setDescription(filmForm.getDescription());
 				
+				if (filmForm.isDeleteImage()) {
+					film.setFilmImage(null);
+				}
+				
 				if (filmForm.getMovieImage() != null) {
 					FileUpload file = filmForm.getMovieImage().get(0);
 					MovieImage movieImage = new MovieImage(file.getClientFileName(), file.getContentType(), (int) file.getSize(), file.getBytes(), film);

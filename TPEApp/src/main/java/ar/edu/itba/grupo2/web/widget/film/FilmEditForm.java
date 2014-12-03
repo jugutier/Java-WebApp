@@ -3,7 +3,6 @@ package ar.edu.itba.grupo2.web.widget.film;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
@@ -18,6 +17,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.lang.Bytes;
+import org.apache.wicket.validation.validator.RangeValidator;
 
 import ar.edu.itba.grupo2.domain.film.FilmRepo;
 import ar.edu.itba.grupo2.domain.genre.Genre;
@@ -54,18 +54,20 @@ public class FilmEditForm extends Panel {
 		// Length
 		NumberTextField<Integer> lengthTextField = new NumberTextField<Integer>("length");
 		lengthTextField.setRequired(true);
+		lengthTextField.setMinimum(0);
 		
 		// Image
 		// TODO Implement image
+		// TODO Fix image deletion
 		FileUploadField imageUpload = new FileUploadField("movieImage");
-		WebMarkupContainer deleteImageContainer = new WebMarkupContainer("deleteImageContainer") {
+		Form<FilmForm> deleteImageForm = new Form<FilmForm>("deleteImageForm", new CompoundPropertyModel<FilmForm>(filmForm)) {
 			@Override
-			public boolean isEnabled() {
-				return form().getMovieImage() != null;
+			public boolean isVisible() {
+				return form().hasImage();
 			};
 		};
 		CheckBox deleteImage = new CheckBox("deleteImage");
-		deleteImageContainer.add(deleteImage);
+		deleteImageForm.add(deleteImage);
 		
 		
 		// Description
@@ -95,7 +97,7 @@ public class FilmEditForm extends Panel {
 		form.add(directorTextField);
 		form.add(lengthTextField);
 		form.add(imageUpload);
-		form.add(deleteImageContainer);
+		form.add(deleteImageForm);
 		form.add(descriptionTextArea);
 		form.add(genresCheckBoxes);
 		
