@@ -12,11 +12,13 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityModel;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.genre.Genre;
+import ar.edu.itba.grupo2.web.widget.StarScoreIndicator;
 import ar.edu.itba.grupo2.web.widget.comment.CommentForm;
 import ar.edu.itba.grupo2.web.widget.comment.FilmCommentListItem;
 import ar.edu.itba.grupo2.web.widget.film.FilmDisplayImage;
@@ -67,11 +69,27 @@ public class FilmDetailsPage extends BasePage {
 		add(deleteFilm);
 		add(editFilm);
 		add(new FilmTitle("name", compoundModel));
+		filmDetailsContainer.add(new StarScoreIndicator("starScore", new PropertyModel<Integer>(compoundModel, "score")));
 		filmDetailsContainer.add(new FilmDisplayImage("thumbnail", compoundModel));
 		filmDetailsContainer.add(new Label("releaseDate"));
 		filmDetailsContainer.add(new Label("director"));
 		filmDetailsContainer.add(new Label("description"));
 		filmDetailsContainer.add(new Label("length"));
+		// TODO Get Film stock here
+		filmDetailsContainer.add(new Label("stock", new Model<Integer>() {
+			@Override
+			public Integer getObject() {
+				return 666;
+			}
+		}));
+		
+		// TODO Get Film visits here
+		filmDetailsContainer.add(new Label("visits", new Model<Integer>() {
+			@Override
+			public Integer getObject() {
+				return 666;
+			}
+		}));
 
 		loadGenreList();
 		loadCommentList();
