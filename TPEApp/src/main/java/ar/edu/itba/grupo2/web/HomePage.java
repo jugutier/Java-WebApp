@@ -2,7 +2,7 @@ package ar.edu.itba.grupo2.web;
 
 import java.util.List;
 
-import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
@@ -19,41 +19,53 @@ import ar.edu.itba.grupo2.web.widget.film.TopFilmsItem;
 @SuppressWarnings("serial")
 public class HomePage extends BasePage {
 	
+	IModel<List<Film>> latestReleasedFilmsModel = null;
+	
 	public HomePage() {
 		super();
 		
+		loadWelcomeSection();
 		loadLatestReleasedFilms();
 		loadTopFilms();
 		loadLatestAddedFilms();
+		loadMostVisitedFilms();
 		loadFollowedUserComments();
 	}
 	
+	private void loadWelcomeSection() {
+		WebMarkupContainer guestUserContainer = new WebMarkupContainer("guestUserContainer") {
+			@Override
+			public boolean isVisible() {
+				return !GAJAmdbSession.get().isLoggedIn();
+			}
+		};
+		
+		add(guestUserContainer);
+	}
+	
 	private void loadLatestReleasedFilms() {
-		final IModel<List<Film>> latestReleasedFilmsModel = new LoadableDetachableModel<List<Film>>() {
+		WebMarkupContainer latestReleasedFilmsContainer = new WebMarkupContainer("latestReleasedFilmsContainer") {
+			@Override
+			public boolean isVisible() {
+				return !latestReleasedFilmsModel.getObject().isEmpty();
+			}
+		};
+		
+		latestReleasedFilmsModel = new LoadableDetachableModel<List<Film>>() {
 			@Override
 			protected List<Film> load() {
 				return films.getNewests(7);
 			}
 		};
 		
-		add(new ListView<Film>("latestReleasedFilm", latestReleasedFilmsModel) {
+		latestReleasedFilmsContainer.add(new ListView<Film>("latestReleasedFilm", latestReleasedFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
 				item.add(new LatestReleasedFilmsItem("latestReleasedFilmPanel", item.getModel(), latestReleasedFilmsModel));	
 			}
 		});
 		
-		// TODO Localize this String
-		Label latestReleasedEmpty = new Label("latestReleasedEmpty", "No hay estrenos esta semana");
-		
-		if (!latestReleasedFilmsModel.getObject().isEmpty()) {
-			latestReleasedEmpty.setVisible(false);
-		}
-		else {
-			latestReleasedEmpty.setVisible(true);
-		}
-		
-		add(latestReleasedEmpty);
+		add(latestReleasedFilmsContainer);
 	}
 	
 	private void loadTopFilms() {
@@ -88,8 +100,33 @@ public class HomePage extends BasePage {
 		});
 	}
 	
+	private void loadMostVisitedFilms() {
+		final IModel<List<Film>> mostVisitedFilmsModel = new LoadableDetachableModel<List<Film>>() {
+			@Override
+			protected List<Film> load() {
+				// TODO Replace with most visited films
+				return films.getLatest(5);
+			}
+		};
+		
+		add(new ListView<Film>("mostVisitedFilm", mostVisitedFilmsModel) {
+			@Override
+			protected void populateItem(ListItem<Film> item) {
+				item.add(new LatestFilmsItem("mostVisitedPanel", item.getModel(), mostVisitedFilmsModel));	
+			}
+		});
+	}
+	
 	private void loadFollowedUserComments() {
-		IModel<List<Comment>> latestAddedFilmsModel = new LoadableDetachableModel<List<Comment>>() {
+		WebMarkupContainer latestFollowedUserContainer = new WebMarkupContainer("latestFollowedUserContainer") {
+			@Override
+			public boolean isVisible() {
+				GAJAmdbSession session = GAJAmdbSession.get();
+				return session.isLoggedIn() && !users.getLatestComments(session.getLoggedInUser()).isEmpty();
+			}
+		};
+		
+		IModel<List<Comment>> latestFollowedUserModel = new LoadableDetachableModel<List<Comment>>() {
 			@Override
 			protected List<Comment> load() {
 				GAJAmdbSession session = GAJAmdbSession.get();
@@ -101,12 +138,14 @@ public class HomePage extends BasePage {
 			}
 		};
 		
-		add(new ListView<Comment>("latestFollowedUser", latestAddedFilmsModel) {
+		latestFollowedUserContainer.add(new ListView<Comment>("latestFollowedUser", latestFollowedUserModel) {
 			@Override
 			protected void populateItem(ListItem<Comment> item) {
 				item.add(new FollowedCommentListItem("latestFollowedUserPanel", item.getModel()));	
 			}
 		});
+		
+		add(latestFollowedUserContainer);
 	}
 
 }
