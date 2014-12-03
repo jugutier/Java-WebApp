@@ -2,9 +2,11 @@ package ar.edu.itba.grupo2.web;
 
 import java.util.List;
 
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -47,16 +49,26 @@ public class FilmListPage extends BasePage {
 			}
 		};
 		
+		ChoiceRenderer<Genre> renderer = new ChoiceRenderer<Genre>("genre");
 		DropDownChoice<Genre> genreDropDown = new DropDownChoice<Genre>("genre", new LoadableDetachableModel<List<Genre>>() {
 			
 			@Override
 			protected List<Genre> load() {
 				return films.getGenres();
 			}
-		});
+		}, renderer);
 		
 		genreDropDown.setNullValid(true);
 		
+		
+		Link<Void> addFilm = new Link<Void>("addFilm") {
+			@Override
+			public void onClick() {
+				setResponsePage(new NewFilmPage());
+			}
+		};
+		
+		form.add(addFilm);
 		form.add(directorText);
 		form.add(genreDropDown);
 		add(form);

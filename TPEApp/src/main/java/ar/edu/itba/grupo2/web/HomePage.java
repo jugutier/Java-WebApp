@@ -3,6 +3,7 @@ package ar.edu.itba.grupo2.web;
 import java.util.List;
 
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
@@ -40,6 +41,15 @@ public class HomePage extends BasePage {
 			}
 		};
 		
+		Link<Void> register = new Link<Void>("register") {
+			@Override
+			public void onClick() {
+				// TODO Go to register page
+				
+			}
+		};
+		
+		guestUserContainer.add(register);
 		add(guestUserContainer);
 	}
 	

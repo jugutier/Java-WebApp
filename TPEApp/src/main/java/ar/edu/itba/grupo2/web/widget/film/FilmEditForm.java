@@ -17,7 +17,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.lang.Bytes;
-import org.apache.wicket.validation.validator.RangeValidator;
 
 import ar.edu.itba.grupo2.domain.film.FilmRepo;
 import ar.edu.itba.grupo2.domain.genre.Genre;
@@ -76,7 +75,7 @@ public class FilmEditForm extends Panel {
 		
 		// Genre list
 		ChoiceRenderer<Genre> renderer = new ChoiceRenderer<Genre>("genre");
-		IModel<List<Genre>> model = new LoadableDetachableModel<List<Genre>>() {
+		IModel<List<Genre>> genreModel = new LoadableDetachableModel<List<Genre>>() {
 
 			@Override
 			protected List<Genre> load() {
@@ -84,7 +83,7 @@ public class FilmEditForm extends Panel {
 			}
 		};
 		
-		CheckBoxMultipleChoice<Genre> genresCheckBoxes = new CheckBoxMultipleChoice<Genre>("genres", model, renderer);
+		CheckBoxMultipleChoice<Genre> genresCheckBoxes = new CheckBoxMultipleChoice<Genre>("genres", genreModel, renderer);
 		
 		genresCheckBoxes.setSuffix("");
 		genresCheckBoxes.setRequired(false);
