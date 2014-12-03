@@ -8,7 +8,6 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
@@ -81,40 +80,43 @@ public class FilmDetailsPage extends BasePage {
 	}
 
 	private void loadGenreList() {
-		// TODO Implement model here
-		RepeatingView genreList = new RepeatingView("genreList");
-		Label genreSingular = new Label("genreSingular", "Género:");
-		Label genrePlural = new Label("genrePlural", "Géneros:");
-
-		List<Genre> genres = film().getGenres();
-
-		if (genres.size() < 1) {
-			genreList.setVisible(false);
-			genreSingular.setVisible(false);
-			genrePlural.setVisible(false);
-		} else if (genres.size() == 1) {
-			genreList.setVisible(true);
-			genreSingular.setVisible(true);
-			genrePlural.setVisible(false);
-		} else {
-			genreList.setVisible(true);
-			genreSingular.setVisible(false);
-			genrePlural.setVisible(true);
-		}
-
-		for (int i = 0; i < genres.size(); i++) {
-			String result = genres.get(i).getGenre();
-
-			if (i != 0) {
-				result = " | " + result;
+		Label genreLabel = new Label("genreLabel", new Model<String>() {
+			@Override
+			public String getObject() {
+				// TODO Ask it this is the right way to return strings
+				// TODO Localize
+				if (film().getGenres().size() == 1) {
+					return "Género";
+				}
+				
+				return "Géneros";
 			}
+		});
+		
+		WebMarkupContainer genreContainer = new WebMarkupContainer("genreContainer") {
+			@Override
+			public boolean isVisible() {
+				return !film().getGenres().isEmpty();
+			}
+		};
 
-			genreList.add(new Label(genreList.newChildId(), result));
-		}
-
-		filmDetailsContainer.add(genreList);
-		filmDetailsContainer.add(genreSingular);
-		filmDetailsContainer.add(genrePlural);
+		IModel<List<Genre>> genreModel = new LoadableDetachableModel<List<Genre>>() {
+			@Override
+			protected List<Genre> load() {
+				return film().getGenres();
+			}
+		};
+		
+		genreContainer.add(new ListView<Genre>("genre", genreModel) {
+			@Override
+			protected void populateItem(ListItem<Genre> item) {
+				item.add(new Label("genreItem", item.getModel()));	
+			}
+		});
+		
+		genreContainer.add(genreLabel);
+		
+		filmDetailsContainer.add(genreContainer);
 	}
 
 	private void loadCommentList() {

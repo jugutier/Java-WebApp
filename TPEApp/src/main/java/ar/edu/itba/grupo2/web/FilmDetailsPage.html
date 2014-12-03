@@ -5,7 +5,7 @@
 	<body>
 		<wicket:extend>
 			<h2 wicket:id="name">Título</h2>
-			<a wicket:id="editButton" class="btn" type="button"><i class="icon-edit"></i> Editar</a>
+			<a wicket:id="editButton" class="btn btn-primary" type="button"><i class="icon-edit"></i> Editar</a>
 			<a wicket:id="deleteButton" class="btn btn-danger" type="button"><i class="icon-remove"></i> Eliminar</a>
 			
 			<div wicket:id="filmDetailsContainer" class="comment-body">
@@ -20,12 +20,12 @@
 			
 								<ul class="details-list">
 									<li><h5 class="details-item-header">Director:</h5> <span wicket:id="director">Pedro</span></li>
-									<li>
+									<li wicket:id="genreContainer">
 										<h5 class="details-item-header">
-										<span wicket:id="genrePlural">Géneros</span><span wicket:id="genreSingular">Género</span>
+										<span wicket:id="genreLabel">Géneros</span>:
 										</h5>
 										<ul class="star-list">
-											<li wicket:id="genreList"></li>
+											<li wicket:id="genre"><span wicket:id="genreItem"></span> | </li>
 										</ul>
 									</li>
 									<li><h5 class="details-item-header">Fecha de estreno:</h5> <span wicket:id="releaseDate">1/1/1111</span></li>
