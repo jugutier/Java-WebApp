@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -31,9 +32,40 @@ public class FilmDetailsPage extends BasePage {
 
 		CompoundPropertyModel<Film> compoundModel = new CompoundPropertyModel<Film>(new EntityModel<Film>(Film.class, film));
 		setDefaultModel(compoundModel);
+		
+		Link<Film> deleteFilm = new Link<Film>("deleteButton", compoundModel) {
+			
+			@Override
+			public void onClick() {
+				films.delete(this.getModelObject());
+				setResponsePage(new FilmListPage());
+			}
+			
+			@Override
+			public boolean isVisible() {
+				GAJAmdbSession session = GAJAmdbSession.get();
+				return session.isLoggedIn() && session.getLoggedInUser().isAdmin();
+			}
+		};
+		
+		Link<Film> editFilm = new Link<Film>("editButton", compoundModel) {
+			
+			@Override
+			public void onClick() {
+				setResponsePage(new EditFilmPage(film()));
+			}
+			
+			@Override
+			public boolean isVisible() {
+				GAJAmdbSession session = GAJAmdbSession.get();
+				return session.isLoggedIn() && session.getLoggedInUser().isAdmin();
+			}
+		};
 
 		filmDetailsContainer = new WebMarkupContainer("filmDetailsContainer");
 
+		add(deleteFilm);
+		add(editFilm);
 		add(new Label("name"));
 		filmDetailsContainer.add(new FilmDisplayImage("thumbnail", compoundModel));
 		filmDetailsContainer.add(new Label("releaseDate"));

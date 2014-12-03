@@ -215,14 +215,7 @@ public class Film extends EntityBaseType {
 	}
 	
 	public void setGenres(List<Genre> genres) {
-		if (this.genres != null) {
-			this.genres.clear();
-			if (genres != null)
-				this.genres.addAll(genres);
-		}
-		else {
-			this.genres = genres;
-		}
+		this.genres = genres;
 	}
 	
 	public void setDescription(String description) {
