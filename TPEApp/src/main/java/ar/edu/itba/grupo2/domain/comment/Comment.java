@@ -36,9 +36,9 @@ public class Comment extends EntityBaseType {
 	private List<CommentRate> ratings;
 	
 	
-	transient public boolean reportable;
-	transient public boolean belongsToUser;
-	transient public boolean ratedByUser;
+	private transient boolean reportable;
+	private transient boolean belongsToUser;
+	private transient boolean ratedByUser;
 	
 	Comment(){}
 	
@@ -119,7 +119,15 @@ public class Comment extends EntityBaseType {
 		
 		return found;
 	}
-	
+	public void setBelongsToUser(boolean belongsToUser) {
+		this.belongsToUser = belongsToUser;
+	}
+	public void setRatedByUser(boolean ratedByUser) {
+		this.ratedByUser = ratedByUser;
+	}
+	public void setReportable(boolean reportable) {
+		this.reportable = reportable;
+	}
 	public void remove() {
 		film.removeComment(this);
 	}
@@ -202,17 +210,12 @@ public class Comment extends EntityBaseType {
 		return true;
 	}
 	public static class Builder {
-		private Integer id;
+		private Integer id = -1;
 		private Film film;
 		private User user;
 		private Date creationDate;
 		private String text;
 		private int rate;
-	
-		public Builder id(final Integer id) {
-			this.id = id;
-			return this;
-		}
 	
 		public Builder film(final Film film) {
 			this.film = film;

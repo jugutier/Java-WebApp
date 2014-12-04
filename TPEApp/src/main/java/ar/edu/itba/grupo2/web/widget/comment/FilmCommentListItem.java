@@ -88,7 +88,7 @@ public class FilmCommentListItem extends Panel {
 			@Override
 			public boolean isVisible() {
 				GAJAmdbSession session = GAJAmdbSession.get();
-				return session.isLoggedIn() && !comment().belongsToUser && !comment().isRatedBy(session.getLoggedInUser());
+				return session.isLoggedIn() && !comment().isBelongsToUser() && !comment().isRatedBy(session.getLoggedInUser());
 			}
 			
 		};
