@@ -3,6 +3,8 @@ package ar.edu.itba.grupo2.web;
 import java.util.List;
 
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
+import org.apache.wicket.extensions.ajax.markup.html.AjaxLazyLoadPanel;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
@@ -13,6 +15,9 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.parse4j.ParseException;
+import org.parse4j.ParseObject;
+import org.parse4j.ParseQuery;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityModel;
@@ -75,9 +80,32 @@ public class FilmDetailsPage extends BasePage {
 		filmDetailsContainer.add(new Label("director"));
 		filmDetailsContainer.add(new Label("description"));
 		filmDetailsContainer.add(new Label("length"));
-		filmDetailsContainer.add(new Label("stock"));
+		// TODO Ask if this it's ok to do ajax requests like this
+		filmDetailsContainer.add(new AjaxLazyLoadPanel("stock") {
+			@Override
+			public Component getLazyLoadComponent(String id) {
+				String string = null;
+				ParseQuery<ParseObject> query = ParseQuery.getQuery("Movie");
+				query.whereEqualTo("name", film().getName());
+				try {
+					List<ParseObject> result = query.find();
+					if (result == null) {
+						// TODO Localize
+						string = "Sin stock";
+					}
+					else {
+						string = String.valueOf(query.find().get(0).getInt("stock"));
+					}
+				} catch (ParseException e) {
+					// TODO Localize
+					string = "Sin stock";
+				}
+				Label ret = new Label(id, string);
+				return ret;
+			}
+		});
 		filmDetailsContainer.add(new Label("visits"));
-
+		
 		loadGenreList();
 		loadCommentList();
 		addCommentForm();
