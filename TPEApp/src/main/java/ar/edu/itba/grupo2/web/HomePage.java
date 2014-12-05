@@ -113,8 +113,7 @@ public class HomePage extends BasePage {
 		final IModel<List<Film>> mostVisitedFilmsModel = new LoadableDetachableModel<List<Film>>() {
 			@Override
 			protected List<Film> load() {
-				// TODO Replace with most visited films
-				return films.getLatest(5);
+				return films.getMostVisited(5);
 			}
 		};
 		

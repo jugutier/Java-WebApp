@@ -63,6 +63,13 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 	}
 
 	@Override
+	public List<Film> getMostVisited(int amount) {
+		return limitedFind(
+				"FROM Film where visits > 0 ORDER BY visits DESC",
+				amount);
+	}
+
+	@Override
 	public List<Film> getFromGenre(Genre genre) {
 		return find("FROM Film film WHERE ? IN (FROM film.genres) ORDER BY releaseDate ASC", genre);
 	}

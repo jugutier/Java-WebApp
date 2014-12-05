@@ -32,5 +32,7 @@ public interface FilmRepo {
 	public List<Film> getFiltered(Genre genre, String director);
 	
 	public List<Film> getByReleaseDate();
+	
+	public List<Film> getMostVisited(int amount);
 
 }
