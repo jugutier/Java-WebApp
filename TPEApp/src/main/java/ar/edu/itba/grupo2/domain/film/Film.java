@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -19,12 +20,10 @@ import org.hibernate.annotations.Cascade;
 import org.parse4j.ParseException;
 import org.parse4j.ParseObject;
 import org.parse4j.ParseQuery;
-import org.parse4j.callback.FindCallback;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 import ar.edu.itba.grupo2.domain.genre.Genre;
-import ar.edu.itba.grupo2.domain.image.MovieImage;
 import ar.edu.itba.grupo2.domain.user.User;
 
 @Entity
@@ -40,7 +39,7 @@ public class Film extends EntityBaseType {
 	@Temporal(TemporalType.DATE)
 	@Column(nullable = false)
 	private Date releaseDate;
-	@OneToMany
+	@ManyToMany
 	private List<Genre> genres;
 	@Column(length = 500, nullable = false)
 	private String description;
@@ -169,9 +168,9 @@ public class Film extends EntityBaseType {
 		List<Comment> copy = new ArrayList<Comment>(comments.size());
 		if (user != null) {
 			for (Comment c : comments) {
-				c.belongsToUser = c.getUser().equals(user);
-				c.reportable = !c.belongsToUser && !c.isReportedByUser(user);
-				c.ratedByUser = c.isRatedBy(user);
+				c.setBelongsToUser(c.getUser().equals(user));
+				c.setReportable(!c.isBelongsToUser() && !c.isReportedByUser(user));
+				c.setRatedByUser(c.isRatedBy(user));
 			}
 		}
 		
@@ -327,11 +326,6 @@ public class Film extends EntityBaseType {
 		private MovieImage movieImage = null;
 
 		private List<Comment> comments;
-
-		public Builder id(final Integer id) {
-			this.id = id;
-			return this;
-		}
 
 		public Builder name(final String name) {
 			this.name = name;

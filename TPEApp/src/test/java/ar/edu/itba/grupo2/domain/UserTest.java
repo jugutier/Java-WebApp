@@ -17,8 +17,8 @@ public class UserTest {
 	 */
 	@Test(expected = UserNotFollowedException.class)
 	public void unfollowTest() {
-		User user = new User.Builder().id(1).email("a@a.com").follows(new ArrayList<User>()).build();
-		User toUnFollow = new User.Builder().id(2).email("b@b.com").build();
+		User user = new User.Builder().email("a@a.com").follows(new ArrayList<User>()).build();
+		User toUnFollow = new User.Builder().email("b@b.com").build();
 		user.unFollowUser(toUnFollow);
 	}
 	/**
@@ -26,19 +26,19 @@ public class UserTest {
 	 */
 	@Test
 	public void resetPasswordTest() {
-		User user = new User.Builder().id(1).email("a@a.com").password("test").secretAnswer("incognito").build();
+		User user = new User.Builder().email("a@a.com").password("test").secretAnswer("incognito").build();
 		user.resetPassword("otra que no es", "nueva pass");
 		Assert.assertFalse(false);
 	}
 	
 	@Test(expected = CantFollowMeException.class)
 	public void followTest() {
-		User user = new User.Builder().id(1).email("a@a.com").follows(new ArrayList<User>()).build();
+		User user = new User.Builder().email("a@a.com").follows(new ArrayList<User>()).build();
 		user.followUser(user);
 	}
 	
 	@Test(expected = CantCreateWithoutEmailException.class)
 	public void createUserTest(){
-		new User.Builder().id(3).build();
+		new User.Builder().build();
 	}
 }

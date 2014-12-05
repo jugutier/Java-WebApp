@@ -8,7 +8,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
 
 import ar.edu.itba.grupo2.domain.common.EntityModel;
 import ar.edu.itba.grupo2.domain.film.Film;
-import ar.edu.itba.grupo2.domain.image.MovieImage;
+import ar.edu.itba.grupo2.domain.film.MovieImage;
 import ar.edu.itba.grupo2.web.command.FilmForm;
 import ar.edu.itba.grupo2.web.widget.film.FilmEditForm;
 

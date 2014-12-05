@@ -1,4 +1,4 @@
-package ar.edu.itba.grupo2.domain.image;
+package ar.edu.itba.grupo2.domain.film;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +7,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
-import ar.edu.itba.grupo2.domain.film.Film;
 
 @Entity
 @Table(name = "image")
@@ -29,7 +28,7 @@ public class MovieImage extends EntityBaseType {
 	@OneToOne
 	private Film film;
 
-	public MovieImage() {
+	MovieImage() {
 	}
 
 	public MovieImage(String name, String contentType, Integer length,
@@ -59,23 +58,23 @@ public class MovieImage extends EntityBaseType {
 		return content;
 	}
 
-	public void setName(String name) {
+	void setName(String name) {
 		this.name = name;
 	}
 
-	public void setContent(byte[] content) {
+	void setContent(byte[] content) {
 		this.content = content;
 	}
 
-	public void setLength(Integer length) {
+	void setLength(Integer length) {
 		this.length = length;
 	}
 
-	public void setContentType(String contentType) {
+	void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
 	
-	public void setFilm(Film film) {
+	void setFilm(Film film) {
 		this.film = film;
 	}
 
