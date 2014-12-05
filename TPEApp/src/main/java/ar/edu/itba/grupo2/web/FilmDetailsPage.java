@@ -175,8 +175,7 @@ public class FilmDetailsPage extends BasePage {
 				"commentList", commentModel) {
 			@Override
 			protected void populateItem(ListItem<Comment> item) {
-				item.add(new FilmCommentListItem("commentListItem", item
-						.getModel(), commentModel));
+				item.add(new FilmCommentListItem("commentListItem", new EntityModel<Comment>(Comment.class, item.getModelObject())));
 			}
 		};
 

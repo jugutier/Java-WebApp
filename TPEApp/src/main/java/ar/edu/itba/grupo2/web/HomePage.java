@@ -10,6 +10,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
+import ar.edu.itba.grupo2.domain.common.EntityModel;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.web.widget.comment.FollowedCommentListItem;
 import ar.edu.itba.grupo2.web.widget.film.LatestFilmsItem;
@@ -69,7 +70,7 @@ public class HomePage extends BasePage {
 		latestReleasedFilmsContainer.add(new ListView<Film>("latestReleasedFilm", latestReleasedFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new LatestReleasedFilmsItem("latestReleasedFilmPanel", item.getModel(), latestReleasedFilmsModel));	
+				item.add(new LatestReleasedFilmsItem("latestReleasedFilmPanel", new EntityModel<Film>(Film.class, item.getModelObject())));	
 			}
 		});
 		
@@ -87,7 +88,7 @@ public class HomePage extends BasePage {
 		add(new ListView<Film>("topFilm", topFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new TopFilmsItem("topFilmPanel", item.getModel(), topFilmsModel));	
+				item.add(new TopFilmsItem("topFilmPanel", new EntityModel<Film>(Film.class, item.getModelObject())));	
 			}
 		});
 	}
@@ -103,7 +104,7 @@ public class HomePage extends BasePage {
 		add(new ListView<Film>("latestAddedFilm", latestAddedFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new LatestFilmsItem("latestAddedPanel", item.getModel(), latestAddedFilmsModel));	
+				item.add(new LatestFilmsItem("latestAddedPanel", new EntityModel<Film>(Film.class, item.getModelObject())));	
 			}
 		});
 	}
@@ -120,7 +121,7 @@ public class HomePage extends BasePage {
 		add(new ListView<Film>("mostVisitedFilm", mostVisitedFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new LatestFilmsItem("mostVisitedPanel", item.getModel(), mostVisitedFilmsModel));	
+				item.add(new LatestFilmsItem("mostVisitedPanel", new EntityModel<Film>(Film.class, item.getModelObject())));	
 			}
 		});
 	}

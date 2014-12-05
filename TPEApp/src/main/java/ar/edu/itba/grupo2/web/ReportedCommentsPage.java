@@ -10,6 +10,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.comment.CommentRepo;
+import ar.edu.itba.grupo2.domain.common.EntityModel;
 import ar.edu.itba.grupo2.web.widget.comment.ReportedCommentListItem;
 
 @SuppressWarnings("serial")
@@ -34,7 +35,7 @@ public class ReportedCommentsPage extends BasePage {
 		PropertyListView<Comment> commentListView = new PropertyListView<Comment>("commentList", commentModel) {
 			@Override
 			protected void populateItem(ListItem<Comment> item) {
-				item.add(new ReportedCommentListItem("commentListItem", item.getModel(), commentModel));	
+				item.add(new ReportedCommentListItem("commentListItem", new EntityModel<Comment>(Comment.class, item.getModelObject())));	
 			}
 		};
 		

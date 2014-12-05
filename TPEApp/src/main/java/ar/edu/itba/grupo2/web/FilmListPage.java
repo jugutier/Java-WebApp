@@ -13,6 +13,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 
+import ar.edu.itba.grupo2.domain.common.EntityModel;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.genre.Genre;
 import ar.edu.itba.grupo2.web.widget.film.NormalFilmListItem;
@@ -85,7 +86,7 @@ public class FilmListPage extends BasePage {
 		add(new ListView<Film>("film", filmListModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new NormalFilmListItem("filmPanel", item.getModel(), filmListModel));
+				item.add(new NormalFilmListItem("filmPanel", new EntityModel<Film>(Film.class, item.getModelObject())));
 			}
 		});
 	}

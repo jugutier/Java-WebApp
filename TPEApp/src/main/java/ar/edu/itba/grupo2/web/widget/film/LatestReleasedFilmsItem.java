@@ -1,7 +1,5 @@
 package ar.edu.itba.grupo2.web.widget.film;
 
-import java.util.List;
-
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
@@ -13,8 +11,8 @@ import ar.edu.itba.grupo2.web.FilmDetailsPage;
 @SuppressWarnings("serial")
 public class LatestReleasedFilmsItem extends FilmListItem {
 	
-	public LatestReleasedFilmsItem(String id, final IModel<Film> film, final IModel<List<Film>> listModel) {
-		super(id, film, listModel);
+	public LatestReleasedFilmsItem(String id, final IModel<Film> film) {
+		super(id, film);
 		
 		Link<Film> moreLink = new Link<Film>("more", film) {
 			@Override
