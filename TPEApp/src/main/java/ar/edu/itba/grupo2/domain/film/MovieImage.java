@@ -3,7 +3,6 @@ package ar.edu.itba.grupo2.domain.film;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
@@ -25,8 +24,8 @@ public class MovieImage extends EntityBaseType {
 	@Lob
 	private byte[] content;
 
-	@OneToOne
-	private Film film;
+	/*@OneToOne
+	private Film film;*/
 
 	MovieImage() {
 	}
@@ -38,7 +37,7 @@ public class MovieImage extends EntityBaseType {
 		this.contentType = contentType;
 		this.length = length;
 		this.content = content;
-		this.film = film;
+		//this.film = film;
 
 	}
 
@@ -74,8 +73,8 @@ public class MovieImage extends EntityBaseType {
 		this.contentType = contentType;
 	}
 	
-	void setFilm(Film film) {
+	/*void setFilm(Film film) {
 		this.film = film;
-	}
+	}*/
 
 }

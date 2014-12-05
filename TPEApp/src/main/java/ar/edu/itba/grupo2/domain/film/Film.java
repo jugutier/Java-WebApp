@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -49,10 +50,14 @@ public class Film extends EntityBaseType {
 	private int sumComments;
 	@Column(nullable = false)
 	private int totalComments;
-	@OneToOne(mappedBy = "film", cascade = CascadeType.ALL,optional = true)
+	/*@OneToOne(mappedBy = "film", cascade = CascadeType.ALL,optional = true)
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	private MovieImage movieImage;*/
+	@OneToOne(cascade = CascadeType.ALL,optional = true)
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+	@JoinColumn(name = "image_fk")
 	private MovieImage movieImage;
-
+	
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
 	private List<Comment> comments;
@@ -256,9 +261,9 @@ public class Film extends EntityBaseType {
 	}
 
 	public void setFilmImage(MovieImage image) {
-		if (this.movieImage != null) {
+		/*if (this.movieImage != null) {
 			this.movieImage.setFilm(null);
-		}
+		}*/
 		this.movieImage = image;
 	}
 
