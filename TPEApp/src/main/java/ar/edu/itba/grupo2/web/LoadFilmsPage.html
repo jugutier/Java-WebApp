@@ -1,0 +1,17 @@
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+		<title>GAJAmdb</title>
+	</head>
+	<body>
+		<wicket:extend>
+			<h2>Cargar películas</h2>
+			<form wicket:id="form">
+				<fieldset>
+					<label>Ingrese un archivo de datos separado por comas</label>
+					<input wicket:id="fileUpload" type="file" accept=".csv" />
+					<button type="submit" class="btn btn-primary">Cargar</button>
+				</fieldset>
+			</form>
+	</wicket:extend>
+	</body>
+</html>

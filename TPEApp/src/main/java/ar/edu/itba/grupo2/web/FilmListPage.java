@@ -67,9 +67,29 @@ public class FilmListPage extends BasePage {
 			public void onClick() {
 				setResponsePage(new NewFilmPage());
 			}
+			
+			@Override
+			public boolean isVisible() {
+				GAJAmdbSession session = GAJAmdbSession.get();
+				return session.isLoggedIn() && session.getLoggedInUser().isAdmin();
+			}
 		};
 		
-		form.add(addFilm);
+		Link<Void> addCSVFilms = new Link<Void>("addCSVFilms") {
+			@Override
+			public void onClick() {
+				setResponsePage(new LoadFilmsPage());
+			}
+			
+			@Override
+			public boolean isVisible() {
+				GAJAmdbSession session = GAJAmdbSession.get();
+				return session.isLoggedIn() && session.getLoggedInUser().isAdmin();
+			}
+		};
+		
+		add(addCSVFilms);
+		add(addFilm);
 		form.add(directorText);
 		form.add(genreDropDown);
 		add(form);

@@ -5,12 +5,13 @@
 	<body>
 		<wicket:extend>
 			<h2>Películas</h2>
+			<a wicket:id="addCSVFilms" href="#" class="btn btn-primary pull-right"><i class="icon-th-list"></i> Cargar películas</a>
+			<a wicket:id="addFilm" href="#" class="btn btn-primary pull-right"><i class="icon-plus"></i> Añadir película</a>
 			<form wicket:id="form" class="form-inline" action="list" method="GET">
 				<input wicket:id="director" type="text" class="span2" placeholder="Director" />
 				<select wicket:id="genre" class="span2">
 				</select>
 				<button type="submit" class="btn"><i class="icon-filter"></i> Filtrar</button>
-				<a wicket:id="addFilm" href="#" class="btn btn-primary pull-right" type="button"><i class="icon-plus"></i> Añadir película</a>
 			</form>
 			<ul class="item-list"> 
 				<li wicket:id="film">
