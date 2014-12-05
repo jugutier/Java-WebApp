@@ -1,0 +1,31 @@
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+		<title>GAJAmdb</title>
+	</head>
+	<body>
+		<wicket:extend>
+			<h2>Registrarse</h2>
+			<form wicket:id="registerUser">
+				<h3>Ingrese su dirección de email</h3>
+				<input wicket:id="email" type="text"><br/>
+				<h3>Ingrese su nombre</h3>
+				<input wicket:id="name" type="text"><br/>
+				<h3>Ingrese su apellido</h3>
+				<input wicket:id="lastname" type="text"><br/>
+				<h3>Ingrese su contrasena</h3>
+				<input wicket:id="password" type="password"><br/>
+				<h3>Ingrese nuevamente su contrasena</h3>
+				<input wicket:id="passwordConfirm" type="password"><br/>
+				<h3>Fecha de nacimiento</h3>
+				<input type="text" wicket:id="birthdate"><br/>
+				<h3>Pregunta secreta</h3>
+				<input type="text" wicket:id="secretQuestion"><br/>
+				<h3>Respuesta secreta</h3>
+				<input type="text" wicket:id="secretAnswer"><br/>
+				
+				
+				<button type="submit" class="btn">Confirmar</button>
+			</form>
+	</wicket:extend>
+	</body>
+</html>

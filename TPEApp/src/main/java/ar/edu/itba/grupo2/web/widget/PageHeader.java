@@ -22,6 +22,7 @@ import ar.edu.itba.grupo2.web.GAJAmdbSession;
 import ar.edu.itba.grupo2.web.HomePage;
 import ar.edu.itba.grupo2.web.NewFilmPage;
 import ar.edu.itba.grupo2.web.ProfilePage;
+import ar.edu.itba.grupo2.web.RegisterPage;
 import ar.edu.itba.grupo2.web.ReportedCommentsPage;
 import ar.edu.itba.grupo2.web.ResetPasswordPage;
 import ar.edu.itba.grupo2.web.UserListPage;
@@ -196,6 +197,14 @@ public class PageHeader extends Panel {
 			}
 		};
 		
+		Link<Void> registerUser = new Link<Void>("registerUser") {
+			@Override
+			public void onClick() {
+				setResponsePage(new RegisterPage());
+			}
+		};
+		
+		form.add(registerUser);
 		form.add(resetPassword);
 		form.add(new TextField<String>("email").setRequired(true));
 		form.add(new PasswordTextField("password"));
