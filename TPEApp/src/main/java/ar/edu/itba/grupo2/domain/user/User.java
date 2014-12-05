@@ -219,6 +219,10 @@ public class User extends EntityBaseType {
 		return true;
 	}
 
+	public void canBeFollowed(User u) {
+		isFollowable = !(u.getFollows().contains(this));
+	}
+
 	public static class Builder {
 		private String name;
 		private String lastname;
@@ -232,73 +236,64 @@ public class User extends EntityBaseType {
 		private List<Comment> comments;
 		private boolean admin = false;
 		private List<User> follows;
-
+	
 		public Builder name(final String name) {
 			this.name = name;
 			return this;
 		}
-
+	
 		public Builder lastname(final String lastname) {
 			this.lastname = lastname;
 			return this;
 		}
-
+	
 		public Builder vip(final boolean vip) {
 			this.vip = vip;
 			return this;
 		}
-
+	
 		public Builder email(final String email) {
 			this.email = email;
 			return this;
 		}
-
+	
 		public Builder password(final String password) {
 			this.password = password;
 			return this;
 		}
-
+	
 		public Builder birthdate(final Date birthdate) {
 			this.birthdate = birthdate;
 			return this;
 		}
-
-		public Builder id(final Integer id) {
-			this.id = id;
-			return this;
-		}
-
+	
 		public Builder secretQuestion(final String secretQuestion) {
 			this.secretQuestion = secretQuestion;
 			return this;
 		}
-
+	
 		public Builder secretAnswer(final String secretAnswer) {
 			this.secretAnswer = secretAnswer;
 			return this;
 		}
-
+	
 		public Builder comments(final List<Comment> comments) {
 			this.comments = comments;
 			return this;
 		}
-
+	
 		public Builder admin(boolean admin) {
 			this.admin = admin;
 			return this;
 		}
-
+	
 		public Builder follows(final List<User> follows) {
 			this.follows = follows;
 			return this;
 		}
-
+	
 		public User build() {
 			return new User(this);
 		}
-	}
-
-	public void canBeFollowed(User u) {
-		isFollowable = !(u.getFollows().contains(this));
 	}
 }

@@ -39,16 +39,16 @@
 							<div class="media">
 									<!-- Show if there is an image -->
 									<div class="pull-left">
-										<img data-src="holder.js/140x140" class="img-thumbnail film-thumbnail" alt="film-Image" src="${pageContext.request.contextPath}/bin/image/get/${film.id}" data-holder-rendered="true">
+										<!-- <img data-src="holder.js/140x140" class="img-thumbnail film-thumbnail" alt="film-Image" src="${pageContext.request.contextPath}/bin/image/get/${film.id}" data-holder-rendered="true"> -->
 									</div>
 								<div class="media-body">
 									<input wicket:id="movieImage" type="file" id="movieImage" accept="image/*" />
 										<!-- Show if there is an image -->
-										<div wicket:id="deleteImageContainer">
+										<form wicket:id="deleteImageForm">
 											<label class="checkbox">
 												<input wicket:id="deleteImage" type="checkbox"> Eliminar imagen
 											</label>
-										</div>
+										</form>
 									<p>La foto debe ser de 100kb como máximo.</p>
 								</div>
 							</div>				

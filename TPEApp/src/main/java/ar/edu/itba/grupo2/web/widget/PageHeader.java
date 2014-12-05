@@ -20,6 +20,7 @@ import ar.edu.itba.grupo2.domain.user.UserRepo;
 import ar.edu.itba.grupo2.web.FilmListPage;
 import ar.edu.itba.grupo2.web.GAJAmdbSession;
 import ar.edu.itba.grupo2.web.HomePage;
+import ar.edu.itba.grupo2.web.LoadFilmsPage;
 import ar.edu.itba.grupo2.web.NewFilmPage;
 import ar.edu.itba.grupo2.web.ProfilePage;
 import ar.edu.itba.grupo2.web.RegisterPage;
@@ -60,6 +61,7 @@ public class PageHeader extends Panel {
 		Link<Void> reportedComments = null;
 		Link<Void> profile = null;
 		Link<Void> addFilm = null;
+		Link<Void> addCSVFilms = null;
 		
 		bannerLink = new Link<Void>("banner") {
 
@@ -100,6 +102,13 @@ public class PageHeader extends Panel {
 			}
 		};
 		
+		WebMarkupContainer addCSVFilmsContainer = new WebMarkupContainer("addCSVFilmsContainer"){
+			@Override
+			public boolean isVisible() {
+				return user().isAdmin();
+			}
+		};
+		
 		WebMarkupContainer reportedCommentsContainer = new WebMarkupContainer("reportedCommentsContainer"){
 			@Override
 			public boolean isVisible() {
@@ -130,6 +139,15 @@ public class PageHeader extends Panel {
 			@Override
 			public void onClick() {
 				setResponsePage(new NewFilmPage());
+			}
+			
+		};
+		
+		addCSVFilms = new Link<Void>("addCSVFilms") {
+
+			@Override
+			public void onClick() {
+				setResponsePage(new LoadFilmsPage());
 			}
 			
 		};
@@ -212,6 +230,7 @@ public class PageHeader extends Panel {
 		loginForm.add(form);
 		
 		userPanel.add(addFilmContainer);
+		userPanel.add(addCSVFilmsContainer);
 		userPanel.add(reportedCommentsContainer);
 		userPanel.add(dividerContainer);
 		userPanel.add(usernameLabel);
@@ -219,6 +238,7 @@ public class PageHeader extends Panel {
 		userPanel.add(logout);
 		
 		addFilmContainer.add(addFilm);
+		addCSVFilmsContainer.add(addCSVFilms);
 		reportedCommentsContainer.add(reportedComments);
 	}
 	

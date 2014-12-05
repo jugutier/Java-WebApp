@@ -18,6 +18,7 @@ public class FilmForm {
 	private String description;
 	private List<FileUpload> movieImage;
 	private boolean deleteImage;
+	private boolean hasImage;
 	
 	public FilmForm (){}
 	
@@ -29,6 +30,7 @@ public class FilmForm {
 		setGenres(film.getGenres());
 		setLength(film.getLength());
 		setDescription(film.getDescription());
+		this.hasImage = film.getMovieImage() != null;
 	}
 	
 	public int getId(){
@@ -65,6 +67,10 @@ public class FilmForm {
 	
 	public boolean isDeleteImage() {
 		return deleteImage;
+	}
+	
+	public boolean hasImage() {
+		return hasImage;
 	}
 	
 	public void setName(String name) {

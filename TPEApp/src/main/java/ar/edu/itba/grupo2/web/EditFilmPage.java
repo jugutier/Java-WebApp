@@ -8,7 +8,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
 
 import ar.edu.itba.grupo2.domain.common.EntityModel;
 import ar.edu.itba.grupo2.domain.film.Film;
-import ar.edu.itba.grupo2.domain.image.MovieImage;
+import ar.edu.itba.grupo2.domain.film.MovieImage;
 import ar.edu.itba.grupo2.web.command.FilmForm;
 import ar.edu.itba.grupo2.web.widget.film.FilmEditForm;
 
@@ -34,7 +34,7 @@ public class EditFilmPage extends BasePage {
 		form.add(new SubmitLink("submit", filmFormModel) {
 			@Override
 			public void onSubmit() {
-				// TODO Add film
+				// TODO Edit film
 				super.onSubmit();
 				
 				FilmForm filmForm = (FilmForm) getDefaultModelObject();
@@ -47,6 +47,11 @@ public class EditFilmPage extends BasePage {
 				film.setGenres(filmForm.getGenres());
 				film.setDescription(filmForm.getDescription());
 				
+				if (filmForm.isDeleteImage()) {
+					film.setFilmImage(null);
+				}
+				
+				// TODO Find out what gets serialized when changing a film's image
 				if (filmForm.getMovieImage() != null) {
 					FileUpload file = filmForm.getMovieImage().get(0);
 					MovieImage movieImage = new MovieImage(file.getClientFileName(), file.getContentType(), (int) file.getSize(), file.getBytes(), film);

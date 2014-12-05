@@ -30,7 +30,7 @@ public class FilmCommentListItem extends Panel {
 	
 	private int rating;
 	
-	public FilmCommentListItem(String id, IModel<Comment> comment, final IModel<List<Comment>> listModel) {
+	public FilmCommentListItem(String id, IModel<Comment> comment) {
 		super(id, comment);
 		
 		final CompoundPropertyModel<Comment> compoundModel;
@@ -67,7 +67,6 @@ public class FilmCommentListItem extends Panel {
 			@Override
 			public void onClick() {
 				comment().remove();
-				listModel.detach();
 			}
 			
 			@Override
@@ -88,7 +87,7 @@ public class FilmCommentListItem extends Panel {
 			@Override
 			public boolean isVisible() {
 				GAJAmdbSession session = GAJAmdbSession.get();
-				return session.isLoggedIn() && !comment().belongsToUser && !comment().isRatedBy(session.getLoggedInUser());
+				return session.isLoggedIn() && !comment().isBelongsToUser() && !comment().isRatedBy(session.getLoggedInUser());
 			}
 			
 		};

@@ -4,15 +4,27 @@
 	</head>
 	<body>
 		<wicket:extend>
-			<div class="row">
-				<div class="span9">
+			<div wicket:id="guestUserContainer" class="row">
+				<div class="span12">
+					<div class="item-container text-center">
+						<h1>Bienvenido a GAJAmdb</h1>
+						<p class="lead"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at fringilla lacus. Morbi maximus condimentum metus, vitae vestibulum orci hendrerit vitae. Sed accumsan nisi a est dignissim, et varius nisi.</p>
+						<a wicket:id="register" href="#" class="btn btn-large btn-success">Registrarse</a>
+					</div>
+				</div>
+			</div>
+			<div wicket:id="latestReleasedFilmsContainer" class="row">
+				<div class="span12">
 					<h2>Estrenos de esta semana</h2>
 					<ul class="item-list">
 						<li wicket:id="latestReleasedFilm">
 							<div wicket:id="latestReleasedFilmPanel"></div>
 						</li>
 					</ul>
-					<h2 wicket:id="latestReleasedEmpty" class="muted text-center">No hay estrenos esta semana</h2>
+				</div>
+			</div>
+			<div wicket:id="latestFollowedUserContainer" class="row">
+				<div class="span12">
 					<h2>Comentarios de interés</h2>
 					<ul class="item-list">
 						<li wicket:id="latestFollowedUser">
@@ -20,17 +32,29 @@
 						</li>
 					</ul>
 				</div>
-				<div class="span3">
+			</div>
+			<div class="row">
+				<div class="span4">
 					<h2>Top 5</h2>
 					<ul class="item-list"> 
 						<li wicket:id="topFilm">
 							<div wicket:id="topFilmPanel"></div>
 						</li>
 					</ul>
-					<h2>Lo m&aacute;s nuevo</h2>
+				</div>
+				<div class="span4">
+					<h2>Lo más nuevo</h2>
 					<ul class="item-list">
 						<li wicket:id="latestAddedFilm">
 							<div wicket:id="latestAddedPanel"></div>
+						</li>
+					</ul>
+				</div>
+				<div class="span4">
+					<h2>Lo más visitado</h2>
+					<ul class="item-list">
+						<li wicket:id="mostVisitedFilm">
+							<div wicket:id="mostVisitedPanel"></div>
 						</li>
 					</ul>
 				</div>
