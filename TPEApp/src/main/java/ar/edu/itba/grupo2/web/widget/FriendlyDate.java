@@ -27,7 +27,7 @@ public class FriendlyDate extends Panel {
 			@Override
 			public String getObject() {
 				PrettyTime p = new PrettyTime();
-				return p.format((Date) getDefaultModelObject());
+				return p.format((Date) getDefaultModelObject()) + " (" + getDefaultModelObject() + ")";
 			}
 			
 		}));
