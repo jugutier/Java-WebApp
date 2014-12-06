@@ -57,6 +57,8 @@ public class Film extends EntityBaseType {
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@JoinColumn(name = "image_fk")
 	private MovieImage movieImage;
+	@Column(nullable = false)
+	private int visits;
 	
 	@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
@@ -91,6 +93,7 @@ public class Film extends EntityBaseType {
 		if(this.comments == null){
 			this.comments = new LinkedList<Comment>();
 		}
+		this.visits = builder.visits;
 	}
 
 	public String getName() {
@@ -122,8 +125,7 @@ public class Film extends EntityBaseType {
 	}
 	
 	public int getVisits() {
-		// TODO Make visits persistent
-		return 123;
+		return visits;
 	}
 	
 	public int getStock() {
@@ -275,8 +277,7 @@ public class Film extends EntityBaseType {
 	}
 	
 	public void visitFilm() {
-		// TODO Make visits persistent
-		System.out.println("Visit");
+		visits++;
 		return;
 	}
 
@@ -329,6 +330,7 @@ public class Film extends EntityBaseType {
 		private int sumComments = 0;
 		private Date creationDate = null;
 		private MovieImage movieImage = null;
+		private int visits = 0;
 
 		private List<Comment> comments;
 
@@ -387,6 +389,11 @@ public class Film extends EntityBaseType {
 			return this;
 		}
 
+		public Builder visits(final int visits) {
+			this.visits = visits;
+			return this;
+		}
+		
 		public Film build() {
 			return new Film(this);
 		}
