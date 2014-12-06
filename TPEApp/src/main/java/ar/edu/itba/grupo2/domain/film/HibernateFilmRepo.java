@@ -36,7 +36,7 @@ public class HibernateFilmRepo extends HibernateBaseRepo<Film> implements
 	@Override
 	public List<Film> getLatest(int amount) {
 		Criteria c = createCriteria().add(
-				Restrictions.lt("creationDate", new Date()));
+				Restrictions.le("creationDate", new Date()));
 		c.setMaxResults(amount);
 		List<Film> out = new ArrayList<Film>(c.list().size());
 		out.addAll(c.list());
