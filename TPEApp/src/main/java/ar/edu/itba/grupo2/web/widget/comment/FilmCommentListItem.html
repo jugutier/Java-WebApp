@@ -2,8 +2,20 @@
 	<body>
 		<wicket:panel>
 			<div class="comment-body">
-				<a wicket:id="deleteButton" href="#" class="btn btn-danger pull-right" type="submit"><i class="icon-remove"></i></a>
-				<a wicket:id="reportButton" href="#" class="btn btn-warning pull-right" type="button"><i class="icon-flag"></i> Denunciar</a>
+
+			<div wicket:id="actionsButton" class="btn-group pull-right">
+				<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Acciones <span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a wicket:id="profileButton"><i class="icon-user"></i> Ver perfil</a></li>
+					<li><a wicket:id="reportButton"><i class="icon-flag"></i> Denunciar</a></li>
+					<li><a wicket:id="muteButton"><i class="icon-volume-off"></i> Silenciar</a></li>
+					<li><a wicket:id="unmuteButton"><i class="icon-volume-up"></i> Permitir comentar</a></li>
+					<li><a wicket:id="deleteButton"><i class="icon-remove"></i> Eliminar</a></li>
+				</ul>
+			</div>
+			
+			<!-- <a wicket:id="deleteButton" href="#" class="btn btn-danger pull-right" type="submit"><i class="icon-remove"></i></a>
+				<a wicket:id="reportButton" href="#" class="btn btn-warning pull-right" type="button"><i class="icon-flag"></i> Denunciar</a> -->
 				
 				<p>
 					<a wicket:id="usernameLink" href="#"><strong wicket:id="username">Nombre de usuario</strong></a>

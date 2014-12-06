@@ -149,7 +149,7 @@ public class HomePage extends BasePage {
 		latestFollowedUserContainer.add(new ListView<Comment>("latestFollowedUser", latestFollowedUserModel) {
 			@Override
 			protected void populateItem(ListItem<Comment> item) {
-				item.add(new FollowedCommentListItem("latestFollowedUserPanel", item.getModel()));	
+				item.add(new FollowedCommentListItem("latestFollowedUserPanel", new EntityModel<Comment>(Comment.class, item.getModelObject())));	
 			}
 		});
 		

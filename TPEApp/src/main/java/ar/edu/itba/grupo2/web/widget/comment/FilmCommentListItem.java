@@ -3,6 +3,7 @@ package ar.edu.itba.grupo2.web.widget.comment;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
@@ -47,6 +48,45 @@ public class FilmCommentListItem extends Panel {
 			
 		};
 		
+		Link<Void> profileButton = new Link<Void>("profileButton") {
+
+			@Override
+			public void onClick() {
+				setResponsePage(new ProfilePage(comment().getUser()));
+			}
+			
+		};
+		
+		Link<Comment> muteButton = new Link<Comment>("muteButton", comment) {
+
+			@Override
+			public void onClick() {
+				comment().getUser().setMuted(true);
+			}
+			
+			@Override
+			public boolean isVisible() {
+				GAJAmdbSession session = GAJAmdbSession.get();
+				return session.isLoggedIn() && session.getLoggedInUser().isAdmin() && !session.getLoggedInUser().equals(comment().getUser()) && !comment().getUser().isMuted();
+			}
+			
+		};
+		
+		Link<Comment> unmuteButton = new Link<Comment>("unmuteButton", comment) {
+
+			@Override
+			public void onClick() {
+				comment().getUser().setMuted(false);
+			}
+			
+			@Override
+			public boolean isVisible() {
+				GAJAmdbSession session = GAJAmdbSession.get();
+				return session.isLoggedIn() && session.getLoggedInUser().isAdmin() && !session.getLoggedInUser().equals(comment().getUser()) && comment().getUser().isMuted();
+			}
+			
+		};
+		
 		Link<Comment> reportButton = new Link<Comment>("reportButton", comment) {
 
 			@Override
@@ -75,6 +115,13 @@ public class FilmCommentListItem extends Panel {
 				return session.isLoggedIn() && session.getLoggedInUser().isAdmin();
 			}
 			
+		};
+		
+		WebMarkupContainer actionsButton = new WebMarkupContainer("actionsButton") {
+			@Override
+			public boolean isVisible() {
+				return GAJAmdbSession.get().isLoggedIn();
+			}
 		};
 		
 		Form<FilmCommentListItem> ratingForm = new Form<FilmCommentListItem>("commentRateForm", new CompoundPropertyModel<FilmCommentListItem>(this)) {
@@ -114,8 +161,14 @@ public class FilmCommentListItem extends Panel {
 		add(new StarScoreIndicator("scoreStars", new PropertyModel<Integer>(comment, "filmRate")));
 		add(new Label("text"));
 		add(new UserRoleBadges("roleBadges", new PropertyModel<User>(comment, "user")));
-		add(reportButton);
-		add(deleteButton);
+		
+		actionsButton.add(profileButton);
+		actionsButton.add(muteButton);
+		actionsButton.add(unmuteButton);
+		actionsButton.add(reportButton);
+		actionsButton.add(deleteButton);
+		
+		add(actionsButton);
 		add(ratingForm);
 		add(commentRating);
 	}

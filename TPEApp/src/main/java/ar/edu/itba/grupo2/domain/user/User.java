@@ -98,6 +98,11 @@ public class User extends EntityBaseType {
 	public boolean isAdmin() {
 		return admin;
 	}
+	
+	public boolean isMuted() {
+		// TODO Implement
+		return false;
+	}
 
 	public String getEmail() {
 		return email;
@@ -192,6 +197,10 @@ public class User extends EntityBaseType {
 		}
 		this.password = newPassword;
 		return true;
+	}
+	
+	public void setMuted(boolean muted) {
+		// TODO Implement
 	}
 
 	@Override

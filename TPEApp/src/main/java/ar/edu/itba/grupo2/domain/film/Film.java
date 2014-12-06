@@ -127,27 +127,6 @@ public class Film extends EntityBaseType {
 	public int getVisits() {
 		return visits;
 	}
-	
-	public int getStock() {
-		// TODO Get stock from external API
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Movie");
-		query.whereEqualTo("name", "Volver al futuro 3");
-		/*query.findInBackground(new FindCallback<ParseObject>() {
-		    public void done(List<ParseObject> list, ParseException e) {
-		        if (e == null) {
-		        	System.out.println(list.get(0).getInt("stock"));
-		        } else {
-		        	
-		        }
-		    }
-		});
-		return 3;*/
-		try {
-			return query.find().get(0).getInt("stock");
-		} catch (ParseException e) {
-			return 0;
-		}
-	}
 
 	public int getSumComments() {
 		return sumComments;
@@ -210,7 +189,7 @@ public class Film extends EntityBaseType {
 	public boolean userCanComment(User user) {
 		if(user == null)
 			return false;
-		if(userHasCommented(user)){
+		if(userHasCommented(user) || user.isMuted()){
 			return false;
 		}		
 		return (isReleased() || user.isVip() );

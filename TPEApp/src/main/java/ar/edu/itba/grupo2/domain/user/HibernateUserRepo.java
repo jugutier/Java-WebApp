@@ -42,22 +42,25 @@ public class HibernateUserRepo extends HibernateBaseRepo<User> implements
 	}
 	
 	public List<Comment> getLatestComments(User u){
-		List<User>followers = u.getFollows();
-		List<Comment>comments = new ArrayList<Comment>();
+		List<User> followers = u.getFollows();
+		List<Comment> comments = new ArrayList<Comment>();
 		for (User user : followers) {
-			Comment last =null;
+			Comment last = null;
 			for (Comment comment : user.getComments()) {
-				if(last==null){
-					last=comment;
+				if(last == null){
+					last = comment;
 				}
 				if(last.getCreationDate().before(comment.getCreationDate())){
-					last=comment;
+					last = comment;
 				}
 			}
-			comments.add(last);
+			
+			if (last != null) {
+				comments.add(last);
+			}
 		}
+		
 		return comments;
-
 	}
 
 	@Override
