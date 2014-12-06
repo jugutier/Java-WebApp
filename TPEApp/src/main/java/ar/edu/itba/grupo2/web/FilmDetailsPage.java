@@ -23,6 +23,7 @@ import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityModel;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.genre.Genre;
+import ar.edu.itba.grupo2.web.widget.FriendlyDate;
 import ar.edu.itba.grupo2.web.widget.StarScoreIndicator;
 import ar.edu.itba.grupo2.web.widget.comment.CommentForm;
 import ar.edu.itba.grupo2.web.widget.comment.FilmCommentListItem;
@@ -76,7 +77,7 @@ public class FilmDetailsPage extends BasePage {
 		add(new FilmTitle("name", compoundModel));
 		filmDetailsContainer.add(new StarScoreIndicator("starScore", new PropertyModel<Integer>(compoundModel, "score")));
 		filmDetailsContainer.add(new FilmDisplayImage("thumbnail", compoundModel));
-		filmDetailsContainer.add(new Label("releaseDate"));
+		filmDetailsContainer.add(new FriendlyDate("releaseDate"));
 		filmDetailsContainer.add(new Label("director"));
 		filmDetailsContainer.add(new Label("description"));
 		filmDetailsContainer.add(new Label("length"));

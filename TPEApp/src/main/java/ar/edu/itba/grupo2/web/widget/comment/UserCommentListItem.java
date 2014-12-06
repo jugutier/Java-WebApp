@@ -10,6 +10,7 @@ import org.apache.wicket.model.PropertyModel;
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.web.FilmDetailsPage;
+import ar.edu.itba.grupo2.web.widget.FriendlyDate;
 import ar.edu.itba.grupo2.web.widget.film.FilmTitle;
 
 @SuppressWarnings("serial")
@@ -30,7 +31,7 @@ public class UserCommentListItem extends Panel {
 			
 		};
 		
-		add(new Label("creationDate"));
+		add(new FriendlyDate("creationDate"));
 		add(new Label("text"));
 		add(film);
 		film.add(new FilmTitle("filmName", new PropertyModel<Film>(compoundModel, "film")));
