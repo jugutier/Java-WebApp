@@ -15,6 +15,7 @@ import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.web.widget.comment.FollowedCommentListItem;
 import ar.edu.itba.grupo2.web.widget.film.LatestFilmsItem;
 import ar.edu.itba.grupo2.web.widget.film.LatestReleasedFilmsItem;
+import ar.edu.itba.grupo2.web.widget.film.MostVisitedFilmsItem;
 import ar.edu.itba.grupo2.web.widget.film.TopFilmsItem;
 
 
@@ -43,8 +44,7 @@ public class HomePage extends BasePage {
 		Link<Void> register = new Link<Void>("register") {
 			@Override
 			public void onClick() {
-				// TODO Go to register page
-				
+				setResponsePage(new RegisterPage());
 			}
 		};
 		
@@ -113,14 +113,14 @@ public class HomePage extends BasePage {
 		final IModel<List<Film>> mostVisitedFilmsModel = new LoadableDetachableModel<List<Film>>() {
 			@Override
 			protected List<Film> load() {
-				return films.getMostVisited(5);
+				return films.getLatest(5);
 			}
 		};
 		
 		add(new ListView<Film>("mostVisitedFilm", mostVisitedFilmsModel) {
 			@Override
 			protected void populateItem(ListItem<Film> item) {
-				item.add(new LatestFilmsItem("mostVisitedPanel", new EntityModel<Film>(Film.class, item.getModelObject())));	
+				item.add(new MostVisitedFilmsItem("mostVisitedPanel", new EntityModel<Film>(Film.class, item.getModelObject())));	
 			}
 		});
 	}
