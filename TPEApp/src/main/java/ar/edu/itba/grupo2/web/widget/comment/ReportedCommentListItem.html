@@ -13,11 +13,11 @@
 				<p wicket:id="message">Comentario</p>
 			</div>
 			<div class="comment-controls">
-				Su calificación: <div wicket:id="scoreStars" class="star-list"></div>
+				<wicket:message key="yourScore">Su calificación</wicket:message>: <div wicket:id="scoreStars" class="star-list"></div>
 				<span class="pull-right">
-					Denuncias: 
+					<wicket:message key="reports">Denuncias</wicket:message>: 
 					<span wicket:id="reportCount" class="badge badge-important">3</span> 
-					<a wicket:id="discardReports" href="#" class="btn btn-primary" type="button">Descartar denuncias</a>
+					<a wicket:id="discardReports" href="#" class="btn btn-primary" type="button"><wicket:message key="discardReports">Descartar denuncias</wicket:message></a>
 				</span>
 			</div>
 		</wicket:panel>

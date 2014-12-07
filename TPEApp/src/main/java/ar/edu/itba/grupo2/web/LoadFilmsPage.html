@@ -4,12 +4,12 @@
 	</head>
 	<body>
 		<wicket:extend>
-			<h2>Cargar películas</h2>
+			<h2><wicket:message key="loadFilms">Cargar películas</wicket:message></h2>
 			<form wicket:id="form">
 				<fieldset>
-					<label>Ingrese un archivo de datos separado por comas</label>
+					<label><wicket:message key="film.loadCSV">Ingrese un archivo de datos separado por comas</wicket:message></label>
 					<input wicket:id="fileUpload" type="file" accept=".csv" />
-					<button type="submit" class="btn btn-primary">Cargar</button>
+					<button type="submit" class="btn btn-primary"><wicket:message key="load">Cargar</wicket:message></button>
 				</fieldset>
 			</form>
 	</wicket:extend>

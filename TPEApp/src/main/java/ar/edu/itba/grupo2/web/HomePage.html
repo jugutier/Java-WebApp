@@ -7,15 +7,15 @@
 			<div wicket:id="guestUserContainer" class="row">
 				<div class="span12">
 					<div class="item-container text-center">
-						<h1>Bienvenido a GAJAmdb</h1>
-						<p class="lead"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at fringilla lacus. Morbi maximus condimentum metus, vitae vestibulum orci hendrerit vitae. Sed accumsan nisi a est dignissim, et varius nisi.</p>
-						<a wicket:id="register" href="#" class="btn btn-large btn-success">Registrarse</a>
+						<h1><wicket:message key="home.welcome">Bienvenido a GAJAmdb</wicket:message></h1>
+						<p class="lead"><wicket:message key="home.welcomeMessage">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at fringilla lacus. Morbi maximus condimentum metus, vitae vestibulum orci hendrerit vitae. Sed accumsan nisi a est dignissim, et varius nisi.</wicket:message></p>
+						<a wicket:id="register" href="#" class="btn btn-large btn-success"><wicket:message key="register">Registrarse</wicket:message></a>
 					</div>
 				</div>
 			</div>
 			<div wicket:id="latestReleasedFilmsContainer" class="row">
 				<div class="span12">
-					<h2>Estrenos de esta semana</h2>
+					<h2><wicket:message key="home.weekReleases">Estrenos de esta semana</wicket:message></h2>
 					<ul class="item-list">
 						<li wicket:id="latestReleasedFilm">
 							<div wicket:id="latestReleasedFilmPanel"></div>
@@ -25,7 +25,7 @@
 			</div>
 			<div wicket:id="latestFollowedUserContainer" class="row">
 				<div class="span12">
-					<h2>Comentarios de interés</h2>
+					<h2><wicket:message key="home.followedComments">Comentarios de interés</wicket:message></h2>
 					<ul class="item-list">
 						<li wicket:id="latestFollowedUser">
 							<div wicket:id="latestFollowedUserPanel"></div>
@@ -35,7 +35,7 @@
 			</div>
 			<div class="row">
 				<div class="span4">
-					<h2>Top 5</h2>
+					<h2><wicket:message key="home.top5">Top 5</wicket:message></h2>
 					<ul class="item-list"> 
 						<li wicket:id="topFilm">
 							<div wicket:id="topFilmPanel"></div>
@@ -43,7 +43,7 @@
 					</ul>
 				</div>
 				<div class="span4">
-					<h2>Lo más nuevo</h2>
+					<h2><wicket:message key="home.latestFilms">Lo más nuevo</wicket:message></h2>
 					<ul class="item-list">
 						<li wicket:id="latestAddedFilm">
 							<div wicket:id="latestAddedPanel"></div>
@@ -51,7 +51,7 @@
 					</ul>
 				</div>
 				<div class="span4">
-					<h2>Lo más visitado</h2>
+					<h2><wicket:message key="home.mostViewed">Lo más visitado</wicket:message></h2>
 					<ul class="item-list">
 						<li wicket:id="mostVisitedFilm">
 							<div wicket:id="mostVisitedPanel"></div>

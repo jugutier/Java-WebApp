@@ -4,11 +4,11 @@
 			<form wicket:id="form">
 				<div class="comment-controls">
 					<textarea wicket:id="message" rows="3" class="input-block-level" placeholder="Escribe un comentario..."></textarea>
-					Puntuación:
+					<wicket:message key="rate">Puntuación</wicket:message>:
 					<select wicket:id="rate" class="span1">
 					</select>
 					
-					<button type="submit" class="btn btn-primary pull-right">Comentar</button>
+					<button type="submit" class="btn btn-primary pull-right"><wicket:message key="makeComment">Comentar</wicket:message></button>
 				</div>
 			</form>
 		</wicket:panel>

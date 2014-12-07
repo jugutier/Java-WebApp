@@ -4,13 +4,13 @@
 			<div class="comment-body">
 
 			<div wicket:id="actionsButton" class="btn-group pull-right">
-				<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">Acciones <span class="caret"></span></a>
+				<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><wicket:message key="actions">Acciones</wicket:message> <span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a wicket:id="profileButton"><i class="icon-user"></i> Ver perfil</a></li>
-					<li><a wicket:id="reportButton"><i class="icon-flag"></i> Denunciar</a></li>
-					<li><a wicket:id="muteButton"><i class="icon-volume-off"></i> Silenciar</a></li>
-					<li><a wicket:id="unmuteButton"><i class="icon-volume-up"></i> Permitir comentar</a></li>
-					<li><a wicket:id="deleteButton"><i class="icon-remove"></i> Eliminar</a></li>
+					<li><a wicket:id="profileButton"><i class="icon-user"></i> <wicket:message key="viewProfile">Ver perfil</wicket:message></a></li>
+					<li><a wicket:id="reportButton"><i class="icon-flag"></i> <wicket:message key="report">Denunciar</wicket:message></a></li>
+					<li><a wicket:id="muteButton"><i class="icon-volume-off"></i> <wicket:message key="mute">Silenciar</wicket:message></a></li>
+					<li><a wicket:id="unmuteButton"><i class="icon-volume-up"></i> <wicket:message key="unmute">Permitir comentar</wicket:message></a></li>
+					<li><a wicket:id="deleteButton"><i class="icon-remove"></i> <wicket:message key="delete">Eliminar</wicket:message></a></li>
 				</ul>
 			</div>
 			
@@ -24,14 +24,14 @@
 				<p wicket:id="text">Ñam ñam ñam ñam, ñam ñam ñam ñam, ñam ñam ñam ñam, ñam - ñam ñam ñam.</p>
 			</div>
 			<div class="comment-controls">
-				Su calificación: <div wicket:id="scoreStars" class="star-list"></div>
-				<span class="pull-right">Puntuación:
+				<wicket:message key="yourScore">Su calificación</wicket:message>: <div wicket:id="scoreStars" class="star-list"></div>
+				<span class="pull-right"><wicket:message key="rate">Puntuación</wicket:message>:
 					<strong wicket:id="rate">5.0</strong></span>
 				<form wicket:id="commentRateForm" class="pull-right">
-					Puntuar este comentario
+					<wicket:message key="rateThisComment">Puntuar este comentario</wicket:message>
 					<select wicket:id="rating" class="span1">
 					</select>
-					<button class="btn btn-primary" type="submit">Puntuar</button>
+					<button class="btn btn-primary" type="submit"><wicket:message key="giveRate">Puntuar</wicket:message></button>
 				</form>
 			</div>
 		</wicket:panel>

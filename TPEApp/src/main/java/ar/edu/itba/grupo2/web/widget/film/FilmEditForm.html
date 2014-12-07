@@ -7,34 +7,34 @@
 			<form wicket:id="form" class="form-horizontal">
 				<fieldset>				
 					<div class="control-group">
-						<label class="control-label" for="name">Título</label>
+						<label class="control-label" for="name"><wicket:message key="title">Título</wicket:message></label>
 						<div class="controls">
 							<input wicket:id="name" type="text" id="name"/>
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="releaseDate">Fecha de estreno</label>
+						<label class="control-label" for="releaseDate"><wicket:message key="releaseDate">Fecha de estreno</wicket:message></label>
 						<div class="controls">
 							<input wicket:id="releaseDate" type="text" id="releaseDate"/>
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="director">Director</label>
+						<label class="control-label" for="director"><wicket:message key="director">Director</wicket:message></label>
 						<div class="controls">
 							<input wicket:id="director" type="text" id="director"/>
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="length">Longitud</label>
+						<label class="control-label" for="length"><wicket:message key="length">Longitud</wicket:message></label>
 						<div class="controls">
 							<div class="input-append">
 								<input wicket:id="length" type="number" id="length"/>
-								<span class="add-on">minutos</span>
+								<span class="add-on"><wicket:message key="lengthUnit">minutos</wicket:message></span>
 							</div>
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="movieImage">Foto de portada</label>
+						<label class="control-label" for="movieImage"><wicket:message key="film.image">Foto de portada</wicket:message></label>
 						<div class="controls">
 							<div class="media">
 									<!-- Show if there is an image -->
@@ -46,22 +46,22 @@
 										<!-- Show if there is an image -->
 										<form wicket:id="deleteImageForm">
 											<label class="checkbox">
-												<input wicket:id="deleteImage" type="checkbox"> Eliminar imagen
+												<input wicket:id="deleteImage" type="checkbox"> <wicket:message key="deleteImage">Eliminar imagen</wicket:message>
 											</label>
 										</form>
-									<p>La foto debe ser de 100kb como máximo.</p>
+									<p><wicket:message key="film.imageLimit">La foto debe ser de 100kb como máximo.</wicket:message></p>
 								</div>
 							</div>				
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="genres">Géneros</label>
+						<label class="control-label" for="genres"><wicket:message key="genres">Géneros</wicket:message></label>
 						<div class="controls">
 							<div wicket:id="genres" class="checkbox"></div>
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="description">Resumen</label>
+						<label class="control-label" for="description"><wicket:message key="summary">Resumen</wicket:message></label>
 						<div class="controls">
 							<textarea wicket:id="description" id="description" class="input-xlarge" rows="5"></textarea>
 						</div>

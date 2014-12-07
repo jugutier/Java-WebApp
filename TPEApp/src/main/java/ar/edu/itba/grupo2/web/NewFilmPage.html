@@ -4,12 +4,12 @@
 	</head>
 	<body>
 		<wicket:extend>
-			<h2>Nueva película</h2>
+			<h2><wicket:message key="film.new">Nueva película</wicket:message></h2>
 			<form wicket:id="form">
 				<div wicket:id="filmForm"></div>
 				<div class="control-group">
 					<div class="form-actions">
-						<button wicket:id="submit" class="btn btn-primary" type="submit">Enviar</button>
+						<button wicket:id="submit" class="btn btn-primary" type="submit"><wicket:message key="send">Enviar</wicket:message></button>
 					</div>
 				</div>
 			</form>

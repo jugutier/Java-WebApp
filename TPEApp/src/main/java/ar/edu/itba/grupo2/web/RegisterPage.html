@@ -4,33 +4,33 @@
 </head>
 <body>
 	<wicket:extend>
-		<h2>Registrarse</h2>
+		<h2><wicket:message key="register">Registrarse</wicket:message></h2>
 		<form wicket:id="registerUser">
-			<h3>Ingrese su dirección de email</h3>
+			<h3><wicket:message key="register.mail">Ingrese su dirección de email</wicket:message></h3>
 			<input wicket:id="email" type="text"><br />
-			<h3>Ingrese su nombre</h3>
+			<h3><wicket:message key="register.name">Ingrese su nombre</wicket:message></h3>
 			<input wicket:id="name" type="text"><br />
-			<h3>Ingrese su apellido</h3>
+			<h3><wicket:message key="register.lastname">Ingrese su apellido</wicket:message></h3>
 			<input wicket:id="lastname" type="text"><br />
-			<h3>Ingrese su contrasena</h3>
+			<h3><wicket:message key="register.password">Ingrese su contrasena</wicket:message></h3>
 			<input wicket:id="password" type="password"><br />
-			<h3>Ingrese nuevamente su contrasena</h3>
+			<h3><wicket:message key="register.confirmPassword">Ingrese nuevamente su contrasena</wicket:message></h3>
 			<input wicket:id="passwordConfirm" type="password"><br />
-			<h3>Fecha de nacimiento</h3>
+			<h3><wicket:message key="register.birthdate">Fecha de nacimiento</wicket:message></h3>
 			<input type="text" wicket:id="birthdate"><br />
-			<h3>Pregunta secreta</h3>
+			<h3><wicket:message key="register.secretQuestion">Pregunta secreta</wicket:message></h3>
 			<input type="text" wicket:id="secretQuestion"><br />
-			<h3>Respuesta secreta</h3>
+			<h3><wicket:message key="register.secretAnswer">Respuesta secreta</wicket:message></h3>
 			<input type="text" wicket:id="secretAnswer"><br />
 
 			<p>
 				<img wicket:id="captchaImage" />
 			</p>
 			<p>
-				Please replicate the text you see above <br /> <input
+				<wicket:message key="captchaCaption">Please replicate the text you see above</wicket:message><br /> <input
 					wicket:id="passkey" id="password" type="text" size="40" />
 			</p>
-			<button type="submit" class="btn">Confirmar</button>
+			<button type="submit" class="btn"><wicket:message key="confirm">Confirmar</wicket:message></button>
 		</form>
 	</wicket:extend>
 </body>

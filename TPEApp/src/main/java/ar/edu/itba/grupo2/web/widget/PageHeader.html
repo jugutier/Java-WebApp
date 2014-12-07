@@ -6,7 +6,7 @@
 					<div class="container">
 						<div class="page-header">
 							<img src="resources/img/default3.png" />
-							<h1>GAJAmdb <small>Un TPE de película</small></h1>
+							<h1><wicket:message key="appName">GAJAmdb</wicket:message> <small><wicket:message key="appSubtitle">Un TPE de película</wicket:message></small></h1>
 						</div>
 					</div>
 				</div>
@@ -18,10 +18,10 @@
 						<!-- Sections -->
 						<ul class="nav">
 							<li>
-								<a wicket:id="filmListLink" href="#" type="button">Películas</a>
+								<a wicket:id="filmListLink" href="#" type="button"><wicket:message key="films">Películas</wicket:message></a>
 							</li>
 							<li>
-								<a wicket:id="userListLink" href="#" type="button">Usuarios</a>
+								<a wicket:id="userListLink" href="#" type="button"><wicket:message key="users">Usuarios</wicket:message></a>
 							</li>
 						</ul>
 
@@ -29,13 +29,13 @@
 						<div wicket:id="loginForm">
 							<ul class="nav pull-right">
 								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Iniciar sesión <b class="caret"></b></a>
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><wicket:message key="login">Iniciar sesión</wicket:message> <b class="caret"></b></a>
 									<form wicket:id="form" class="login-form-mini dropdown-menu" action="/" method="POST">
 										<input wicket:id="email" type="text" name="email" class="input-block-level" placeholder="Dirección de email">
 										<input wicket:id="password" type="password" name="password" class="input-block-level" placeholder="Contraseña">
-										<p class="pull-right"><a wicket:id="resetPassword" href="#">¿Olvidó su contraseña?</a></p>
-										<p class="pull-right"><a wicket:id="registerUser" href="#">Registrarse</a></p>
-										<button wicket:id="submit" class="btn btn-primary pull-right" type="submit">Iniciar sesión</button>
+										<p class="pull-right"><a wicket:id="resetPassword" href="#"><wicket:message key="forgotPassword">¿Olvidó su contraseña?</wicket:message></a></p>
+										<p class="pull-right"><a wicket:id="registerUser" href="#"><wicket:message key="register">Registrarse</wicket:message></a></p>
+										<button wicket:id="submit" class="btn btn-primary pull-right" type="submit"><wicket:message key="login">Iniciar sesión</wicket:message></button>
 									</form>
 								</li>
 							</ul>
@@ -47,13 +47,13 @@
 								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span wicket:id="username">Nombre de usuario</span> <b class="caret"></b></a>
 									<ul class="dropdown-menu">
-										<li><a wicket:id="profile" href="#">Ver mi perfil</a></li>
+										<li><a wicket:id="profile" href="#"><wicket:message key="viewMyProfile">Ver mi perfil</wicket:message></a></li>
 										<li class="divider"></li>
-										<li wicket:id="addFilmContainer"><a wicket:id="addFilm" href="#">Añadir película</a></li>
-										<li wicket:id="addCSVFilmsContainer"><a wicket:id="addCSVFilms" href="#">Cargar películas</a></li>
-										<li wicket:id="reportedCommentsContainer"><a wicket:id="reportedComments" href="#">Ver denuncias</a></li>
+										<li wicket:id="addFilmContainer"><a wicket:id="addFilm" href="#"><wicket:message key="addFilm">Añadir película</wicket:message></a></li>
+										<li wicket:id="addCSVFilmsContainer"><a wicket:id="addCSVFilms" href="#"><wicket:message key="loadFilms">Cargar películas</wicket:message></a></li>
+										<li wicket:id="reportedCommentsContainer"><a wicket:id="reportedComments" href="#"><wicket:message key="viewReportedComments">Ver denuncias</wicket:message></a></li>
 										<li wicket:id="dividerContainer" class="divider"></li>
-										<li><a wicket:id="logout" href="#">Cerrar sesión</a></li>
+										<li><a wicket:id="logout" href="#"><wicket:message key="logout">Cerrar sesión</wicket:message></a></li>
 									</ul>
 								</li>
 							</ul>

@@ -11,14 +11,14 @@
 				<div class="media-body item-container">
 					<h2 class="media-heading"><span wicket:id="name">Nombre</span> <span wicket:id="lastname">Apellido</span><span wicket:id="roleBadges"></span></h2>
 					<h4 wicket:id="email" class="muted">direccion@email.com</h4>
-					<p><a wicket:id="follow" href="#" class="btn">Seguir a <span wicket:id="nameFollow">usuario</span></a></p>
-					<p><a wicket:id="unfollow" href="#" class="btn">Dejar de seguir a <span wicket:id="nameUnfollow">usuario</span></a></p>
-					<p><h5 class="details-item-header">Fecha de nacimiento: </h5> <span wicket:id="birthdate">11/11/1111</span></p>
+					<p><a wicket:id="follow" href="#" class="btn"><wicket:message key="profile.follow">Seguir a</wicket:message> <span wicket:id="nameFollow">usuario</span></a></p>
+					<p><a wicket:id="unfollow" href="#" class="btn"><wicket:message key="profile.unfollow">Dejar de seguir a</wicket:message> <span wicket:id="nameUnfollow">usuario</span></a></p>
+					<p><h5 class="details-item-header"><wicket:message key="birthdate">Fecha de nacimiento</wicket:message>: </h5> <span wicket:id="birthdate">11/11/1111</span></p>
 				</div>
 			</div>
 			
 			<div wicket:id="commentSection">
-				<h3>Comentarios</h3>
+				<h3><wicket:message key="comments">Comentarios</wicket:message></h3>
 				
 				<ul class="item-list">
 					<li wicket:id="comment">
