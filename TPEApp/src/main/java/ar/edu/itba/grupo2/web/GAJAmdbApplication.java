@@ -37,6 +37,8 @@ public class GAJAmdbApplication extends WebApplication {
 		Parse.initialize(APP_ID, APP_REST_API_ID);
 		getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 		getRequestCycleListeners().add(new HibernateRequestCycleListener(sessionFactory));
+		
+		getApplicationSettings().setPageExpiredErrorPage(ExpiredPage.class);
 	}
     
     @Override
