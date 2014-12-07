@@ -7,12 +7,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.wicket.extensions.markup.html.captcha.CaptchaImageResource;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
+import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
+import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.util.value.ValueMap;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 
 import ar.edu.itba.grupo2.domain.user.User;
@@ -27,6 +32,9 @@ public class RegisterPage extends BasePage{
 	private transient String passwordConfirm;
 	private transient String secretQuestion;
 	private transient String secretAnswer;
+	private transient CaptchaImageResource captchaImageResource;
+	private transient String imagePass = randomString(6, 8);
+	private transient ValueMap properties = new ValueMap();
 	
 	
 	public RegisterPage() {
@@ -34,7 +42,7 @@ public class RegisterPage extends BasePage{
 		Form<RegisterPage> registerUser = new Form<RegisterPage>("registerUser",new CompoundPropertyModel<RegisterPage>(this)){
 			@Override
 			protected void onSubmit() {
-				
+				if (imagePass.equals(getPassword())){
 				User user = users.getUserByEmail(email);
 				if (user != null) {
 					// TODO Localize
@@ -54,8 +62,27 @@ public class RegisterPage extends BasePage{
 					 session.authenticate(email, password, users);
 					setResponsePage(new ProfilePage(session.getLoggedInUser()));
 				}
+			}else{
+				error("Captcha password '" + getPassword() + "' is wrong.\n" +
+	                    "Correct password was: " + imagePass);
+				captchaImageResource.invalidate();
 			}
+			}
+
 		};
+		 captchaImageResource = new CaptchaImageResource(imagePass);
+        registerUser.add(new Image("captchaImage", captchaImageResource));
+        registerUser.add(new RequiredTextField<String>("passkey", new PropertyModel<String>(properties,
+             "passkey"))
+         {
+             @Override
+             protected final void onComponentTag(final ComponentTag tag)
+             {
+                 super.onComponentTag(tag);
+                 // clear the field after each render
+                 tag.put("value", "");
+             }
+         });
 		TextField<String> emailTextField = new TextField<String>("email");
 		PasswordTextField passwordTextField = new PasswordTextField("password");
 		PasswordTextField passwordConfirmTextField = new PasswordTextField("passwordConfirm");
@@ -85,6 +112,25 @@ public class RegisterPage extends BasePage{
 		
 		add(registerUser);
 	}
+	
+	private static int randomInt(int min, int max)
+    {
+        return (int)(Math.random() * (max - min) + min);
+    }
+
+    private static String randomString(int min, int max)
+    {
+        int num = randomInt(min, max);
+        byte b[] = new byte[num];
+        for (int i = 0; i < num; i++)
+            b[i] = (byte)randomInt('a', 'z');
+        return new String(b);
+    }
+    
+    private String getPassword()
+    {
+        return properties.getString("passkey");
+    }
 
 }
 
