@@ -22,6 +22,7 @@ import org.apache.wicket.validation.validator.EmailAddressValidator;
 
 import ar.edu.itba.grupo2.domain.user.User;
 
+@SuppressWarnings("serial")
 public class RegisterPage extends BasePage{
 	
 	private transient String email;
@@ -55,7 +56,8 @@ public class RegisterPage extends BasePage{
 					 try {
 							birth = outputDateFormat.parse(birthdate);
 							} catch (ParseException e) {
-								System.out.println("Error parseo");
+								error("La fecha esta mal ingresada. El formato correcto es: yyyy-MM-dd");
+								return ;
 							}
 					 users.registerUser(email, password, passwordConfirm, name, lastname, birth, secretQuestion, secretAnswer);
 					 GAJAmdbSession session = GAJAmdbSession.get();
