@@ -10,20 +10,19 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.model.StringResourceModel;
-import org.parse4j.ParseException;
-import org.parse4j.ParseObject;
-import org.parse4j.ParseQuery;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityModel;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.genre.Genre;
+import ar.edu.itba.grupo2.service.FilmService;
 import ar.edu.itba.grupo2.web.widget.FriendlyDate;
 import ar.edu.itba.grupo2.web.widget.StarScoreIndicator;
 import ar.edu.itba.grupo2.web.widget.comment.CommentForm;
@@ -35,6 +34,9 @@ import ar.edu.itba.grupo2.web.widget.film.FilmTitle;
 public class FilmDetailsPage extends BasePage {
 
 	private WebMarkupContainer filmDetailsContainer;
+	
+	@SpringBean
+	private FilmService filmService;
 
 	public FilmDetailsPage(final Film film) {
 		super();
@@ -82,26 +84,10 @@ public class FilmDetailsPage extends BasePage {
 		filmDetailsContainer.add(new Label("director"));
 		filmDetailsContainer.add(new Label("description"));
 		filmDetailsContainer.add(new Label("length"));
-		// TODO Ask if this it's ok to do ajax requests like this
 		filmDetailsContainer.add(new AjaxLazyLoadPanel("stock") {
 			@Override
 			public Component getLazyLoadComponent(String id) {
-				Label ret;
-				
-				ParseQuery<ParseObject> query = ParseQuery.getQuery("Movie");
-				query.whereEqualTo("name", film().getName());
-				try {
-					List<ParseObject> result = query.find();
-					if (result == null) {
-						ret = new Label(id, new StringResourceModel("noStock", this, null));
-					}
-					else {
-						ret = new Label(id, String.valueOf(query.find().get(0).getInt("stock")));
-					}
-				} catch (ParseException e) {
-					ret = new Label(id, new StringResourceModel("noStock", this, null));
-				}				
-				
+				Label ret = new Label(id, String.valueOf(filmService.getStock(film().getName())));
 				return ret;
 			}
 		});
@@ -115,13 +101,17 @@ public class FilmDetailsPage extends BasePage {
 	}
 
 	private void loadGenreList() {
-		String labelKey;
-		if (film().getGenres().size() == 1) {
-			labelKey = "genre";
-		}else{
-			labelKey = "genres";
-		}
-		Label genreLabel = new Label("genreLabel", new StringResourceModel(labelKey, this, null));
+		Label genreLabel = new Label("genreLabel", new AbstractReadOnlyModel<String>() {
+			@Override
+			public String getObject() {
+				// TODO Localize
+				if (film().getGenres().size() == 1) {
+					return "Género";
+				}
+				
+				return "Géneros";
+			}
+		});
 		
 		WebMarkupContainer genreContainer = new WebMarkupContainer("genreContainer") {
 			@Override
@@ -208,6 +198,14 @@ public class FilmDetailsPage extends BasePage {
 	protected void onConfigure() {
 		super.onConfigure();
 		film().visitFilm();
+		
+		filmDetailsContainer.replace(new AjaxLazyLoadPanel("stock") {
+			@Override
+			public Component getLazyLoadComponent(String id) {
+				Label ret = new Label(id, String.valueOf(filmService.getStock(film().getName())));
+				return ret;
+			}
+		});
 	}
 
 	private Film film() {
