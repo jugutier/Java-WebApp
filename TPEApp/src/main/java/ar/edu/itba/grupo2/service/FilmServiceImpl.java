@@ -5,7 +5,9 @@ import java.util.List;
 import org.parse4j.ParseException;
 import org.parse4j.ParseObject;
 import org.parse4j.ParseQuery;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FilmServiceImpl implements FilmService {
 
 	@Override
