@@ -17,6 +17,7 @@ import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.util.value.ValueMap;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 
@@ -45,46 +46,45 @@ public class RegisterPage extends BasePage{
 			protected void onSubmit() {
 				if (imagePass.equals(getPassword())){
 				User user = users.getUserByEmail(email);
-				if (user != null) {
-					// TODO Localize
-					error("Mail ya esta en uso");
-					
-				}
-				else {
-					DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-					Date birth=null;
-					 try {
+					if (user != null) {
+						error(new StringResourceModel("error.mailUsed", this, null).getString());
+					}
+					else {
+						DateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+						Date birth=null;
+						try {
 							birth = outputDateFormat.parse(birthdate);
-							} catch (ParseException e) {
-								error("La fecha esta mal ingresada. El formato correcto es: yyyy-MM-dd");
-								return ;
-							}
-					 users.registerUser(email, password, passwordConfirm, name, lastname, birth, secretQuestion, secretAnswer);
-					 GAJAmdbSession session = GAJAmdbSession.get();
-					 session.authenticate(email, password, users);
-					setResponsePage(new ProfilePage(session.getLoggedInUser()));
+						} catch (ParseException e) {
+							error(new StringResourceModel("error.dateFormat", this, null).getString());
+							return ;
+						}
+						users.registerUser(email, password, passwordConfirm, name, lastname, birth, secretQuestion, secretAnswer);
+						GAJAmdbSession session = GAJAmdbSession.get();
+						session.authenticate(email, password, users);
+						setResponsePage(new ProfilePage(session.getLoggedInUser()));
+					}
+				}else{
+					Object[] values = {getPassword(),imagePass};
+					error(new StringResourceModel("error.captcha", this, null, values).getString());
+					
+					captchaImageResource.invalidate();
 				}
-			}else{
-				error("Captcha password '" + getPassword() + "' is wrong.\n" +
-	                    "Correct password was: " + imagePass);
-				captchaImageResource.invalidate();
-			}
 			}
 
 		};
-		 captchaImageResource = new CaptchaImageResource(imagePass);
+		
+		captchaImageResource = new CaptchaImageResource(imagePass);
         registerUser.add(new Image("captchaImage", captchaImageResource));
         registerUser.add(new RequiredTextField<String>("passkey", new PropertyModel<String>(properties,
-             "passkey"))
-         {
-             @Override
-             protected final void onComponentTag(final ComponentTag tag)
-             {
-                 super.onComponentTag(tag);
-                 // clear the field after each render
-                 tag.put("value", "");
-             }
-         });
+             "passkey")){
+	             @Override
+	             protected final void onComponentTag(final ComponentTag tag)
+	             {
+	                 super.onComponentTag(tag);
+	                 // clear the field after each render
+	                 tag.put("value", "");
+	             }
+         	});
 		TextField<String> emailTextField = new TextField<String>("email");
 		PasswordTextField passwordTextField = new PasswordTextField("password");
 		PasswordTextField passwordConfirmTextField = new PasswordTextField("passwordConfirm");

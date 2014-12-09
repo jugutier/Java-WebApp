@@ -15,6 +15,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.parse4j.ParseException;
 import org.parse4j.ParseObject;
 import org.parse4j.ParseQuery;
@@ -85,23 +86,22 @@ public class FilmDetailsPage extends BasePage {
 		filmDetailsContainer.add(new AjaxLazyLoadPanel("stock") {
 			@Override
 			public Component getLazyLoadComponent(String id) {
-				String string = null;
+				Label ret;
+				
 				ParseQuery<ParseObject> query = ParseQuery.getQuery("Movie");
 				query.whereEqualTo("name", film().getName());
 				try {
 					List<ParseObject> result = query.find();
 					if (result == null) {
-						// TODO Localize
-						string = "Sin stock";
+						ret = new Label(id, new StringResourceModel("noStock", this, null));
 					}
 					else {
-						string = String.valueOf(query.find().get(0).getInt("stock"));
+						ret = new Label(id, String.valueOf(query.find().get(0).getInt("stock")));
 					}
 				} catch (ParseException e) {
-					// TODO Localize
-					string = "Sin stock";
-				}
-				Label ret = new Label(id, string);
+					ret = new Label(id, new StringResourceModel("noStock", this, null));
+				}				
+				
 				return ret;
 			}
 		});
@@ -115,18 +115,13 @@ public class FilmDetailsPage extends BasePage {
 	}
 
 	private void loadGenreList() {
-		Label genreLabel = new Label("genreLabel", new Model<String>() {
-			@Override
-			public String getObject() {
-				// TODO Ask it this is the right way to return strings
-				// TODO Localize
-				if (film().getGenres().size() == 1) {
-					return "Género";
-				}
-				
-				return "Géneros";
-			}
-		});
+		String labelKey;
+		if (film().getGenres().size() == 1) {
+			labelKey = "genre";
+		}else{
+			labelKey = "genres";
+		}
+		Label genreLabel = new Label("genreLabel", new StringResourceModel(labelKey, this, null));
 		
 		WebMarkupContainer genreContainer = new WebMarkupContainer("genreContainer") {
 			@Override
