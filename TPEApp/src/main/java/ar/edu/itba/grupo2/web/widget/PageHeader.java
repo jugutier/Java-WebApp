@@ -13,6 +13,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.grupo2.domain.user.User;
@@ -202,8 +203,7 @@ public class PageHeader extends Panel {
 				GAJAmdbSession session = GAJAmdbSession.get();
 
 				if (!session.authenticate(email, password, users)) {
-					// TODO Localize
-					error("Email o contraseña incorrectos");
+					error(new StringResourceModel("error.incorrectUserOrPass", this, null).getString());
 				}
 			}
 		};

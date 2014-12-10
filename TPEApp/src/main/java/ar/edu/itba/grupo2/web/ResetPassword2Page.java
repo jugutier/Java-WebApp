@@ -7,6 +7,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.StringResourceModel;
 
 import ar.edu.itba.grupo2.domain.common.EntityModel;
 import ar.edu.itba.grupo2.domain.user.User;
@@ -31,8 +32,7 @@ public class ResetPassword2Page extends BasePage {
 					setResponsePage(new HomePage());
 				}
 				else {
-					// TODO LOcalize
-					error("Wrong answer, yo");
+					error(new StringResourceModel("error.incorrectSecretAnswer", this, null).getString());
 				}
 			}
 		};

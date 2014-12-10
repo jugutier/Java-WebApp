@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.validation.validator.StringValidator;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
@@ -33,8 +34,7 @@ public class CommentForm extends Panel {
 				GAJAmdbSession session = GAJAmdbSession.get();
 				
 				if (!session.isLoggedIn()) {
-					// TODO Localize
-					error("No estas loggeado");
+					error(new StringResourceModel("error.notLoggedIn", this, null).getString());
 					return;
 				}
 				
@@ -52,8 +52,7 @@ public class CommentForm extends Panel {
 					message = null;
 					rate = 0;
 				} catch (UserCantCommentException e) {
-					// TODO Localize
-					error("No puedes comentar");
+					error(new StringResourceModel("error.cantComment", this, null).getString());
 				}
 			}
 		};

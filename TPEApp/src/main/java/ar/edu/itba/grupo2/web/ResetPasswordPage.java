@@ -3,6 +3,7 @@ package ar.edu.itba.grupo2.web;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 
 import ar.edu.itba.grupo2.domain.user.User;
@@ -23,8 +24,7 @@ public class ResetPasswordPage extends BasePage {
 					setResponsePage(new ResetPassword2Page(user));
 				}
 				else {
-					// TODO Localize
-					error("No existe");
+					error(new StringResourceModel("error.incorrectUser", this, null).getString());
 				}
 			}
 		};

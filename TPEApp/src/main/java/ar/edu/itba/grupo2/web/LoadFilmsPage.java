@@ -17,6 +17,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.grupo2.domain.film.Film;
@@ -71,13 +72,11 @@ public class LoadFilmsPage extends BasePage {
 									.description(r.get("description")).build();
 							films.save(film);
 						} catch (ParseException e) {
-							// TODO Localize
-							error("Ocurrió un error al cargar las películas");
+							error(new StringResourceModel("error.loadingFilms", this, null).getString());
 						}
 					}
 				} catch (IOException e) {
-					// TODO Localize
-					error("Ocurrió un error al cargar las películas");
+					error(new StringResourceModel("error.loadingFilms", this, null).getString());
 				}
 			}
 		};
