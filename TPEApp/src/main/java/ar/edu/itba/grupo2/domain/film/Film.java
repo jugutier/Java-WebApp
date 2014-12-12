@@ -1,8 +1,6 @@
 package ar.edu.itba.grupo2.domain.film;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,9 +16,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cascade;
-import org.parse4j.ParseException;
-import org.parse4j.ParseObject;
-import org.parse4j.ParseQuery;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
@@ -147,33 +142,6 @@ public class Film extends EntityBaseType {
 	public List<Comment> getComments() {
 		List<Comment> copy = new ArrayList<Comment>(comments.size());
 		copy.addAll(comments);
-		return copy;
-	}
-	
-	public List<Comment> getCommentsForUser(User user) {
-		List<Comment> copy = new ArrayList<Comment>(comments.size());
-		if (user != null) {
-			for (Comment c : comments) {
-				c.setBelongsToUser(c.getUser().equals(user));
-				c.setReportable(!c.isBelongsToUser() && !c.isReportedByUser(user));
-				c.setRatedByUser(c.isRatedBy(user));
-			}
-		}
-		
-		copy.addAll(comments);
-		Collections.sort(copy, new Comparator<Comment>(){
-
-			@Override
-			public int compare(Comment c1, Comment c2) {
-				if(c1.getRate() > c2.getRate())
-					return -1;
-				else if(c1.getRate() < c2.getRate())
-					return 1;
-				return 0;
-			}
-			
-		});
-		
 		return copy;
 	}
 

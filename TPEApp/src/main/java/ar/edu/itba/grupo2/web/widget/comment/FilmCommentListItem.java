@@ -97,7 +97,7 @@ public class FilmCommentListItem extends Panel {
 			@Override
 			public boolean isVisible() {
 				GAJAmdbSession session = GAJAmdbSession.get();
-				return session.isLoggedIn() && comment().isReportable() && !comment().isReportedByUser(session.getLoggedInUser());
+				return session.isLoggedIn() && !comment().isReportedByUser(session.getLoggedInUser());
 			}
 			
 		};
@@ -134,7 +134,7 @@ public class FilmCommentListItem extends Panel {
 			@Override
 			public boolean isVisible() {
 				GAJAmdbSession session = GAJAmdbSession.get();
-				return session.isLoggedIn() && !comment().isBelongsToUser() && !comment().isRatedBy(session.getLoggedInUser());
+				return session.isLoggedIn() && !comment().getUser().equals(session.getLoggedInUser()) && !comment().isRatedBy(session.getLoggedInUser());
 			}
 			
 		};

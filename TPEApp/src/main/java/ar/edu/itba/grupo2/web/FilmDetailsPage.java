@@ -144,8 +144,7 @@ public class FilmDetailsPage extends BasePage {
 		final IModel<List<Comment>> commentModel = new LoadableDetachableModel<List<Comment>>() {
 			@Override
 			protected List<Comment> load() {
-				return film().getCommentsForUser(
-						GAJAmdbSession.get().getLoggedInUser());
+				return film().getComments();
 			}
 		};
 

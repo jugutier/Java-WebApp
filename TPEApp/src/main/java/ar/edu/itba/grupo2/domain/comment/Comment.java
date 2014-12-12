@@ -35,11 +35,6 @@ public class Comment extends EntityBaseType {
 	@OneToMany(mappedBy="comment", cascade = CascadeType.ALL)
 	private List<CommentRate> ratings;
 	
-	
-	private transient boolean reportable;
-	private transient boolean belongsToUser;
-	private transient boolean ratedByUser;
-	
 	Comment(){}
 	
 	private Comment(final Builder builder) {
@@ -54,9 +49,6 @@ public class Comment extends EntityBaseType {
 		setText(builder.text);
 		this.rate = builder.rate;
 		this.ratings = new LinkedList<CommentRate>();
-		reportable = false;
-		belongsToUser = false;
-		ratedByUser = false;
 	}
 
 	public Film getFilm() {
@@ -119,15 +111,7 @@ public class Comment extends EntityBaseType {
 		
 		return found;
 	}
-	public void setBelongsToUser(boolean belongsToUser) {
-		this.belongsToUser = belongsToUser;
-	}
-	public void setRatedByUser(boolean ratedByUser) {
-		this.ratedByUser = ratedByUser;
-	}
-	public void setReportable(boolean reportable) {
-		this.reportable = reportable;
-	}
+	
 	public void remove() {
 		film.removeComment(this);
 	}
@@ -135,18 +119,6 @@ public class Comment extends EntityBaseType {
 	public void report(User user) {
 		if (user != null && !this.user.equals(user) && !isReportedByUser(user))
 			reports.add(new Report(this, user));
-	}
-	
-	public boolean isReportable() {
-		return reportable;
-	}
-	
-	public boolean isBelongsToUser() {
-		return belongsToUser;
-	}
-	
-	public boolean isRatedByUser(){
-		return ratedByUser;
 	}
 	
 	public int getReportCount() {
