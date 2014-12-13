@@ -210,9 +210,6 @@ public class Film extends EntityBaseType {
 	}
 
 	public void setFilmImage(MovieImage image) {
-		/*if (this.movieImage != null) {
-			this.movieImage.setFilm(null);
-		}*/
 		this.movieImage = image;
 	}
 

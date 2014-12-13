@@ -10,6 +10,7 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.NumberTextField;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -28,13 +29,13 @@ public class FilmEditForm extends Panel {
 	@SpringBean
 	private FilmRepo films;
 	
-	public FilmEditForm(String id, IModel<FilmForm> filmForm) {
+	public FilmEditForm(String id, IModel<FilmForm> filmForm, IModel<List<FileUpload>>  fileUploadModel) {
 		super(id, filmForm);
 		
-		createForm(filmForm);
+		createForm(filmForm, fileUploadModel);
 	}
 	
-	private void createForm(IModel<FilmForm> filmForm) {
+	private void createForm(IModel<FilmForm> filmForm, IModel<List<FileUpload>>  fileUploadModel) {
 		
 		Form<FilmForm> form = new Form<FilmForm>("form", new CompoundPropertyModel<FilmForm>(filmForm));
 	
@@ -56,7 +57,7 @@ public class FilmEditForm extends Panel {
 		lengthTextField.setMinimum(0);
 		
 		// Image
-		FileUploadField imageUpload = new FileUploadField("movieImage");
+		FileUploadField imageUpload = new FileUploadField("movieImage", fileUploadModel);
 		Form<FilmForm> deleteImageForm = new Form<FilmForm>("deleteImageForm", new CompoundPropertyModel<FilmForm>(filmForm)) {
 			@Override
 			public boolean isVisible() {

@@ -1,10 +1,13 @@
 package ar.edu.itba.grupo2.web;
 
+import java.util.List;
+
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.PropertyModel;
 
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.film.MovieImage;
@@ -13,6 +16,8 @@ import ar.edu.itba.grupo2.web.widget.film.FilmEditForm;
 
 @SuppressWarnings("serial")
 public class NewFilmPage extends BasePage {
+	
+	private transient List<FileUpload> fileUpload;
 
 	@SuppressWarnings("rawtypes")
 	public NewFilmPage() {
@@ -29,7 +34,7 @@ public class NewFilmPage extends BasePage {
 		
 		setDefaultModel(filmFormModel);
 		
-		form.add(new FilmEditForm("filmForm", filmFormModel));
+		form.add(new FilmEditForm("filmForm", filmFormModel, new PropertyModel<List<FileUpload>>(this, "fileUpload")));
 		form.add(new SubmitLink("submit", filmFormModel) {
 			@Override
 			public void onSubmit() {
@@ -47,8 +52,8 @@ public class NewFilmPage extends BasePage {
 					.description(filmForm.getDescription())
 					.build();
 				
-				if (filmForm.getMovieImage() != null) {
-					FileUpload file = filmForm.getMovieImage().get(0);
+				if (fileUpload != null) {
+					FileUpload file = fileUpload.get(0);
 					MovieImage movieImage = new MovieImage(file.getClientFileName(), file.getContentType(), (int) file.getSize(), file.getBytes());
 					
 					film.setFilmImage(movieImage);
