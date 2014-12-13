@@ -1,6 +1,7 @@
 package ar.edu.itba.grupo2.web.widget.comment;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -45,6 +46,7 @@ public class CommentForm extends Panel {
 					.rate(rate)
 					.user(user)
 					.film(film())
+					.creationDate(new Date())
 					.build();
 				
 				try {

@@ -98,6 +98,14 @@ public class FilmDetailsPage extends BasePage {
 		addCommentForm();
 
 		add(filmDetailsContainer);
+		
+		add(new WebMarkupContainer("mutedWarning") {
+			@Override
+			public boolean isVisible() {
+				GAJAmdbSession session = GAJAmdbSession.get();
+				return super.isVisible() && session.isLoggedIn() && session.getLoggedInUser().isMuted();
+			}
+		});
 	}
 
 	private void loadGenreList() {

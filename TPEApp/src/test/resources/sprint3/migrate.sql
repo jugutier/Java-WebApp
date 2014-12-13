@@ -5,3 +5,7 @@ alter table image drop column film_id;
 
 alter table film add column visits int;
 update film set visits = 0 where visits is null;
+
+alter table GAJAmdbUser add column muted bool;
+update GAJAmdbUser set muted = false;
+update GAJAmdbUser set muted = true where id = 2;

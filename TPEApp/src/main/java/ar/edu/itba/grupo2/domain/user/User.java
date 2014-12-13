@@ -36,6 +36,8 @@ public class User extends EntityBaseType {
 	private boolean admin;
 	@Column(nullable = false)
 	private boolean vip;
+	@Column(nullable = false)
+	private boolean muted;
 	@Column(length = 140, nullable = false)
 	private String secretQuestion;
 	@Column(length = 140, nullable = false)
@@ -101,7 +103,7 @@ public class User extends EntityBaseType {
 	
 	public boolean isMuted() {
 		// TODO Implement
-		return false;
+		return muted;
 	}
 
 	public String getEmail() {
@@ -201,6 +203,7 @@ public class User extends EntityBaseType {
 	
 	public void setMuted(boolean muted) {
 		// TODO Implement
+		this.muted = muted;
 	}
 
 	@Override
