@@ -241,7 +241,7 @@ public class User extends EntityBaseType {
 		private Date birthdate;
 		private String email;
 		private String password;
-		private Integer id = -1;
+		private Integer id = null;
 		private boolean vip = false;
 		private String secretQuestion;
 		private String secretAnswer;

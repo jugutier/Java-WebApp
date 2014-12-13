@@ -38,28 +38,27 @@ public class EditFilmPage extends BasePage {
 				super.onSubmit();
 				
 				FilmForm filmForm = (FilmForm) getDefaultModelObject();
-				Film film = film();
 				
-				film.setName(filmForm.getName());
-				film.setReleaseDate(filmForm.getReleaseDate());
-				film.setDirector(filmForm.getDirector());
-				film.setLength(filmForm.getLength());
-				film.setGenres(filmForm.getGenres());
-				film.setDescription(filmForm.getDescription());
+				film().setName(filmForm.getName());
+				film().setReleaseDate(filmForm.getReleaseDate());
+				film().setDirector(filmForm.getDirector());
+				film().setLength(filmForm.getLength());
+				film().setGenres(filmForm.getGenres());
+				film().setDescription(filmForm.getDescription());
 				
 				if (filmForm.isDeleteImage()) {
-					film.setFilmImage(null);
+					film().setFilmImage(null);
 				}
 				
 				// TODO Find out what gets serialized when changing a film's image
 				if (filmForm.getMovieImage() != null) {
 					FileUpload file = filmForm.getMovieImage().get(0);
-					MovieImage movieImage = new MovieImage(file.getClientFileName(), file.getContentType(), (int) file.getSize(), file.getBytes(), film);
+					MovieImage movieImage = new MovieImage(file.getClientFileName(), file.getContentType(), (int) file.getSize(), file.getBytes());
 					
-					film.setFilmImage(movieImage);
+					film().setFilmImage(movieImage);
 				}
 				
-				setResponsePage(new FilmDetailsPage(film));
+				setResponsePage(new FilmDetailsPage(film()));
 			}
 		});
 		

@@ -266,7 +266,7 @@ public class Film extends EntityBaseType {
 	}
 
 	public static class Builder {
-		private Integer id = -1;
+		private Integer id = null;
 		private String name;
 		private String director;
 		private Date releaseDate;

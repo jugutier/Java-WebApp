@@ -182,7 +182,7 @@ public class Comment extends EntityBaseType {
 		return true;
 	}
 	public static class Builder {
-		private Integer id = -1;
+		private Integer id = null;
 		private Film film;
 		private User user;
 		private Date creationDate;

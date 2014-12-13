@@ -21,6 +21,6 @@ abstract class EntityBaseType {
 	}
 
 	public boolean isNew() {
-		return getId() == null;
+		return getId() == null || getId() == -1;
 	}
 }

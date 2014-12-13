@@ -24,20 +24,16 @@ public class MovieImage extends EntityBaseType {
 	@Lob
 	private byte[] content;
 
-	/*@OneToOne
-	private Film film;*/
-
 	MovieImage() {
 	}
 
 	public MovieImage(String name, String contentType, Integer length,
-			byte[] content, Film film) {
+			byte[] content) {
 		setId(null);
 		this.name = name;
 		this.contentType = contentType;
 		this.length = length;
 		this.content = content;
-		//this.film = film;
 
 	}
 
@@ -72,9 +68,5 @@ public class MovieImage extends EntityBaseType {
 	void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
-	
-	/*void setFilm(Film film) {
-		this.film = film;
-	}*/
 
 }

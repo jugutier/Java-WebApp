@@ -49,7 +49,7 @@ public class NewFilmPage extends BasePage {
 				
 				if (filmForm.getMovieImage() != null) {
 					FileUpload file = filmForm.getMovieImage().get(0);
-					MovieImage movieImage = new MovieImage(file.getClientFileName(), file.getContentType(), (int) file.getSize(), file.getBytes(), film);
+					MovieImage movieImage = new MovieImage(file.getClientFileName(), file.getContentType(), (int) file.getSize(), file.getBytes());
 					
 					film.setFilmImage(movieImage);
 				}
