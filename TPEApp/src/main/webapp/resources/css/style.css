@@ -203,3 +203,11 @@ td form {
 .stock-panel div {
 	display: inline;
 }
+
+.score-button {
+	display: inline;
+}
+
+.score-display {
+	margin-left: 5px;
+}

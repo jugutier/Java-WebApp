@@ -29,28 +29,12 @@ public class ReportedCommentListItem extends Panel {
 			
 		};
 		
-		Link<Comment> deleteComment = new Link<Comment>("deleteButton", comment) {
-			
-			@Override
-			public void onClick() {
-				comment().remove();
-			}
-		};
+		CommentActionsButton actionsButton = new CommentActionsButton("actionsButton", comment);
 		
-		Link<Comment> discardReports = new Link<Comment>("discardReports", comment) {
-
-			@Override
-			public void onClick() {
-				getModelObject().discardReports();
-			}
-			
-		};
-		
-		add(deleteComment);
-		add(discardReports);
-		add(filmLink);
 		filmLink.add(new FilmTitle("filmName", new PropertyModel<Film>(comment, "film")));
 		
+		add(actionsButton);
+		add(filmLink);
 		add(new Label("message", new PropertyModel<String>(comment, "text")));
 		add(new Label("username", new PropertyModel<String>(comment, "user.name")));
 		add(new StarScoreIndicator("scoreStars", new PropertyModel<Integer>(comment, "filmRate")));

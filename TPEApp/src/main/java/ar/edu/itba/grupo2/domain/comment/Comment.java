@@ -129,6 +129,10 @@ public class Comment extends EntityBaseType {
 		return reports.size();
 	}
 	
+	public boolean isReported() {
+		return reports != null && !reports.isEmpty();
+	}
+	
 	public void discardReports() {
 		if (reports != null)
 			reports.clear();

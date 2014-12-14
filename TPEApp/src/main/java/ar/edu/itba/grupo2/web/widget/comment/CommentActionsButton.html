@@ -1,0 +1,22 @@
+<html xmlns:wicket="http://wicket.apache.org">
+	<body>
+		<wicket:panel>
+			<div class="btn-group">
+				<a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#"><wicket:message key="actions">Acciones</wicket:message> <span class="caret"></span></a>
+				<ul class="dropdown-menu">
+					<li><a wicket:id="profileButton"><i class="icon-user"></i> <wicket:message key="viewProfile">Ver perfil</wicket:message></a></li>
+					<li><a wicket:id="followButton"><i class="icon-eye-open"></i> <wicket:message key="follow">Seguir</wicket:message></a></li>
+					<li><a wicket:id="unfollowButton"><i class="icon-eye-close"></i> <wicket:message key="unfollow">Dejar de seguir</wicket:message></a></li>
+					<li><a wicket:id="reportButton"><i class="icon-flag"></i> <wicket:message key="report">Denunciar</wicket:message></a></li>
+					
+					<li wicket:id="adminSeparator" class="divider"></li>
+					
+					<li><a wicket:id="muteButton"><i class="icon-volume-off"></i> <wicket:message key="mute">Silenciar</wicket:message></a></li>
+					<li><a wicket:id="unmuteButton"><i class="icon-volume-up"></i> <wicket:message key="unmute">Permitir comentar</wicket:message></a></li>
+					<li><a wicket:id="discardReports"><i class="icon-ok"></i> <wicket:message key="discardReports">Permitir comentar</wicket:message></a></li>
+					<li><a wicket:id="deleteButton"><i class="icon-remove"></i> <wicket:message key="delete">Eliminar</wicket:message></a></li>
+				</ul>
+			</div>
+		</wicket:panel>
+	</body>
+</html>

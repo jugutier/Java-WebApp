@@ -1,17 +1,13 @@
 package ar.edu.itba.grupo2.web.widget.comment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.repeater.RepeatingView;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -28,8 +24,6 @@ public class FilmCommentListItem extends Panel {
 
 	@SpringBean
 	private UserRepo users;
-	
-	private int rating;
 	
 	public FilmCommentListItem(String id, IModel<Comment> comment) {
 		super(id, comment);
@@ -48,89 +42,8 @@ public class FilmCommentListItem extends Panel {
 			
 		};
 		
-		Link<Void> profileButton = new Link<Void>("profileButton") {
+		WebMarkupContainer scoreButton = new WebMarkupContainer("scoreButton") {
 
-			@Override
-			public void onClick() {
-				setResponsePage(new ProfilePage(comment().getUser()));
-			}
-			
-		};
-		
-		Link<Comment> muteButton = new Link<Comment>("muteButton", comment) {
-
-			@Override
-			public void onClick() {
-				comment().getUser().setMuted(true);
-			}
-			
-			@Override
-			public boolean isVisible() {
-				GAJAmdbSession session = GAJAmdbSession.get();
-				return session.isLoggedIn() && session.getLoggedInUser().isAdmin() && !session.getLoggedInUser().equals(comment().getUser()) && !comment().getUser().isMuted();
-			}
-			
-		};
-		
-		Link<Comment> unmuteButton = new Link<Comment>("unmuteButton", comment) {
-
-			@Override
-			public void onClick() {
-				comment().getUser().setMuted(false);
-			}
-			
-			@Override
-			public boolean isVisible() {
-				GAJAmdbSession session = GAJAmdbSession.get();
-				return session.isLoggedIn() && session.getLoggedInUser().isAdmin() && !session.getLoggedInUser().equals(comment().getUser()) && comment().getUser().isMuted();
-			}
-			
-		};
-		
-		Link<Comment> reportButton = new Link<Comment>("reportButton", comment) {
-
-			@Override
-			public void onClick() {
-				comment().report(GAJAmdbSession.get().getLoggedInUser());
-			}
-			
-			@Override
-			public boolean isVisible() {
-				GAJAmdbSession session = GAJAmdbSession.get();
-				return session.isLoggedIn() && !comment().isReportedByUser(session.getLoggedInUser());
-			}
-			
-		};
-		
-		Link<Comment> deleteButton = new Link<Comment>("deleteButton", comment) {
-
-			@Override
-			public void onClick() {
-				comment().remove();
-			}
-			
-			@Override
-			public boolean isVisible() {
-				GAJAmdbSession session = GAJAmdbSession.get();
-				return session.isLoggedIn() && session.getLoggedInUser().isAdmin();
-			}
-			
-		};
-		
-		WebMarkupContainer actionsButton = new WebMarkupContainer("actionsButton") {
-			@Override
-			public boolean isVisible() {
-				return GAJAmdbSession.get().isLoggedIn();
-			}
-		};
-		
-		Form<FilmCommentListItem> ratingForm = new Form<FilmCommentListItem>("commentRateForm", new CompoundPropertyModel<FilmCommentListItem>(this)) {
-			
-			@Override
-			public void onSubmit() {
-				comment().rate(GAJAmdbSession.get().getLoggedInUser(), rating);
-			}
-			
 			@Override
 			public boolean isVisible() {
 				GAJAmdbSession session = GAJAmdbSession.get();
@@ -139,38 +52,64 @@ public class FilmCommentListItem extends Panel {
 			
 		};
 		
-		DropDownChoice<Integer> rateDropDown = new DropDownChoice<Integer>("rating", new LoadableDetachableModel<List<Integer>>() {
+		WebMarkupContainer scoreDisplay = new WebMarkupContainer("scoreDisplay") {
 			
 			@Override
-			protected List<Integer> load() {
-				List<Integer> list = new ArrayList<Integer>();
-				
-				for(int i = 0; i < 6; i++) {
-					list.add(i);
+			public boolean isVisible() {
+				return comment().isRated();
+			}
+		};
+		
+		RepeatingView scoreItem = new RepeatingView("scoreItem");
+		
+		// Fill list with stars
+		for (int i = 0; i < 6; i++) {
+			final int index = i;
+			
+			StarScoreIndicator stars = new StarScoreIndicator("scoreStarsShow", new AbstractReadOnlyModel<Integer>() {
+				@Override
+				public Integer getObject() {
+					return index;
+				}
+			});
+			
+			Label scoreNumber = new Label("scoreNumber", new AbstractReadOnlyModel<String>() {
+				@Override
+				public String getObject() {
+					return String.valueOf(index);
+				}
+			}); 
+			
+			Link<Void> scoreLink = new Link<Void>(scoreItem.newChildId()) {
+
+				@Override
+				public void onClick() {
+					comment().rate(GAJAmdbSession.get().getLoggedInUser(), index);
 				}
 				
-				return list;
-			}
-		});
+			};
+			
+			scoreLink.add(scoreNumber);
+			scoreLink.add(stars);
+			scoreItem.add(scoreLink);
+		}
 		
-		ratingForm.add(rateDropDown);
+		CommentActionsButton actionsButton = new CommentActionsButton("actionsButton", compoundModel);
 		
 		add(usernameLink);
 		usernameLink.add(new Label("username", compoundModel.bind("user.name")));
-		// TODO Revise this
 		add(new StarScoreIndicator("scoreStars", new PropertyModel<Integer>(comment, "filmRate")));
 		add(new Label("text"));
 		add(new UserRoleBadges("roleBadges", new PropertyModel<User>(comment, "user")));
 		
-		actionsButton.add(profileButton);
-		actionsButton.add(muteButton);
-		actionsButton.add(unmuteButton);
-		actionsButton.add(reportButton);
-		actionsButton.add(deleteButton);
+
+		scoreButton.add(scoreItem);
 		
+		scoreDisplay.add(commentRating);
+		
+		add(scoreButton);
 		add(actionsButton);
-		add(ratingForm);
-		add(commentRating);
+		add(scoreDisplay);
 	}
 	
 	private Comment comment() {

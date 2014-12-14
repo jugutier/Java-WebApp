@@ -3,8 +3,6 @@ package ar.edu.itba.grupo2.web.command;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.wicket.markup.html.form.upload.FileUpload;
-
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.genre.Genre;
 
@@ -16,7 +14,6 @@ public class FilmForm {
 	private List<Genre> genres;
 	private int length;
 	private String description;
-	private List<FileUpload> movieImage;
 	private boolean deleteImage;
 	private boolean hasImage;
 	
@@ -61,10 +58,6 @@ public class FilmForm {
 		return description;
 	}
 	
-	public List<FileUpload> getMovieImage() {
-		return movieImage;
-	}
-	
 	public boolean isDeleteImage() {
 		return deleteImage;
 	}
@@ -99,10 +92,6 @@ public class FilmForm {
 	
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	
-	public void setMovieImage(List<FileUpload> movieImage) {
-		this.movieImage = movieImage;
 	}
 	
 	public void setDeleteImage(boolean deleteImage) {

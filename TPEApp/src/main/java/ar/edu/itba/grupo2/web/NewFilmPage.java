@@ -38,7 +38,6 @@ public class NewFilmPage extends BasePage {
 		form.add(new SubmitLink("submit", filmFormModel) {
 			@Override
 			public void onSubmit() {
-				// TODO Add film
 				super.onSubmit();
 				
 				FilmForm filmForm = (FilmForm) getDefaultModelObject();

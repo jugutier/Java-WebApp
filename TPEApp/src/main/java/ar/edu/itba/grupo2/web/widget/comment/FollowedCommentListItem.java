@@ -31,6 +31,7 @@ public class FollowedCommentListItem extends Panel {
 			}
 		};
 		
+		add(new CommentActionsButton("actionsButton", comment));
 		add(new Label("username", compoundModel.bind("user.name")));
 		add(new Label("text"));
 		add(new StarScoreIndicator("scoreStars",  new PropertyModel<Integer>(comment, "filmRate")));

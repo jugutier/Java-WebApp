@@ -46,21 +46,8 @@ public class User extends EntityBaseType {
 	@OneToMany(mappedBy = "user")
 	private List<Comment> comments;
 
-	// TODO Uncomment to get free followers list!
-	/*@ManyToMany(mappedBy="followers", cascade=CascadeType.ALL)
-	@JoinTable(name="followers",
-	 joinColumns=@JoinColumn(name="followedUserId"),
-	 inverseJoinColumns=@JoinColumn(name="followerId")
-	)*/
 	@ManyToMany
 	private List<User> follows;
-	
-	/*@ManyToMany
-	@JoinTable(name="followers",
-	 joinColumns=@JoinColumn(name="followerId"),
-	 inverseJoinColumns=@JoinColumn(name="followedUserId")
-	)
-	private List<User> followers;*/
 
 	private transient boolean isFollowable;
 
@@ -102,7 +89,6 @@ public class User extends EntityBaseType {
 	}
 	
 	public boolean isMuted() {
-		// TODO Implement
 		return muted;
 	}
 
@@ -202,7 +188,6 @@ public class User extends EntityBaseType {
 	}
 	
 	public void setMuted(boolean muted) {
-		// TODO Implement
 		this.muted = muted;
 	}
 

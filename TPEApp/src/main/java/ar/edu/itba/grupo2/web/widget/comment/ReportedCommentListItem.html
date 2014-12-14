@@ -2,7 +2,9 @@
 	<body>
 		<wicket:panel>
 			<div class="comment-body">
-				<a wicket:id="deleteButton" href="#" class="btn btn-danger pull-right" type="submit"><i class="icon-remove"></i></a>
+			
+				<span wicket:id="actionsButton" class="pull-right"></span>
+				
 				<p>
 					<a wicket:id="filmLink" href="#"><h4  wicket:id="filmName">Título</h4></a>
 				</p>
@@ -17,7 +19,6 @@
 				<span class="pull-right">
 					<wicket:message key="reports">Denuncias</wicket:message>: 
 					<span wicket:id="reportCount" class="badge badge-important">3</span> 
-					<a wicket:id="discardReports" href="#" class="btn btn-primary" type="button"><wicket:message key="discardReports">Descartar denuncias</wicket:message></a>
 				</span>
 			</div>
 		</wicket:panel>
