@@ -211,3 +211,11 @@ td form {
 .score-display {
 	margin-left: 5px;
 }
+
+.label .icon-white {
+	opacity: 1;
+}
+
+.btn .icon-white {
+	opacity: 1;
+}

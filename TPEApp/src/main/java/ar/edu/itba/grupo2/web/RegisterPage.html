@@ -5,32 +5,79 @@
 <body>
 	<wicket:extend>
 		<h2><wicket:message key="register">Registrarse</wicket:message></h2>
-		<form wicket:id="registerUser">
-			<h3><wicket:message key="register.mail">Ingrese su dirección de email</wicket:message></h3>
-			<input wicket:id="email" type="text"><br />
-			<h3><wicket:message key="register.name">Ingrese su nombre</wicket:message></h3>
-			<input wicket:id="name" type="text"><br />
-			<h3><wicket:message key="register.lastname">Ingrese su apellido</wicket:message></h3>
-			<input wicket:id="lastname" type="text"><br />
-			<h3><wicket:message key="register.password">Ingrese su contrasena</wicket:message></h3>
-			<input wicket:id="password" type="password"><br />
-			<h3><wicket:message key="register.confirmPassword">Ingrese nuevamente su contrasena</wicket:message></h3>
-			<input wicket:id="passwordConfirm" type="password"><br />
-			<h3><wicket:message key="register.birthdate">Fecha de nacimiento</wicket:message></h3>
-			<input type="text" wicket:id="birthdate"><br />
-			<h3><wicket:message key="register.secretQuestion">Pregunta secreta</wicket:message></h3>
-			<input type="text" wicket:id="secretQuestion"><br />
-			<h3><wicket:message key="register.secretAnswer">Respuesta secreta</wicket:message></h3>
-			<input type="text" wicket:id="secretAnswer"><br />
+		<form wicket:id="registerUser" class="form-horizontal">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label" for="mail"><wicket:message key="register.mail">Ingrese su dirección de email</wicket:message></label>
+					<div class="controls">
+						<input wicket:id="email" type="text" id="mail">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="name"><wicket:message key="register.name">Ingrese su nombre</wicket:message></label>
+					<div class="controls">
+						<input wicket:id="name" type="text" id="name">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="lastname"><wicket:message key="register.lastname">Ingrese su apellido</wicket:message></label>
+					<div class="controls">
+						<input wicket:id="lastname" type="text" id="lastname">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="password"><wicket:message key="register.password">Ingrese su contrasena</wicket:message></label>
+					<div class="controls">
+						<input wicket:id="password" type="password" id="password">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="confirmPassword"><wicket:message key="register.confirmPassword">Ingrese nuevamente su contrasena</wicket:message></label>
+					<div class="controls">
+						<input wicket:id="passwordConfirm" type="password" id="confirmPassword">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="birthdate"><wicket:message key="register.birthdate">Fecha de nacimiento</wicket:message></label>
+					<div class="controls">
+						<input type="text" wicket:id="birthdate" id="birthdate">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="secretQuestion"><wicket:message key="register.secretQuestion">Pregunta secreta</wicket:message></label>
+					<div class="controls">
+						<input type="text" wicket:id="secretQuestion" id="secretQuestion">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="secretAnswer"><wicket:message key="register.secretAnswer">Respuesta secreta</wicket:message></label>
+					<div class="controls">
+						<input type="text" wicket:id="secretAnswer" id="secretAnswer">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="secretAnswer"><wicket:message key="captchaCaption">Please replicate the text you see above</wicket:message></label>
+					<div class="controls">
+						<input wicket:id="passkey" id="password" type="text" size="40" /> <br />
+						<img wicket:id="captchaImage" />
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" class="btn btn-success"><wicket:message key="confirm">Confirmar</wicket:message></button>
+					</div>
+				</div>
 
-			<p>
-				<img wicket:id="captchaImage" />
-			</p>
-			<p>
-				<wicket:message key="captchaCaption">Please replicate the text you see above</wicket:message><br /> <input
-					wicket:id="passkey" id="password" type="text" size="40" />
-			</p>
-			<button type="submit" class="btn"><wicket:message key="confirm">Confirmar</wicket:message></button>
+			</fieldset>
 		</form>
 	</wicket:extend>
 </body>

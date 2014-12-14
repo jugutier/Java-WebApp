@@ -4,12 +4,12 @@
 	</head>
 	<body>
 		<wicket:extend>
-			<h2>Editar</h2>
-			<form wicket:id="form">
+			<h2>Editar <span wicket:id="filmTitle">Nombre de película</span></h2>
+			<form wicket:id="form" class="form-horizontal">
 				<div wicket:id="filmForm"></div>
 				<div class="control-group">
-					<div class="form-actions">
-						<button wicket:id="submit" class="btn btn-primary" type="submit"><wicket:message key="send">Enviar</wicket:message></button>
+					<div class="controls">
+						<button wicket:id="submit" class="btn btn-success" type="submit"><wicket:message key="send">Enviar</wicket:message></button>
 					</div>
 				</div>
 			</form>
