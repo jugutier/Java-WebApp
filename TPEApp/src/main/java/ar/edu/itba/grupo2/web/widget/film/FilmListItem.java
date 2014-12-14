@@ -1,5 +1,6 @@
 package ar.edu.itba.grupo2.web.widget.film;
 
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -32,6 +33,14 @@ public class FilmListItem extends Panel {
 			}
 		};
 		
+		WebMarkupContainer actionsButton = new WebMarkupContainer("actionsButton") {
+			@Override
+			public boolean isVisible() {
+				GAJAmdbSession session = GAJAmdbSession.get();
+				return session.isLoggedIn() && session.getLoggedInUser().isAdmin();
+			}
+		};
+		
 		Link<Film> deleteFilm = new Link<Film>("deleteButton", film) {
 			
 			@Override
@@ -60,9 +69,11 @@ public class FilmListItem extends Panel {
 			}
 		};
 		
+		add(actionsButton);
 		add(titleLink);
-		add(deleteFilm);
-		add(editFilm);
+		
+		actionsButton.add(deleteFilm);
+		actionsButton.add(editFilm);
 		
 		titleLink.add(new FilmTitle("name", compoundModel));
 	}
