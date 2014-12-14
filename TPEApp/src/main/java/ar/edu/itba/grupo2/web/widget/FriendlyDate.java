@@ -27,7 +27,15 @@ public class FriendlyDate extends Panel {
 			@Override
 			public String getObject() {
 				PrettyTime p = new PrettyTime();
-				return p.format((Date) getDefaultModelObject()) + " (" + getDefaultModelObject() + ")";
+				
+				Date d = (Date)getDefaultModelObject();
+				Date now = new Date();
+				long diff = d.getTime() - now.getTime();
+				//Calculate difference and limit pretty time to 90 days
+				if( Math.abs(diff / (1000 * 60 * 60 * 24)) < 90){
+					return p.format((Date) getDefaultModelObject());
+				}
+				return ((Date)getDefaultModelObject()).toString();
 			}
 			
 		}));
