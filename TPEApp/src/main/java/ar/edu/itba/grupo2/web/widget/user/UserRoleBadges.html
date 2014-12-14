@@ -1,8 +1,10 @@
 <html xmlns:wicket="http://wicket.apache.org">
 	<body>
 		<wicket:panel>
-			<span wicket:id="adminBadge" class="label label-important">Admin</span>
-			<span wicket:id="vipBadge" class="label label-success">V.I.P.</span>
+			<span wicket:id="adminBadge" class="label label-important"><wicket:message key="admin">Admin</wicket:message></span>
+			<span wicket:id="vipBadge" class="label label-success"><wicket:message key="vip">V.I.P.</wicket:message></span>
+			<span wicket:id="followedBadge" class="label label-info"><wicket:message key="followed">Seguido</wicket:message></span>
+			<span wicket:id="mutedBadge" class="label label-default"><wicket:message key="muted">Silenciado</wicket:message></span>
 		</wicket:panel>
 	</body>
 </html>

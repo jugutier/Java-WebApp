@@ -14,6 +14,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
 import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.common.EntityModel;
 import ar.edu.itba.grupo2.domain.user.User;
+import ar.edu.itba.grupo2.web.widget.FriendlyDate;
 import ar.edu.itba.grupo2.web.widget.comment.UserCommentListItem;
 import ar.edu.itba.grupo2.web.widget.user.UserRoleBadges;
 
@@ -82,7 +83,7 @@ public class ProfilePage extends BasePage {
 		add(new Label("name"));
 		add(new Label("lastname"));
 		add(new Label("email"));
-		add(new Label("birthdate"));
+		add(new FriendlyDate("birthdate"));
 		add(new UserRoleBadges("roleBadges", compoundModel));
 		add(follow);
 		add(unfollow);

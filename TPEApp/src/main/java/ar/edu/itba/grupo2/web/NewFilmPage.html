@@ -5,11 +5,11 @@
 	<body>
 		<wicket:extend>
 			<h2><wicket:message key="film.new">Nueva película</wicket:message></h2>
-			<form wicket:id="form">
+			<form wicket:id="form" class="form-horizontal">
 				<div wicket:id="filmForm"></div>
 				<div class="control-group">
-					<div class="form-actions">
-						<button wicket:id="submit" class="btn btn-primary" type="submit"><wicket:message key="send">Enviar</wicket:message></button>
+					<div class="controls">
+						<button wicket:id="submit" class="btn btn-success" type="submit"><wicket:message key="send">Enviar</wicket:message></button>
 					</div>
 				</div>
 			</form>

@@ -16,6 +16,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
@@ -112,12 +113,11 @@ public class FilmDetailsPage extends BasePage {
 		Label genreLabel = new Label("genreLabel", new AbstractReadOnlyModel<String>() {
 			@Override
 			public String getObject() {
-				// TODO Localize
 				if (film().getGenres().size() == 1) {
-					return "Género";
+					return new StringResourceModel("genre", null).getString();
 				}
 				
-				return "Géneros";
+				return new StringResourceModel("genres", null).getString();
 			}
 		});
 		

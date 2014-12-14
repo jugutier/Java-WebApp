@@ -14,6 +14,7 @@ import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.film.MovieImage;
 import ar.edu.itba.grupo2.web.command.FilmForm;
 import ar.edu.itba.grupo2.web.widget.film.FilmEditForm;
+import ar.edu.itba.grupo2.web.widget.film.FilmTitle;
 
 @SuppressWarnings("serial")
 public class EditFilmPage extends BasePage {
@@ -33,7 +34,8 @@ public class EditFilmPage extends BasePage {
 			}
 		};
 		
-		setDefaultModel(new EntityModel<Film>(Film.class, film));
+		IModel<Film> model = new EntityModel<Film>(Film.class, film);
+		setDefaultModel(model);
 		
 		form.add(new FilmEditForm("filmForm", filmFormModel, new PropertyModel<List<FileUpload>>(this, "fileUpload")));
 		form.add(new SubmitLink("submit", filmFormModel) {
@@ -68,6 +70,7 @@ public class EditFilmPage extends BasePage {
 		form.setMultiPart(true);
 		
 		add(form);
+		add(new FilmTitle("filmTitle", model));
 	}
 	
 	private Film film() {
