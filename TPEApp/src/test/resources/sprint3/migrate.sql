@@ -9,3 +9,5 @@ update film set visits = 0 where visits is null;
 alter table GAJAmdbUser add column muted bool;
 update GAJAmdbUser set muted = false;
 update GAJAmdbUser set muted = true where id = 2;
+
+alter table report add column reason varchar(140);

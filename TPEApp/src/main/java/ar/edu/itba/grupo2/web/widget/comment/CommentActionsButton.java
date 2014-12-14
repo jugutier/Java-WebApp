@@ -90,7 +90,7 @@ public class CommentActionsButton extends Panel {
 
 			@Override
 			public void onClick() {
-				comment().report(GAJAmdbSession.get().getLoggedInUser());
+				comment().report(GAJAmdbSession.get().getLoggedInUser(), "Reportado porque si");
 			}
 			
 			@Override

@@ -116,9 +116,9 @@ public class Comment extends EntityBaseType {
 		film.removeComment(this);
 	}
 	
-	public void report(User user) {
-		if (user != null && !this.user.equals(user) && !isReportedByUser(user))
-			reports.add(new Report(this, user));
+	public void report(User user, String reason) {
+		if (user != null && reason != null && !this.user.equals(user) && !isReportedByUser(user) )
+			reports.add(new Report(this, user, reason));
 	}
 	
 	public int getReportCount() {
