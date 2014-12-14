@@ -33,7 +33,7 @@ public class FriendlyDate extends Panel {
 				long diff = d.getTime() - now.getTime();
 				//Calculate difference and limit pretty time to 90 days
 				if( Math.abs(diff / (1000 * 60 * 60 * 24)) < 90){
-					return p.format((Date) getDefaultModelObject());
+					return p.format((Date) getDefaultModelObject()) + " (" + getDefaultModelObject() + ")";
 				}
 				return ((Date)getDefaultModelObject()).toString();
 			}
