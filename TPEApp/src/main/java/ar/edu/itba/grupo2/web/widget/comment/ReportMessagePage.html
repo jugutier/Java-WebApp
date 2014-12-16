@@ -1,0 +1,25 @@
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<title>GAJAmdb</title>
+</head>
+<body>
+	<wicket:extend>
+		<h2><wicket:message key="reportMessage">Motivo</wicket:message></h2>
+		<form wicket:id="reportMessage" class="form-horizontal">
+			<fieldset>
+			<div class="control-group">
+					<label class="control-label" for="reason"><wicket:message key="report.reason">Escriba el motivo de la denuncia</wicket:message></label>
+					<div class="controls">
+						<input wicket:id="reason" type="text" id="reason" >
+					</div>
+				</div>
+			<div class="control-group">
+					<div class="controls">
+						<button type="submit" class="btn btn-success"><wicket:message key="confirm">Confirmar</wicket:message></button>
+					</div>
+			</div>
+		</fieldset>
+		</form>
+	</wicket:extend>
+</body>
+</html>

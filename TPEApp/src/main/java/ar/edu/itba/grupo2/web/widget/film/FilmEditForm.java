@@ -18,6 +18,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.lang.Bytes;
+import org.apache.wicket.validation.validator.StringValidator;
 
 import ar.edu.itba.grupo2.domain.film.FilmRepo;
 import ar.edu.itba.grupo2.domain.genre.Genre;
@@ -42,6 +43,7 @@ public class FilmEditForm extends Panel {
 		// Film title
 		TextField<String> nameTextField = new TextField<String>("name");
 		nameTextField.setRequired(true);
+		nameTextField.add(StringValidator.maximumLength(100));
 		
 		// Release date
 		TextField<Date> releaseDateTextField = new TextField<Date>("releaseDate");
@@ -50,6 +52,7 @@ public class FilmEditForm extends Panel {
 		// Director
 		TextField<String> directorTextField = new TextField<String>("director");
 		directorTextField.setRequired(true);
+		directorTextField.add(StringValidator.maximumLength(40));
 		
 		// Length
 		NumberTextField<Integer> lengthTextField = new NumberTextField<Integer>("length");
@@ -71,6 +74,7 @@ public class FilmEditForm extends Panel {
 		// Description
 		TextArea<String> descriptionTextArea = new TextArea<String>("description");
 		descriptionTextArea.setRequired(true);
+		descriptionTextArea.add(StringValidator.maximumLength(500));
 		
 		// Genre list
 		ChoiceRenderer<Genre> renderer = new ChoiceRenderer<Genre>("genre");
@@ -81,6 +85,7 @@ public class FilmEditForm extends Panel {
 				return films.getGenres();
 			}
 		};
+		
 		
 		CheckBoxMultipleChoice<Genre> genresCheckBoxes = new CheckBoxMultipleChoice<Genre>("genres", genreModel, renderer);
 		

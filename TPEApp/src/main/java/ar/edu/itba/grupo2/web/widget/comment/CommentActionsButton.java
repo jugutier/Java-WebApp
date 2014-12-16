@@ -12,7 +12,7 @@ import ar.edu.itba.grupo2.web.ProfilePage;
 @SuppressWarnings("serial")
 public class CommentActionsButton extends Panel {
 
-	public CommentActionsButton(String id, IModel<Comment> comment) {
+	public CommentActionsButton(String id, final IModel<Comment> comment) {
 		super(id, comment);
 		
 		Link<Void> profileButton = new Link<Void>("profileButton") {
@@ -90,7 +90,8 @@ public class CommentActionsButton extends Panel {
 
 			@Override
 			public void onClick() {
-				comment().report(GAJAmdbSession.get().getLoggedInUser(), "Reportado porque si");
+				setResponsePage(new ReportMessagePage(comment));
+				
 			}
 			
 			@Override

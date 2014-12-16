@@ -20,6 +20,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.util.value.ValueMap;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
+import org.apache.wicket.validation.validator.StringValidator;
 
 import ar.edu.itba.grupo2.domain.user.User;
 
@@ -81,7 +82,6 @@ public class RegisterPage extends BasePage{
 	             protected final void onComponentTag(final ComponentTag tag)
 	             {
 	                 super.onComponentTag(tag);
-	                 // clear the field after each render
 	                 tag.put("value", "");
 	             }
          	});
@@ -103,6 +103,13 @@ public class RegisterPage extends BasePage{
 		passwordConfirmTextField.setRequired(true);
 		registerUser.add(new EqualPasswordInputValidator(passwordTextField, passwordConfirmTextField));
 		emailTextField.add(EmailAddressValidator.getInstance());
+		sqTextField.add(StringValidator.maximumLength(140));
+		saTextField.add(StringValidator.maximumLength(140));
+		nameTextField.add(StringValidator.maximumLength(15));
+		lastnameTextField.add(StringValidator.maximumLength(15));
+		passwordTextField.add(StringValidator.maximumLength(10));
+		passwordConfirmTextField.add(StringValidator.maximumLength(10));
+		emailTextField.add(StringValidator.maximumLength(100));
 		registerUser.add(sqTextField);
 		registerUser.add(saTextField);
 		registerUser.add(birthdateTextField);
