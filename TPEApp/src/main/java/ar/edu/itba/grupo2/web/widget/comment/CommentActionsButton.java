@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
+import ar.edu.itba.grupo2.domain.report.Resolution;
 import ar.edu.itba.grupo2.web.GAJAmdbSession;
 import ar.edu.itba.grupo2.web.ProfilePage;
 
@@ -113,7 +114,8 @@ public class CommentActionsButton extends Panel {
 
 			@Override
 			public void onClick() {
-				getModelObject().discardReports();
+				//getModelObject().discardReports();
+				getModelObject().resolve(Resolution.DISCARDREPORT, "Porque yo lo digo (Disc)");
 			}
 			
 			@Override
@@ -128,7 +130,8 @@ public class CommentActionsButton extends Panel {
 
 			@Override
 			public void onClick() {
-				comment().remove();
+				//comment().remove();
+				getModelObject().resolve(Resolution.DELETE, "Porque yo lo digo (Dele)");
 			}
 			
 			@Override

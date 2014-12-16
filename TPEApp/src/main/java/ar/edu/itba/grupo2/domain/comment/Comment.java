@@ -19,6 +19,8 @@ import ar.edu.itba.grupo2.domain.commentRate.CommentRate;
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.report.Report;
+import ar.edu.itba.grupo2.domain.report.ReportResolution;
+import ar.edu.itba.grupo2.domain.report.Resolution;
 import ar.edu.itba.grupo2.domain.user.User;
 @Entity
 @Table(name="Comment")
@@ -126,23 +128,62 @@ public class Comment extends EntityBaseType {
 			return 0;
 		}
 		
-		return reports.size();
+		//return reports.size();
+		return getUnresolvedReports().size();
 	}
 	
 	public boolean isReported() {
-		return reports != null && !reports.isEmpty();
+		//return reports != null && !reports.isEmpty();
+		for(Report r: reports){
+			if(!r.resolved()){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void discardReports() {
 		if (reports != null)
 			reports.clear();
 	}
+	
+	public void resolve(Resolution resolution, String reason){
+		if(resolution != null && reason != null && reason != ""){
+			if(resolution != Resolution.DELETE && resolution != Resolution.DISCARDREPORT){
+				//TODO error
+				return ;
+			}
+			ReportResolution rr = new ReportResolution(user, getUnresolvedReports(), reason, resolution);
+			markReports(rr);
+		}
+	}
+	
+	private void markReports(ReportResolution resolution){
+		List<Report> unresolved = getUnresolvedReports();
+		
+		for(Report r: unresolved){
+			r.resolve(resolution);
+		}
+		return ;
+	}
+	
+	private List<Report> getUnresolvedReports(){
+		List<Report> unresolved = new LinkedList<Report>(); 
+		for(Report r: reports){
+			if(!r.resolved()){
+				unresolved.add(r);
+			}
+		}
+		return unresolved;
+	}
+	
 	private void setText(String text) {
 		if(text == null || text.equals("") || text.length()>140){
 			throw new IllegalArgumentException();
 		}
 		this.text = text;
 	}
+	
 	@Override
 	public String toString() {
 		return this.user + " > " + this.text;

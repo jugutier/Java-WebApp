@@ -17,6 +17,7 @@ public class Report extends EntityBaseType {
 	@ManyToOne private Comment comment;
 	@OneToOne private User user;
 	@Column(length=140,nullable=true)private String reason;
+	@ManyToOne private ReportResolution reportResolution;
 	
 	Report(){}
 	
@@ -25,10 +26,19 @@ public class Report extends EntityBaseType {
 		this.comment = comment;
 		this.user = user;
 		this.reason = reason;
+		this.reportResolution = null;
 	}
 	
 	public User getUser() {
 		return user;
+	}
+	
+	public void resolve(ReportResolution reportResolution){
+		this.reportResolution = reportResolution;
+	}
+	
+	public boolean resolved(){
+		return reportResolution != null;
 	}
 
 }
