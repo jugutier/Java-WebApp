@@ -22,7 +22,6 @@ public class LatestReleasedFilmsItem extends FilmListItem {
 			
 			@Override
 			public boolean isVisible() {
-				// TODO Check this value
 				return film().getDescription().length() > 300;
 			}
 		};
@@ -32,7 +31,6 @@ public class LatestReleasedFilmsItem extends FilmListItem {
 			public String getObject() {
 				String ret = film().getDescription();
 				
-				// TODO Check this value
 				if (ret.length() > 300) {
 					ret = ret.substring(0, 300) + "...";
 				}

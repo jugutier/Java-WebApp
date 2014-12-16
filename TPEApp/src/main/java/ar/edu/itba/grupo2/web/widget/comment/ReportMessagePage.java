@@ -33,9 +33,6 @@ public class ReportMessagePage extends BasePage {
 		reportMessage.add(reasonTextField);
 		add(reportMessage);
 	}
-	
-	private Comment comment() {
-		return (Comment) getDefaultModelObject();
-	}
+
 
 }

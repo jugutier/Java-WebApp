@@ -76,8 +76,7 @@ public class CommentForm extends Panel {
 		TextArea<String> messageTextArea = new TextArea<String>("message");
 		
 		messageTextArea.setRequired(true);
-		// TODO Check this value
-		messageTextArea.add(StringValidator.maximumLength(300));
+		messageTextArea.add(StringValidator.maximumLength(140));
 		
 		form.add(rateDropDown);
 		form.add(messageTextArea);
