@@ -1,5 +1,6 @@
 package ar.edu.itba.grupo2.domain.report;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -33,6 +34,7 @@ public class ReportResolution extends EntityBaseType {
 		this.user = user;
 		this.reason = reason;
 		this.resolution = resolution;
+		this.reports = new LinkedList<Report>();
 		this.reports.addAll(reports);			
 	}
 	
