@@ -17,7 +17,7 @@ import ar.edu.itba.grupo2.domain.user.User;
 @Table(name = "ReportResolution")
 public class ReportResolution extends EntityBaseType {
 	
-	@OneToMany(mappedBy="comment", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="reportResolution", cascade = CascadeType.ALL)
 	private List<Report> reports;
 	
 	@OneToOne private User user;
