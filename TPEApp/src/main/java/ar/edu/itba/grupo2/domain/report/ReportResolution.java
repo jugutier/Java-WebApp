@@ -3,13 +3,16 @@ package ar.edu.itba.grupo2.domain.report;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 import ar.edu.itba.grupo2.domain.user.User;
-
+@Entity
+@Table(name = "ReportResolution")
 public class ReportResolution extends EntityBaseType {
 	
 	@OneToMany(mappedBy="comment", cascade = CascadeType.ALL)
