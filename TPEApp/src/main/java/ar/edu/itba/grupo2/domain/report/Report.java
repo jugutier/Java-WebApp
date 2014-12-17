@@ -17,7 +17,7 @@ public class Report extends EntityBaseType {
 	@ManyToOne private Comment comment;
 	@OneToOne private User user;
 	@Column(length=140,nullable=true)private String reason;
-	@ManyToOne private ReportResolution reportResolution;
+	@ManyToOne(optional = true) private ReportResolution reportResolution;
 	
 	Report(){}
 	

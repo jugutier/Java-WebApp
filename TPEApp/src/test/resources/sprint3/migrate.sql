@@ -21,5 +21,6 @@ create table ReportResolution (
 );
 alter table Report add column reportresolution_id int4;
 alter table Report add constraint FK91B1415463D19E40 foreign key (reportResolution_id) references ReportResolution;
+insert into reportresolution (id)  (select comment_id from report);
 alter table Report add constraint FK91B141543A9BA861 foreign key (comment_id) references ReportResolution;
 alter table ReportResolution add constraint FKEC51FD20D8DE7209 foreign key (user_id) references GAJAmdbUser;
