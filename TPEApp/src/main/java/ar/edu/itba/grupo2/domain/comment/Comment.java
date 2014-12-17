@@ -147,15 +147,11 @@ public class Comment extends EntityBaseType {
 	}
 	
 	public void resolve(ReportResolution rr/*Resolution resolution, String reason*/){
-		if (rr == null) return;
-		/*if(resolution != null && reason != null && reason != ""){
-			if(resolution != Resolution.DELETE && resolution != Resolution.DISCARDREPORT){
-				//TODO error
-				return ;
-			}*/
-			//ReportResolution rr = new ReportResolution(user, getUnresolvedReports(), reason, resolution);
-			markReports(rr);
-		//}
+		if (rr == null) 
+			return;
+		
+		markReports(rr);
+		
 	}
 	
 	private void markReports(ReportResolution resolution){

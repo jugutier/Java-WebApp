@@ -25,7 +25,7 @@ public class ReportedCommentsPage extends BasePage {
 		final IModel<List<Comment>> commentModel = new LoadableDetachableModel<List<Comment>>() {
 			@Override
 			protected List<Comment> load() {
-				List<Comment> reported = comments.getAllReported();
+				List<Comment> reported = comments.getReportedUnresolved();
 				return reported;
 			}
 		};
