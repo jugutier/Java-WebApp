@@ -15,9 +15,11 @@ alter table report add column reason varchar(140);
 create table ReportResolution (
 	id  serial not null, 
 	reason varchar(140), 
-	resolution int4 not null, 
-	user_id int4, primary key (id)
+	resolution varchar(40) not null, 
+	user_id int4, 
+	primary key (id)
 );
+alter table Report add column reportresolution_id int4;
 alter table Report add constraint FK91B1415463D19E40 foreign key (reportResolution_id) references ReportResolution;
 alter table Report add constraint FK91B141543A9BA861 foreign key (comment_id) references ReportResolution;
 alter table ReportResolution add constraint FKEC51FD20D8DE7209 foreign key (user_id) references GAJAmdbUser;

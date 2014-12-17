@@ -2,10 +2,12 @@ package ar.edu.itba.grupo2.domain.report;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,7 +24,7 @@ public class ReportResolution extends EntityBaseType {
 	
 	@Column(length=140,nullable=true)private String reason;
 	
-	@Column(length=40,nullable=false)private Resolution resolution;
+	@Column(length=40,nullable=false)@Enumerated(EnumType.STRING)private Resolution resolution;
 	
 	ReportResolution(){}
 	
