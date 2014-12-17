@@ -1,5 +1,6 @@
 package ar.edu.itba.grupo2.domain.report;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -17,7 +18,7 @@ public class Report extends EntityBaseType {
 	@ManyToOne private Comment comment;
 	@OneToOne private User user;
 	@Column(length=140,nullable=true)private String reason;
-	@ManyToOne(optional = true) private ReportResolution reportResolution;
+	@ManyToOne(optional = true, cascade = CascadeType.ALL) private ReportResolution reportResolution;
 	
 	Report(){}
 	

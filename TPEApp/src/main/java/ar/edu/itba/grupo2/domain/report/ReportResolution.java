@@ -3,7 +3,6 @@ package ar.edu.itba.grupo2.domain.report;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -18,7 +17,7 @@ import ar.edu.itba.grupo2.domain.user.User;
 @Table(name = "ReportResolution")
 public class ReportResolution extends EntityBaseType {
 	
-	@OneToMany(mappedBy="reportResolution", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="reportResolution")
 	private List<Report> reports;
 	
 	@OneToOne private User user;
