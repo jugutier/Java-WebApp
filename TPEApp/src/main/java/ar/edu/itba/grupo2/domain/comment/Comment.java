@@ -20,7 +20,6 @@ import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.report.Report;
 import ar.edu.itba.grupo2.domain.report.ReportResolution;
-import ar.edu.itba.grupo2.domain.report.Resolution;
 import ar.edu.itba.grupo2.domain.user.User;
 @Entity
 @Table(name="Comment")
@@ -147,15 +146,16 @@ public class Comment extends EntityBaseType {
 			reports.clear();
 	}
 	
-	public void resolve(Resolution resolution, String reason){
-		if(resolution != null && reason != null && reason != ""){
+	public void resolve(ReportResolution rr/*Resolution resolution, String reason*/){
+		if (rr == null) return;
+		/*if(resolution != null && reason != null && reason != ""){
 			if(resolution != Resolution.DELETE && resolution != Resolution.DISCARDREPORT){
 				//TODO error
 				return ;
-			}
-			ReportResolution rr = new ReportResolution(user, getUnresolvedReports(), reason, resolution);
+			}*/
+			//ReportResolution rr = new ReportResolution(user, getUnresolvedReports(), reason, resolution);
 			markReports(rr);
-		}
+		//}
 	}
 	
 	private void markReports(ReportResolution resolution){
@@ -167,7 +167,7 @@ public class Comment extends EntityBaseType {
 		return ;
 	}
 	
-	private List<Report> getUnresolvedReports(){
+	public List<Report> getUnresolvedReports(){
 		List<Report> unresolved = new LinkedList<Report>(); 
 		for(Report r: reports){
 			if(!r.resolved()){
