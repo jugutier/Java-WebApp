@@ -129,8 +129,10 @@ public class User extends EntityBaseType {
 	}
 
 	public List<User> getFollows() {
-		List<User> copy = new ArrayList<User>(follows.size());
-		copy.addAll(follows);
+		List<User> copy = new ArrayList<User>();
+		if (follows != null) {
+			copy.addAll(follows);
+		}
 		return copy;
 	}
 
