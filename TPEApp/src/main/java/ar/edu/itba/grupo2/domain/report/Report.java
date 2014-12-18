@@ -38,6 +38,12 @@ public class Report extends EntityBaseType {
 		this.reportResolution = reportResolution;
 	}
 	
+	public Resolution getResolution(){
+		if(reportResolution == null)
+			return null;
+		return reportResolution.getResolution();
+	}
+	
 	public boolean resolved(){
 		return reportResolution != null;
 	}

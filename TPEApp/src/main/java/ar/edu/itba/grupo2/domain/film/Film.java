@@ -140,10 +140,16 @@ public class Film extends EntityBaseType {
 	}
 
 	public List<Comment> getComments() {
-		List<Comment> copy = new ArrayList<Comment>(comments.size());
-		copy.addAll(comments);
+		List<Comment> copy = new LinkedList<Comment>();
+		for(Comment c: comments){
+			if(!c.isDeleted()){
+				copy.add(c);
+			}
+		}
 		return copy;
 	}
+	
+	
 
 	private boolean userHasCommented(User user) {
 		for (Comment c : comments) {

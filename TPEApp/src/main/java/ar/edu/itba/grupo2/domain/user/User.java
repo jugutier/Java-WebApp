@@ -154,8 +154,12 @@ public class User extends EntityBaseType {
 	}
 
 	public List<Comment> getComments() {
-		List<Comment> copy = new ArrayList<Comment>(comments.size());
-		copy.addAll(comments);
+		List<Comment> copy = new LinkedList<Comment>();
+		for(Comment c: comments){
+			if(!c.isDeleted()){
+				copy.add(c);
+			}
+		}
 		return copy;
 	}
 

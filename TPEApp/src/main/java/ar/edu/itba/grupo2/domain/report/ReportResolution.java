@@ -37,5 +37,8 @@ public class ReportResolution extends EntityBaseType {
 		this.reports.addAll(reports);			
 	}
 	
+	public Resolution getResolution(){
+		return resolution;
+	}
 	
 }

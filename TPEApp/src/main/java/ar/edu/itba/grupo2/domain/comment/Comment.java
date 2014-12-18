@@ -20,6 +20,7 @@ import ar.edu.itba.grupo2.domain.common.EntityBaseType;
 import ar.edu.itba.grupo2.domain.film.Film;
 import ar.edu.itba.grupo2.domain.report.Report;
 import ar.edu.itba.grupo2.domain.report.ReportResolution;
+import ar.edu.itba.grupo2.domain.report.Resolution;
 import ar.edu.itba.grupo2.domain.user.User;
 @Entity
 @Table(name="Comment")
@@ -135,6 +136,15 @@ public class Comment extends EntityBaseType {
 		//return reports != null && !reports.isEmpty();
 		for(Report r: reports){
 			if(!r.resolved()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isDeleted() {
+		for(Report r: reports){
+			if(r.getResolution() == Resolution.DELETE){
 				return true;
 			}
 		}
