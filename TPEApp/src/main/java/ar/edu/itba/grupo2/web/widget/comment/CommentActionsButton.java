@@ -9,8 +9,11 @@ import ar.edu.itba.grupo2.domain.comment.Comment;
 import ar.edu.itba.grupo2.domain.report.ReportResolution;
 import ar.edu.itba.grupo2.domain.report.Resolution;
 import ar.edu.itba.grupo2.domain.user.User;
+import ar.edu.itba.grupo2.web.DeleteCommentPage;
+import ar.edu.itba.grupo2.web.DiscardReportPage;
 import ar.edu.itba.grupo2.web.GAJAmdbSession;
 import ar.edu.itba.grupo2.web.ProfilePage;
+import ar.edu.itba.grupo2.web.ReportMessagePage;
 
 @SuppressWarnings("serial")
 public class CommentActionsButton extends Panel {
@@ -116,9 +119,8 @@ public class CommentActionsButton extends Panel {
 
 			@Override
 			public void onClick() {
-				User user = GAJAmdbSession.get().getLoggedInUser();
-				ReportResolution rr = new ReportResolution(user, getModelObject().getUnresolvedReports(), "Porque yo lo digo (Disc)", Resolution.DISCARDREPORT);
-				getModelObject().resolve(rr);
+				setResponsePage(new DiscardReportPage(comment));
+				
 			}
 			
 			@Override
@@ -133,10 +135,7 @@ public class CommentActionsButton extends Panel {
 
 			@Override
 			public void onClick() {
-				//comment().remove();
-				User user = GAJAmdbSession.get().getLoggedInUser();
-				ReportResolution rr = new ReportResolution(user, getModelObject().getUnresolvedReports(), "Porque yo lo digo (Dele)", Resolution.DELETE);
-				getModelObject().resolve(rr);
+				setResponsePage(new DeleteCommentPage(comment));
 			}
 			
 			@Override

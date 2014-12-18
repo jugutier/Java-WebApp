@@ -1,4 +1,4 @@
-package ar.edu.itba.grupo2.web.widget.comment;
+package ar.edu.itba.grupo2.web;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -7,9 +7,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.validation.validator.StringValidator;
 
 import ar.edu.itba.grupo2.domain.comment.Comment;
-import ar.edu.itba.grupo2.web.BasePage;
-import ar.edu.itba.grupo2.web.GAJAmdbSession;
-import ar.edu.itba.grupo2.web.HomePage;
 
 @SuppressWarnings("serial")
 public class ReportMessagePage extends BasePage {
