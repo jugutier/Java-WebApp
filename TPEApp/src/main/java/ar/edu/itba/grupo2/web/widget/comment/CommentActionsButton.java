@@ -126,7 +126,7 @@ public class CommentActionsButton extends Panel {
 			@Override
 			public boolean isVisible() {
 				GAJAmdbSession session = GAJAmdbSession.get();
-				return session.isLoggedIn() && comment().isReported();
+				return session.isLoggedIn() && comment().isReported() && session.getLoggedInUser().isAdmin();
 			}
 			
 		};
@@ -141,7 +141,7 @@ public class CommentActionsButton extends Panel {
 			@Override
 			public boolean isVisible() {
 				GAJAmdbSession session = GAJAmdbSession.get();
-				return session.isLoggedIn() && session.getLoggedInUser().isAdmin();
+				return session.isLoggedIn() && session.getLoggedInUser().isAdmin() && session.getLoggedInUser().isAdmin();
 			}
 			
 		};
